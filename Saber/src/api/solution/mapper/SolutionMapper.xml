@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.springblade.modules.solution.mapper.SolutionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="solutionResultMap" type="org.springblade.modules.solution.entity.Solution">
+        <result column="fault_id" property="faultId"/>
+        <result column="fault_code" property="faultCode"/>
+        <result column="fault_type" property="faultType"/>
+        <result column="fault_key" property="faultKey"/>
+        <result column="fault_value" property="faultValue"/>
+        <result column="fault_name" property="faultName"/>
+        <result column="fault_solution" property="faultSolution"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+    <select id="selectSolutionPage" resultMap="solutionResultMap">
+        select * from swap_solution where is_deleted = 0
+    </select>
+
+</mapper>

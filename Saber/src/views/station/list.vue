@@ -1,0 +1,1170 @@
+<template>
+  <basic-container>
+    <avue-crud :option="option"
+               :table-loading="loading"
+               :data="data"
+               :page="page"
+               :permission="permissionList"
+               :before-open="beforeOpen"
+               v-model="form"
+               ref="crud"
+               @row-update="rowUpdate"
+               @row-save="rowSave"
+               @row-del="rowDel"
+               @search-change="searchChange"
+               @search-reset="searchReset"
+               @selection-change="selectionChange"
+               @current-change="currentChange"
+               @size-change="sizeChange"
+               @on-load="onLoad">
+      <template slot="menuLeft">
+        <el-button type="danger"
+                   size="small"
+                   icon="el-icon-delete"
+                   plain
+                   @click="handleDelete">批量删除
+        </el-button>
+
+
+        <el-button  @click="dialogFormVisible = true">分配店铺</el-button>
+        <template>
+
+                  <el-button @click.stop="delstore" >解除店铺关联</el-button></template>
+
+
+<el-dialog
+  title="分配店铺"
+  :visible.sync="dialogFormVisible"
+  width="30%"
+  center>
+  <span slot="footer" class="dialog-footer">
+  <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
+
+  </span>
+</el-dialog>
+
+
+
+        
+          <!-- <el-button type="primary"
+                     icon="el-icon-check"
+                     size="small"
+                     plain
+                     @click.stop="goimportxls()">导出</el-button> -->
+      </template>
+
+            <template slot-scope="{row}"
+                slot="storeId">
+        <el-tag>{{row.storeName}}</el-tag>
+      </template>
+       <template slot-scope="{row}"
+                slot="supplierId">
+        <el-tag>{{row.supplierName}}</el-tag>
+      </template>
+
+
+
+    <template slot-scope="scope" slot="menu">
+
+    <el-button type="text" @click="getListData(scope.row)" >充电仓管理</el-button>
+
+     <el-button type="text" @click="getGridData(scope.row)" >图片管理</el-button>
+        &nbsp;&nbsp;
+            <el-button type="text"
+                   size="small"
+                   icon="el-icon-document-copy"  @click="openmap(scope.row)"> 地址选取</el-button>
+
+
+                
+<el-dialog
+  title="地图"
+  :visible.sync="mapDialogVisible" :append-to-body="true"
+  width="30%"
+  center>
+  <mapbox-map mapWidth="100%" mapHeight="600px" :lnglat="lnglat"  @sendiptVal='showChildMsg'></mapbox-map>
+     <div slot="footer" class="dialog-footer">
+     <el-button @click="mapDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
+    </div>
+</el-dialog>
+<el-dialog
+  title="换电柜图片"
+  :visible.sync="dialogTableVisible"
+   :append-to-body="true"
+
+  center>
+
+      <el-button   @click="getTableData()" >分配图片</el-button>
+
+      <el-button   @click="fileDialog=true" >上传换电柜图片</el-button>
+    <el-dialog
+      width="50%"
+      title="上传换电柜图片"
+      :visible.sync="fileDialog"
+      append-to-body>
+
+          <el-form :model="fileform">
+    <el-form-item label="上传图片" :label-width="formLabelWidth">
+      <el-upload
+  class="avatar-uploader"
+  action="/api//blade-resource/oss/endpoint//upload"
+  :show-file-list="false"
+  :headers="myHeaders"
+  :on-success="handleSuccess"
+  :before-upload="beforeUpload">
+  <img v-if="photoUrl" :src="photoUrl" class="avatar">
+  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+</el-upload>
+    </el-form-item>
+
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="fileDialog = false">取 消</el-button>
+    <el-button type="primary" @click="insertShopPicature()">确 定</el-button>
+  </div>
+    </el-dialog>
+
+<el-table :data="gridData" class="tb-edit" highlight-current-row>
+      <el-table-column label="序号" width="70px">
+        <template slot-scope="scope">
+            {{scope.$index+1}}
+        </template>
+    </el-table-column>
+    <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
+    <el-table-column property="station_picture_id" label="编号" v-if="show"></el-table-column>
+      <el-table-column property="station_id" label="编号" v-if="show"></el-table-column>
+      <el-table-column prop="picture_main_url" label="图片" min-width="20%" >
+                 <!-- 图片的显示 -->
+                 <template   slot-scope="scope">            
+                    <img :src="scope.row.picture_main_url"  min-width="70" height="70" />
+                 </template>         
+      </el-table-column> 
+
+
+       <el-table-column prop="sort" label="权重">
+                <template  slot-scope="scope">
+                    <el-input size="small" style="width:80px" v-model="scope.row.sort" placeholder="请输入权重" @change="handleEdit(scope.$index, scope.row)"></el-input> <span>{{scope.row.sort}}</span>
+                </template>
+            </el-table-column>
+    <el-table-column property="is_default" label="是否为主图" width="200">
+              <template slot-scope="scope">
+        <el-tag>{{scope.row.is_default==="0"? '是':'否'}}</el-tag>
+         </template>   
+    </el-table-column>
+       <el-table-column
+      fixed="right"
+      label="操作"
+      width="200">
+      <template slot-scope="scope">
+        <el-button  type="text" @click="deletePicture(scope.row)" size="small">删除</el-button>
+        <el-button  type="text" @click="updateMain(scope.row)">设置为主图</el-button>
+
+      </template>
+    </el-table-column>
+  </el-table>
+
+  <el-dialog
+      width="50%"
+      title="图片素材"
+      :visible.sync="innerVisible"
+      append-to-body>
+      <el-button    @click="submitPicture()" >关联图片</el-button>
+      <el-button    @click="uploadDialog=true" >上传图片</el-button>
+
+
+      <el-table :data="tabledData" @selection-change="changeFun" style="margin-top:50px;">
+       <el-table-column type="selection" width="55">
+             </el-table-column>
+
+            <el-table-column label="序号" width="70px">
+        <template slot-scope="scope">
+            {{scope.$index+1}}
+        </template>
+    </el-table-column>
+        <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
+        <el-table-column prop="picture_main_url" label="图片" min-width="20%" >
+              <template   slot-scope="scope">            
+                    <img :src="scope.row.picture_main_url"  min-width="70" height="70" />
+                 </template>         
+      </el-table-column> 
+      <el-table-column prop="picture86Url" label="图片86" min-width="20%" >
+                 <!-- 图片的显示 -->
+              <template   slot-scope="scope">            
+                    <img :src="scope.row.picture86Url"  min-width="70" height="70" />
+              </template>         
+      </el-table-column> 
+      <el-table-column prop="picture324Url" label="图片324" min-width="20%" >
+                 <!-- 图片的显示 -->
+                 <template   slot-scope="scope">            
+                    <img :src="scope.row.picture324Url"  min-width="70" height="70" />
+                 </template>         
+      </el-table-column> 
+
+  </el-table>
+
+          <el-dialog
+  title="上传素材"
+  :visible.sync="uploadDialog"
+  :append-to-body="true"
+    width="40%"
+  center>
+
+    <el-form :model="uploadform">
+    <el-form-item label="上传图片" :label-width="formLabelWidth">
+      <el-upload
+  class="avatar-uploader"
+  action="/api//blade-resource/oss/endpoint//upload"
+  :show-file-list="false"
+  :headers="myHeaders"
+  :on-success="handleAvatarSuccess"
+  :before-upload="beforeAvatarUpload">
+  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+</el-upload>
+    </el-form-item>
+
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="uploadDialog = false">取 消</el-button>
+    <el-button type="primary" @click="insertPicature()">确 定</el-button>
+  </div>
+    </el-dialog>
+    </el-dialog>
+  
+</el-dialog>
+
+
+<el-dialog title="充电仓管理" :visible.sync="chaTableVisible" :append-to-body="true" :fullscreen="true">
+  <el-table :data="chaData">
+            <el-table-column label="序号" width="70px">
+        <template slot-scope="scope">
+            {{scope.$index+1}}
+        </template>
+        </el-table-column>
+    <el-table-column property="station_code" label="充电柜编码 " width="150"></el-table-column>
+    <el-table-column property="name" label="仓位" width="200"></el-table-column>
+    <el-table-column property="lt" label="电池仓锁状态" width="200"></el-table-column>
+    <el-table-column property="ct" label="电池仓状态"></el-table-column>
+    <el-table-column property="v" label="电池仓电压 " width="150"></el-table-column>
+    <el-table-column property="i" label="电池仓电流" width="200"></el-table-column>
+    <el-table-column property="t" label="电池仓温度" width="150"></el-table-column>
+        <el-table-column property="tmz" label="电池仓累计时间充电"></el-table-column>
+    <el-table-column property="tm" label="当前充电时间 " width="150"></el-table-column>
+    <el-table-column property="bs" label="当前剩余电池" width="200"></el-table-column>
+    <el-table-column property="bm" label="充电电池的MOS最高温度" width="150"></el-table-column>
+        <el-table-column property="bt" label="当前充电电池的最高温度" width="150"></el-table-column>
+
+
+  </el-table>
+</el-dialog>
+
+
+    </template>
+    
+
+    </avue-crud>
+  </basic-container>
+</template>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+
+  import {getList, getDetail, add,addPhoto, update,updateAddress,getChaList, remove,importxls,updateSort,SaveStore,updatePicture,del,SavePicture,getStationcPicture,removePicture} from "@/api/swap_station/station";
+    import {getDeptTree} from "@/api/swap_supplier/supplier";
+  import {getPicture} from "@/api/swap_picture/picture";
+import website from '@/config/website';
+
+  import {mapGetters} from "vuex";
+import {getToken} from '@/util/auth'
+import {addPic} from "@/api/swap_picture/picture";
+
+var token = getToken(); // 要保证取到
+var auth= `Basic ${Base64.encode(`${website.clientId}:${website.clientSecret}`)}`;
+  export default {
+    data() {
+      return {
+        form: {},
+         gridData: [],
+         tabledData:[],
+         show: false,
+         multipleSelection: [],
+         query: {},
+          chaData: [],
+        dialogFormVisible: false,
+        dialogTableVisible:false,
+        mapDialogVisible:false,
+        chaTableVisible:false,
+        innerVisible: false,
+        loading: true,
+        myHeaders: {Authorization: auth,
+        'Blade-Auth':'bearer '+token
+        },
+          fileDialog:false,
+         imageUrl: '',
+         photoUrl:'',
+        lnglat: {
+        stationId:0,
+        longitude:0,
+        latitude:0
+      },
+        pictureMainUrl:'',
+        pictureUrl:'',
+        uploadform:{
+
+        },
+        fileform:{
+
+        },
+        formLabelWidth:'100px',
+        pictureMainUrl:'',
+        picturestationId:0,
+        uploadDialog:false,
+        page: {
+          pageSize: 10,
+          currentPage: 1,
+          total: 0
+        },
+            formoption:{
+          column:[      {
+              label: "分配店铺",
+              prop: "storeId",
+              type: "tree",
+              span: 24,
+              slot: true,
+                 rules: [{
+                required: true,
+                message: "请选择店铺",
+                trigger: "blur"
+              }],
+              dicUrl: "/api/swap_store/store/select",
+              props: {
+                label: "storeName",
+                value: "storeId"
+              },
+                     },]
+        },
+        selectionList: [],
+        option: {
+          tip: false,
+          border: true,
+          viewBtn: true,
+          updateBtn:true,
+          selection: true,
+          excelBtn:true,
+          // columnBtn:false,
+          // searchBtn:false,
+          // defaultExpandAll:true,
+          index:true,
+          menuWidth:120,
+          column: [
+            // {
+            //   label: "换电柜ID",
+            //   prop: "stationId",
+            //   editDisabled:true,
+            //   editDisplay:false,
+            //   addDisabled:true,
+            //   addDisplay:false,
+            //   rules: [{
+            //     required: true,
+            //     message: "请输入换电柜ID",
+            //     trigger: "blur"
+            //   }]
+            // },
+            {
+              label:this.$t(`station.stationCode`),
+              prop: "stationCode",
+                editDisabled:true,
+              search:true,
+              rules: [{
+                required: true,
+                message: "请输入换电柜编号（UID）",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: this.$t(`station.stationModel`),
+              prop: "stationModel",
+              rules: [{
+                required: false,
+                message: "请输入换电柜型号",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: this.$t(`station.imei`),
+              prop: "imei",
+              rules: [{
+                required: false,
+                addDisabled:true,
+                addDisplay:false,
+                message: "请输入设备IMEI码",
+                trigger: "blur"
+              }]
+            },
+            {
+              label:this.$t(`station.warehouseNumber`),
+              prop: "warehouseNumber",
+              search:false,
+              valueDefault:3,
+              type:'number',
+              rules: [{
+                required: false,
+                message: "请输入充电仓数",
+                trigger: "blur"
+              }]
+            },
+                {
+              label: "分配店铺",
+              prop: "storeId",
+              type: "tree",
+              slot: true,
+                 rules: [{
+                required: true,
+                message: "请选择店铺",
+                trigger: "blur"
+              }],
+              dicUrl: "/api/swap_store/store/select",
+              props: {
+                label: "storeName",
+                value: "storeId"
+              },
+                     },
+            {
+              label: "电表实时读数",
+              prop: "ammeterValue",
+              addDisabled:true,
+              addDisplay:false,
+              rules: [{
+                required: false,
+                message: "请输入电表实时读数",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "读数时间",
+              prop: "ammeterTime",
+              type:'datetime',
+              format: "yyyy-MM-dd HH:mm:ss",
+              valueFormat: "yyyy-MM-dd HH:mm:ss",
+              addDisabled:true,
+              addDisplay:false,
+              rules: [{
+                required: false,
+                message: "请输入读数时间",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "营业开始时间",
+              prop: "businessTimeS",
+               type:'time',
+                format: " HH:mm ",
+              valueFormat: "HH:mm",
+              hide:true,
+              rules: [{
+                required: false,
+                message: "请输入营业开始时间",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "营业结束时间",
+              prop: "businessTimeE",
+              hide:true,
+              type:'time',
+               format: " HH:mm",
+              valueFormat: "HH:mm:",
+              rules: [{
+                required: false,
+                message: "请输入营业结束时间",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: this.$t(`station.address`),
+              prop: "address",
+              rules: [{
+                required: false,
+                message: "请输入地址",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: this.$t(`station.stationStatus`),
+              prop: "stationStatus",
+              search:true,
+              type:'select',
+             // addDisabled:true,
+              addDisplay:false,
+              valueDefault:"0",
+              dicData:[
+                {
+                  label:'正常',
+                  value:'0'
+                },{
+                  label:'故障',
+                  value:'1'
+                },{
+                  label:'维修',
+                  value:'2'
+                },{
+                  label:'报废',
+                  value:'3'
+                }
+              ],
+              rules: [{
+                required: false,
+                message: "请输入换电柜状态 数据字典",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: this.$t(`station.locationStatus`),
+              prop: "locationStatus",
+               addDisabled:true,
+              addDisplay:false,
+              search:true,
+              type:'select',
+              valueDefault:'1',
+              dicData:[
+                {
+                  label:'已定位',
+                  value:'0'
+                },{
+                  label:'未定位',
+                  value:'1'
+                }
+              ],
+              rules: [{
+                required: false,
+                message: "请输入定位状态",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: this.$t(`station.connectStatus`),
+              prop: "connectStatus",
+              //addDisabled:true,
+              addDisplay:false,
+              search:true,
+              type:'select',
+              valueDefault:'1',
+              dicData:[
+               {
+                  label:'已连接',
+                  value:'0'
+                },{
+                  label:'未连接',
+                  value:'1'
+                }
+              ],
+              rules: [{
+                required: true,
+                message: "请输入连接状态 0:已连接 1:未连接",
+                trigger: "blur"
+              }]
+            },
+            {
+              label: "保质期(月)",
+              prop: "expirationDate",
+              valueDefault:'1',
+              rules: [{
+                required: false,
+                message: "请输入保质期(月)",
+                trigger: "blur"
+              }]
+            },
+            {
+               
+              label: "关联供应商",
+              prop: "supplierId",
+              type: "tree",
+              multiple: false,
+              dicData: [],
+              props: {
+                label: "title"
+              },
+              slot: true,
+              rules: [{
+                required: true,
+                message: "请选择供应商",
+                trigger: "click"
+              }]
+            },
+            // {
+            //   label: "供应商id",
+            //   prop: "supplierId",
+            //   editDisabled:true,
+            //   editDisplay:false,
+            //   addDisabled:true,
+            //   addDisplay:false,
+            //   rules: [{
+            //     required: true,
+            //     message: "请输入供应商id",
+            //     trigger: "blur"
+            //   }]
+            // },
+            {
+              label: "出厂时间",
+             prop: "produceTime",
+              type:'datetime',
+              format: "yyyy-MM-dd",
+              valueFormat: "yyyy-MM-dd",
+              // addDisabled:true,
+              // addDisplay:false,
+              rules: [{
+                required: false,
+                message: "请输入出厂时间",
+                trigger: "blur"
+              }]
+              },
+            // 
+            // {
+            //   label: "创建人",
+            //   prop: "createUser",
+            // editDisabled:true,
+            //   editDisplay:false,
+            //   addDisabled:true,
+            //   addDisplay:false,
+            //   rules: [{
+            //     required: true,
+            //     message: "请输入创建人",
+            //     trigger: "blur"
+            //   }]
+            // },
+            // {
+            //   label: "创建时间",
+            //   prop: "createTime",
+            //    editDisabled:true,
+            //   editDisplay:false,
+            //   addDisabled:true,
+            //   addDisplay:false,
+            //   rules: [{
+            //     required: true,
+            //     message: "请输入创建时间",
+            //     trigger: "blur"
+            //   }]
+            // },
+            // {
+            //   label: "更新人",
+            //   prop: "updateUser",
+            //     editDisabled:true,
+            //   editDisplay:false,
+            //   addDisabled:true,
+            //   addDisplay:false,
+            //   rules: [{
+            //     required: true,
+            //     message: "请输入更新人",
+            //     trigger: "blur"
+            //   }]
+            // },
+            // {
+            //   label: "更新时间",
+            //   prop: "updateTime",
+            //   editDisabled:true,
+            //   editDisplay:false,
+            //   addDisabled:true,
+            //   addDisplay:false,
+            //   rules: [{
+            //     required: true,
+            //     message: "请输入更新时间",
+            //     trigger: "blur"
+            //   }]
+            // },
+            // {
+            //   label: "备注",
+            //   prop: "remark",
+            //   rules: [{
+            //     required: true,
+            //     message: "请输入备注",
+            //     trigger: "blur"
+            //   }]
+            // },
+            // {
+            //   label: "删除标识",
+            //   prop: "delFlag",
+            //   type:'select',
+            //      addDisabled:true,
+            //   addDisplay:false,
+            //   dicData:[
+            //     {
+            //       label:'存在',
+            //       value:'0'
+            //     },{
+            //       label:'删除',
+            //       value:'1'
+            //     }
+            //   ],
+            //   rules: [{
+            //     required: false,
+            //     message: "请输入删除标识 0代表存在 1代表删除",
+            //     trigger: "blur"
+            //   }]
+            // },
+          ]
+        },
+        data: []
+      };
+    },
+
+
+  watch: {
+      'form.tenantId'() {
+        if (this.form.tenantId !== '') {
+          getDeptTree(this.form.tenantId).then(res => {
+            const index = this.$refs.crud.findColumnIndex("supplierId");
+
+            this.option.column[index].dicData = res.data.data;
+          });
+         
+        }
+      }
+    },
+    
+    
+    computed: {
+      ...mapGetters(["permission"]),
+      permissionList() {
+        return {
+          addBtn: this.vaildData(this.permission.station_add, false),
+          viewBtn: this.vaildData(this.permission.station_view, false),
+        //  delBtn: this.vaildData(this.permission.station_delete, false),
+          // editBtn: this.vaildData(this.permission.station_edit, false)
+        };
+      },
+      ids() {
+        let ids = [];
+        this.selectionList.forEach(ele => {
+          ids.push(ele.stationId);
+        });
+        return ids.join(",");
+      }
+    },
+    methods: {
+      rowSave(row, loading, done) {
+        add(row).then(() => {
+          loading();
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "操作成功!"
+          });
+        }, error => {
+          done();
+          console.log(error);
+        });
+      },
+            goimportxls(){
+        importxls().then((response) => {
+        //创建一个blob对象,file的一种
+        let blob = new Blob([response.data], { type: 'application/x-xls' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        //配置下载的文件名
+        link.download = '导出换电柜数据列表.xls'
+        link.click()
+  });
+      },
+      submitPicture(){
+            let pictureids = [];
+         this.multipleSelection.forEach(ele => {
+          pictureids.push(ele.picture_id);
+        });
+        
+        SavePicture(pictureids.join(","),this.data.picturestationId).then(() => {
+             getStationcPicture( this.data.picturestationId).then(res => {
+          console.log("返回结果:"+res.data)
+            this.gridData = res.data.data;
+          });
+               this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+            this.innerVisible=false;
+              });
+         
+    },
+        getTableData(){
+        getPicture().then(res => {
+          console.log("返回结果:"+res.data)
+            this.tabledData = res.data.data;
+          });
+        this.innerVisible=true;
+      },
+
+        openmap(row){
+      this.lnglat.longitude=row.longitude;
+      this.lnglat.latitude=row.latitude;
+      this.lnglat.stationId=row.stationId;
+      
+      this.mapDialogVisible=true;
+    },
+  showChildMsg(value){
+    var obj = JSON.parse(value);
+    this.lnglat.longitude=obj.lng;
+    this.lnglat.latitude=obj.lat;
+  },
+     sumbitAddres(){
+        updateAddress(this.lnglat).then(() => {
+          this.mapDialogVisible=false;
+          this.onLoad(this.page);       
+          this.$message({
+            type: "success",
+            message: "操作成功!"
+          });
+        }, error => {
+          console.log(error);
+        });
+    },
+
+           getGridData(row){
+             this.data.picturestationId=row.stationId;
+        getStationcPicture(row.stationId).then(res => {
+          console.log("返回结果:"+res.data)
+            this.gridData = res.data.data;
+          });
+        this.dialogTableVisible=true;
+      },
+      
+
+       getListData(row){
+        getChaList(row.stationCode).then(res => {
+          console.log("返回结果:"+res.data)
+            this.chaData = res.data.data;
+            console.log("cha:"+this.chaData);
+          });
+        this.chaTableVisible=true;
+      },
+
+
+      deletePicture(row){
+         this.$confirm("确定将选择数据删除?", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            console.log(row.station_picture_id);
+            return removePicture(row.station_picture_id);
+          })
+          .then(() => {
+            getStationcPicture( this.data.picturestationId).then(res => {
+          console.log("返回结果:"+res.data)
+            this.gridData = res.data.data;
+          });
+            this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+          });
+      },
+
+
+
+  beforeUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        return isJPG && isLt2M;
+      },
+      
+      handleSuccess(res, file) {
+             console.log(res)
+        this.photoUrl = res.data.url;
+        this.data.pictureUrl=res.data.url;
+      },
+
+
+        insertShopPicature(){
+      if(this.data.pictureUrl==''){
+        this.$message({
+              type: "error",
+              message: "请上传图片"
+            })
+            return
+      }
+
+          console.log("返回结果:"+this.data.picturestationId);
+      addPhoto(this.data.pictureUrl,this.data.picturestationId).then(() => {
+         getStationcPicture( this.data.picturestationId).then(res => {
+          console.log("返回结果:"+res.data)
+            this.gridData = res.data.data;
+          });
+               this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+          this.fileDialog = false
+              });
+    },
+
+    insertPicature(){
+      if(this.pictureMainUrl==''){
+        this.$message({
+              type: "error",
+              message: "请上传图片"
+            })
+            return
+      }
+
+      addPic(this.pictureMainUrl).then(() => {
+           getPicture().then(res => {
+          console.log("返回结果:"+res.data)
+            this.tabledData = res.data.data;
+          });
+               this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+          this.uploadDialog = false
+              });
+    },
+               handleAvatarSuccess(res, file) {
+             console.log(res)
+        this.imageUrl = res.data.url;
+        this.pictureMainUrl=res.data.url;
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        // }
+        // if (!isLt2M) {
+        //   this.$message.error('上传头像图片大小不能超过 2MB!');
+        // }
+        return isJPG && isLt2M;
+      },
+      updateMain(row){
+           this.$confirm("确定将此图设置为主图吗?", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            console.log(row.station_picture_id,row.station_id);
+            return updatePicture(row.station_picture_id,row.station_id);
+          })
+          .then(() => {
+            getStationcPicture( this.data.picturestationId).then(res => {
+          console.log("返回结果:"+res.data)
+            this.gridData = res.data.data;
+          });
+            this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+          });
+      },
+
+        handleAvatarSuccess(res, file) {
+             console.log(res)
+        this.imageUrl = res.data.url;
+        this.pictureMainUrl=res.data.url;
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        // }
+        // if (!isLt2M) {
+        //   this.$message.error('上传头像图片大小不能超过 2MB!');
+        // }
+        return isJPG && isLt2M;
+      },
+
+         handleSubmit(){
+        if(this.ids.length>0){
+          SaveStore(this.ids,this.form.storeId).then(() => {
+            this.onLoad(this.page);
+               this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+            this.dialogFormVisible=false;
+          });
+         
+
+        }else{
+          this.$message.error('请选择至少一条数据');
+
+        }
+        
+      },
+
+       delstore(){
+            if(this.ids.length>0){
+          del(this.ids).then(() => {
+                this.onLoad(this.page);
+            this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+          });
+    }else{
+           this.$message({
+              type: "error",
+              message: "请选择至少一条数据!"
+            })
+    }
+    },
+      rowUpdate(row, index, loading, done) {
+        update(row).then(() => {
+          loading();
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "操作成功!"
+          });
+        }, error => {
+          done();
+          console.log(error);
+        });
+      },
+      rowDel(row) {
+        this.$confirm("确定将选择数据删除?", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            return remove(row.stationId);
+          })
+          .then(() => {
+            this.onLoad(this.page);
+            this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+          });
+      },
+
+       handleEdit(index, row) {
+         row.stationPictureId=row.station_picture_id;
+           updateSort(row)
+            },
+      handleDelete() {
+        if (this.selectionList.length === 0) {
+          this.$message.warning("请选择至少一条数据");
+          return;
+        }
+        this.$confirm("确定将选择数据删除?", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            return remove(this.ids);
+          })
+          .then(() => {
+            this.onLoad(this.page);
+            this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+            this.$refs.crud.toggleSelection();
+          });
+      },
+      beforeOpen(done, type) {
+        if (["edit", "view"].includes(type)) {
+          getDetail(this.form.stationId).then(res => {
+            this.form = res.data.data;
+            
+          });
+        }
+        done();
+      },
+      searchReset() {
+        this.query = {};
+        this.onLoad(this.page);
+      },
+      searchChange(params) {
+        this.query = params;
+        this.onLoad(this.page, params);
+      },
+      selectionChange(list) {
+        this.selectionList = list;
+      },
+      selectionClear() {
+        this.selectionList = [];
+        this.$refs.crud.toggleSelection();
+      },
+      currentChange(currentPage){
+        this.page.currentPage = currentPage;
+      },
+      sizeChange(pageSize){
+        this.page.pageSize = pageSize;
+      },
+       changeFun(val) {
+      this.multipleSelection = val 
+      },
+      onLoad(page, params = {}) {
+        this.loading = true;
+        getList(page.currentPage, page.pageSize, Object.assign(params, this.query)).then(res => {
+          const data = res.data.data;
+          this.page.total = data.total;
+          this.data = data.records;
+          this.loading = false;
+          this.selectionClear();
+        });
+
+          getDeptTree(this.form.tenantId).then(res => {
+          const index = this.$refs.crud.findColumnIndex("supplierId");
+          this.option.column[index].dicData = res.data.data;
+          console.log(this.option.column[index].dicData);
+
+        });
+      }
+    }
+  };
+</script>
+
+    <style>
+        * {
+    margin: 0;
+    padding: 0
+}
+body {
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+    overflow: auto;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+}
+.tb-edit .el-input {
+    display: none
+}
+.tb-edit .current-row .el-input {
+    display: block
+}
+.tb-edit .current-row .el-input+span {
+    display: none
+}
+
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+    </style>
