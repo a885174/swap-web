@@ -33,7 +33,7 @@ export const getMenu = () => request({
 });
 
 export const getTopMenu = () => request({
-  url: baseUrl + '/user/getTopMenu',
+  url:   '/api/user/getTopMenu',
   method: 'get'
 });
 
