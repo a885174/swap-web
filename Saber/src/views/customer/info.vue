@@ -59,9 +59,9 @@ export default {
 }
 .fullbox .content {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 10%;
+  left: 30%;
+  /* transform: translate(0, -50%); */
 }
 .fullbox .content .phone {
   padding: 0 20px;

@@ -164,9 +164,9 @@ export default {
         ]
       },
       option: {
-        dialogWidth: "60%",
-        dialogHeight: 500,
-        labelWidth: 140,
+        // dialogWidth: "60%",
+        // dialogHeight: 500,
+        // labelWidth: 140,
         tip: false,
         border: true,
         index: true,
@@ -177,6 +177,7 @@ export default {
         delBtn: true,
         align: "center",
         menuAlign: "center",
+        indexLabel: "序号",
         // columnBtn:false,
         // searchBtn:false,
         // defaultExpandAll:true,
@@ -197,7 +198,7 @@ export default {
           // },
           {
             label: this.$t(`scooter.vincode`),
-            width: 160,
+            // width: 160,
             prop: "scooterCode",
             editDisabled: true,
             search: true,
@@ -212,7 +213,7 @@ export default {
           },
           {
             label: this.$t(`scooter.licensePlate`),
-            width: 100,
+            // width: 100,
             prop: "licensePlate",
             span: 8,
             search: true,
@@ -225,8 +226,21 @@ export default {
             ]
           },
           {
+            label: this.$t(`scooter.scooterVersion`),
+            // width: 120,
+            prop: "scooterVersion",
+            valueDefault: "",
+            rules: [
+              {
+                required: false,
+                message: "请输入电动车型号",
+                trigger: "blur"
+              }
+            ]
+          },
+          {
             label: "设备IMEI码",
-            width: 160,
+            // width: 160,
             addDisabled: true,
             addDisplay: false,
             span: 8,
@@ -240,23 +254,11 @@ export default {
             ]
           },
           {
-            label: this.$t(`scooter.scooterVersion`),
-            width: 120,
-            prop: "scooterVersion",
-            valueDefault: "",
-            rules: [
-              {
-                required: false,
-                message: "请输入电动车型号",
-                trigger: "blur"
-              }
-            ]
-          },
-          {
             label: this.$t(`scooter.scooterStatus`),
             prop: "scooterStatus",
             type: "select",
             search: true,
+            hide:true,
             // addDisabled:true,
             valueDefault: "0",
             addDisplay: false,
@@ -289,6 +291,7 @@ export default {
           {
             label: this.$t(`scooter.sellChannel`),
             search: true,
+            hide:true,
             type: "select",
             valueDefault: "1",
             prop: "sellChannel",
@@ -313,6 +316,7 @@ export default {
           {
             label: this.$t(`scooter.sellStatus`),
             prop: "sellStatus",
+            hide:true,
             //editDisabled:true,
             editDisplay: false,
             //addDisabled:true,
@@ -342,6 +346,7 @@ export default {
             label: "所属客户",
             prop: "tenantId",
             type: "tree",
+            hide:true,
             slot: true,
             dicUrl: "/api/swap_tenant_bat/swaptenantbat/select",
             valueDefault: "",
@@ -365,6 +370,7 @@ export default {
           {
             label: this.$t(`scooter.initStatus`),
             prop: "initStatus",
+            hide:true,
             //editDisabled:true,
             editDisplay: false,
             //addDisabled:true,
@@ -393,6 +399,7 @@ export default {
             label: this.$t(`scooter.runStatus`),
             prop: "runStatus",
             type: "select",
+            hide:true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -418,6 +425,7 @@ export default {
             label: this.$t(`scooter.gpsStatus`),
             prop: "gpsStatus",
             type: "select",
+            hide:true,
             //addDisabled:true,
             valueDefault: "1",
             addDisplay: false,
@@ -444,6 +452,7 @@ export default {
             prop: "lockStatus",
             addDisabled: true,
             addDisplay: false,
+            hide:true,
             type: "select",
             valueDefault: "1",
             dicData: [
@@ -468,6 +477,7 @@ export default {
             label: this.$t(`scooter.securityLock`),
             prop: "securityLock",
             type: "select",
+            hide:true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -493,6 +503,7 @@ export default {
             label: this.$t(`scooter.arrearageLock`),
             prop: "arrearageLock",
             type: "select",
+            hide:true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -517,6 +528,7 @@ export default {
           {
             label: "可装电池数",
             width: 100,
+            hide:true,
             prop: "batteryNumber",
             valueDefault: "1",
             type: "number",
@@ -531,6 +543,7 @@ export default {
           {
             label: "行车总里程",
             width: 100,
+            hide:true,
             prop: "mileageValue",
             addDisabled: true,
             addDisplay: false,
@@ -563,6 +576,7 @@ export default {
           },
           {
             label: "初始里程表读数",
+            hide:true,
             prop: "initRead",
             addDisabled: true,
             addDisplay: false,
@@ -580,6 +594,7 @@ export default {
           {
             label: "初始里程读数时间",
             prop: "initTime",
+            hide:true,
             type: "datetime",
             format: "yyyy-MM-dd hh:mm:ss",
             valueFormat: "yyyy-MM-dd hh:mm:ss",
@@ -598,6 +613,7 @@ export default {
           },
           {
             label: "供应商id",
+            hide:true,
             prop: "supplierId",
             hide: true,
             editDisabled: true,
@@ -615,6 +631,7 @@ export default {
           {
             label: "出厂时间",
             width: 100,
+            hide:true,
             prop: "produceTime",
             default: true,
             type: "datetime",
@@ -631,6 +648,7 @@ export default {
           {
             label: "保质期（月）",
             prop: "expirationDate",
+            hide:true,
             valueDefault: "1",
             type: "number",
             rules: [
@@ -697,6 +715,7 @@ export default {
           {
             label: "备注",
             prop: "remark",
+            hide:true,
             editDisabled: true,
             editDisplay: false,
             rules: [

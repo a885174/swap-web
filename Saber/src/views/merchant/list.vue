@@ -29,6 +29,13 @@
           <el-button @click.stop="userdel">解除冻结</el-button>
         </template>
       </template>
+
+      <template slot-scope="{row}" slot="status">
+        <label
+          :style="{color:row.status=='0'?'green':'red'}"
+        >{{row.status=="0"?"正常":"停用"}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
       </template>
@@ -86,17 +93,26 @@ export default {
         viewBtn: false,
         selection: true,
         excelBtn: true,
+        align: "center",
+        menuAlign: "center",
+        indexLabel: "序号",
         column: [
-          // {
-          //   label: "商户id",
-          //   prop: "merchantId",
-          //   search:true,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入商户id",
-          //     trigger: "blur"
-          //   }]
-          // },
+          {
+            label: "商户id",
+            prop: "merchantId",
+            search: true,
+            editDisabled: true,
+            editDisplay: false,
+            addDisabled: true,
+            addDisplay: false,
+            rules: [
+              {
+                required: true,
+                message: "请输入商户id",
+                trigger: "blur"
+              }
+            ]
+          },
           {
             label: "商户名称",
             prop: "merchantName",
@@ -138,6 +154,7 @@ export default {
           {
             label: "国家",
             prop: "countryId",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -149,6 +166,7 @@ export default {
           {
             label: "城市",
             prop: "cityId",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -169,6 +187,7 @@ export default {
           {
             label: "主要联系人",
             prop: "linkman",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -180,6 +199,7 @@ export default {
           {
             label: "联系电话",
             prop: "contactNumber",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -191,6 +211,7 @@ export default {
           {
             label: "联系地址",
             prop: "address",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -202,6 +223,7 @@ export default {
           {
             label: "法律代表",
             prop: "legalPerson",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -215,6 +237,7 @@ export default {
             prop: "filingStatus",
             type: "select",
             valueDefault: "1",
+            hide: true,
             dicData: [
               {
                 label: "有",
@@ -244,6 +267,7 @@ export default {
             prop: "status",
             valueDefault: "0",
             type: "select",
+            slot: true,
             dicData: [
               {
                 label: "正常",
@@ -301,6 +325,7 @@ export default {
           {
             label: "备注",
             prop: "remark",
+            hide: true,
             rules: [
               {
                 required: false,

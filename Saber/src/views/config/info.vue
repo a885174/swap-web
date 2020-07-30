@@ -86,9 +86,9 @@ export default {
 }
 .fullbox .content {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  left: 30%;
+  top: 10%;
+  /* transform: translate(0, -50%); */
 }
 .fullbox .content .item {
   padding: 12px 120px 12px 0;

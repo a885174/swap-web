@@ -362,6 +362,7 @@ export default {
         updateBtn: true,
         selection: true,
         excelBtn: true,
+        indexLabel: "序号",
         // columnBtn:false,
         // searchBtn:false,
         // defaultExpandAll:true,
@@ -383,7 +384,7 @@ export default {
           // },
           {
             label: this.$t(`station.stationCode`),
-            width: 160,
+            // width: 160,
             prop: "stationCode",
             editDisabled: true,
             search: true,
@@ -397,7 +398,7 @@ export default {
           },
           {
             label: this.$t(`station.stationModel`),
-            width: 120,
+            // width: 120,
             prop: "stationModel",
             rules: [
               {
@@ -409,7 +410,7 @@ export default {
           },
           {
             label: this.$t(`station.imei`),
-            width: 140,
+            // width: 140,
             prop: "imei",
             rules: [
               {
@@ -427,6 +428,7 @@ export default {
             search: false,
             valueDefault: 3,
             type: "number",
+            hide:true,
             rules: [
               {
                 required: false,
@@ -441,6 +443,7 @@ export default {
             prop: "storeId",
             type: "tree",
             slot: true,
+            hide:true,
             rules: [
               {
                 required: true,
@@ -460,6 +463,7 @@ export default {
             prop: "ammeterValue",
             addDisabled: true,
             addDisplay: false,
+            hide:true,
             rules: [
               {
                 required: false,
@@ -477,6 +481,7 @@ export default {
             valueFormat: "yyyy-MM-dd HH:mm:ss",
             addDisabled: true,
             addDisplay: false,
+            hide:true,
             rules: [
               {
                 required: false,
@@ -519,6 +524,7 @@ export default {
             label: this.$t(`station.address`),
             width: 200,
             prop: "address",
+            hide:true,
             rules: [
               {
                 required: false,
@@ -533,6 +539,7 @@ export default {
             prop: "stationStatus",
             search: true,
             type: "select",
+            hide:true,
             // addDisabled:true,
             addDisplay: false,
             valueDefault: "0",
@@ -570,6 +577,7 @@ export default {
             search: true,
             type: "select",
             valueDefault: "1",
+            hide:true,
             dicData: [
               {
                 label: "已定位",
@@ -596,6 +604,7 @@ export default {
             search: true,
             type: "select",
             valueDefault: "1",
+            hide:true,
             dicData: [
               {
                 label: "已连接",
@@ -618,6 +627,7 @@ export default {
             label: "保质期(月)",
             prop: "expirationDate",
             valueDefault: "1",
+            hide:true,
             rules: [
               {
                 required: false,
@@ -632,6 +642,7 @@ export default {
             prop: "supplierId",
             type: "tree",
             multiple: false,
+            hide:true,
             dicData: [],
             props: {
               label: "title"
@@ -665,6 +676,7 @@ export default {
             type: "datetime",
             format: "yyyy-MM-dd",
             valueFormat: "yyyy-MM-dd",
+            hide:true,
             // addDisabled:true,
             // addDisplay:false,
             rules: [

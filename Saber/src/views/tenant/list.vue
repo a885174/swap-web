@@ -40,7 +40,10 @@
           <el-button @click.stop="userdel">解除冻结</el-button>
         </template>
       </template>
-
+      <template slot-scope="{row}" slot="tenantStatus">
+        <label :style="{color:row.tenantStatus=='0'?'green':'red'}">{{row.tenantStatus=="0"?"正常":"停用"}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot="menu" slot-scope="scope">
         <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">查看</el-button>
         <!-- <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button> -->
@@ -148,9 +151,12 @@ export default {
         border: true,
         index: true,
         columnBtn: true,
-        viewBtn: true,
+        viewBtn: false,
         excelBtn: true,
         selection: true,
+        align: "center",
+        menuAlign: "center",
+        indexLabel: "序号",
         column: [
           {
             label: "客户id",
@@ -341,6 +347,7 @@ export default {
             addDisPlay: false,
             valueDefault: "0",
             type: "select",
+            slot: true,
             dicData: [
               {
                 label: "正常",
@@ -693,4 +700,29 @@ export default {
 </script>
 
 <style>
+.abow_dialog .el-dialog .el-dialog__body {
+  padding: 0 30px;
+} 
+.abow_dialog .title {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.847058823529412);
+  line-height: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.abow_dialog .item {
+  overflow: hidden;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  border-bottom: 1px solid #ebebeb;
+}
+.abow_dialog .item label {
+  line-height: 32px;
+}
+.abow_dialog .fullItem {
+  padding-bottom: 12px;
+  padding-top: 12px;
+  line-height: 20px;
+  border-bottom: 1px solid #ebebeb;
+}
 </style>
