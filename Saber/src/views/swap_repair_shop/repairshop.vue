@@ -29,6 +29,12 @@
           <el-button @click.stop="userdel">上架</el-button>
         </template>
       </template>
+      <template slot-scope="{row}" slot="shopStatus">
+        <label
+          :style="{color:row.shopStatus=='0'?'green':'red'}"
+        >{{row.shopStatus=="0"?"正常":(row.shopStatus=="1"?"上架":"下架")}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
 
       <template slot-scope="scope" slot="menu">
         <el-button type="text" icon="el-icon-date" size="small" @click="opentable(scope.row)">营业时间分配</el-button>
@@ -391,17 +397,22 @@ export default {
         excelBtn: true,
         selection: true,
         align: "center",
+        menuAlign: "center",
+        indexLabel: "序号",
         column: [
-          // {
-          //   label: "维修店铺id",
-          //   prop: "shopId",
-          //   hide:true,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入维修店铺id",
-          //     trigger: "blur"
-          //   }]
-          // },
+          {
+            label: "维修店铺id",
+            prop: "shopId",
+            editDisabled:true,
+            editDisplay:false,
+            addDisabled:true,
+            addDisplay:false,
+            rules: [{
+              required: true,
+              message: "请输入维修店铺id",
+              trigger: "blur"
+            }]
+          },
           {
             label: "店铺名称",
             prop: "shopName",
@@ -418,6 +429,7 @@ export default {
             label: "维修区域",
             prop: "areaId",
             type: "tree",
+            hide: true,
             //slot: true,
             dicUrl: "/api/swap_area/area/select",
             rules: [
@@ -436,6 +448,7 @@ export default {
             label: "所属维修商",
             prop: "comId",
             type: "tree",
+            hide: true,
             rules: [
               {
                 required: true,
@@ -462,6 +475,7 @@ export default {
           {
             label: "营业开始时间",
             prop: "businessTimeS",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -473,6 +487,7 @@ export default {
           {
             label: "营业结束时间",
             prop: "businessTimeE",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -484,6 +499,7 @@ export default {
           {
             label: "地址",
             prop: "address",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -495,6 +511,7 @@ export default {
           {
             label: "联系人",
             prop: "linkman",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -506,6 +523,7 @@ export default {
           {
             label: "联系电话",
             prop: "contactNumber",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -519,6 +537,7 @@ export default {
             prop: "shopStatus",
             valueDefault: "1",
             type: "select",
+            slot: true,
             dicData: [
               {
                 label: "上架",

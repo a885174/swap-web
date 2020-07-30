@@ -22,6 +22,7 @@
       <template slot="menuLeft">
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
       </template>
+
       <template slot-scope="scope" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click="rowView(scope.row)">查看</el-button>
       </template>
@@ -79,16 +80,25 @@ export default {
         index: true,
         viewBtn: false,
         selection: true,
+        align: "center",
+        menuAlign: "center",
+        indexLabel: "序号",
         column: [
-          // {
-          //   label: "供应商id",
-          //   prop: "supplierId",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入供应商id",
-          //     trigger: "blur"
-          //   }]
-          // },
+          {
+            label: "供应商id",
+            prop: "supplierId",
+            editDisabled: true,
+            editDisplay: false,
+            addDisabled: true,
+            addDisplay: false,
+            rules: [
+              {
+                required: true,
+                message: "请输入供应商id",
+                trigger: "blur"
+              }
+            ]
+          },
           {
             label: "供应商名称",
             prop: "supplierName",
@@ -107,6 +117,7 @@ export default {
             type: "select",
             valueDefault: "1",
             search: true,
+            hide: true,
             dicData: [
               {
                 label: "电动车供应商",
@@ -132,6 +143,7 @@ export default {
           {
             label: "主要联系人",
             prop: "linkman",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -143,6 +155,7 @@ export default {
           {
             label: "联系电话",
             prop: "contactNumber",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -154,6 +167,7 @@ export default {
           {
             label: "地址",
             prop: "address",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -201,6 +215,7 @@ export default {
           {
             label: "备注",
             prop: "remark",
+            hide: true,
             rules: [
               {
                 required: false,

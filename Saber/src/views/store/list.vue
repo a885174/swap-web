@@ -47,7 +47,12 @@
       <template slot-scope="{row}" slot="electricityPrice">
         <el-tag>{{row.electricityPrice+'.00'}}</el-tag>
       </template>
-
+      <template slot-scope="{row}" slot="storeStatus">
+        <label
+          :style="{color:row.storeStatus=='0'?'green':'red'}"
+        >{{row.storeStatus=="0"?"冻结":"正常"}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="scope" slot="menu">
         <el-button
           type="text"
@@ -534,6 +539,10 @@ export default {
         refreshBtn: false,
         columnBtn: false,
         cellBtn: false,
+        align: "center",
+        menuAlign: "center",
+        indexLabel: "序号",
+        menuWidth: 250,
         dialogFullscreen: true,
         column: [
           {
@@ -571,6 +580,7 @@ export default {
             type: "tree",
             slot: true,
             dicUrl: "/api/swap_merchant/merchant/select",
+            hide: true,
             props: {
               label: "merchantName",
               value: "merchantId"
@@ -582,6 +592,7 @@ export default {
             prop: "rentPeriod",
             type: "number",
             valueDefault: 30,
+            hide: true,
             rules: [
               {
                 required: false,
@@ -596,6 +607,7 @@ export default {
             prop: "rentPrice",
             slot: true,
             valueDefault: 0,
+            hide: true,
             rules: [
               {
                 required: false,
@@ -610,6 +622,7 @@ export default {
             prop: "electricityPrice",
             slot: true,
             valueDefault: 0,
+            hide: true,
             rules: [
               {
                 required: false,
@@ -621,6 +634,7 @@ export default {
           {
             label: "联系人",
             prop: "linkman",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -632,6 +646,7 @@ export default {
           {
             label: "联系电话",
             prop: "contactNumber",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -643,6 +658,7 @@ export default {
           {
             label: "地址",
             prop: "address",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -702,6 +718,7 @@ export default {
             search: true,
             valueDefault: "1",
             type: "select",
+            slot: true,
             dicData: [
               {
                 label: "冻结",

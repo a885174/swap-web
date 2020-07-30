@@ -42,6 +42,12 @@
           <el-button @click.stop="userdel">解除冻结</el-button>
         </template>
       </template>
+      <template slot-scope="{row}" slot="userStatus">
+        <label
+          :style="{color:row.userStatus=='0'?'green':'red'}"
+        >{{row.userStatus=="0"?"正常":(row.userStatus=="1"?"已冻结":"欠费锁定")}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
       </template>
@@ -100,21 +106,26 @@ export default {
         index: true,
         selection: true,
         excelBtn: true,
+        align: "center",
+        menuAlign: "center",
+        indexLabel: "序号",
         column: [
-          // {
-          //   label: "用户ID",
-          //   prop: "userId",
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   search:true,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入用户ID",
-          //     trigger: "blur"
-          //   }]
-          // },
+          {
+            label: "用户ID",
+            prop: "userId",
+            editDisabled: true,
+            editDisplay: false,
+            addDisabled: true,
+            addDisplay: false,
+            search: true,
+            rules: [
+              {
+                required: true,
+                message: "请输入用户ID",
+                trigger: "blur"
+              }
+            ]
+          },
           {
             label: this.$t(`user.loginName`),
             prop: "loginName",
@@ -148,17 +159,6 @@ export default {
           //   }]
           // },
           {
-            label: this.$t(`user.email`),
-            prop: "email",
-            rules: [
-              {
-                required: false,
-                message: "请输入邮箱 暂不真实校验，只做格式校验",
-                trigger: "blur"
-              }
-            ]
-          },
-          {
             label: this.$t(`user.phoneNumber`),
             prop: "phoneNumber",
             search: true,
@@ -171,8 +171,20 @@ export default {
             ]
           },
           {
+            label: this.$t(`user.email`),
+            prop: "email",
+            rules: [
+              {
+                required: false,
+                message: "请输入邮箱 暂不真实校验，只做格式校验",
+                trigger: "blur"
+              }
+            ]
+          },
+          {
             label: this.$t(`user.job`),
             prop: "job",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -184,6 +196,7 @@ export default {
           {
             label: this.$t(`user.sex`),
             prop: "sex",
+            hide: true,
             type: "select",
             valueDefault: "0",
             dicData: [
@@ -210,6 +223,7 @@ export default {
             format: "yyyy-MM-dd",
             valueFormat: "yyyy-MM-dd",
             type: "datetime",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -245,6 +259,7 @@ export default {
             editDisplay: false,
             valueDefault: "1",
             search: true,
+            slot: true,
             dicData: [
               {
                 label: "正常",

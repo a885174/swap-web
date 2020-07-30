@@ -96,6 +96,7 @@ export default {
         editDisabled: true,
         align: "center",
         menuAlign: "center",
+        indexLabel: "序号",
         column: [
           // {
           //   label: "电池id",
@@ -112,7 +113,7 @@ export default {
           // },
           {
             label: this.$t(`battery.batteryCode`),
-            width: 160,
+            // width: 160,
             prop: "batteryCode",
             search: true,
             rules: [
@@ -125,8 +126,9 @@ export default {
           },
           {
             label: this.$t(`battery.batteryName`),
-            width: 160,
+            // width: 160,
             prop: "batteryName",
+            hide:true,
             search: true,
             rules: [
               {
@@ -138,7 +140,7 @@ export default {
           },
           {
             label: this.$t(`battery.batteryVersion`),
-            width: 120,
+            // width: 120,
             prop: "batteryVersion",
             search: true,
             // addDisabled:true,
@@ -155,6 +157,7 @@ export default {
             label: this.$t(`battery.voltage`),
             prop: "voltage",
             addDisabled: true,
+            hide:true,
             addDisplay: false,
             rules: [
               {
@@ -169,6 +172,7 @@ export default {
             prop: "electricity",
             addDisabled: true,
             addDisplay: false,
+            hide:true,
             rules: [
               {
                 required: false,
@@ -184,6 +188,7 @@ export default {
             addDisabled: true,
             addDisplay: false,
             type: "number",
+            hide:true,
             rules: [
               {
                 required: false,
@@ -198,6 +203,7 @@ export default {
             addDisabled: true,
             addDisplay: false,
             prop: "surplusMileage",
+            hide:true,
             rules: [
               {
                 required: false,
@@ -211,6 +217,7 @@ export default {
             prop: "surplusElectric",
             addDisabled: true,
             addDisplay: false,
+            hide:true,
             rules: [
               {
                 required: false,
@@ -226,6 +233,7 @@ export default {
             type: "number",
             addDisabled: true,
             addDisplay: false,
+            hide:true,
             rules: [
               {
                 required: false,
@@ -242,6 +250,7 @@ export default {
             // addDisabled:true,
             addDisplay: false,
             valueDefault: "0",
+            hide:true,
             dicData: [
               {
                 label: "正常",
@@ -275,6 +284,7 @@ export default {
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
+            hide:true,
             dicData: [
               {
                 label: "已锁定",
@@ -297,6 +307,7 @@ export default {
             label: this.$t(`battery.powerStatus`),
             prop: "powerStatus",
             type: "select",
+            hide:true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "2",
@@ -331,6 +342,7 @@ export default {
             valueDefault: "1",
             search: true,
             type: "select",
+            hide:true,
             dicData: [
               {
                 label: "已激活",
@@ -354,6 +366,7 @@ export default {
             prop: "temperature",
             addDisabled: true,
             addDisplay: false,
+            hide:true,
             rules: [
               {
                 required: false,
@@ -370,6 +383,7 @@ export default {
             prop: "connectStatus",
             search: true,
             type: "select",
+            hide:true,
             dicData: [
               {
                 label: "连接换电归",
@@ -408,6 +422,7 @@ export default {
             addDisplay: false,
             valueDefault: "0",
             value: "正常",
+            hide:true,
             dicData: [
               {
                 label: "正常",
@@ -490,6 +505,7 @@ export default {
             format: "yyyy-MM-dd",
             hide: true,
             valueFormat: "yyyy-MM-dd",
+            hide:true,
             rules: [
               {
                 required: false,

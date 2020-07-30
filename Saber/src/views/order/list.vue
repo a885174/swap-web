@@ -29,6 +29,12 @@
           @click="handleDelete"
         >批量删除</el-button>
       </template>
+      <template slot-scope="{row}" slot="payStatus">
+        <label
+          :style="{color:row.payStatus=='0'?'green':'red'}"
+        >{{row.payStatus=="0"?"到账成功":(row.payStatus=="1"?"已支付未到帐":(row.payStatus=="2"?"待支付":(row.payStatus=="3"?"支付失败":"取消支付")))}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
       </template>
@@ -89,7 +95,9 @@ export default {
         excelBtn: true,
         editBtn: true,
         align: "center",
-        menuWidth:120,
+        menuWidth: 120,
+        menuAlign: "center",
+        indexLabel: "序号",
         column: [
           {
             label: "订单id",
@@ -110,7 +118,7 @@ export default {
           },
           {
             label: "订单编号",
-            width: 190,
+            // width: 190,
             search: true,
             editDisabled: true,
             prop: "orderCode",
@@ -162,9 +170,23 @@ export default {
           //     trigger: "blur"
           //   }]
           // },
+
+          {
+            label: "用户",
+            // width: 140,
+            prop: "userName",
+            rules: [
+              {
+                required: true,
+                message: "请输入套餐总里程",
+                trigger: "blur"
+              }
+            ]
+          },
           {
             label: "套餐单价",
             prop: "planPrice",
+            hide: true,
             rules: [
               {
                 required: true,
@@ -176,23 +198,11 @@ export default {
           {
             label: "套餐里程",
             prop: "distance",
+            hide: true,
             rules: [
               {
                 required: true,
                 message: "请输入套餐单价 100",
-                trigger: "blur"
-              }
-            ]
-          },
-
-          {
-            label: "用户",
-            width: 140,
-            prop: "userName",
-            rules: [
-              {
-                required: true,
-                message: "请输入套餐总里程",
                 trigger: "blur"
               }
             ]
@@ -212,6 +222,7 @@ export default {
           {
             label: "套餐折扣",
             prop: "discount",
+            hide: true,
             rules: [
               {
                 required: true,
@@ -223,6 +234,7 @@ export default {
           {
             label: "数量",
             prop: "count",
+            hide: true,
             rules: [
               {
                 required: true,
@@ -234,6 +246,7 @@ export default {
           {
             label: "套餐总价",
             prop: "planTotal",
+            hide: true,
             rules: [
               {
                 required: true,
@@ -245,6 +258,7 @@ export default {
           {
             label: "优惠券",
             prop: "discounts",
+            hide: true,
             rules: [
               {
                 required: true,
@@ -268,6 +282,7 @@ export default {
             label: "套餐总里程",
             width: 120,
             prop: "distanceSum",
+            hide: true,
             rules: [
               {
                 required: true,
@@ -305,6 +320,7 @@ export default {
             prop: "payStatus",
             type: "select",
             editDisabled: true,
+            slot: true,
             dicData: [
               {
                 label: "到账成功",
@@ -354,6 +370,7 @@ export default {
             editDisabled: true,
             hide: true,
             prop: "callbackResult",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -363,8 +380,23 @@ export default {
             ]
           },
           {
+            label: "创建时间",
+            prop: "createTime",
+            editDisabled: true,
+            editDisplay: false,
+            addDisabled: true,
+            addDisplay: false,
+            rules: [
+              {
+                required: true,
+                message: "请输入创建时间",
+                trigger: "blur"
+              }
+            ]
+          },
+          {
             label: "完成付款时间",
-            width: 190,
+            // width: 190,
             prop: "payTime",
             format: "yyyy-MM-dd hh:mm:ss",
             valueFormat: "yyyy-MM-dd hh:mm:ss",
@@ -387,19 +419,6 @@ export default {
           //   rules: [{
           //     required: true,
           //     message: "请输入创建人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "创建时间 可以用于下单时间",
-          //   prop: "createTime",
-          //                 editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建时间 可以用于下单时间",
           //     trigger: "blur"
           //   }]
           // },

@@ -22,7 +22,34 @@
       <template slot="menuLeft">
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
       </template>
+      <template slot-scope="{row}" slot="status">
+        <label :style="{color:row.status=='0'?'green':'red'}">{{row.status=="0"?"正常":"关闭"}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
+
+      <template slot="menu" slot-scope="scope">
+        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">查看</el-button>
+        <!-- <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button> -->
+      </template>
     </avue-crud>
+    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+      <div ref="form" :model="rowItem">
+        <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
+          <div class="title">{{item.title}}</div>
+          <div v-for="column in item.column" :key="column.label" style="width:33%;float:left">
+            <label class="label">{{column.label}}：</label>
+            <label>{{column.prop}}</label>
+          </div>
+        </div>
+        <div v-for="item in rowItem.fullItem" :key="item.title" class="fullItem">
+          <div class="title">{{item.title}}</div>
+          <p>{{item.prop}}</p>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogViewVisible = false">返 回</el-button>
+      </span>
+    </el-dialog>
   </basic-container>
 </template>
 
@@ -54,19 +81,27 @@ export default {
         tip: false,
         border: true,
         index: true,
-        viewBtn: true,
+        viewBtn: false,
         selection: true,
         align: "center",
+        menuAlign: "center",
+        indexLabel: "序号",
         column: [
-          // {
-          //   label: "公告ID",
-          //   prop: "messageId",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入公告ID",
-          //     trigger: "blur"
-          //   }]
-          // },
+          {
+            label: "公告ID",
+            prop: "messageId",
+            editDisabled: true,
+            editDisplay: false,
+            addDisabled: true,
+            addDisplay: false,
+            rules: [
+              {
+                required: true,
+                message: "请输入公告ID",
+                trigger: "blur"
+              }
+            ]
+          },
           {
             label: "公告标题",
             width: 280,
@@ -131,6 +166,7 @@ export default {
             prop: "status",
             type: "select",
             valueDefault: "0",
+            slot: true,
             dicData: [
               {
                 label: "正常",
@@ -152,6 +188,7 @@ export default {
           {
             label: "发布人",
             prop: "publisher",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -164,6 +201,7 @@ export default {
             label: "推送方式 ",
             prop: "pushService",
             type: "select",
+            hide: true,
             dicData: [
               {
                 label: "无",
@@ -198,6 +236,7 @@ export default {
           {
             label: "推送结果 ",
             prop: "pushResult",
+            hide: true,
             display: false,
             rules: [
               {
@@ -267,6 +306,46 @@ export default {
     }
   },
   methods: {
+    rowViews(row) {
+      this.dialogViewVisible = true;
+      var pushService;
+      switch (row.pushService) {
+        case "0":
+          pushService = "无";
+          break;
+        case "1":
+          pushService = "状态栏";
+          break;
+        case "2":
+          pushService = "锁屏";
+          break;
+        case "3":
+          pushService = "横幅通知";
+          break;
+        case "4":
+          pushService = "短信";
+          break;
+      }
+      this.rowItem = {
+        item: [
+          {
+            title: "消息详情",
+            column: [
+              { label: "公告ID", prop: row.messageId },
+              { label: "公告标题", prop: row.messageTitle },
+              {
+                label: "公告类型",
+                prop: row.messageType == "0" ? "通知" : "公告"
+              },
+              { label: "公告状态", prop: row.status == "0" ? "正常" : "关闭" },
+              { label: "发布人", prop: row.publisher },
+              { label: "发布人", prop: pushService },
+              { label: "推送结果", prop: row.pushResult }
+            ]
+          }
+        ]
+      };
+    },
     rowSave(row, loading, done) {
       add(row).then(
         () => {
@@ -386,4 +465,29 @@ export default {
 </script>
 
 <style>
+.abow_dialog .el-dialog .el-dialog__body {
+  padding: 0 30px;
+}
+.abow_dialog .title {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.847058823529412);
+  line-height: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.abow_dialog .item {
+  overflow: hidden;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  border-bottom: 1px solid #ebebeb;
+}
+.abow_dialog .item label {
+  line-height: 32px;
+}
+.abow_dialog .fullItem {
+  padding-bottom: 12px;
+  padding-top: 12px;
+  line-height: 20px;
+  border-bottom: 1px solid #ebebeb;
+}
 </style>

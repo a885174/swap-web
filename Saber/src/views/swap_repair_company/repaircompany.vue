@@ -78,17 +78,22 @@ export default {
         viewBtn: false,
         selection: true,
         align: "center",
+        menuAlign: "center",
+        indexLabel: "序号",
         column: [
-          // {
-          //   label: "维修商id",
-          //   prop: "comId",
-          //   hide:true,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入维修商id",
-          //     trigger: "blur"
-          //   }]
-          // },
+          {
+            label: "维修商id",
+            prop: "comId",
+            editDisabled:true,
+            editDisplay:false,
+            addDisabled:true,
+            addDisplay:false,
+            rules: [{
+              required: true,
+              message: "请输入维修商id",
+              trigger: "blur"
+            }]
+          },
           {
             label: "维修商名称",
             prop: "comName",
@@ -103,6 +108,7 @@ export default {
           {
             label: "联系人",
             prop: "linkman",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -114,6 +120,7 @@ export default {
           {
             label: "联系电话",
             prop: "contactNumber",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -125,6 +132,7 @@ export default {
           {
             label: "法律代表",
             prop: "legalPerson",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -136,6 +144,7 @@ export default {
           {
             label: "工商备案",
             prop: "filingStatus",
+            hide: true,
             rules: [
               {
                 required: false,
@@ -147,6 +156,7 @@ export default {
           {
             label: "地址",
             prop: "address",
+            hide: true,
             rules: [
               {
                 required: false,
