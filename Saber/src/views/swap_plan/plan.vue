@@ -29,6 +29,11 @@
           <el-button @click.stop="userdel">上架</el-button>
         </template>
       </template>
+
+      <template slot-scope="{row}" slot="planStatus">
+        <label :style="{color:row.planStatus=='0'?'green':'red'}">{{row.planStatus=="0"?"上架":"下架"}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
       </template>
@@ -173,6 +178,7 @@ export default {
             prop: "planStatus",
             type: "select",
             valueDefault: "1",
+            slot: true,
             dicData: [
               {
                 label: "上架",

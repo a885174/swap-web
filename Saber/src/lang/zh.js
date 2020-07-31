@@ -132,7 +132,7 @@ export default {
     systemStatus:'系统模式',
   },
   station:{
-    stationCode:'换电柜编号（UID',
+    stationCode:'换电柜编号（UID）',
     stationModel:'换电柜型号',
     imei:'设备imei码',
     warehouseNumber:'充电仓数',

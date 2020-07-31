@@ -4,13 +4,11 @@
 
 <!-- <el-input :disabled="true" v-model="address"></el-input> -->
 
-
-&nbsp;&nbsp;
     <el-button @click="box=true"
                class="avue-map__submit">{{textTitle}}</el-button>
-    <el-dialog fullscreen
+    <el-dialog
                class="avue-map__dialog"
-               width="100%"
+               width="60%"
                append-to-body
                modal-append-to-body
                title="选择坐标"
@@ -170,7 +168,6 @@ export default {
       
       console.log(  );
       if(this.marker !=null){
-        debugger;
         this.address = this.marker._lngLat. lng+","+this.marker._lngLat.lat;
        this.$emit("sendiptVal", JSON.stringify(this.marker._lngLat)) 
       }
@@ -180,7 +177,6 @@ export default {
     },
     addClick() {
       this.map.on("click", e => {
-        debugger;
         console.log(e)
         const lnglat = e.lngLat;
         const P = lnglat.lat;
