@@ -82,7 +82,7 @@
       width="30%"
       center
     >
-      <mapbox-map mapWidth="100%" mapHeight="600px" :lnglat="lnglat" @sendiptVal="showChildMsg"></mapbox-map>
+      <mapbox-map mapWidth="60%" mapHeight="600px" :lnglat="lnglat" @sendiptVal="showChildMsg"></mapbox-map>
       <div slot="footer" class="dialog-footer">
         <el-button @click="mapDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
@@ -217,7 +217,8 @@
       title="充电仓管理"
       :visible.sync="chaTableVisible"
       :append-to-body="true"
-      :fullscreen="true"
+      :fullscreen="false"
+      width="80%"
     >
       <el-table :data="chaData">
         <el-table-column label="序号" width="70px">
@@ -356,6 +357,7 @@ export default {
       },
       selectionList: [],
       option: {
+        dialogWidth: "60%",
         tip: false,
         border: true,
         viewBtn: false,

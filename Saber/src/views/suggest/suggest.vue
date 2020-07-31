@@ -23,6 +23,12 @@
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
       </template>
 
+      <template slot-scope="{row}" slot="suggestStatus">
+        <label
+          :style="{color:row.suggestStatus=='0'?'green':'red'}"
+        >{{row.suggestStatus=="0"?"已处理":"未处理"}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="scope" slot="menu">
         <el-button
           v-if="scope.row.suggestStatus==='0'"
@@ -31,14 +37,36 @@
           icon="el-icon-document-copy"
           @click="deal(scope.row)"
         >处理</el-button>
-
-        <el-dialog title="处理意见" :visible.sync="centerDialogVisible" :append-to-body="true" center>
-          <basic-container>
-            <avue-form :option="formoption" v-model="form" @submit="handleSubmit()"></avue-form>
-          </basic-container>
-        </el-dialog>
+        <!-- <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">详情</el-button> -->
       </template>
     </avue-crud>
+    <el-dialog title="处理意见" :visible.sync="centerDialogVisible" :append-to-body="true" center>
+      <basic-container>
+        <avue-form :option="formoption" v-model="form" @submit="handleSubmit()"></avue-form>
+      </basic-container>
+    </el-dialog>
+    <!-- <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
+      <div ref="form" :model="rowItem">
+        <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
+          <div class="title">{{item.title}}</div>
+          <div v-for="column in item.column" :key="column.label" style="width:33%;float:left">
+            <label class="label">{{column.label}}：</label>
+            <label>{{column.prop}}</label>
+          </div>
+        </div>
+        <div v-for="item in rowItem.fullItem" :key="item.title" class="fullItem">
+          <div class="title">{{item.title}}</div>
+          <p>{{item.prop}}</p>
+        </div>
+        <div v-for="item in rowItem.imageItem" :key="item.title" class="imageItem">
+          <div class="title">{{item.title}}</div>
+          <img :src="item.prop">
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogViewVisibles = false">返 回</el-button>
+      </span>
+    </el-dialog>-->
   </basic-container>
 </template>
 
@@ -56,6 +84,8 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      dialogViewVisibles: false,
+      rowItem: {},
       form: {},
       query: {},
       suggestId: "",
@@ -89,28 +119,31 @@ export default {
         tip: false,
         border: true,
         index: true,
-        viewBtn: true,
         selection: true,
+        excelBtn: true,
+        viewBtn: true,
+        editBtn: false,
+        delBtn: false,
         align: "center",
         menuAlign: "center",
         indexLabel: "序号",
 
         column: [
-          {
-            label: "意见id",
-            prop: "suggestId",
-            editDisabled: true,
-            editDisplay: false,
-            addDisabled: true,
-            addDisplay: false,
-            rules: [
-              {
-                required: true,
-                message: "请输入意见id",
-                trigger: "blur"
-              }
-            ]
-          },
+          // {
+          //   label: "意见id",
+          //   prop: "suggestId",
+          //   editDisabled: true,
+          //   editDisplay: false,
+          //   addDisabled: true,
+          //   addDisplay: false,
+          //   rules: [
+          //     {
+          //       required: true,
+          //       message: "请输入意见id",
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // },
           {
             label: "用户",
             prop: "userName",
@@ -119,7 +152,6 @@ export default {
             addDisplay: false,
             editDisabled: true,
             editDisplay: false,
-            hide: true,
             rules: [
               {
                 required: false,
@@ -135,7 +167,6 @@ export default {
             addDisplay: false,
             editDisabled: true,
             editDisplay: false,
-            hide: true,
             rules: [
               {
                 required: false,
@@ -237,7 +268,7 @@ export default {
             addDisplay: false,
             editDisabled: true,
             editDisplay: false,
-            hide: true,
+            slot: true,
             dicData: [
               {
                 label: "已处理",
@@ -312,10 +343,10 @@ export default {
     ...mapGetters(["permission"]),
     permissionList() {
       return {
-        addBtn: this.vaildData(this.permission.suggest_add, false),
-        viewBtn: this.vaildData(this.permission.suggest_view, false),
-        delBtn: this.vaildData(this.permission.suggest_delete, false),
-        editBtn: this.vaildData(this.permission.suggest_edit, false)
+        // addBtn: this.vaildData(this.permission.scooter_add, false),
+        viewBtn: this.vaildData(this.permission.scooter_view, false),
+        //delBtn: this.vaildData(this.permission.scooter_delete, false),
+        editBtn: this.vaildData(this.permission.scooter_edit, false)
       };
     },
 
@@ -328,6 +359,26 @@ export default {
     }
   },
   methods: {
+    // rowViews(row) {
+    //   this.dialogViewVisibles = true;
+    //   this.rowItem = {
+    //     item: [
+    //       {
+    //         title: "详情",
+    //         column: [
+    //           { label: "用户", prop: row.userName },
+    //           { label: this.$t(`suggest.detials`), prop: row.content },
+    //           { label: this.$t(`suggest.detials`), prop: row.content }
+    //         ]
+    //       }
+    //     ],
+    //     imageItem: [
+    //       {
+
+    //       }
+    //     ]
+    //   };
+    // },
     rowSave(row, loading, done) {
       add(row).then(
         () => {

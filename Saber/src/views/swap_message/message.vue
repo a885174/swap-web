@@ -87,21 +87,21 @@ export default {
         menuAlign: "center",
         indexLabel: "序号",
         column: [
-          {
-            label: "公告ID",
-            prop: "messageId",
-            editDisabled: true,
-            editDisplay: false,
-            addDisabled: true,
-            addDisplay: false,
-            rules: [
-              {
-                required: true,
-                message: "请输入公告ID",
-                trigger: "blur"
-              }
-            ]
-          },
+          // {
+          //   label: "公告ID",
+          //   prop: "messageId",
+          //   editDisabled: true,
+          //   editDisplay: false,
+          //   addDisabled: true,
+          //   addDisplay: false,
+          //   rules: [
+          //     {
+          //       required: true,
+          //       message: "请输入公告ID",
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // },
           {
             label: "公告标题",
             width: 280,
