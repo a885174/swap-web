@@ -47,6 +47,12 @@
         <el-tag>{{row.supplierName}}</el-tag>
       </template>
 
+      <template slot-scope="{row}" slot="connectStatus">
+        <label
+          :style="{color:row.connectStatus=='0'?'green':'red'}"
+        >{{row.connectStatus=="0"?"已连接":"未连接"}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="scope" slot="menu">
         <el-button
           type="text"
@@ -430,7 +436,7 @@ export default {
             search: false,
             valueDefault: 3,
             type: "number",
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
@@ -445,7 +451,7 @@ export default {
             prop: "storeId",
             type: "tree",
             slot: true,
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: true,
@@ -465,7 +471,7 @@ export default {
             prop: "ammeterValue",
             addDisabled: true,
             addDisplay: false,
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
@@ -483,7 +489,7 @@ export default {
             valueFormat: "yyyy-MM-dd HH:mm:ss",
             addDisabled: true,
             addDisplay: false,
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
@@ -526,7 +532,7 @@ export default {
             label: this.$t(`station.address`),
             width: 200,
             prop: "address",
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
@@ -541,7 +547,7 @@ export default {
             prop: "stationStatus",
             search: true,
             type: "select",
-            hide:true,
+            hide: true,
             // addDisabled:true,
             addDisplay: false,
             valueDefault: "0",
@@ -579,7 +585,7 @@ export default {
             search: true,
             type: "select",
             valueDefault: "1",
-            hide:true,
+            hide: true,
             dicData: [
               {
                 label: "已定位",
@@ -601,12 +607,13 @@ export default {
           {
             label: this.$t(`station.connectStatus`),
             prop: "connectStatus",
+            slot: true,
             //addDisabled:true,
             addDisplay: false,
             search: true,
             type: "select",
             valueDefault: "1",
-            hide:true,
+            // hide:true,
             dicData: [
               {
                 label: "已连接",
@@ -629,7 +636,7 @@ export default {
             label: "保质期(月)",
             prop: "expirationDate",
             valueDefault: "1",
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
@@ -644,7 +651,7 @@ export default {
             prop: "supplierId",
             type: "tree",
             multiple: false,
-            hide:true,
+            hide: true,
             dicData: [],
             props: {
               label: "title"
@@ -678,7 +685,7 @@ export default {
             type: "datetime",
             format: "yyyy-MM-dd",
             valueFormat: "yyyy-MM-dd",
-            hide:true,
+            hide: true,
             // addDisabled:true,
             // addDisplay:false,
             rules: [
@@ -890,7 +897,7 @@ export default {
               { label: "营业开始时间", prop: row.businessTimeS },
               { label: "营业结束时间", prop: row.businessTimeE },
               { label: this.$t(`station.address`), prop: row.address },
-              { label: "关联供应商", prop: row.supplierId },
+              { label: "关联供应商", prop: row.supplierId }
             ]
           }
         ],

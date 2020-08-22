@@ -81,7 +81,10 @@
       <template slot-scope="{row}" slot="tenantId">
         <el-tag>{{row.tenantName}}</el-tag>
       </template>
-
+      <template slot-scope="{row}" slot="connectStatus">
+        <label :style="{color:row.connectStatus=='0'?'green':'red'}">{{row.connectStatus=="0"?"已连接":"未连接"}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
       </template>
@@ -254,11 +257,38 @@ export default {
             ]
           },
           {
+            label: this.$t(`station.connectStatus`),
+            prop: "connectStatus",
+            slot: true,
+            //addDisabled:true,
+            addDisplay: false,
+            search: true,
+            type: "select",
+            valueDefault: "1",
+            dicData: [
+              {
+                label: "已连接",
+                value: "0"
+              },
+              {
+                label: "未连接",
+                value: "1"
+              }
+            ],
+            rules: [
+              {
+                required: true,
+                message: "请输入连接状态 0:已连接 1:未连接",
+                trigger: "blur"
+              }
+            ]
+          },
+          {
             label: this.$t(`scooter.scooterStatus`),
             prop: "scooterStatus",
             type: "select",
             search: true,
-            hide:true,
+            hide: true,
             // addDisabled:true,
             valueDefault: "0",
             addDisplay: false,
@@ -291,7 +321,7 @@ export default {
           {
             label: this.$t(`scooter.sellChannel`),
             search: true,
-            hide:true,
+            hide: true,
             type: "select",
             valueDefault: "1",
             prop: "sellChannel",
@@ -316,7 +346,7 @@ export default {
           {
             label: this.$t(`scooter.sellStatus`),
             prop: "sellStatus",
-            hide:true,
+            hide: true,
             //editDisabled:true,
             editDisplay: false,
             //addDisabled:true,
@@ -346,7 +376,7 @@ export default {
             label: "所属客户",
             prop: "tenantId",
             type: "tree",
-            hide:true,
+            hide: true,
             slot: true,
             dicUrl: "/api/swap_tenant_bat/swaptenantbat/select",
             valueDefault: "",
@@ -370,7 +400,7 @@ export default {
           {
             label: this.$t(`scooter.initStatus`),
             prop: "initStatus",
-            hide:true,
+            hide: true,
             //editDisabled:true,
             editDisplay: false,
             //addDisabled:true,
@@ -399,7 +429,7 @@ export default {
             label: this.$t(`scooter.runStatus`),
             prop: "runStatus",
             type: "select",
-            hide:true,
+            hide: true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -425,7 +455,7 @@ export default {
             label: this.$t(`scooter.gpsStatus`),
             prop: "gpsStatus",
             type: "select",
-            hide:true,
+            hide: true,
             //addDisabled:true,
             valueDefault: "1",
             addDisplay: false,
@@ -452,7 +482,7 @@ export default {
             prop: "lockStatus",
             addDisabled: true,
             addDisplay: false,
-            hide:true,
+            hide: true,
             type: "select",
             valueDefault: "1",
             dicData: [
@@ -477,7 +507,7 @@ export default {
             label: this.$t(`scooter.securityLock`),
             prop: "securityLock",
             type: "select",
-            hide:true,
+            hide: true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -503,7 +533,7 @@ export default {
             label: this.$t(`scooter.arrearageLock`),
             prop: "arrearageLock",
             type: "select",
-            hide:true,
+            hide: true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -528,7 +558,7 @@ export default {
           {
             label: "可装电池数",
             width: 100,
-            hide:true,
+            hide: true,
             prop: "batteryNumber",
             valueDefault: "1",
             type: "number",
@@ -543,7 +573,7 @@ export default {
           {
             label: "行车总里程",
             width: 100,
-            hide:true,
+            hide: true,
             prop: "mileageValue",
             addDisabled: true,
             addDisplay: false,
@@ -576,7 +606,7 @@ export default {
           },
           {
             label: "初始里程表读数",
-            hide:true,
+            hide: true,
             prop: "initRead",
             addDisabled: true,
             addDisplay: false,
@@ -594,7 +624,7 @@ export default {
           {
             label: "初始里程读数时间",
             prop: "initTime",
-            hide:true,
+            hide: true,
             type: "datetime",
             format: "yyyy-MM-dd hh:mm:ss",
             valueFormat: "yyyy-MM-dd hh:mm:ss",
@@ -613,7 +643,7 @@ export default {
           },
           {
             label: "供应商id",
-            hide:true,
+            hide: true,
             prop: "supplierId",
             hide: true,
             editDisabled: true,
@@ -631,7 +661,7 @@ export default {
           {
             label: "出厂时间",
             width: 100,
-            hide:true,
+            hide: true,
             prop: "produceTime",
             default: true,
             type: "datetime",
@@ -648,7 +678,7 @@ export default {
           {
             label: "保质期（月）",
             prop: "expirationDate",
-            hide:true,
+            hide: true,
             valueDefault: "1",
             type: "number",
             rules: [
@@ -715,7 +745,7 @@ export default {
           {
             label: "备注",
             prop: "remark",
-            hide:true,
+            hide: true,
             editDisabled: true,
             editDisplay: false,
             rules: [
@@ -1151,7 +1181,7 @@ export default {
 <style>
 .abow_dialog .el-dialog .el-dialog__body {
   padding: 0 30px;
-} 
+}
 .abow_dialog .title {
   font-size: 16px;
   color: rgba(0, 0, 0, 0.847058823529412);

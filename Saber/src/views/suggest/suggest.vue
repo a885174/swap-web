@@ -37,7 +37,7 @@
           icon="el-icon-document-copy"
           @click="deal(scope.row)"
         >处理</el-button>
-        <!-- <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">详情</el-button> -->
+        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">详情</el-button>
       </template>
     </avue-crud>
     <el-dialog title="处理意见" :visible.sync="centerDialogVisible" :append-to-body="true" center>
@@ -45,7 +45,7 @@
         <avue-form :option="formoption" v-model="form" @submit="handleSubmit()"></avue-form>
       </basic-container>
     </el-dialog>
-    <!-- <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
+    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -58,18 +58,39 @@
           <div class="title">{{item.title}}</div>
           <p>{{item.prop}}</p>
         </div>
-        <div v-for="item in rowItem.imageItem" :key="item.title" class="imageItem">
+        <div class="imageItem" v-for="item in rowItem.imageItem" :key="item.title">
           <div class="title">{{item.title}}</div>
-          <img :src="item.prop">
+          <el-popover placement="bottom" trigger="click" v-for="column in item.column"
+            :key="column">
+            <!--trigger属性值：hover、click、focus 和 manual-->
+            <a :href="column" target="_blank" title="查看最大化图片">
+              <img :src="column" class="bigimg"  />
+            </a>
+            <img
+              slot="reference"
+              :src="column"
+              class="img"
+            />
+          </el-popover>
+
+          <!-- <el-image
+            v-for="column in item.column"
+            :key="column"
+            :src="column"
+            class="img"
+            fit="cover"
+            :preview-src-list="column.srcList"
+          ></el-image>-->
+          <!-- <img v-for="column in item.column" :key="column" :src="column" class="img" /> -->
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogViewVisibles = false">返 回</el-button>
       </span>
-    </el-dialog>-->
+    </el-dialog>
   </basic-container>
 </template>
-
+<script src="//unpkg.com/element-ui@2.13.2/lib/index.js"></script>
 <script>
 import {
   getList,
@@ -121,7 +142,7 @@ export default {
         index: true,
         selection: true,
         excelBtn: true,
-        viewBtn: true,
+        viewBtn: false,
         editBtn: false,
         delBtn: false,
         align: "center",
@@ -359,26 +380,64 @@ export default {
     }
   },
   methods: {
-    // rowViews(row) {
-    //   this.dialogViewVisibles = true;
-    //   this.rowItem = {
-    //     item: [
-    //       {
-    //         title: "详情",
-    //         column: [
-    //           { label: "用户", prop: row.userName },
-    //           { label: this.$t(`suggest.detials`), prop: row.content },
-    //           { label: this.$t(`suggest.detials`), prop: row.content }
-    //         ]
-    //       }
-    //     ],
-    //     imageItem: [
-    //       {
-
-    //       }
-    //     ]
-    //   };
-    // },
+    photoList() {
+      // let final = [];
+      // for (let photo of this.photos) {
+      //   final.push(photo.src);
+      // }
+      // let nowIndex = final.findIndex(photo => photo === this.now);
+      // if (nowIndex > -1) {
+      //   let start = final.slice(0, nowIndex);
+      //   let end = final.slice(nowIndex);
+      //   final = [...end, ...start];
+      // }
+      // return final;
+    },
+    rowViews(row) {
+      this.dialogViewVisibles = true;
+      var imageItems = row.picUrl.split(";");
+      var clientType;
+      switch (row.clientType) {
+        case "1":
+          clientType = "IOS";
+          break;
+        case "2":
+          clientType = "Android";
+          break;
+        case "3":
+          clientType = "其他";
+          break;
+      }
+      this.rowItem = {
+        item: [
+          {
+            title: "详情",
+            column: [
+              { label: "用户", prop: row.userName },
+              { label: "客户端类型", prop: clientType },
+              { label: "客户端ip", prop: row.clientIp },
+              { label: "是否匿名", prop: row.anonymityStatus=="1"?"是":"否" },
+              { label: "处理状态", prop: row.suggestStatus=="1"?"已处理":"未处理" },
+              { label: "处理结果", prop: row.result }
+              // { label: this.$t(`suggest.detials`), prop: row.content }
+            ]
+          }
+        ],
+        fullItem: [
+          {
+            title: this.$t(`suggest.detials`),
+            prop: row.content
+          }
+        ],
+        imageItem: [
+          {
+            title: "图片",
+            column: imageItems,
+            srcList: imageItems
+          }
+        ]
+      };
+    },
     rowSave(row, loading, done) {
       add(row).then(
         () => {
@@ -473,7 +532,12 @@ export default {
         });
     },
     beforeOpen(done, type) {
-      if (["edit", "view"].includes(type)) {
+      // if (["edit", "view"].includes(type)) {
+      //   getDetail(this.form.suggestId).then(res => {
+      //     this.form = res.data.data;
+      //   });
+      // }
+      if (["edit"].includes(type)) {
         getDetail(this.form.suggestId).then(res => {
           this.form = res.data.data;
         });
@@ -520,4 +584,42 @@ export default {
 </script>
 
 <style>
+.abow_dialog .el-dialog .el-dialog__body {
+  padding: 0 30px;
+}
+.abow_dialog .title {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.847058823529412);
+  line-height: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.abow_dialog .item {
+  overflow: hidden;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  border-bottom: 1px solid #ebebeb;
+}
+.abow_dialog .item label {
+  line-height: 32px;
+}
+.abow_dialog .fullItem {
+  padding-bottom: 12px;
+  padding-top: 12px;
+  line-height: 20px;
+  border-bottom: 1px solid #ebebeb;
+}
+.abow_dialog .imageItem {
+  padding-bottom: 12px;
+  padding-top: 12px;
+}
+.abow_dialog .imageItem .img {
+  width: 240px;
+  cursor:pointer;
+  margin: 0 10px;
+  
+}
+.abow_dialog .imageItem .bigimg {
+  width: 720px;
+}
 </style>
