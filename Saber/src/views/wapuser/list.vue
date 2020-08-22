@@ -35,19 +35,18 @@
           <el-button >欠费锁车</el-button>
         <el-button >删除</el-button>-->
 
-        <template>
+        <!-- <template>
           <el-button @click.stop="delteant">冻结</el-button>
         </template>
         <template>
           <el-button @click.stop="userdel">解除冻结</el-button>
-        </template>
+        </template> -->
       </template>
-      <template slot-scope="{row}" slot="userStatus">
+      <!-- <template slot-scope="{row}" slot="userStatus">
         <label
           :style="{color:row.userStatus=='0'?'green':'red'}"
         >{{row.userStatus=="0"?"正常":(row.userStatus=="1"?"已冻结":"欠费锁定")}}</label>
-        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
-      </template>
+      </template>-->
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
       </template>
@@ -257,6 +256,7 @@ export default {
             type: "select",
             addDisplay: false,
             editDisplay: false,
+            hide: true,
             valueDefault: "1",
             search: true,
             slot: true,
