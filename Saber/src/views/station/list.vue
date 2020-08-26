@@ -103,7 +103,7 @@
           <el-form-item label="上传图片" :label-width="formLabelWidth">
             <el-upload
               class="avatar-uploader"
-              action="/api//blade-resource/oss/endpoint//upload"
+              action="http://47.112.171.131/api//blade-resource/oss/endpoint//upload"
               :show-file-list="false"
               :headers="myHeaders"
               :on-success="handleSuccess"
@@ -1015,15 +1015,23 @@ export default {
     },
 
     beforeUpload(file) {
-      const isJPG = file.type === "image/jpeg";
+      // const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
-      return isJPG && isLt2M;
+      // if (!isJPG) {
+      //   this.$message.error("上传图片只能是 JPG 格式!");
+      // }
+      if (!isLt2M) {
+        this.$message.error("上传图片大小不能超过 2MB!");
+      }
+      // return isJPG && isLt2M;
+      return  isLt2M;
     },
 
     handleSuccess(res, file) {
       console.log(res);
-      this.photoUrl = res.data.url;
+      this.photoUrl = URL.createObjectURL(file.raw);
+      // this.photoUrl = res.data.url;
       this.data.pictureUrl = res.data.url;
     },
 

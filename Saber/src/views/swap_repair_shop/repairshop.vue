@@ -39,7 +39,12 @@
       <template slot-scope="scope" slot="menu">
         <el-button type="text" icon="el-icon-date" size="small" @click="opentable(scope.row)">营业时间分配</el-button>
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">查看</el-button>
-        <el-button type="text" icon="el-icon-picture-outline" size="small" @click="getGridData(scope.row)">图片管理</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-picture-outline"
+          size="small"
+          @click="getGridData(scope.row)"
+        >图片管理</el-button>
         <el-button
           type="text"
           size="small"
@@ -403,15 +408,17 @@ export default {
           {
             label: "维修店铺id",
             prop: "shopId",
-            editDisabled:true,
-            editDisplay:false,
-            addDisabled:true,
-            addDisplay:false,
-            rules: [{
-              required: true,
-              message: "请输入维修店铺id",
-              trigger: "blur"
-            }]
+            editDisabled: true,
+            editDisplay: false,
+            addDisabled: true,
+            addDisplay: false,
+            rules: [
+              {
+                required: true,
+                message: "请输入维修店铺id",
+                trigger: "blur"
+              }
+            ]
           },
           {
             label: "店铺名称",
@@ -419,7 +426,7 @@ export default {
             search: true,
             rules: [
               {
-                required: false,
+                required: true,
                 message: "请输入店铺名称",
                 trigger: "blur"
               }
@@ -476,9 +483,108 @@ export default {
             label: "营业开始时间",
             prop: "businessTimeS",
             hide: true,
+            type: "select",
+            dicData: [
+              {
+                label: "1:00",
+                value: "1:00"
+              },
+              {
+                label: "2:00",
+                value: "2:00"
+              },
+              {
+                label: "3:00",
+                value: "3:00"
+              },
+              {
+                label: "4:00",
+                value: "4:00"
+              },
+              {
+                label: "5:00",
+                value: "5:00"
+              },
+              {
+                label: "6:00",
+                value: "6:00"
+              },
+              {
+                label: "7:00",
+                value: "7:00"
+              },
+              {
+                label: "8:00",
+                value: "8:00"
+              },
+              {
+                label: "9:00",
+                value: "9:00"
+              },
+              {
+                label: "10:00",
+                value: "10:00"
+              },
+              {
+                label: "11:00",
+                value: "11:00"
+              },
+              {
+                label: "12:00",
+                value: "12:00"
+              },
+              {
+                label: "13:00",
+                value: "13:00"
+              },
+              {
+                label: "14:00",
+                value: "14:00"
+              },
+              {
+                label: "15:00",
+                value: "15:00"
+              },
+              {
+                label: "16:00",
+                value: "16:00"
+              },
+              {
+                label: "17:00",
+                value: "17:00"
+              },
+              {
+                label: "18:00",
+                value: "18:00"
+              },
+              {
+                label: "19:00",
+                value: "19:00"
+              },
+              {
+                label: "20:00",
+                value: "20:00"
+              },
+              {
+                label: "21:00",
+                value: "21:00"
+              },
+              {
+                label: "22:00",
+                value: "22:00"
+              },
+              {
+                label: "23:00",
+                value: "23:00"
+              },
+              {
+                label: "24:00",
+                value: "24:00"
+              }
+            ],
             rules: [
               {
-                required: false,
+                required: true,
                 message: "请输入营业开始时间",
                 trigger: "blur"
               }
@@ -488,9 +594,108 @@ export default {
             label: "营业结束时间",
             prop: "businessTimeE",
             hide: true,
+            type: "select",
+            dicData: [
+              {
+                label: "1:00",
+                value: "1:00"
+              },
+              {
+                label: "2:00",
+                value: "2:00"
+              },
+              {
+                label: "3:00",
+                value: "3:00"
+              },
+              {
+                label: "4:00",
+                value: "4:00"
+              },
+              {
+                label: "5:00",
+                value: "5:00"
+              },
+              {
+                label: "6:00",
+                value: "6:00"
+              },
+              {
+                label: "7:00",
+                value: "7:00"
+              },
+              {
+                label: "8:00",
+                value: "8:00"
+              },
+              {
+                label: "9:00",
+                value: "9:00"
+              },
+              {
+                label: "10:00",
+                value: "10:00"
+              },
+              {
+                label: "11:00",
+                value: "11:00"
+              },
+              {
+                label: "12:00",
+                value: "12:00"
+              },
+              {
+                label: "13:00",
+                value: "13:00"
+              },
+              {
+                label: "14:00",
+                value: "14:00"
+              },
+              {
+                label: "15:00",
+                value: "15:00"
+              },
+              {
+                label: "16:00",
+                value: "16:00"
+              },
+              {
+                label: "17:00",
+                value: "17:00"
+              },
+              {
+                label: "18:00",
+                value: "18:00"
+              },
+              {
+                label: "19:00",
+                value: "19:00"
+              },
+              {
+                label: "20:00",
+                value: "20:00"
+              },
+              {
+                label: "21:00",
+                value: "21:00"
+              },
+              {
+                label: "22:00",
+                value: "22:00"
+              },
+              {
+                label: "23:00",
+                value: "23:00"
+              },
+              {
+                label: "24:00",
+                value: "24:00"
+              }
+            ],
             rules: [
               {
-                required: false,
+                required: true,
                 message: "请输入营业结束时间",
                 trigger: "blur"
               }
@@ -502,7 +707,7 @@ export default {
             hide: true,
             rules: [
               {
-                required: false,
+                required: true,
                 message: "请输入地址",
                 trigger: "blur"
               }
@@ -526,7 +731,7 @@ export default {
             hide: true,
             rules: [
               {
-                required: false,
+                required: true,
                 message: "请输入联系电话",
                 trigger: "blur"
               }

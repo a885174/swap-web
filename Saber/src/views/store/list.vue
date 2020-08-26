@@ -24,12 +24,6 @@
 
         <el-button @click="dialogFormVisible = true">分配商户</el-button>
 
-        <el-dialog title="分配商户" :visible.sync="dialogFormVisible" width="40%" center>
-          <span slot="footer" class="dialog-footer">
-            <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
-          </span>
-        </el-dialog>
-
         <template>
           <el-button @click.stop="delteant">冻结</el-button>
         </template>
@@ -61,20 +55,7 @@
           @click="openmap(scope.row)"
         >地址选取</el-button>
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">查看</el-button>
-        <el-dialog
-          title="地图"
-          :visible.sync="centerDialogVisible"
-          :append-to-body="true"
-          width="30%"
-          center
-        >
-          <mapbox-map mapWidth="100%" mapHeight="600px" :lnglat="lnglat" @sendiptVal="showChildMsg"></mapbox-map>
 
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
-          </div>
-        </el-dialog>&nbsp;&nbsp;
         <el-button type="text" size="small" icon="el-icon-date" @click="opentable(scope.row)">营业时间分配</el-button>&nbsp;&nbsp;
         <el-button
           type="text"
@@ -82,237 +63,258 @@
           icon="el-icon-picture-outline"
           @click="getGridData(scope.row)"
         >图片管理</el-button>
-        <el-dialog title="店铺图片" :visible.sync="dialogTableVisible" :append-to-body="true" center>
-          <el-button @click="getTableData()">分配图片</el-button>
-          <el-button @click="fileDialog=true">上传店铺图片</el-button>
-          <el-dialog width="50%" title="上传店铺图片" :visible.sync="fileDialog" append-to-body>
-            <el-form :model="fileform">
-              <el-form-item label="上传图片" :label-width="formLabelWidth">
-                <el-upload
-                  class="avatar-uploader"
-                  action="/api//blade-resource/oss/endpoint//upload"
-                  :show-file-list="false"
-                  :headers="myHeaders"
-                  :on-success="handleSuccess"
-                  :before-upload="beforeUpload"
-                >
-                  <img v-if="photoUrl" :src="photoUrl" class="avatar" />
-                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
-              </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="fileDialog = false">取 消</el-button>
-              <el-button type="primary" @click="insertShopPicature()">确 定</el-button>
-            </div>
-          </el-dialog>
-
-          <el-table :data="gridData" class="tb-edit" highlight-current-row>
-            <el-table-column label="序号" width="70px">
-              <template slot-scope="scope">{{scope.$index+1}}</template>
-            </el-table-column>
-            <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
-            <el-table-column property="store_id" label="店铺" v-if="show"></el-table-column>
-            <el-table-column property="store_picture_id" label="编号" v-if="show"></el-table-column>
-            <el-table-column prop="picture_main_url" label="图片" min-width="20%">
-              <!-- 图片的显示 -->
-              <template slot-scope="scope">
-                <img :src="scope.row.picture_main_url" min-width="70" height="70" />
-              </template>
-            </el-table-column>
-
-            <el-table-column prop="sort" label="权重">
-              <template slot-scope="scope">
-                <el-input
-                  size="small"
-                  style="width:80px"
-                  v-model="scope.row.sort"
-                  placeholder="请输入权重"
-                  @change="handleEdit(scope.$index, scope.row)"
-                ></el-input>
-                <span>{{scope.row.sort}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column property="is_default" label="是否为主图" width="200">
-              <template slot-scope="scope">
-                <el-tag>{{scope.row.is_default==="0"? '是':'否'}}</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column fixed="right" label="操作" width="200">
-              <template slot-scope="scope">
-                <el-button type="text" @click="deletePicture(scope.row)" size="small">删除</el-button>
-                <el-button type="text" @click="updateMain(scope.row)">设置为主图</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-
-          <el-dialog width="50%" title="图片素材" :visible.sync="innerVisible" append-to-body>
-            <el-button @click="submitPicture()">关联图片</el-button>
-            <el-button @click="uploadDialog=true">上传图片</el-button>
-
-            <el-table :data="tabledData" @selection-change="changeFun" style="margin-top:50px;">
-              <el-table-column type="selection" width="55"></el-table-column>
-
-              <el-table-column label="序号" width="70px">
-                <template slot-scope="scope">{{scope.$index+1}}</template>
-              </el-table-column>
-              <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
-              <el-table-column prop="picture_main_url" label="图片" min-width="20%">
-                <template slot-scope="scope">
-                  <img :src="scope.row.picture_main_url" min-width="70" height="70" />
-                </template>
-              </el-table-column>
-              <el-table-column prop="picture86Url" label="图片86" min-width="20%">
-                <!-- 图片的显示 -->
-                <template slot-scope="scope">
-                  <img :src="scope.row.picture86Url" min-width="70" height="70" />
-                </template>
-              </el-table-column>
-              <el-table-column prop="picture324Url" label="图片324" min-width="20%">
-                <!-- 图片的显示 -->
-                <template slot-scope="scope">
-                  <img :src="scope.row.picture324Url" min-width="70" height="70" />
-                </template>
-              </el-table-column>
-            </el-table>
-
-            <el-dialog
-              title="上传素材"
-              :visible.sync="uploadDialog"
-              :append-to-body="true"
-              width="40%"
-              center
-            >
-              <el-form :model="uploadform">
-                <el-form-item label="上传图片" :label-width="formLabelWidth">
-                  <el-upload
-                    class="avatar-uploader"
-                    action="/api//blade-resource/oss/endpoint//upload"
-                    :show-file-list="false"
-                    :headers="myHeaders"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload"
-                  >
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                  </el-upload>
-                </el-form-item>
-              </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="uploadDialog = false">取 消</el-button>
-                <el-button type="primary" @click="insertPicature()">确 定</el-button>
-              </div>
-            </el-dialog>
-          </el-dialog>
-        </el-dialog>
-
-        <el-dialog title="营业时间分配" :visible.sync="tableVisible" :append-to-body="true">
-          <el-button @click="timeFormVisible=true">新增营业时间</el-button>
-
-          <el-table :data="timeData">
-            <el-table-column label="序号" width="70px">
-              <template slot-scope="scope">{{scope.$index+1}}</template>
-            </el-table-column>
-            <el-table-column property="week" label="星期" width="150">
-              <template slot-scope="scope">
-                <el-tag>{{scope.row.week===0? '七天24小时':'星期'+scope.row.week}}</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column property="business_time_s" label="营业开始时间" width="200"></el-table-column>
-            <el-table-column property="business_time_e" label="营业结束时间"></el-table-column>
-
-            <el-table-column fixed="right" label="操作" width="200">
-              <template slot-scope="scope">
-                <el-button type="text" size="small" @click="deltime(scope.row)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-
-          <el-dialog
-            title="新增营业时间"
-            :visible.sync="timeFormVisible"
-            :append-to-body="true"
-            width="40%"
-            center
-          >
-            <el-form :model="addform">
-              <el-form-item label="星期" :label-width="formLabelWidth">
-                <el-select v-model="addform.week" placeholder="请选择星期">
-                  <el-option label="七天24小时" value="0"></el-option>
-                  <el-option label="星期一" value="1"></el-option>
-                  <el-option label="星期二" value="2"></el-option>
-                  <el-option label="星期三" value="3"></el-option>
-                  <el-option label="星期四" value="4"></el-option>
-                  <el-option label="星期五" value="5"></el-option>
-                  <el-option label="星期六" value="6"></el-option>
-                  <el-option label="星期天" value="7"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="营业开始时间" :label-width="formLabelWidth">
-                <el-select v-model="addform.businessTimeS" placeholder="请选择时间">
-                  <el-option label="1:00" value="1:00"></el-option>
-                  <el-option label="2:00" value="2:00"></el-option>
-                  <el-option label="3:00" value="3:00"></el-option>
-                  <el-option label="4:00" value="4:00"></el-option>
-                  <el-option label="5:00" value="5:00"></el-option>
-                  <el-option label="6:00" value="6:00"></el-option>
-                  <el-option label="7:00" value="7:00"></el-option>
-                  <el-option label="8:00" value="8:00"></el-option>
-                  <el-option label="9:00" value="9:00"></el-option>
-                  <el-option label="10:00" value="10:00"></el-option>
-                  <el-option label="11:00" value="11:00"></el-option>
-                  <el-option label="12:00" value="12:00"></el-option>
-                  <el-option label="13:00" value="13:00"></el-option>
-                  <el-option label="14:00" value="14:00"></el-option>
-                  <el-option label="15:00" value="15:00"></el-option>
-                  <el-option label="16:00" value="16:00"></el-option>
-                  <el-option label="17:00" value="17:00"></el-option>
-                  <el-option label="18:00" value="18:00"></el-option>
-                  <el-option label="19:00" value="19:00"></el-option>
-                  <el-option label="20:00" value="20:00"></el-option>
-                  <el-option label="21:00" value="21:00"></el-option>
-                  <el-option label="22:00" value="22:00"></el-option>
-                  <el-option label="23:00" value="23:00"></el-option>
-                  <el-option label="24:00" value="24:00"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="营业结束时间" :label-width="formLabelWidth">
-                <el-select v-model="addform.businessTimeE" placeholder="请选择时间">
-                  <el-option label="1:00" value="1:00"></el-option>
-                  <el-option label="2:00" value="2:00"></el-option>
-                  <el-option label="3:00" value="3:00"></el-option>
-                  <el-option label="4:00" value="4:00"></el-option>
-                  <el-option label="5:00" value="5:00"></el-option>
-                  <el-option label="6:00" value="6:00"></el-option>
-                  <el-option label="7:00" value="7:00"></el-option>
-                  <el-option label="8:00" value="8:00"></el-option>
-                  <el-option label="9:00" value="9:00"></el-option>
-                  <el-option label="10:00" value="10:00"></el-option>
-                  <el-option label="11:00" value="11:00"></el-option>
-                  <el-option label="12:00" value="12:00"></el-option>
-                  <el-option label="13:00" value="13:00"></el-option>
-                  <el-option label="14:00" value="14:00"></el-option>
-                  <el-option label="15:00" value="15:00"></el-option>
-                  <el-option label="16:00" value="16:00"></el-option>
-                  <el-option label="17:00" value="17:00"></el-option>
-                  <el-option label="18:00" value="18:00"></el-option>
-                  <el-option label="19:00" value="19:00"></el-option>
-                  <el-option label="20:00" value="20:00"></el-option>
-                  <el-option label="21:00" value="21:00"></el-option>
-                  <el-option label="22:00" value="22:00"></el-option>
-                  <el-option label="23:00" value="23:00"></el-option>
-                  <el-option label="24:00" value="24:00"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-              <el-button @click="timeFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="Submittime()">确 定</el-button>
-            </div>
-          </el-dialog>
-        </el-dialog>
       </template>
     </avue-crud>
+
+    <el-dialog title="营业时间分配" :visible.sync="tableVisible" :append-to-body="true">
+      <el-button @click="timeFormVisible=true">新增营业时间</el-button>
+
+      <el-table :data="timeData">
+        <el-table-column label="序号" width="70px">
+          <template slot-scope="scope">{{scope.$index+1}}</template>
+        </el-table-column>
+        <el-table-column property="week" label="星期" width="150">
+          <template slot-scope="scope">
+            <el-tag>{{scope.row.week===0? '七天24小时':'星期'+scope.row.week}}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column property="business_time_s" label="营业开始时间" width="200"></el-table-column>
+        <el-table-column property="business_time_e" label="营业结束时间"></el-table-column>
+
+        <el-table-column fixed="right" label="操作" width="200">
+          <template slot-scope="scope">
+            <el-button type="text" size="small" @click="deltime(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-dialog
+        title="新增营业时间"
+        :visible.sync="timeFormVisible"
+        :append-to-body="true"
+        width="40%"
+        center
+      >
+        <el-form :model="addform">
+          <el-form-item label="星期" :label-width="formLabelWidth">
+            <el-select v-model="addform.week" placeholder="请选择星期">
+              <el-option label="七天24小时" value="0"></el-option>
+              <el-option label="星期一" value="1"></el-option>
+              <el-option label="星期二" value="2"></el-option>
+              <el-option label="星期三" value="3"></el-option>
+              <el-option label="星期四" value="4"></el-option>
+              <el-option label="星期五" value="5"></el-option>
+              <el-option label="星期六" value="6"></el-option>
+              <el-option label="星期天" value="7"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="营业开始时间" :label-width="formLabelWidth">
+            <el-select v-model="addform.businessTimeS" placeholder="请选择时间">
+              <el-option label="1:00" value="1:00"></el-option>
+              <el-option label="2:00" value="2:00"></el-option>
+              <el-option label="3:00" value="3:00"></el-option>
+              <el-option label="4:00" value="4:00"></el-option>
+              <el-option label="5:00" value="5:00"></el-option>
+              <el-option label="6:00" value="6:00"></el-option>
+              <el-option label="7:00" value="7:00"></el-option>
+              <el-option label="8:00" value="8:00"></el-option>
+              <el-option label="9:00" value="9:00"></el-option>
+              <el-option label="10:00" value="10:00"></el-option>
+              <el-option label="11:00" value="11:00"></el-option>
+              <el-option label="12:00" value="12:00"></el-option>
+              <el-option label="13:00" value="13:00"></el-option>
+              <el-option label="14:00" value="14:00"></el-option>
+              <el-option label="15:00" value="15:00"></el-option>
+              <el-option label="16:00" value="16:00"></el-option>
+              <el-option label="17:00" value="17:00"></el-option>
+              <el-option label="18:00" value="18:00"></el-option>
+              <el-option label="19:00" value="19:00"></el-option>
+              <el-option label="20:00" value="20:00"></el-option>
+              <el-option label="21:00" value="21:00"></el-option>
+              <el-option label="22:00" value="22:00"></el-option>
+              <el-option label="23:00" value="23:00"></el-option>
+              <el-option label="24:00" value="24:00"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="营业结束时间" :label-width="formLabelWidth">
+            <el-select v-model="addform.businessTimeE" placeholder="请选择时间">
+              <el-option label="1:00" value="1:00"></el-option>
+              <el-option label="2:00" value="2:00"></el-option>
+              <el-option label="3:00" value="3:00"></el-option>
+              <el-option label="4:00" value="4:00"></el-option>
+              <el-option label="5:00" value="5:00"></el-option>
+              <el-option label="6:00" value="6:00"></el-option>
+              <el-option label="7:00" value="7:00"></el-option>
+              <el-option label="8:00" value="8:00"></el-option>
+              <el-option label="9:00" value="9:00"></el-option>
+              <el-option label="10:00" value="10:00"></el-option>
+              <el-option label="11:00" value="11:00"></el-option>
+              <el-option label="12:00" value="12:00"></el-option>
+              <el-option label="13:00" value="13:00"></el-option>
+              <el-option label="14:00" value="14:00"></el-option>
+              <el-option label="15:00" value="15:00"></el-option>
+              <el-option label="16:00" value="16:00"></el-option>
+              <el-option label="17:00" value="17:00"></el-option>
+              <el-option label="18:00" value="18:00"></el-option>
+              <el-option label="19:00" value="19:00"></el-option>
+              <el-option label="20:00" value="20:00"></el-option>
+              <el-option label="21:00" value="21:00"></el-option>
+              <el-option label="22:00" value="22:00"></el-option>
+              <el-option label="23:00" value="23:00"></el-option>
+              <el-option label="24:00" value="24:00"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="timeFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="Submittime()">确 定</el-button>
+        </div>
+      </el-dialog>
+    </el-dialog>
+    
+    <el-dialog title="店铺图片" :visible.sync="dialogTableVisible" :append-to-body="true" center>
+      <el-button @click="getTableData()">分配图片</el-button>
+      <el-button @click="fileDialog=true">上传店铺图片</el-button>
+
+      <el-table :data="gridData" class="tb-edit" highlight-current-row>
+        <el-table-column label="序号" width="70px">
+          <template slot-scope="scope">{{scope.$index+1}}</template>
+        </el-table-column>
+        <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
+        <el-table-column property="store_id" label="店铺" v-if="show"></el-table-column>
+        <el-table-column property="store_picture_id" label="编号" v-if="show"></el-table-column>
+        <el-table-column prop="picture_main_url" label="图片" min-width="20%">
+          <!-- 图片的显示 -->
+          <template slot-scope="scope">
+            <img :src="scope.row.picture_main_url" min-width="70" height="70" />
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="sort" label="权重">
+          <template slot-scope="scope">
+            <el-input
+              size="small"
+              style="width:80px"
+              v-model="scope.row.sort"
+              placeholder="请输入权重"
+              @change="handleEdit(scope.$index, scope.row)"
+            ></el-input>
+            <span>{{scope.row.sort}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column property="is_default" label="是否为主图" width="200">
+          <template slot-scope="scope">
+            <el-tag>{{scope.row.is_default==="0"? '是':'否'}}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="200">
+          <template slot-scope="scope">
+            <el-button type="text" @click="deletePicture(scope.row)" size="small">删除</el-button>
+            <el-button type="text" @click="updateMain(scope.row)">设置为主图</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-dialog width="50%" title="图片素材" :visible.sync="innerVisible" append-to-body>
+        <el-button @click="submitPicture()">关联图片</el-button>
+        <el-button @click="uploadDialog=true">上传图片</el-button>
+
+        <el-table :data="tabledData" @selection-change="changeFun" style="margin-top:50px;">
+          <el-table-column type="selection" width="55"></el-table-column>
+
+          <el-table-column label="序号" width="70px">
+            <template slot-scope="scope">{{scope.$index+1}}</template>
+          </el-table-column>
+          <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
+          <el-table-column prop="picture_main_url" label="图片" min-width="20%">
+            <template slot-scope="scope">
+              <img :src="scope.row.picture_main_url" min-width="70" height="70" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="picture86Url" label="图片86" min-width="20%">
+            <!-- 图片的显示 -->
+            <template slot-scope="scope">
+              <img :src="scope.row.picture86Url" min-width="70" height="70" />
+            </template>
+          </el-table-column>
+          <el-table-column prop="picture324Url" label="图片324" min-width="20%">
+            <!-- 图片的显示 -->
+            <template slot-scope="scope">
+              <img :src="scope.row.picture324Url" min-width="70" height="70" />
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <el-dialog
+          title="上传素材"
+          :visible.sync="uploadDialog"
+          :append-to-body="true"
+          width="40%"
+          center
+        >
+          <el-form :model="uploadform">
+            <el-form-item label="上传图片" :label-width="formLabelWidth">
+              <el-upload
+                class="avatar-uploader"
+                action="/api//blade-resource/oss/endpoint//upload"
+                :show-file-list="false"
+                :headers="myHeaders"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+              >
+                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="uploadDialog = false">取 消</el-button>
+            <el-button type="primary" @click="insertPicature()">确 定</el-button>
+          </div>
+        </el-dialog>
+      </el-dialog>
+    </el-dialog>
+
+    <el-dialog title="分配商户" :visible.sync="dialogFormVisible" width="40%" center>
+      <span slot="footer" class="dialog-footer">
+        <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
+      </span>
+    </el-dialog>
+    <el-dialog
+      title="地图"
+      :visible.sync="centerDialogVisible"
+      :append-to-body="true"
+      width="30%"
+      center
+    >
+      <mapbox-map mapWidth="100%" mapHeight="600px" :lnglat="lnglat" @sendiptVal="showChildMsg"></mapbox-map>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog width="50%" title="上传店铺图片" :visible.sync="fileDialog" append-to-body>
+      <el-form :model="fileform">
+        <el-form-item label="上传图片" :label-width="formLabelWidth">
+          <el-upload
+            class="avatar-uploader"
+            action="/api//blade-resource/oss/endpoint//upload"
+            :show-file-list="false"
+            :headers="myHeaders"
+            :on-success="handleSuccess"
+            :before-upload="beforeUpload"
+          >
+            <img v-if="photoUrl" :src="photoUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="fileDialog = false">取 消</el-button>
+        <el-button type="primary" @click="insertShopPicature()">确 定</el-button>
+      </div>
+    </el-dialog>
     <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
