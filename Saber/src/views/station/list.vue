@@ -21,7 +21,7 @@
     >
       <template slot="menuLeft">
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
-
+    
         <el-button @click="dialogFormVisible = true">分配店铺</el-button>
         <template>
           <el-button @click.stop="delstore">解除店铺关联</el-button>
@@ -73,7 +73,7 @@
           icon="el-icon-picture-outline"
           @click.stop="getGridData(scope.row)"
         >图片管理</el-button>&nbsp;&nbsp;
-        <el-button
+    <el-button
           type="text"
           size="small"
           icon="el-icon-document-copy"
@@ -89,6 +89,38 @@
       center
     >
       <mapbox-map mapWidth="60%" mapHeight="600px" :lnglat="lnglat" @sendiptVal="showChildMsg"></mapbox-map>
+<!-- 
+   <el-form
+          ref="editForm"
+          :model="editData"
+          label-width="140px"
+        >
+          <el-form-item label="地图">
+            <div style="height: 370px;">
+                            <label>
+                                <GmapAutocomplete @place_changed="setPlace" ref="gampautocomplete"/>
+                                <el-button @click="addMarker">confirm</el-button>
+                            </label>
+                            <br/>
+                            <gmap-map
+                                    :center="center"
+                                    :zoom="16"
+                                    map-type-id="terrain"
+                                    style="width: 400px; height: 300px"
+                            >
+                                <gmap-marker
+                                        @dragend="updateMaker"
+                                        :key="index"
+                                        v-for="(m, index) in markers"
+                                        :position="m.position"
+                                        :clickable="true"
+                                        :draggable="true"
+                                        @click="center = m.position"
+                                ></gmap-marker>
+                            </gmap-map>
+                        </div>
+          </el-form-item>
+   </el-form> -->
       <div slot="footer" class="dialog-footer">
         <el-button @click="mapDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
@@ -119,6 +151,7 @@
           <el-button type="primary" @click="insertShopPicature()">确 定</el-button>
         </div>
       </el-dialog>
+
 
       <el-table :data="gridData" class="tb-edit" highlight-current-row>
         <el-table-column label="序号" width="70px">
@@ -308,8 +341,10 @@ export default {
       tabledData: [],
       show: false,
       multipleSelection: [],
+      currentPlace: '',
       query: {},
       chaData: [],
+      editData:{},
       dialogFormVisible: false,
       dialogTableVisible: false,
       mapDialogVisible: false,
@@ -329,6 +364,12 @@ export default {
       pictureUrl: "",
       uploadform: {},
       fileform: {},
+      center: {
+           lat: 40.4167754,
+                        lng: -3.7037902,
+      },
+      markers: [],
+      place: null,
       formLabelWidth: "100px",
       pictureMainUrl: "",
       picturestationId: 0,
@@ -950,9 +991,48 @@ export default {
       this.lnglat.longitude = row.longitude;
       this.lnglat.latitude = row.latitude;
       this.lnglat.stationId = row.stationId;
+      
 
       this.mapDialogVisible = true;
+
     },
+                // 设置位置
+        setPlace(place) {
+            this.currentPlace = null
+            this.currentPlace = place
+        },
+        // 获取当前位置
+        geolocate() {
+            navigator.geolocation.getCurrentPosition(position => {
+                    console.log('获取当前位置', position)
+                    this.center = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    }
+                },
+                () => {
+                    this.center = {
+                        lat: 40.4167754,
+                        lng: -3.7037902,
+                    }
+                })
+        },
+        updateMaker(event) {
+                this.markers[0].position = {
+                    lat: event.latLng.lat(),
+                    lng: event.latLng.lng()
+                }
+            },
+            addMarker() {
+                if (this.currentPlace) {
+                    const marker = {
+                        lat: this.currentPlace.geometry.location.lat(),
+                        lng: this.currentPlace.geometry.location.lng()
+                    }
+                    this.markers.push({position: marker})
+                    this.center = marker
+                }
+            },
     showChildMsg(value) {
       var obj = JSON.parse(value);
       this.lnglat.longitude = obj.lng;
