@@ -77,12 +77,18 @@ export default {
         if (this.box) {
           this.$nextTick(() =>
             this.init(() => {
-              if (this.isPR) {
-                // this.addMarker(this.R, this.P);
-                // this.getAddress(this.R, this.P);
+              console.log(this.lnglat)
+              const P = this.lnglat.latitude;
+              const R = this.lnglat.longitude;
+              console.log(P,R)
+              if(! P =="0"&&! R =="0"){
+                  this.addMarker(R, P);
+                          this.map.setCenter([R, P]);
+
               }
             })
           );
+          
         }
       },
       immediate: true
@@ -95,9 +101,7 @@ export default {
   },
   },
   computed: {
-    isPR() {
-      return this.R && this.P;
-    },
+    
     P() {
       return this.lnglat.P || 0;
     },
@@ -111,6 +115,7 @@ export default {
   methods: {
     //新增坐标
     addMarker(R, P) {
+      console.log(1111)
       this.clearMarker();
       this.marker = new mapboxgl.Marker({
         position: [R, P],
@@ -191,7 +196,7 @@ export default {
             this.map = new mapboxgl.Map({
         container: this.$refs.basicMapbox,
         center: [12.550343, 55.665957],
-        zoom: 8,
+        zoom: 11,
         style: 'mapbox://styles/mapbox/streets-v11'
       });
 
@@ -221,7 +226,6 @@ export default {
       
 
       
-      // this.initPoip();
        this.addClick();
       callback();
     },
