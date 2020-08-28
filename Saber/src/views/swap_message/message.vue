@@ -103,7 +103,7 @@ export default {
           //   ]
           // },
           {
-            label: "公告标题",
+            label: this.$t(`message.messageTitle`),
             width: 280,
             prop: "messageTitle",
             search: true,
@@ -116,7 +116,7 @@ export default {
             ]
           },
           {
-            label: "公告类型",
+            label: this.$t(`message.messageType`),
             prop: "messageType",
             type: "select",
             valueDefault: "0",
@@ -162,7 +162,7 @@ export default {
           //   }
           // },
           {
-            label: "公告状态",
+            label:this.$t(`message.status`),
             prop: "status",
             type: "select",
             valueDefault: "0",
@@ -353,7 +353,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -369,7 +369,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -391,7 +391,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -412,7 +412,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

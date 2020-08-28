@@ -65,7 +65,7 @@
           size="small"
           icon="el-icon-view"
           @click.stop="getrowViews(scope.row)"
-        >查看</el-button>
+        >{{$t(`chakan`)}}</el-button>
         <!-- <el-button type="text" icon="el-icon-view" size="small" @click.stop="getrowViews(scope.row)">查看</el-button> -->
         <el-button
           type="text"
@@ -73,12 +73,14 @@
           icon="el-icon-picture-outline"
           @click.stop="getGridData(scope.row)"
         >图片管理</el-button>&nbsp;&nbsp;
-    <el-button
+
+          <el-button
           type="text"
           size="small"
           icon="el-icon-document-copy"
           @click.stop="openmap(scope.row)"
         >地址选取</el-button>
+  
       </template>
     </avue-crud>
     <el-dialog
@@ -154,7 +156,7 @@
 
 
       <el-table :data="gridData" class="tb-edit" highlight-current-row>
-        <el-table-column label="序号" width="70px">
+        <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
@@ -199,7 +201,7 @@
         <el-table :data="tabledData" @selection-change="changeFun" style="margin-top:50px;">
           <el-table-column type="selection" width="55"></el-table-column>
 
-          <el-table-column label="序号" width="70px">
+          <el-table-column label="index" width="70px">
             <template slot-scope="scope">{{scope.$index+1}}</template>
           </el-table-column>
           <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
@@ -260,7 +262,7 @@
       width="80%"
     >
       <el-table :data="chaData">
-        <el-table-column label="序号" width="70px">
+        <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="station_code" label="充电柜编码 " width="150"></el-table-column>
@@ -539,36 +541,36 @@ export default {
               }
             ]
           },
-          {
-            label: "营业开始时间",
-            prop: "businessTimeS",
-            type: "time",
-            format: " HH:mm ",
-            valueFormat: "HH:mm",
-            hide: true,
-            rules: [
-              {
-                required: false,
-                message: "请输入营业开始时间",
-                trigger: "blur"
-              }
-            ]
-          },
-          {
-            label: "营业结束时间",
-            prop: "businessTimeE",
-            hide: true,
-            type: "time",
-            format: " HH:mm",
-            valueFormat: "HH:mm:",
-            rules: [
-              {
-                required: false,
-                message: "请输入营业结束时间",
-                trigger: "blur"
-              }
-            ]
-          },
+          // {
+          //   label: "营业开始时间",
+          //   prop: "businessTimeS",
+          //   type: "time",
+          //   format: " HH:mm ",
+          //   valueFormat: "HH:mm",
+          //   hide: true,
+          //   rules: [
+          //     {
+          //       required: false,
+          //       message: "请输入营业开始时间",
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // },
+          // {
+          //   label: "营业结束时间",
+          //   prop: "businessTimeE",
+          //   hide: true,
+          //   type: "time",
+          //   format: " HH:mm",
+          //   valueFormat: "HH:mm:",
+          //   rules: [
+          //     {
+          //       required: false,
+          //       message: "请输入营业结束时间",
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // },
           {
             label: this.$t(`station.address`),
             width: 200,
@@ -674,7 +676,7 @@ export default {
             ]
           },
           {
-            label: "保质期(月)",
+            label: this.$t(`scooter.expirationDate`),
             prop: "expirationDate",
             valueDefault: "1",
             hide: true,
@@ -720,7 +722,7 @@ export default {
           //   }]
           // },
           {
-            label: "出厂时间",
+            label: this.$t(`scooter.produceTime`),
             width: 120,
             prop: "produceTime",
             type: "datetime",
@@ -732,7 +734,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入出厂时间",
+                message: "请输入"+this.$t(`scooter.produceTime`),
                 trigger: "blur"
               }
             ]
@@ -864,7 +866,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -906,11 +908,11 @@ export default {
                 prop: row.warehouseNumber
               },
               {
-                label: "保质期(月)",
+                label: this.$t(`station.expirationDate`),
                 prop: row.expirationDate
               },
               {
-                label: "出厂时间",
+                label: this.$t(`scooter.produceTime`),
                 prop: row.produceTime
               }
             ]
@@ -943,10 +945,10 @@ export default {
           }
         ],
         fullItem: [
-          {
-            title: "备注",
-            prop: row.remark
-          }
+          // {
+          //   title: "备注",
+          //   prop: row.remark
+          // }
         ]
       };
     },
@@ -974,7 +976,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.innerVisible = false;
       });
@@ -991,8 +993,6 @@ export default {
       this.lnglat.longitude = row.longitude;
       this.lnglat.latitude = row.latitude;
       this.lnglat.stationId = row.stationId;
-      
-
       this.mapDialogVisible = true;
 
     },
@@ -1045,7 +1045,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -1089,7 +1089,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -1124,7 +1124,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.fileDialog = false;
       });
@@ -1146,7 +1146,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.uploadDialog = false;
       });
@@ -1185,7 +1185,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -1214,7 +1214,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.dialogFormVisible = false;
         });
@@ -1229,7 +1229,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -1246,7 +1246,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -1268,7 +1268,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -1294,7 +1294,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

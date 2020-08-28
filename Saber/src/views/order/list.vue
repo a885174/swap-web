@@ -36,11 +36,11 @@
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -97,7 +97,7 @@ export default {
         align: "center",
         menuWidth: 120,
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         column: [
           {
             label: "订单id",
@@ -117,7 +117,7 @@ export default {
             ]
           },
           {
-            label: "订单编号",
+            label:this.$t(`order.orderNo`),
             // width: 190,
             search: true,
             editDisabled: true,
@@ -172,7 +172,7 @@ export default {
           // },
 
           {
-            label: "用户",
+            label: this.$t(`order.useName`),
             // width: 140,
             prop: "userName",
             rules: [
@@ -208,7 +208,7 @@ export default {
             ]
           },
           {
-            label: "电动车编码",
+            label: this.$t(`order.scooterCode`),
             width: 190,
             prop: "scooterCode",
             rules: [
@@ -244,7 +244,7 @@ export default {
             ]
           },
           {
-            label: "套餐总价",
+            label: this.$t(`order.plantTotal`),
             prop: "planTotal",
             hide: true,
             rules: [
@@ -268,7 +268,7 @@ export default {
             ]
           },
           {
-            label: "订单总价",
+            label: this.$t(`order.totalPrices`),
             prop: "totalPrices",
             rules: [
               {
@@ -316,7 +316,7 @@ export default {
             ]
           },
           {
-            label: "支付状态",
+            label: this.$t(`order.payStatus`),
             prop: "payStatus",
             type: "select",
             editDisabled: true,
@@ -368,7 +368,6 @@ export default {
           {
             label: "第三方支付回调结果",
             editDisabled: true,
-            hide: true,
             prop: "callbackResult",
             hide: true,
             rules: [
@@ -379,23 +378,23 @@ export default {
               }
             ]
           },
+          // {
+          //   label: "创建时间",
+          //   prop: "createTime",
+          //   editDisabled: true,
+          //   editDisplay: false,
+          //   addDisabled: true,
+          //   addDisplay: false,
+          //   rules: [
+          //     {
+          //       required: true,
+          //       message: "请输入创建时间",
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // },
           {
-            label: "创建时间",
-            prop: "createTime",
-            editDisabled: true,
-            editDisplay: false,
-            addDisabled: true,
-            addDisplay: false,
-            rules: [
-              {
-                required: true,
-                message: "请输入创建时间",
-                trigger: "blur"
-              }
-            ]
-          },
-          {
-            label: "完成付款时间",
+            label: this.$t(`order.PayTime`),
             // width: 190,
             prop: "payTime",
             format: "yyyy-MM-dd hh:mm:ss",
@@ -513,38 +512,37 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "订单信息",
+            title: "Order Info",
             column: [
-              { label: "订单id", prop: row.orderId },
-              { label: "订单编号", prop: row.orderCode },
+              // { label: "订单id", prop: row.orderId },
+              { label: this.$t(`order.orderNo`), prop: row.orderCode },
               { label: "套餐单价", prop: row.planPrice },
               { label: "套餐里程", prop: row.distance },
-              { label: "用户", prop: row.userName },
-              { label: "电动车编码", prop: row.scooterCode },
-              { label: "套餐折扣", prop: row.discount },
-              { label: "数量", prop: row.count },
-              { label: "套餐总价", prop: row.planTotal },
-              { label: "优惠券", prop: row.discounts },
-              { label: "订单总价", prop: row.totalPrices },
+              { label: this.$t(`user.username`), prop: row.userName },
+              { label: this.$t(`scooter.name`), prop: row.scooterCode },
+              // { label: "套餐折扣", prop: row.discount },
+              // { label: "数量", prop: row.count },
+              // { label: "套餐总价", prop: row.planTotal },
+              // { label: "优惠券", prop: row.discounts },
+              { label: this.$t(`order.totalPrices`), prop: row.totalPrices },
               { label: "套餐总里程", prop: row.distanceSum },
-              { label: "支付渠道", prop: row.payChannel },
               {
-                label: "支付渠道",
+                label: this.$t(`order.payChannel`),
                 prop: row.payChannel == "0" ? "ovo" : "gopay"
               },
-              { label: "支付状态", prop: payStatus },
+              { label: this.$t(`order.payStatus`), prop: payStatus },
               { label: "第三方支付编号", prop: row.payCode },
-              { label: "第三方支付回调结果", prop: row.callbackResult },
-              { label: "完成付款时间", prop: row.payTime }
+              // { label: "第三方支付回调结果", prop: row.callbackResult },
+              { label: this.$t(`order.PayTime`), prop: row.payTime }
             ]
           }
         ],
-        fullItem: [
-          {
-            title: "备注",
-            prop: row.remark
-          }
-        ]
+        // fullItem: [
+        //   {
+        //     title: "备注",
+        //     prop: row.remark
+        //   }
+        // ]
       };
     },
     rowSave(row, loading, done) {
@@ -554,7 +552,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -570,7 +568,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -592,7 +590,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -613,7 +611,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

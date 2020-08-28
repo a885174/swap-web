@@ -20,7 +20,7 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
 
         <!-- <el-button type="primary"
                      icon="el-icon-check"
@@ -37,11 +37,11 @@
         </el-popover>
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -96,7 +96,7 @@ export default {
         editDisabled: true,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         column: [
           // {
           //   label: "电池id",
@@ -119,7 +119,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入电池编号 BID",
+                message: "请输入"+this.$t(`battery.batteryCode`),
                 trigger: "blur"
               }
             ]
@@ -133,7 +133,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电池名  ",
+                message: "请输入"+this.$t(`battery.batteryName`),
                 trigger: "blur"
               }
             ]
@@ -148,7 +148,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电池型号",
+                message: "请输入"+this.$t(`battery.batteryVersion`),
                 trigger: "blur"
               }
             ]
@@ -162,7 +162,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电池电压 V",
+                message: "请输入"+this.$t(`battery.voltage`),
                 trigger: "blur"
               }
             ]
@@ -176,7 +176,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电池电流 A",
+                message: "请输入"+this.$t(`battery.electricity`),
                 trigger: "blur"
               }
             ]
@@ -253,26 +253,26 @@ export default {
             hide:true,
             dicData: [
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "0"
               },
               {
-                label: "故障",
+                label: this.$t(`battery.Fault`),
                 value: "1"
               },
               {
-                label: "维修",
+                label: this.$t(`battery.Repairing`),
                 value: "2"
               },
               {
-                label: "报废",
+                label: this.$t(`battery.Castoff`),
                 value: "3"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入电池状态",
+                message: "请选择"+this.$t(`battery.batteryStatus`),
                 trigger: "blur"
               }
             ]
@@ -287,11 +287,11 @@ export default {
             hide:true,
             dicData: [
               {
-                label: "已锁定",
+                label: this.$t(`battery.Locked`),
                 value: "0"
               },
               {
-                label: "未锁定",
+                label: this.$t(`battery.Unlocked`),
                 value: "1"
               }
             ],
@@ -313,7 +313,7 @@ export default {
             valueDefault: "2",
             dicData: [
               {
-                label: "充电中",
+                label: this.$t(`battery.Charge`),
                 value: "0"
               },
               {
@@ -425,19 +425,19 @@ export default {
             hide:true,
             dicData: [
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "0"
               },
               {
-                label: "安全",
+                label: this.$t(`battery.Safe`),
                 value: "1"
               },
               {
-                label: "被盗",
+                label: this.$t(`battery.Safe`),
                 value: "2"
               },
               {
-                label: "睡眠",
+                label: this.$t(`battery.Safe`),
                 value: "3"
               }
             ],
@@ -450,7 +450,7 @@ export default {
             ]
           },
           {
-            label: "保质期",
+            label: this.$t(`scooter.expirationDate`),
             prop: "expirationDate",
             // addDisabled:true,
             // addDisplay:false,
@@ -499,7 +499,7 @@ export default {
           //   }]
           // },
           {
-            label: "出厂时间",
+            label: this.$t(`scooter.produceTime`),
             prop: "produceTime",
             type: "datetime",
             format: "yyyy-MM-dd",
@@ -647,27 +647,27 @@ export default {
       var batteryStatus,powerStatus,connectStatus,systemStatus;
       switch (row.batteryStatus) {
         case "0":
-          batteryStatus = "正常";
+          batteryStatus = this.$t(`battery.Normal`);
           break;
         case "1":
-          batteryStatus = "故障";
+          batteryStatus = this.$t(`battery.Fault`);
           break;
         case "2":
-          batteryStatus = "维修";
+          batteryStatus = this.$t(`battery.Repairing`);
           break;
         case "3":
-          batteryStatus = "报废";
+          batteryStatus = this.$t(`battery.Castoff`);
           break;
       }
       switch (row.powerStatus) {
         case "0":
-          powerStatus = "充电中";
+          powerStatus = this.$t(`battery.charge`);
           break;
         case "1":
-          powerStatus = "放电中";
+          powerStatus = this.$t(`battery.Out`);
           break;
         case "2":
-          powerStatus = "搁置";
+          powerStatus = this.$t(`battery.Close`);
           break;
       }
       switch (row.connectStatus) {
@@ -689,22 +689,22 @@ export default {
       }
       switch (row.systemStatus) {
         case "0":
-          systemStatus = "正常";
+          systemStatus = this.$t(`battery.Normal`);
           break;
         case "1":
-          systemStatus = "安全";
+          systemStatus = this.$t(`battery.Safe`);
           break;
         case "2":
-          systemStatus = "被盗";
+          systemStatus = this.$t(`battery.Stolen`);
           break;
         case "3":
-          systemStatus = "睡眠";
+          systemStatus = this.$t(`battery.Sleep`);
           break;
       }
       this.rowItem = {
         item: [
           {
-            title: "电池信息",
+            title: "Battery Info",
             column: [
               { label: this.$t(`battery.batteryCode`), prop: row.batteryCode },
               {
@@ -738,7 +738,7 @@ export default {
               },
               {
                 label: this.$t(`battery.lockStatus`),
-                prop: row.lockStatus == "0" ? "已锁定 " : "未锁定"
+                prop: row.lockStatus == "0" ? this.$t(`battery.Locked`) :this.$t(`battery.Unlocked`)
               },
               {
                 label:  this.$t(`battery.powerStatus`),
@@ -746,7 +746,7 @@ export default {
               },
               {
                 label: this.$t(`battery.activateStatus`),
-                prop: row.activateStatus == "0" ? "已激活 " : "未激活"
+                prop: row.activateStatus == "0" ? this.$t(`battery.Actived`) : this.$t(`battery.Unactivated`)
               },
               {
                 label: this.$t(`battery.temperature`),
@@ -754,7 +754,7 @@ export default {
               },
               {
                 label: this.$t(`battery.connectStatus`),
-                prop: connectStatus
+                prop: connectStatus=="0"? this.$t(`Connected`):this.$t(`Unconnected`)
               },
               {
                 label: this.$t(`battery.systemStatus`),
@@ -773,7 +773,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -789,7 +789,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -811,7 +811,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -843,7 +843,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

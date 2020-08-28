@@ -25,6 +25,16 @@ import Mapbox from "mapbox-gl";
 import AvueMap from 'avue-plugin-map'
 import AvueUeditor from 'avue-plugin-ueditor'
 import global_ from './Global.vue'
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+Vue.use(VueGoogleMaps, {
+    load: {
+      key: 'AIzaSyBFhdyjOq_mAY67fbNpgkADkb3fXXOHIdU',
+      libraries: 'places' // This is required if you use the Autocomplete plugin
+    }
+  })
+
+
 
     
 import VueCropper from 'vue-cropper'
@@ -52,6 +62,7 @@ axios.defaults.baseURL=global_.BASE_URL;
 axios.defaults.timeout=1800;
 axios.defaults.withCredentials=true;
 Vue.prototype.$t = (key, value) => i18n.t(key, value);
+
 
 
 

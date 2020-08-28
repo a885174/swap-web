@@ -6,6 +6,13 @@ export default {
   cancelText: '取消',
   search: '请输入搜索内容',
   menuTip: '没有发现菜单',
+  import:'导入',
+  delte:'批量删除',
+  assignClient:'分配商家',
+  UnlinkwithClient:'解除客户关联',
+  chakan:'查看',
+  Connected:'已连接',
+  Unconnected:'未连接',
   wel: {
     info: '早安，Smallwei，Avuex一款超乎你想象的框架！',
     dept: '我是avue团队下的一个部门-哈皮部门-哈皮职位',
@@ -95,8 +102,8 @@ export default {
   },
   tagsView: {
     menu: '更多',
+    closeAll: '关闭所有',
     closeOthers: '关闭其它',
-    closeAll: '关闭所有'
   },
   scooter:{
     vincode:'VIN码',
@@ -109,9 +116,15 @@ export default {
     initStatus:'激活状态',
     runStatus:'行驶状态',
     gpsStatus:'定位状态',
+    connectStatus:'连接状态',
     lockStatus:'上锁状态',
     securityLock:'防盗锁定',
     arrearageLock:'欠费锁车',
+    mileageValue:'行车总里程',
+    batteryNumber:'电池数',
+    expirationDate:'保质期',
+    produceTime:'出厂时间'
+
   },
   battery:{
     batteryCode:'电池编号 BID',
@@ -130,6 +143,20 @@ export default {
     temperature:'电池温度',
     connectStatus:'连接状态',
     systemStatus:'系统模式',
+    Normal:'正常',
+    Fault:'故障',
+    Repairing:'维修',
+    Castoff:'报废',
+    Locked:'已上锁',
+    UnLocked:'未上锁',
+    Charge:'充电中',
+    Out:'放电',
+    Close:'搁置',
+    Activated:'激活',
+    Unactivated:'未激活',
+    Safe:'安全',
+    Stolen:'被盗',
+    Sleep:'睡眠',
   },
   station:{
     stationCode:'换电柜编号（UID）',
@@ -141,12 +168,68 @@ export default {
     address:'地址',
     locationStatus:'定位状态',
   },
+  
+supplier:{
+  supplierName:'主要联系人',
+  linkman:'联系人',
+  contactNumber:'联系电话',
+  type:'供应商类型',
+  address:'地址'
+},
+store:{
+  storeName:'店铺名称',
+  rentPeriod:'结算周期',
+  rentPrice:'租金',
+  electricityPrice:'电费单价',
+  linkman:'联系人',
+  contactNumber:'联系电话',
+  address:'地址',
+  storeStatus:'店铺状态',
+
+},
   tenant:{
     tenantName:'客户名称',
     area:'地区',
     trade:'行业',
     linkman:'联系人',
-    tenantStatus:'tenantStatus',
+    users:'User Count',
+    scooters:'Motorcycle Count',
+    contactNumber: '联系电话',
+    tenantStatus:'客户状态',
+    legalPerson:'法定代表',
+    Frozen:'冻结',
+    approveStatus:'工商备案',
+  },
+  merchant:{
+    merchantName:'商户名',
+    countryId:'国家',
+    city:'城市',
+    status:'商户状态',
+
+  },
+  order:{
+    orderNo:'订单编号',
+    useName:'用户名',
+    scooterCOde:'电动车编号',
+    planTotal:'套餐总价',
+    payTime:'支付时间',
+    payStatus:'支付状态',
+    totalPrices:'订单总价',
+    payChannel:'支付渠道'
+
+
+
+  },
+  record:{
+    recordNumber:'记录编号',
+    userName:'用户姓名',
+    scooterCode:'电动车编号',
+    batteryCode:'电池编号',
+    stationCode:'换电柜编号',
+    warehouseCode:'换电仓',
+    orderTimeS:'订单开始日期',
+    orderTimeE:'订单结束日期',
+    orderStatus:'订单状态',
   },
   user:{
     loginName:'登录账号',
@@ -157,15 +240,63 @@ export default {
     sex:'用户性别',
     birthday:'出生日期',
     userStatus:'用户状态',
-
   },
   suggest:{
+    userName:'用户姓名',
+    Dispose:'处理',
+    suggestStatus:'处理状态',
     detials:'意见内容',
+    
+  },
+  subscribe:{
+    stationName:'换电柜编号',
+    username:'预约用户',
+    batteryName:'电池编号',
+    warehouse:'换电仓',
+    effectiveTime:'有效时间',
+    subscribeTime:'发起预约时间',
+    subscribeState:'预约状态'
+  },
+  repaircompany:{
+    comName:'维修商名称',
+    comId:'维修商编号'
+  },
+  area:{
+    areaId:'区域编号',
+    areaName:'区域名称'
+  },
+  solution:{
+    faultCode:'故障编号',
+    faultType:'故障类型',
+    faultName:'故障名称',
+    Solution:'解决方案'
+    
+  },
+  plan:{
+    planName:'套餐名',
+    price:'售价',
+    distanceSum:'套餐里程数',
+    ailableTime:'使用天数',
+    planStatus:'套餐状态',
+    sale:'上架',
+    TakeOff:'下架'
+  },
+  message:{
+    messageTitle:'标题',
+    messageType:'类型',
+    status:'状态'
+  },
+  common:{
+    
+  },
+  repairshop:{
+    shopId:'店铺编号',
+    shopeName:'店铺名称'
   },
   AppVseroin:{
     appVersoin:'版本号',
     updatedInstruction:'更新说明',
     updatedTime:'更新时间'
-
 }
+
 }

@@ -20,7 +20,7 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
       </template>
 
       <template slot-scope="{row}" slot="suggestStatus">
@@ -36,16 +36,16 @@
           size="small"
           icon="el-icon-document-copy"
           @click="deal(scope.row)"
-        >处理</el-button>
-        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">详情</el-button>
+        >{{$t('suggest.Dispose')}}</el-button>
+        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
-    <el-dialog title="处理意见" :visible.sync="centerDialogVisible" :append-to-body="true" center>
+    <el-dialog title="Dispose" :visible.sync="centerDialogVisible" :append-to-body="true" center>
       <basic-container>
         <avue-form :option="formoption" v-model="form" @submit="handleSubmit()"></avue-form>
       </basic-container>
     </el-dialog>
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
+    <el-dialog title="Detail" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -123,7 +123,7 @@ export default {
       formoption: {
         column: [
           {
-            label: "处理结果",
+            label: this.$t(`suggest.result`),
             prop: "content",
             type: "textarea",
             rules: [
@@ -144,10 +144,11 @@ export default {
         excelBtn: true,
         viewBtn: false,
         editBtn: false,
+        addBtn:false,
         delBtn: false,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
 
         column: [
           // {
@@ -166,7 +167,7 @@ export default {
           //   ]
           // },
           {
-            label: "用户",
+            label:this.$t(`suggest.userName`),
             prop: "userName",
             search: true,
             addDisabled: true,
@@ -283,7 +284,7 @@ export default {
             ]
           },
           {
-            label: "处理状态",
+            label: this.$t(`suggest.suggestStatus`),
             prop: "suggestStatus",
             addDisabled: true,
             addDisplay: false,
@@ -309,7 +310,7 @@ export default {
             ]
           },
           {
-            label: "处理结果",
+            label:this.$t(`suggest.result`),
             prop: "result",
             rules: [
               {
@@ -411,14 +412,14 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "详情",
+            title: "Detail",
             column: [
-              { label: "用户", prop: row.userName },
-              { label: "客户端类型", prop: clientType },
-              { label: "客户端ip", prop: row.clientIp },
-              { label: "是否匿名", prop: row.anonymityStatus=="1"?"是":"否" },
-              { label: "处理状态", prop: row.suggestStatus=="1"?"已处理":"未处理" },
-              { label: "处理结果", prop: row.result }
+              { label: this.$t(`suggest.userName`), prop: row.userName },
+              // { label: "客户端类型", prop: clientType },
+              // { label: "客户端ip", prop: row.clientIp },
+              // { label: "是否匿名", prop: row.anonymityStatus=="1"?"是":"否" },
+              { label: this.$t(`suggest.suggestStatus`), prop: row.suggestStatus=="1"?"已处理":"未处理" },
+              { label: this.$t(`suggest.result`), prop: row.result }
               // { label: this.$t(`suggest.detials`), prop: row.content }
             ]
           }
@@ -431,7 +432,7 @@ export default {
         ],
         imageItem: [
           {
-            title: "图片",
+            title: "picture",
             column: imageItems,
             srcList: imageItems
           }
@@ -445,7 +446,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -459,7 +460,7 @@ export default {
         this.onLoad(this.page);
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.centerDialogVisible = false;
       });
@@ -483,7 +484,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -505,7 +506,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -526,7 +527,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

@@ -79,10 +79,10 @@ export default {
         selection: true,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         column: [
           {
-            label: "维修商id",
+            label:this.$t(`repaircompany.comId`),
             prop: "comId",
             editDisabled:true,
             editDisplay:false,
@@ -95,7 +95,7 @@ export default {
             }]
           },
           {
-            label: "维修商名称",
+            label: this.$t(`repaircompany.comName`),
             prop: "comName",
             rules: [
               {
@@ -106,25 +106,25 @@ export default {
             ]
           },
           {
-            label: "联系人",
+            label: this.$t(`supplier.linkman`),
             prop: "linkman",
             hide: true,
             rules: [
               {
                 required: false,
-                message: "请输入联系人",
+                message: "请输入"+this.$t(`supplier.linkman`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "联系电话",
+            label: this.$t(`suppliercontactNumber`),
             prop: "contactNumber",
             hide: true,
             rules: [
               {
                 required: false,
-                message: "请输入联系电话",
+                message: "请输入"+this.$t(`suppliercontactNumber`),
                 trigger: "blur"
               }
             ]
@@ -154,7 +154,7 @@ export default {
             ]
           },
           {
-            label: "地址",
+            label: "address",
             prop: "address",
             hide: true,
             rules: [
@@ -232,13 +232,12 @@ export default {
           {
             title: "维修商信息",
             column: [
-              { label: "维修商id", prop: row.comId },
-              { label: "维修商名称", prop: row.comName },
-              { label: "联系人", prop: row.linkman },
-              { label: "联系电话", prop: row.contactNumber },
+              { label: this.$t(`repaircompany.comName`), prop: row.comName },
+              { label: this.$t(`supplier.linkman`), prop: row.linkman },
+              { label: this.$t(`supplier.contactNumber`), prop: row.contactNumber },
               { label: "法律代表", prop: row.legalPerson },
               { label: "工商备案", prop: row.filingStatus },
-              { label: "地址", prop: row.address },
+              { label: "address", prop: row.address },
             ]
           }
         ]
@@ -251,7 +250,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -267,7 +266,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -289,7 +288,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -310,7 +309,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

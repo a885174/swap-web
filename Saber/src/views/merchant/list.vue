@@ -20,10 +20,10 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
 
         <template>
-          <el-button @click.stop="delteant">冻结</el-button>
+          <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>
         </template>
         <template>
           <el-button @click.stop="userdel">解除冻结</el-button>
@@ -33,14 +33,14 @@
       <template slot-scope="{row}" slot="status">
         <label
           :style="{color:row.status=='0'?'green':'red'}"
-        >{{row.status=="0"?"正常":"停用"}}</label>
+        >{{row.status=="0"?"Normal":"Frozen"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -95,10 +95,10 @@ export default {
         excelBtn: true,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         column: [
           {
-            label: "商户id",
+            label: this.$t(`merchant.merchantId`),
             prop: "merchantId",
             search: true,
             editDisabled: true,
@@ -114,7 +114,7 @@ export default {
             ]
           },
           {
-            label: "商户名称",
+            label: this.$t(`merchant.merchantName`),
             prop: "merchantName",
             search: true,
             rules: [
@@ -152,7 +152,7 @@ export default {
             ]
           },
           {
-            label: "国家",
+            label: this.$t(`merchant.countryId`),
             prop: "countryId",
             hide: true,
             rules: [
@@ -164,7 +164,7 @@ export default {
             ]
           },
           {
-            label: "城市",
+            label: this.$t(`merchant.city`),
             prop: "cityId",
             hide: true,
             rules: [
@@ -185,31 +185,31 @@ export default {
           //   }]
           // },
           {
-            label: "主要联系人",
+            label: this.$t(`supplier.linkman`),
             prop: "linkman",
             hide: true,
             rules: [
               {
                 required: false,
-                message: "请输入主要联系人",
+                message: "请输入"+this.$t(`supplier.linkman`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "联系电话",
+            label: this.$t(`store.contactNumber`),
             prop: "contactNumber",
             hide: true,
             rules: [
               {
                 required: false,
-                message: "请输入联系电话",
+                message: "请输入"+this.$t(`store.contactNumber`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "联系地址",
+            label: "address",
             prop: "address",
             hide: true,
             rules: [
@@ -261,7 +261,7 @@ export default {
             ]
           },
           {
-            label: "客户状态",
+            label: this.$t( `merchant.status`),
             search: false,
             addDisPlay: false,
             prop: "status",
@@ -270,18 +270,18 @@ export default {
             slot: true,
             dicData: [
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "0"
               },
               {
-                label: "停用",
+                label: this.$t(`tenant.Frozen`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: true,
-                message: "请输入客户状态",
+                message: "请选择"+this.$t( `merchant.status`),
                 trigger: "blur"
               }
             ]
@@ -322,18 +322,18 @@ export default {
           //     trigger: "blur"
           //   }]
           // },
-          {
-            label: "备注",
-            prop: "remark",
-            hide: true,
-            rules: [
-              {
-                required: false,
-                message: "请输入备注",
-                trigger: "blur"
-              }
-            ]
-          }
+            // {
+            //   label: "备注",
+            //   prop: "remark",
+            //   hide: true,
+            //   rules: [
+            //     {
+            //       required: false,
+            //       message: "请输入备注",
+            //       trigger: "blur"
+            //     }
+            //   ]
+            // }
           // {
           //   label: "删除状态",
           //   prop: "delFlag",
@@ -395,18 +395,17 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "商户信息",
+            title: "Merchant Info",
             column: [
-              { label: "商户id", prop: row.merchantId },
-              { label: "商户名称", prop: row.merchantName },
-              { label: "国家", prop: row.countryId },
-              { label: "城市", prop: row.cityId },
-              { label: "主要联系人", prop: row.linkman },
-              { label: "联系电话", prop: row.contactNumber },
-              { label: "联系地址", prop: row.address },
-              { label: "法律代表", prop: row.legalPerson },
-              { label: "工商备案", prop: filingStatus },
-              { label: "客户状态", prop: row.status == "0" ? "正常" : "停用" }
+              { label: this.$t(`merchant.merchantName`), prop: row.merchantName },
+              { label: this.$t(`merchant.countryId`), prop: row.countryId },
+              { label: this.$t(`merchant.city`), prop: row.cityId },
+              { label: this.$t(`supplier.linkman`), prop: row.linkman },
+              { label: this.$t(`store.contactNumber`), prop: row.contactNumber },
+              { label: "address", prop: row.address },
+              // { label: "法律代表", prop: row.legalPerson },
+              // { label: "工商备案", prop: filingStatus },
+              { label: this.$t(`teant.teantStatus`), prop: row.status == "0" ? this.$t(`battery.Normal`) :this.$t(`tenant.Frozen`) }
             ],
             fullItem: [
               {
@@ -425,7 +424,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -440,7 +439,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -457,7 +456,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -474,7 +473,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -496,7 +495,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -517,7 +516,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

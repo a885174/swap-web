@@ -20,7 +20,7 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delte`)}}</el-button>
 
         <el-button @click="dialogFormVisible = true">分配电动车</el-button>
 
@@ -41,11 +41,11 @@
         </template>
       </template>
       <template slot-scope="{row}" slot="tenantStatus">
-        <label :style="{color:row.tenantStatus=='0'?'green':'red'}">{{row.tenantStatus=="0"?"正常":"停用"}}</label>
+        <label :style="{color:row.tenantStatus=='0'?'green':'red'}">{{row.tenantStatus=="0"?'Normal':'Fezon'}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot="menu" slot-scope="scope">
-        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">查看</el-button>
+        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">{{$t(`chakan`)}}</el-button>
         <!-- <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button> -->
       </template>
     </avue-crud>
@@ -56,7 +56,7 @@
       :fullscreen="true"
     >
       <el-table :data="chaData">
-        <el-table-column label="序号" width="70px">
+        <el-table-column label="Index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="station_code" label="充电柜编码 " width="150"></el-table-column>
@@ -68,7 +68,7 @@
       </el-table>
     </el-dialog>
 
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
+    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -156,7 +156,7 @@ export default {
         selection: true,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "Index",
         column: [
           {
             label: "客户id",
@@ -208,7 +208,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入地区",
+                message: "请输入"+this.$t(`tenant.area`),
                 trigger: "blur"
               }
             ]
@@ -220,7 +220,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入行业",
+                message: "请输入"+ this.$t(`tenant.trade`),
                 trigger: "blur"
               }
             ]
@@ -232,13 +232,13 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入联系人",
+                message: "请输入"+this.$t(`tenant.linkman`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "联系电话",
+            label: this.$t(`tenant.contactNumber`),
             hide: true,
             prop: "contactNumber",
             rules: [
@@ -250,7 +250,7 @@ export default {
             ]
           },
           {
-            label: "联系地址",
+            label: "address",
             prop: "address",
             hide: true,
             rules: [
@@ -262,7 +262,7 @@ export default {
             ]
           },
           {
-            label: "邮箱",
+            label: "email",
             prop: "email",
             hide: true,
             rules: [
@@ -274,19 +274,20 @@ export default {
             ]
           },
           {
-            label: "法定代表",
+            label: this.$t(`tenant.legalPerson`),
             prop: "legalPerson",
             hide: true,
             rules: [
               {
                 required: false,
-                message: "请输入法定代表",
+                message: "请输入"+this.$t(`tenant.legalPerson`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "关联电动车数",
+            
+            label:this.$t(`tenant.scooters`),
             prop: "scooters",
             editDisabled: true,
             editDisplay: false,
@@ -300,7 +301,7 @@ export default {
             ]
           },
           {
-            label: "关联用户数",
+            label:this.$t(`tenant.users`),
             prop: "users",
             editDisabled: true,
             editDisplay: false,
@@ -314,7 +315,7 @@ export default {
             ]
           },
           {
-            label: "工商备案 ",
+            label: this.$t(`tenant.approveStatus`),
             prop: "approveStatus",
             type: "select",
             hide: true,
@@ -342,7 +343,7 @@ export default {
             ]
           },
           {
-            label: "客户状态",
+            label: this.$t(`tenant.tenantStatus`),
             search: true,
             addDisPlay: false,
             valueDefault: "0",
@@ -350,11 +351,11 @@ export default {
             slot: true,
             dicData: [
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "0"
               },
               {
-                label: "停用",
+                label: this.$t(`tenant.Frozen`),
                 value: "1"
               }
             ],
@@ -468,26 +469,26 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "客户信息",
+            title: "Clinent Info",
             column: [
-              { label: "客户id", prop: row.tenantId },
+              // { label: "客户id", prop: row.tenantId },
               { label: this.$t(`tenant.tenantName`), prop: row.tenantName },
               { label: this.$t(`tenant.area`), prop: row.area },
               { label: this.$t(`tenant.trade`), prop: row.trade },
               { label: this.$t(`tenant.linkman`), prop: row.linkman },
               {
-                label: "联系电话",
+                label: this.$t(`tenant.contactNumber`),
                 prop: row.contactNumber
               },
-              { label: "联系地址", prop: row.address },
-              { label: "邮箱", prop: row.email },
-              { label: "法定代表", prop: row.legalPerson },
-              { label: "关联电动车数", prop: row.scooters },
-              { label: "关联用户数", prop: row.users },
-              { label: "工商备案", prop: row.approveStatus },
+              { label: "address", prop: row.address },
+              { label: "email", prop: row.email },
+              { label: this.$t(`tenant.legalPerson`), prop: row.legalPerson },
+              { label: this.$t(`tenant.scooters`), prop: row.scooters },
+              { label: this.$t(`tenant.users`), prop: row.users },
+              { label: this.$t(`tenant.approveStatus`), prop: row.approveStatus },
               {
-                label: "客户状态",
-                prop: row.tenantStatus == "0" ? "正常" : "停用"
+                label: this.$t(`tenant.tenantStatus`),
+                prop: row.tenantStatus == "0" ? this.$t(`battery.Normal`) : this.$t(`teant.Frozen`)
               }
             ]
           }
@@ -501,7 +502,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -527,7 +528,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -543,7 +544,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.dialogFormVisible = false;
         });
@@ -557,7 +558,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -574,7 +575,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -601,7 +602,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -623,7 +624,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -645,7 +646,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });
