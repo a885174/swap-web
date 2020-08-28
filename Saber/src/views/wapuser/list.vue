@@ -40,7 +40,7 @@
         </template>
         <template>
           <el-button @click.stop="userdel">解除冻结</el-button>
-        </template> -->
+        </template>-->
       </template>
       <!-- <template slot-scope="{row}" slot="userStatus">
         <label
@@ -419,26 +419,35 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      this.rowItem = {
-        item: [
-          {
-            title: "用户信息",
-            column: [
-              { label: this.$t(`user.loginName`), prop: row.loginName },
-              { label: this.$t(`user.username`), prop: row.username },
-              { label: this.$t(`user.email`), prop: row.email },
-              { label: this.$t(`user.phoneNumber`), prop: row.phoneNumber },
-              { label: this.$t(`user.job`), prop: row.job },
-              { label: this.$t(`user.sex`), prop: row.sex },
-              { label: this.$t(`user.birthday`), prop: row.birthday },
-              { label: this.$t(`user.userStatus`), prop: row.userStatus },
-              { label: "最后登陆IP", prop: row.loginIp },
-              { label: "最后登陆时间", prop: row.loginDate }
-            ]
-          }
-        ]
-      };
+      getDetail(row.userId).then(res => {
+        this.form = res.data.data;
+        this.dialogViewVisible = true;
+        var data = res.data.data;
+        this.rowItem = {
+          item: [
+            {
+              title: "用户信息",
+              column: [
+                { label: this.$t(`user.loginName`), prop: data.loginName },
+                { label: this.$t(`user.username`), prop: data.username },
+                { label: this.$t(`user.email`), prop: data.email },
+                { label: this.$t(`user.phoneNumber`), prop: data.phoneNumber },
+                { label: this.$t(`user.job`), prop: data.job },
+                { label: this.$t(`user.sex`), prop: data.sex },
+                { label: this.$t(`user.birthday`), prop: data.birthday },
+                { label: this.$t(`user.userStatus`), prop: data.userStatus },
+                { label: "身份证", prop: data.idcard },
+                { label: "家庭地址", prop: data.address },
+                { label: "紧急联系人", prop: data.emergencyContact },
+                { label: "紧急联系电话", prop: data.emergencyPhone },
+                { label: "邮箱已验证", prop: data.checkEmail=="0"?"未验证":"已验证" },
+                { label: "最后登陆IP", prop: data.loginIp },
+                { label: "最后登陆时间", prop: data.loginDate },
+              ]
+            }
+          ]
+        };
+      });
     },
     goimportxls() {
       importxls().then(response => {
@@ -603,4 +612,29 @@ export default {
 </script>
 
 <style>
+.abow_dialog .el-dialog .el-dialog__body {
+  padding: 0 30px;
+}
+.abow_dialog .title {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.847058823529412);
+  line-height: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.abow_dialog .item {
+  overflow: hidden;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  border-bottom: 1px solid #ebebeb;
+}
+.abow_dialog .item label {
+  line-height: 32px;
+}
+.abow_dialog .fullItem {
+  padding-bottom: 12px;
+  padding-top: 12px;
+  line-height: 20px;
+  border-bottom: 1px solid #ebebeb;
+}
 </style>
