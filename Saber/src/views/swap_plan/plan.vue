@@ -20,26 +20,26 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete">批量删除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete">{{`delete`}}</el-button>
 
         <template>
-          <el-button @click.stop="delteant">下架</el-button>
+          <el-button @click.stop="delteant">{{$t(`plan.takeOff`)}}</el-button>
         </template>
         <template>
-          <el-button @click.stop="userdel">上架</el-button>
+          <el-button @click.stop="userdel">{{$t(`plan.sale`)}}</el-button>
         </template>
       </template>
 
       <template slot-scope="{row}" slot="planStatus">
-        <label :style="{color:row.planStatus=='0'?'green':'red'}">{{row.planStatus=="0"?"上架":"下架"}}</label>
+        <label :style="{color:row.planStatus=='0'?'green':'red'}">{{row.planStatus=="0"?"Sale":"Take Off"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -112,80 +112,80 @@ export default {
           //   }]
           // },
           {
-            label: "套餐名",
+            label: this.$t(`plan.planName`),
             prop: "planName",
             search: true,
             rules: [
               {
                 required: true,
-                message: "请输入套餐名",
+                message: "请输入"+this.$t(`plan.planName`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "售价(元)",
+            label: this.$t(`plan.price`),
             prop: "price",
             rules: [
               {
                 required: false,
-                message: "请输入售价 ",
+                message: "请输入"+this.$t(`plan.price`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "套餐里程数(千米)",
+            label: this.$t(`plan.distanceSum`),
             prop: "distanceSum",
             rules: [
               {
                 required: false,
-                message: "请输入套餐里程数 ",
+                message: "请输入"+ this.$t(`plan.distanceSum`),
                 trigger: "blur"
               }
             ]
           },
-          {
-            label: "折扣(%) ",
-            prop: "discount",
-            type: "number",
-            valueDefault: 100,
-            rules: [
-              {
-                required: false,
-                message: "请输入折扣",
-                validator: validateNumber,
+          // {
+          //   label: "折扣(%) ",
+          //   prop: "discount",
+          //   type: "number",
+          //   valueDefault: 100,
+          //   rules: [
+          //     {
+          //       required: false,
+          //       message: "请输入折扣",
+          //       validator: validateNumber,
 
-                trigger: "blur"
-              }
-            ]
-          },
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // },
           {
-            label: "使用时间(天数)",
+            label: this.$t(`plan.ailableTime`),
             prop: "ailableTime",
             type: "number",
             valueDefault: 0,
             rules: [
               {
                 required: true,
-                message: "请输入使用时间 ",
+                message: "请输入"+this.$t(`plan.ailableTime`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "套餐状态",
+            label: this.$t(`plan.planStatus`),
             prop: "planStatus",
             type: "select",
             valueDefault: "1",
             slot: true,
             dicData: [
               {
-                label: "上架",
+                label: this.$t(`plan.sale`),
                 value: "0"
               },
               {
-                label: "下架",
+                label: this.$t(`plan.takeOff`),
                 value: "1"
               }
             ],
@@ -271,15 +271,15 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "套餐信息",
+            title: "Detail",
             column: [
-              { label: "套餐id", prop: row.planId },
-              { label: "套餐名", prop: row.planName },
-              { label: "售价(元)", prop: row.price },
-              { label: "套餐里程数(千米)", prop: row.distanceSum },
-              { label: "折扣(%)", prop: row.discount },
-              { label: "使用时间(天数)", prop: row.ailableTime },
-              { label: "套餐状态", prop: row.planStatus=="0"?"上架":"下架" },
+              // { label: "套餐id", prop: row.planId },
+              { label: this.$t(`plan.planName`), prop: row.planName },
+              { label: this.$t(`plan.price`), prop: row.price },
+              { label: this.$t(`plan.distanceSum`), prop: row.distanceSum },
+              // { label: "折扣(%)", prop: row.discount },
+              { label: this.$t(`plan.ailableTime`), prop: row.ailableTime },
+              { label: this.$t(`plan.planStatus`), prop: row.planStatus=="0"?this.$t(`plan.sale`):this.$t(`plan.takeOff`) },
             ]
           }
         ]
@@ -292,7 +292,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -307,7 +307,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -324,7 +324,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -341,7 +341,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -363,7 +363,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -384,7 +384,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

@@ -2,27 +2,27 @@
   <div id="info" class="fullbox">
     <div class="content">
       <div class="item">
-       <span class="title">可换电池电量:</span>
+       <span class="title">Avaliable Battery Level:</span>
         <span class="info">{{form.name}}</span>
-        <el-button type="primary" size="small" @click="dialogFormVisible = true">编辑</el-button>
+        <el-button type="primary" size="small" @click="dialogFormVisible = true">Update</el-button>
       </div>
       <div class="item">
-        <span class="title">预约有效时间/min:</span>
+        <span class="title">Booking Valid Time / min</span>
         <span class="info">{{form.time}}</span>
-        <el-button type="primary" size="small" @click="formVisible = true">编辑</el-button>
+        <el-button type="primary" size="small" @click="formVisible = true">Update</el-button>
       </div>
     </div>
 
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
       <span slot="footer" class="dialog-footer">
         <el-form :model="form">
-          <el-form-item label="可换电池电量" :label-width="formLabelWidth">
+          <el-form-item label="Avaliable Battery Level" :label-width="formLabelWidth">
             <el-input v-model="form.name" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">Submit</el-button>
         </div>
       </span>
     </el-dialog>
@@ -30,7 +30,7 @@
     <el-dialog title="编辑" :visible.sync="formVisible">
       <span slot="footer" class="dialog-footer">
         <el-form :model="form">
-          <el-form-item label="预约有效时间" :label-width="formLabelWidth">
+          <el-form-item label="Booking Valid Time / min" :label-width="formLabelWidth">
             <el-input v-model="form.time" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>

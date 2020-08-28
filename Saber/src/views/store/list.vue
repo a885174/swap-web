@@ -541,9 +541,8 @@ export default {
         cellBtn: false,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         menuWidth: 250,
-        dialogFullscreen: true,
         column: [
           {
             label: "店铺ID",
@@ -563,7 +562,7 @@ export default {
             ]
           },
           {
-            label: "店铺名",
+            label: this.$t(`store.storeName`),
             prop: "storeName",
             search: true,
             rules: [
@@ -588,7 +587,7 @@ export default {
           },
 
           {
-            label: "结算周期（天）",
+            label:this.$t(`store.rentPeriod`),
             prop: "rentPeriod",
             type: "number",
             valueDefault: 30,
@@ -603,7 +602,7 @@ export default {
           },
 
           {
-            label: "租金",
+            label: this.$t(`store.rentPrice`),
             prop: "rentPrice",
             slot: true,
             valueDefault: 0,
@@ -618,7 +617,7 @@ export default {
           },
 
           {
-            label: "电费单价",
+            label: this.$t('store.electricityPrice'),
             prop: "electricityPrice",
             slot: true,
             valueDefault: 0,
@@ -632,7 +631,7 @@ export default {
             ]
           },
           {
-            label: "联系人",
+            label:this.$t(`store.linkman`),
             prop: "linkman",
             hide: true,
             rules: [
@@ -644,7 +643,7 @@ export default {
             ]
           },
           {
-            label: "联系电话",
+            label:this.$t('store.contactNumber'),
             prop: "contactNumber",
             hide: true,
             rules: [
@@ -656,7 +655,7 @@ export default {
             ]
           },
           {
-            label: "地址",
+            label: this.$t(`store.address`),
             prop: "address",
             hide: true,
             rules: [
@@ -713,7 +712,7 @@ export default {
           //   listType:'picture-img',
           // },
           {
-            label: "店铺状态",
+            label:this.$t(`store.storeStatus`),
             prop: "storeStatus",
             search: true,
             valueDefault: "1",
@@ -849,7 +848,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -891,7 +890,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -906,7 +905,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -930,7 +929,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.innerVisible = false;
       });
@@ -964,7 +963,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.fileDialog = false;
       });
@@ -993,7 +992,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -1018,7 +1017,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -1028,7 +1027,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -1054,7 +1053,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.uploadDialog = false;
       });
@@ -1067,7 +1066,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -1101,7 +1100,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -1124,7 +1123,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -1134,7 +1133,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.dialogFormVisible = false;
         });
@@ -1156,7 +1155,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.timeFormVisible = false;
       });
@@ -1177,7 +1176,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -1199,7 +1198,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

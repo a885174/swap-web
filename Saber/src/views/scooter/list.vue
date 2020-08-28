@@ -20,7 +20,7 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
 
         <!--     
           <el-button type="primary"
@@ -50,16 +50,16 @@
                   @click="submitUpload"
                 >上传到服务器</el-button>
                 <el-button size="small" type="infor" @click="download">导入模板</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传xls文件</div>
+                <div slot="tip" class="el-upload__tip">please select xls</div>
               </el-upload>
             </el-form-item>
           </el-form>
-          <el-button size="medium" slot="reference">导入</el-button>
+          <el-button size="medium" slot="reference">{{$t(`import`)}}</el-button>
         </el-popover>
 
-        <el-button @click="openTenantWindos()">分配客户</el-button>
+        <el-button @click="openTenantWindos()">{{$t(`assignClient`)}}</el-button>
 
-        <el-dialog title="分配客户" :visible.sync="dialogFormVisible" width="30%" center>
+        <el-dialog title="Assign Client" :visible.sync="dialogFormVisible" width="30%" center>
           <span slot="footer" class="dialog-footer">
             <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
           </span>
@@ -72,8 +72,7 @@
           <el-button @click.stop="userdel">解除用户关联</el-button>
         </template>
         <el-button @click.stop="Updatelock">欠费锁车</el-button>
-        <el-button>删除</el-button>
-      </template>
+        </template>
 
       <template slot-scope="{row}" slot="userId">
         <el-tag>{{row.loginName}}</el-tag>
@@ -86,11 +85,11 @@
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -146,7 +145,7 @@ export default {
       formoption: {
         column: [
           {
-            label: "分配客户",
+            label: this.$t(`assignClient`),
             prop: "tenantId",
             type: "tree",
             span: 24,
@@ -205,25 +204,26 @@ export default {
             prop: "scooterCode",
             editDisabled: true,
             search: true,
-            span: 8,
+            span: 20,
+            labelWidth:120,
             rules: [
               {
                 required: true,
-                message: "请输入电动车编号 VIN码",
+                message: "请输入"+this.$t(`scooter.vincode`),
                 trigger: "blur"
               }
             ]
           },
           {
             label: this.$t(`scooter.licensePlate`),
-            // width: 100,
             prop: "licensePlate",
-            span: 8,
+            span: 20,
             search: true,
+            labelWidth:120,
             rules: [
               {
                 required: false,
-                message: "请输入车牌号",
+                message: "请输入"+this.$t(`scooter.licensePlate`),
                 trigger: "blur"
               }
             ]
@@ -242,7 +242,7 @@ export default {
             ]
           },
           {
-            label: "设备IMEI码",
+            label: "IMEI",
             // width: 160,
             addDisabled: true,
             addDisplay: false,
@@ -257,7 +257,7 @@ export default {
             ]
           },
           {
-            label: this.$t(`station.connectStatus`),
+            label: this.$t(`scooter.connectStatus`),
             prop: "connectStatus",
             slot: true,
             //addDisabled:true,
@@ -267,11 +267,11 @@ export default {
             valueDefault: "1",
             dicData: [
               {
-                label: "已连接",
+                label: this.$t(`Connected`),
                 value: "0"
               },
               {
-                label: "未连接",
+                label: this.$t(`Unconnected`),
                 value: "1"
               }
             ],
@@ -556,7 +556,7 @@ export default {
             ]
           },
           {
-            label: "可装电池数",
+            label: this.$t(`scooter.batteryNumber`),
             width: 100,
             hide: true,
             prop: "batteryNumber",
@@ -565,13 +565,13 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入可装电池数",
+                message: "请输入"+this.$t(`scooter.batteryNumber`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "行车总里程",
+            label: this.$t(`scooter.mileageValue`),
             width: 100,
             hide: true,
             prop: "mileageValue",
@@ -582,7 +582,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入行车总里程",
+                message: "请输入："+this.$t(`scooter.mileageValue`),
                 trigger: "blur"
               }
             ]
@@ -676,7 +676,7 @@ export default {
             ]
           },
           {
-            label: "保质期（月）",
+            label: this.$t(`scooter.expirationDate`),
             prop: "expirationDate",
             hide: true,
             valueDefault: "1",
@@ -835,7 +835,7 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "电动车信息",
+            title: "Scooter",
             column: [
               { label: this.$t(`scooter.vincode`), prop: row.scooterCode },
               {
@@ -846,14 +846,14 @@ export default {
                 label: this.$t(`scooter.scooterVersion`),
                 prop: row.scooterVersion
               },
-              { label: "电池数", prop: row.batteryNumber },
-              { label: "设备IMEI码", prop: row.imei },
+              { label: this.$t(`scooter.batteryNumber`), prop: row.batteryNumber },
+              { label: "IMEI", prop: row.imei },
               {
-                label: "行车总里程",
+                label: this.$t(`scooter.mileageValue`),
                 prop: row.mileageValue == null ? "0" : row.mileageValue + "km"
               },
-              { label: "保质期（月）", prop: row.expirationDate + "月" },
-              { label: "出厂时间", prop: row.produceTime },
+              { label:this.$t(`scooter.expirationDate`), prop: row.expirationDate + "month" },
+              { label: this.$t(`scooter.produceTime`), prop: row.produceTime },
               {
                 label: this.$t(`scooter.sellChannel`),
                 prop: row.sellChannel == 0 ? "客户" : "门店"
@@ -861,10 +861,10 @@ export default {
             ]
           },
           {
-            title: "电动车状态",
+            title:  this.$t(`scooter.scooterStatus`),
             column: [
               {
-                label: this.$t(`scooter.scooterStatus`),
+                label:  this.$t(`scooter.scooterStatus`),
                 prop: scooterStatus
               },
               {
@@ -888,8 +888,16 @@ export default {
                 prop: row.lockStatus == "0" ? "已锁定 " : "未锁定"
               },
               {
+                label:this.$t(`scooter.connectStatus`),
+                prop:row.connectStatus == "0" ? this.$t(`Connected`):this.$t(`Unconnected`)
+              },
+              {
                 label: this.$t(`scooter.securityLock`),
                 prop: row.securityLock == "0" ? "已锁定 " : "未连接"
+              },
+              {
+                label: this.$t(`scooter.arrearageLock`),
+                prop: row.arrearageLock == "0" ? "已锁定 " : "未连接"
               },
               {
                 label: this.$t(`scooter.arrearageLock`),
@@ -898,12 +906,12 @@ export default {
             ]
           }
         ],
-        fullItem: [
-          {
-            title: "备注",
-            prop: row.remark
-          }
-        ]
+        // fullItem: [
+        //   {
+        //     title: "备注",
+        //     prop: row.remark
+        //   }
+        // ]
       };
     },
     customUpload(file) {
@@ -914,7 +922,7 @@ export default {
         if (response.code == 200) {
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         }
       });
@@ -930,7 +938,7 @@ export default {
             this.onLoad(this.page);
             this.$message({
               type: "success",
-              message: "操作成功!"
+              message: "success!"
             });
           });
         });
@@ -953,7 +961,7 @@ export default {
             this.onLoad(this.page);
             this.$message({
               type: "success",
-              message: "操作成功!"
+              message: "success!"
             });
           });
         });
@@ -970,7 +978,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -999,7 +1007,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -1015,7 +1023,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -1054,7 +1062,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.dialogFormVisible = false;
         });
@@ -1084,7 +1092,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -1112,7 +1120,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

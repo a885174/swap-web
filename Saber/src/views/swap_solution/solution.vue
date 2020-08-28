@@ -27,11 +27,11 @@
           plain
           v-if="permission.solution_delete"
           @click="handleDelete"
-        >删 除</el-button>
+        ></el-button>
       </template>
-      <template slot-scope="{row}" slot="menu">
+      <!-- <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
-      </template>
+      </template> -->
     </avue-crud>
     <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
@@ -98,7 +98,7 @@ export default {
             ]
           },
           {
-            label: "故障编号",
+            label:this.$t('faultCode'),
             prop: "faultCode",
             rules: [
               {
@@ -109,7 +109,7 @@ export default {
             ]
           },
           {
-            label: "故障类型",
+            label: this.$t(`faultType`),
             prop: "faultType",
             type: "select",
             dicData: [
@@ -131,7 +131,7 @@ export default {
             ]
           },
           {
-            label: "故障代码",
+            label: "faultKey",
             prop: "faultKey",
             rules: [
               {
@@ -142,7 +142,7 @@ export default {
             ]
           },
           {
-            label: "故障值",
+            label: "faultValue",
             prop: "faultValue",
             rules: [
               {
@@ -153,7 +153,7 @@ export default {
             ]
           },
           {
-            label: "故障名称",
+            label: this.$t(`solution.faultName`),
             prop: "faultName",
             rules: [
               {
@@ -164,7 +164,7 @@ export default {
             ]
           },
           {
-            label: "解决方案",
+            label:this.$t(`solution.Solution`),
             prop: "faultSolution",
             rules: [
               {
@@ -173,6 +173,7 @@ export default {
                 trigger: "blur"
               }
             ]
+
           },
           {
             label: "创建人",
@@ -282,7 +283,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -298,7 +299,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -320,7 +321,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -341,7 +342,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

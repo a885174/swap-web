@@ -48,7 +48,7 @@
         >{{row.userStatus=="0"?"正常":(row.userStatus=="1"?"已冻结":"欠费锁定")}}</label>
       </template>-->
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
     <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
@@ -102,15 +102,16 @@ export default {
         tip: false,
         border: true,
         viewBtn: false,
+        addBtn:false,
         index: true,
         selection: true,
         excelBtn: true,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         column: [
           {
-            label: "用户ID",
+            label: "userId",
             prop: "userId",
             editDisabled: true,
             editDisplay: false,
@@ -423,7 +424,7 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "用户信息",
+            title: "User Info",
             column: [
               { label: this.$t(`user.loginName`), prop: row.loginName },
               { label: this.$t(`user.username`), prop: row.username },
@@ -433,8 +434,6 @@ export default {
               { label: this.$t(`user.sex`), prop: row.sex },
               { label: this.$t(`user.birthday`), prop: row.birthday },
               { label: this.$t(`user.userStatus`), prop: row.userStatus },
-              { label: "最后登陆IP", prop: row.loginIp },
-              { label: "最后登陆时间", prop: row.loginDate }
             ]
           }
         ]
@@ -457,7 +456,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -474,7 +473,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -491,7 +490,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -507,7 +506,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -529,7 +528,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -550,7 +549,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

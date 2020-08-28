@@ -196,7 +196,7 @@ export default {
             this.map = new mapboxgl.Map({
         container: this.$refs.basicMapbox,
         center: [12.550343, 55.665957],
-        zoom: 11,
+        zoom: 10,
         style: 'mapbox://styles/mapbox/streets-v11'
       });
 

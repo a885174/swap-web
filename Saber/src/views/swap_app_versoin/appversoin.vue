@@ -89,7 +89,7 @@ export default {
           //   }]
           // },
           {
-            label: "版本号",
+            label: this.$t(`AppVseroin.appVersoin`),
             prop: "versoin",
             rules: [
               {
@@ -99,28 +99,28 @@ export default {
               }
             ]
           },
-          {
-            label: "是否强制更新",
-            prop: "isForcedUpdate",
-            type: "select",
-            dicData: [
-              {
-                label: "否",
-                value: "1"
-              },
-              {
-                label: "是",
-                value: "0"
-              }
-            ],
-            rules: [
-              {
-                required: true,
-                message: "请输入版本号",
-                trigger: "blur"
-              }
-            ]
-          },
+          // {
+          //   label:this.$t(`AppVersoin.isForcedUpdate`),
+          //   prop: "isForcedUpdate",
+          //   type: "select",
+          //   dicData: [
+          //     {
+          //       label: "否",
+          //       value: "1"
+          //     },
+          //     {
+          //       label: "是",
+          //       value: "0"
+          //     }
+          //   ],
+          //   rules: [
+          //     {
+          //       required: true,
+          //       message: "请输入版本号",
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // },
           {
             label: "apk地址",
             prop: "apkUrl",
@@ -133,7 +133,7 @@ export default {
             ]
           },
           {
-            label: "更新日志",
+            label: this.$t(`AppVseroin.updatedInstruction`),
             prop: "versoinLog",
             rules: [
               {
@@ -204,7 +204,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -220,7 +220,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -242,7 +242,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -263,7 +263,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

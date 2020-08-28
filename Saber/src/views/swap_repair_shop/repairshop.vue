@@ -20,25 +20,25 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">删 除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
 
         <template>
-          <el-button @click.stop="delteant">下架</el-button>
+          <el-button @click.stop="delteant">{{$t(`plan.takeOff`)}}</el-button>
         </template>
         <template>
-          <el-button @click.stop="userdel">上架</el-button>
+          <el-button @click.stop="userdel">{{$t(`plan.sale`)}}</el-button>
         </template>
       </template>
       <template slot-scope="{row}" slot="shopStatus">
         <label
           :style="{color:row.shopStatus=='0'?'green':'red'}"
-        >{{row.shopStatus=="0"?"正常":(row.shopStatus=="1"?"上架":"下架")}}</label>
+        >{{row.shopStatus=="0"?"正常":(row.shopStatus=="1"?"Sale":"Take Off")}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
 
       <template slot-scope="scope" slot="menu">
         <el-button type="text" icon="el-icon-date" size="small" @click="opentable(scope.row)">营业时间分配</el-button>
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
         <el-button type="text" icon="el-icon-picture-outline" size="small" @click="getGridData(scope.row)">图片管理</el-button>
         <el-button
           type="text"
@@ -104,7 +104,7 @@
             <el-option label="星期天" value="7"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="营业开始时间" :label-width="formLabelWidth">
+        <el-form-item label="Start TIME" :label-width="formLabelWidth">
           <el-select v-model="addform.businessTimeS" placeholder="请选择时间">
             <el-option label="1:00" value="1:00"></el-option>
             <el-option label="2:00" value="2:00"></el-option>
@@ -132,7 +132,7 @@
             <el-option label="24:00" value="24:00"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="营业结束时间" :label-width="formLabelWidth">
+        <el-form-item label="END Time" :label-width="formLabelWidth">
           <el-select v-model="addform.businessTimeE" placeholder="请选择时间">
             <el-option label="1:00" value="1:00"></el-option>
             <el-option label="2:00" value="2:00"></el-option>
@@ -398,10 +398,10 @@ export default {
         selection: true,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         column: [
           {
-            label: "维修店铺id",
+            label: this.$t(`repairshop.shopId`),
             prop: "shopId",
             editDisabled:true,
             editDisplay:false,
@@ -414,7 +414,7 @@ export default {
             }]
           },
           {
-            label: "店铺名称",
+            label:this.$t(`repairshop.shopeName`),
             prop: "shopName",
             search: true,
             rules: [
@@ -509,49 +509,49 @@ export default {
             ]
           },
           {
-            label: "联系人",
+            label: this.$t(`supplier.linkman`),
             prop: "linkman",
             hide: true,
             rules: [
               {
                 required: false,
-                message: "请输入联系人",
+                message: "请输入"+this.$t(`stoe.linkman`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "联系电话",
+            label: this.$t(`supplier.contactNumber`),
             prop: "contactNumber",
             hide: true,
             rules: [
               {
                 required: false,
-                message: "请输入联系电话",
+                message: "请输入"+this.$t(`stoe.contactNumber`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "店铺状态",
+            label: this.$t(`repairshop.shopStatus`),
             prop: "shopStatus",
             valueDefault: "1",
             type: "select",
             slot: true,
             dicData: [
               {
-                label: "上架",
+                label: this.$t(`plan.sale`),
                 value: "0"
               },
               {
-                label: "下架",
+                label: this.$t(`plan.takeOff`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: true,
-                message: "请输入店铺状态 （0上架、1下架）",
+                message: "请输入"+this.$t(`repairshop.shopStatus`),
                 trigger: "blur"
               }
             ]
@@ -630,21 +630,21 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "套餐信息",
+            title: "Detail",
             column: [
-              { label: "维修店铺id", prop: row.shopId },
-              { label: "店铺名称", prop: row.shopName },
-              { label: "维修区域", prop: row.areaId },
+              // { label: "维修店铺id", prop: row.shopId },
+              { label: this.$t(`repairshop.shopeName`), prop: row.shopName },
+              // { label: "维修区域", prop: row.areaId },
               { label: "维修区域", prop: row.areaName },
               { label: "所属维修商", prop: row.comId },
               { label: "营业开始时间", prop: row.businessTimeS },
               { label: "营业结束时间", prop: row.businessTimeE },
-              { label: "地址", prop: row.address },
-              { label: "联系人", prop: row.linkman },
-              { label: "联系电话", prop: row.contactNumber },
+              { label: "addrees", prop: row.address },
+              { label: this.$t(`supplier.linkman`), prop: row.linkman },
+              { label: this.$t(`supplier.contactNumber`), prop: row.contactNumber },
               {
-                label: "店铺状态",
-                prop: row.shopStatus == "0" ? "上架" : "下架"
+                label: this.$t(`repairshop.shopStatus`),
+                prop: row.shopStatus == "0" ? this.$t(`plan.sale`) : "this.$t(`plan.takeOff`) "
               }
             ]
           }
@@ -658,7 +658,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -713,7 +713,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.uploadDialog = false;
       });
@@ -736,7 +736,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.fileDialog = false;
       });
@@ -761,7 +761,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -784,7 +784,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -800,7 +800,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -817,7 +817,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
       } else {
@@ -840,7 +840,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -867,7 +867,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -884,7 +884,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.innerVisible = false;
       });
@@ -906,7 +906,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -927,7 +927,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });
@@ -961,7 +961,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -984,7 +984,7 @@ export default {
         });
         this.$message({
           type: "success",
-          message: "操作成功!"
+          message: "success!"
         });
         this.timeFormVisible = false;
       });

@@ -20,15 +20,15 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete  `)}}</el-button>
       </template>
 
       <template slot-scope="scope" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click="rowView(scope.row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -82,11 +82,12 @@ export default {
         selection: true,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         column: [
           {
             label: "供应商id",
             prop: "supplierId",
+            hide:true,
             editDisabled: true,
             editDisplay: false,
             addDisabled: true,
@@ -100,7 +101,7 @@ export default {
             ]
           },
           {
-            label: "供应商名称",
+            label: this.$t(`supplier.supplierName`),
             prop: "supplierName",
             search: true,
             rules: [
@@ -112,12 +113,11 @@ export default {
             ]
           },
           {
-            label: "供应商类型",
+            label: this.$t(`supplier.type`),
             prop: "supplierType",
             type: "select",
             valueDefault: "1",
             search: true,
-            hide: true,
             dicData: [
               {
                 label: "电动车供应商",
@@ -129,7 +129,7 @@ export default {
               },
               {
                 label: "电池供应商",
-                value: "1"
+                value: "3"
               }
             ],
             rules: [
@@ -141,7 +141,7 @@ export default {
             ]
           },
           {
-            label: "主要联系人",
+            label: this.$t(`supplier.linkman`),
             prop: "linkman",
             hide: true,
             rules: [
@@ -153,7 +153,7 @@ export default {
             ]
           },
           {
-            label: "联系电话",
+            label: this.$t(`supplier.contactNumber`),
             prop: "contactNumber",
             hide: true,
             rules: [
@@ -165,7 +165,7 @@ export default {
             ]
           },
           {
-            label: "地址",
+            label: this.$t(`supplier.address`),
             prop: "address",
             hide: true,
             rules: [
@@ -212,18 +212,18 @@ export default {
           //     trigger: "blur"
           //   }]
           // },
-          {
-            label: "备注",
-            prop: "remark",
-            hide: true,
-            rules: [
-              {
-                required: false,
-                message: "请输入备注",
-                trigger: "blur"
-              }
-            ]
-          }
+          // {
+          //   label: "备注",
+          //   prop: "remark",
+          //   hide: true,
+          //   rules: [
+          //     {
+          //       required: false,
+          //       message: "请输入备注",
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // }
         ]
       },
       data: []
@@ -253,35 +253,35 @@ export default {
       console.log(row);
       var supplierType;
       switch (row.supplierType) {
-        case "0":
+        case "1":
           supplierType = "电动车供应商";
           break;
-        case "1":
+        case "2":
           supplierType = "换电柜供应商";
           break;
-        case "2":
+        case "3":
           supplierType = "电池供应商";
           break;
       }
       this.rowItem = {
         item: [
           {
-            title: "供应商信息",
+            title: "Suppllier Info  ",
             column: [
-              { label: "供应商id", prop: row.supplierId },
-              { label: "供应商名称", prop: row.supplierName },
-              { label: "供应商类型", prop: supplierType },
-              { label: "主要联系人", prop: row.linkman },
-              { label: "联系电话", prop: row.contactNumber },
-              { label: "地址", prop: row.address }
+              // { label: "供应商id", prop: row.supplierId },
+              { label: this.$t(`supplier.supplierName`), prop: row.supplierName },
+              { label: this.$t(`supplier.type`), prop: supplierType },
+              { label: this.$t(`store.linkman`), prop: row.linkman },
+              { label: this.$t(`store.contactNumber`), prop: row.contactNumber },
+              { label: "address", prop: row.address }
             ]
           }
         ],
         fullItem: [
-          {
-            title: "备注",
-            prop: row.remark
-          }
+          // {
+          //   title: "备注",
+          //   prop: row.remark
+          // }
         ]
       };
     },
@@ -292,7 +292,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -308,7 +308,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -330,7 +330,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -351,7 +351,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

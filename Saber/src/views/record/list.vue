@@ -78,7 +78,7 @@
               }]
             },
             {
-              label: "记录编号",
+              label: this.$t(`record.recordNumber`),
               prop: "recordNumber",
               search:true,
               rules: [{
@@ -88,7 +88,7 @@
               }]
             },
             {
-              label: "用户",
+              label: this.$t(`record.userName`),
               prop: "userName",
               editDisabled:true,
               editDisplay:false,
@@ -101,7 +101,7 @@
               }]
             },
             {
-              label: "电动车编码",
+              label: this.$t(`record.scooterCode`),
               prop: "scooterCode",
               editDisabled:true,
               editDisplay:false,
@@ -114,8 +114,8 @@
               }]
             },
             {
-              label: "电池编码",
-                 hide:true,
+              label: this.$t(`record.batteryCode`),
+              prop: "batteryCode",
               editDisabled:true,
               editDisplay:false,
               addDisabled:true,
@@ -125,9 +125,10 @@
                 message: "请输入电池id",
                 trigger: "blur"
               }]
+
             },
             {
-              label: "换电柜编码",
+              label:this.$t(`recorde.stationCode`),
               prop: "stationCode",
               editDisabled:true,
               editDisplay:false,
@@ -140,7 +141,7 @@
               }]
             },
             {
-              label: "充电仓",
+              label: this.$t(`record.warehouseCode`),
               prop: "warehouseCode",
               editDisabled:true,
               editDisplay:false,
@@ -154,7 +155,7 @@
               }]
             },
             {
-              label: "订单开始时间",
+              label: this.$t(`record.orderTimeS`),
               prop: "orderTimeS",
               format: "yyyy-MM-dd hh:mm:ss",
               valueFormat: "yyyy-MM-dd hh:mm:ss",
@@ -167,12 +168,11 @@
               }]
             },
             {
-              label: "订单结束时间",
+              label: this.$t(`record.orderTimeE`),
               prop: "orderTimeE",
               format: "yyyy-MM-dd hh:mm:ss",
               valueFormat: "yyyy-MM-dd hh:mm:ss",
               type: "date",
-              
               rules: [{
                 required: true,
                 message: "请输入订单结束时间",
@@ -180,7 +180,7 @@
               }]
             },
             {
-              label: "订单状态",
+              label:this.$t('record.orderStatus'),
               seach:true,
               prop: "orderStatus",
               type:'select',
@@ -297,7 +297,7 @@
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         }, error => {
           done();
@@ -310,7 +310,7 @@
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         }, error => {
           done();
@@ -330,7 +330,7 @@
             this.onLoad(this.page);
             this.$message({
               type: "success",
-              message: "操作成功!"
+              message: "success!"
             });
           });
       },
@@ -351,7 +351,7 @@
             this.onLoad(this.page);
             this.$message({
               type: "success",
-              message: "操作成功!"
+              message: "success!"
             });
             this.$refs.crud.toggleSelection();
           });

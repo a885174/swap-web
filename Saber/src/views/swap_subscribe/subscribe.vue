@@ -98,7 +98,7 @@ export default {
           //   }]
           // },
           {
-            label: "充电柜编号",
+            label: this.$t(`subscribe.stationName`),
             prop: "stationName",
             rules: [
               {
@@ -110,7 +110,7 @@ export default {
           },
 
           {
-            label: "预约用户",
+            label: this.$t(`subscribe.username`),
             prop: "userName",
             rules: [
               {
@@ -121,7 +121,7 @@ export default {
             ]
           },
           {
-            label: "电池",
+            label:this.$t(`subscribe.batteryName`),
             prop: "batteryName",
             rules: [
               {
@@ -132,7 +132,7 @@ export default {
             ]
           },
           {
-            label: "充电仓编号",
+            label: this.$t(`subscribe.Warehouse`),
             prop: "warehouse",
             rules: [
               {
@@ -143,7 +143,7 @@ export default {
             ]
           },
           {
-            label: "发起预约时间",
+            label: this.$t(`subscribe.subscribeTime`),
             prop: "subscribeTime",
             rules: [
               {
@@ -154,7 +154,7 @@ export default {
             ]
           },
           {
-            label: "预约成功时间",
+            label:this.$t(`subscribe.succeedTime`),
             prop: "succeedTime",
             rules: [
               {
@@ -165,7 +165,7 @@ export default {
             ]
           },
           {
-            label: "有效时间 分钟",
+            label:this.$t(`subscribe.effectiveTime`),
             prop: "effectiveTime",
             rules: [
               {
@@ -176,7 +176,7 @@ export default {
             ]
           },
           {
-            label: "预约状态 ",
+            label:this.$t(`subscribe.subscribeState`),
             prop: "subscribeState",
             type: "select",
             dicData: [
@@ -316,7 +316,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -332,7 +332,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         },
         error => {
@@ -354,7 +354,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         });
     },
@@ -375,7 +375,7 @@ export default {
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
           this.$refs.crud.toggleSelection();
         });

@@ -6,6 +6,12 @@ export default {
   cancelText: 'cancel',
   search: 'Please input search content',
   menuTip: 'none menu list',
+  import:'Import',
+  assignClient:'Assign Client',
+  UnlinkwithClient:'Unlink with Client',
+  Connected:'Connected',
+  Unconnected:'Unconnected',
+  chakan:'view',
   wel: {
     info: 'Good morning, Smallwei, Avuex is a framework',
     dept: 'a certain technology department',
@@ -46,6 +52,7 @@ export default {
       nr: 'Work content',
       sj: 'Working hours',
     }
+    
   },
   route: {
     info: 'info',
@@ -100,9 +107,9 @@ export default {
     closeAll: 'Close All'
   },
   scooter:{
-    vincode:'VIN Number',
+    vincode:'VIN',
     name:'Name of Motorcycle',
-    licensePlate:'License Plate Number',
+    licensePlate:'Car License ',
     scooterVersion:'Model Number',
     scooterStatus:'Motorcycle Status',
     sellChannel:'Sales Channel',
@@ -113,6 +120,11 @@ export default {
     lockStatus:'Locked Status',
     securityLock:'Locked for Stolen',
     arrearageLock:'Locked for Owed',
+    mileageValue:'Total Distance Travelled',
+    batteryNumber:'Battery Number',
+    connectStatus:'ConnectStatus',
+    expirationDate:'Expiration Date(Day)',
+    produceTime:'Produce Date',
   },
   battery:{
     batteryCode:'Battery ID Number',
@@ -131,6 +143,20 @@ export default {
     temperature:'Temperature',
     connectStatus:'Connected Status',
     systemStatus:'System Model',
+    Normal:'Normal',
+    Fault:'Fault',
+    Repairing:'Repairing',
+    Castoff:'Cast off',
+    Locked:'Locked',
+    Unlocked:'UbLocked',
+    Charge:'Charge',
+    Out:'Out',
+    Close:'Close',
+    Activated:'Activated',
+    Unactivated:'Unactivated',
+    Safe:'Safe',
+    Stolen:'Stolen',
+    Sleep:'Sleep'
   },
   station:{
     stationCode:'Swap Station ID Number',
@@ -153,24 +179,128 @@ export default {
     userStatus:'Status of Account'
   },
 
+supplier:{
+  supplierName:'Supplier Name',
+  linkman:'Link Man',
+  contactNumber:'Contact Number',
+  address:'Address',
+  type:'Production'
+
+},
+store:{
+  storeName:'Store Name',
+  rentPeriod:'Settlement days',
+  rentPrice:'Rent Price',
+  electricityPrice:'Electricity Price',
+  linkman: "Link Man",
+  contactNumber:'Contact Number',
+  address:'Address',
+  storeStatus:'Store Status'
+},
+
+merchant:{
+  merchantName:'Name of Merchant',
+  countryId: 'Country',
+  city:'City',
+  status:'Status',
+  merchantId:'Merchant ID',
+},
+order:{
+  orderNo:'Order Number',
+  useName:'Name of User',
+  scooterCode:'VIN Number',
+  payStatus:'Pay Status',
+  PayTime:'Pay Time',
+  planTotal:' Plan Total Fee',
+  totalPrices:'Total Prices',
+  payChannel:'Pay Channel'
+
+},
+record:{
+  recordNumber:'Record Number',
+  userName:'User Name',
+  scooterCode:'Scooter Code',
+  batteryCode:'Battery Code',
+  stationCode:'Station Code',
+  warehouseCode:'Warehouse Code',
+  orderTimeS:'Order Start Time',
+  orderTimeE:'Order End Time',
+  orderStatus:'Order Status',
+
+},
   tenant:{
-    tenantName:'Tenant Name',
+    tenantName:'Client Name',
     area:'Area',
     trade:'Trade',
     linkman:'Emergency Contact Person',
-    tenantStatus:'客户状态',
-
-
+    tenantStatus:'Status of Account',
+    contactNumber:'contact Number',
+    users:'User Count',
+    scooters:'Motorcycle Count',
+    legalPerson:'Legal Person',
+    approveStatus:'Government Record File',
+    Frozen:'Frozen'
 
 
   },
+  subscribe:{
+    stationName:'Name of Swap Station',
+    username:'User Name',
+    batteryName:'Battery Name',
+    warehouse:'Charge Warehouse',
+    subscribeTime:'Subscribe Create Time',
+    succeedTime:'Subscribe succeed Time',
+    effectiveTime:'Effective Time',
+    subscribeState:'Subscribe State'
+
+  },
   suggest:{
-    detials:'Details',
+    detials:'Result of Dispose',
+    userName:'User Name',
+    suggestStatus:'State of Dispose',
+    Dispose:'Dispose',
+    result:'Result of Dispose'
+  },
+  
+  solution:{
+    faultCode:'Malfunction ID',
+    faultType:'Type of Malfunction',
+    faultName:'Malfunction',
+    Solution:'Solution'
+  },
+  repairshop:{
+    shopId:'Repair Store ID',
+    shopeName:'Name of Repair Store',
+    shopStatus:'Repair Store Status'
+  },
+  plan:{
+    planName:'Name of Prepayment',
+    price:'Price of Prepayment',
+    distanceSum:'Total Distance Credits',
+    ailableTime:'Duration',
+    planStatus:'Status of Top-up',
+    sale:'For Sale',
+    takeOff:'Take Off',
+  },
+  message:{
+    messageTitle:'Title',
+    messageType:'Type',
+    status:'Status'
+  },
+  repaircompany:{
+    comName:'Name of Repair Merchant',
+    comId:'Repair Merchant ID',
+  },
+  
+ 
+  area:{
+    areaId:'Area ID',
+    areaName:'Name of Area'
   },
   AppVseroin:{
       appVersoin:'APP Version ',
       updatedInstruction:'Updated Instruction',
       updatedTime:'Updated time'
-
   }
+
 }

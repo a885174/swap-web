@@ -290,7 +290,7 @@
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         }, error => {
           done();
@@ -303,7 +303,7 @@
           this.onLoad(this.page);
           this.$message({
             type: "success",
-            message: "操作成功!"
+            message: "success!"
           });
         }, error => {
           done();
@@ -323,7 +323,7 @@
             this.onLoad(this.page);
             this.$message({
               type: "success",
-              message: "操作成功!"
+              message: "success!"
             });
           });
       },
@@ -344,7 +344,7 @@
             this.onLoad(this.page);
             this.$message({
               type: "success",
-              message: "操作成功!"
+              message: "success!"
             });
             this.$refs.crud.toggleSelection();
           });
