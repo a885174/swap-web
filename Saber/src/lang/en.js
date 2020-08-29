@@ -134,7 +134,7 @@ export default {
     UnlinkwithClient: "Unlink with Client",
     UnlinkwithUser: "Unlink with User",
     client: "By Client",
-    client: "By Store",
+    store: "By Store",
     salesChannel: "Please input Sales Channel",
     please: "Please input ",
     nameOfClient: "Name of Client",
