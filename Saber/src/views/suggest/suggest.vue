@@ -26,7 +26,7 @@
       <template slot-scope="{row}" slot="suggestStatus">
         <label
           :style="{color:row.suggestStatus=='1'?'green':'red'}"
-        >{{row.suggestStatus=="1"?"已处理":"未处理"}}</label>
+        >{{row.suggestStatus=="1"?"Disposed":"Undisposed"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="scope" slot="menu">
