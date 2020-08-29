@@ -14,6 +14,7 @@ export default {
   Connected:'已连接',
   Unfreeze:'解除冻结',
   Unconnected:'未连接',
+  transactionNum:'交易编号',
   
   
   wel: {
@@ -310,6 +311,12 @@ store:{
     appVersoin:'版本号',
     updatedInstruction:'更新说明',
     updatedTime:'更新时间'
-}
+},
+
+billing:{
+  bank:'银行',
+  totalPrices:'总价',
+  status:'状态'
+},
 
 }
