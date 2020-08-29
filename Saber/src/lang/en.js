@@ -212,6 +212,8 @@ merchant:{
   city:'City',
   status:'Status',
   merchantId:'Merchant ID',
+  AssignMerchant:'Assign Merchant',
+
 },
 order:{
   orderNo:'Order Number',
@@ -248,6 +250,7 @@ record:{
     scooters:'Motorcycle Count',
     legalPerson:'Legal Person',
     approveStatus:'Government Record File',
+    AssignScooter:'Assign Scooter',
     Frozen:'Frozen'
 
 

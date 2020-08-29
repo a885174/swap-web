@@ -22,7 +22,7 @@
       <template slot="menuLeft">
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
 
-        <el-button @click="dialogFormVisible = true">分配商户</el-button>
+        <el-button @click="dialogFormVisible = true">{{$t(`merchant.AssignMerchant`)}}</el-button>
 
         <template>
           <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>
@@ -275,7 +275,7 @@
       </el-dialog>
     </el-dialog>
 
-    <el-dialog title="分配商户" :visible.sync="dialogFormVisible" width="40%" center>
+    <el-dialog title="Assign Merchant" :visible.sync="dialogFormVisible" width="40%" center>
       <span slot="footer" class="dialog-footer">
         <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
       </span>
