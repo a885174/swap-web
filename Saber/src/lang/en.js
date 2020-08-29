@@ -1,26 +1,24 @@
 export default {
-  title: 'Avue is a framework',
-  tip: 'tip',
-  logoutTip: 'Exit the system, do you want to continue?',
-  submitText: 'submit',
-  cancelText: 'cancel',
-  search: 'Please input search content',
-  menuTip: 'none menu list',
-  import:'Import',
-  assignClient:'Assign Client',
-  UnlinkwithClient:'Unlink with Client',
-  Connected:'Connected',
-  Unconnected:'Unconnected',
-  Unfreeze:'Unfreeze',
-  transactionNum:'Clearing Number',
-  AssignStore:'Assign Store',
-  getlocaton:'getlocaton',
-  coordinate:'Get latitude and longitude',
-  UnlinkwithStore:'Unlink with Store',
-  pictureManagement:'Picture Management',
-  BusinessHours:'BusinessHours Management',
-
-
+  title: "Avue is a framework",
+  tip: "tip",
+  logoutTip: "Exit the system, do you want to continue?",
+  submitText: "submit",
+  cancelText: "cancel",
+  search: "Please input search content",
+  menuTip: "none menu list",
+  import: "Import",
+  assignClient: "Assign Client",
+  UnlinkwithClient: "Unlink with Client",
+  Connected: "Connected",
+  Unconnected: "Unconnected",
+  Unfreeze: "Unfreeze",
+  transactionNum: "Clearing Number",
+  AssignStore: "Assign Store",
+  getlocaton: "getlocaton",
+  coordinate: "Get latitude and longitude",
+  UnlinkwithStore: "Unlink with Store",
+  pictureManagement: "Picture Management",
+  BusinessHours: "BusinessHours Management",
 
   chakan: "view",
   wel: {
@@ -116,46 +114,6 @@ export default {
     closeOthers: "Close Others",
     closeAll: "Close All"
   },
-<<<<<<< HEAD
-  scooter:{
-    vincode:'VIN',
-    name:'Name of Motorcycle',
-    licensePlate:'License Plate Number ',
-    scooterVersion:'Model Number',
-    scooterStatus:'Motorcycle Status',
-    sellChannel:'Sales Channel',
-    sellStatus:'Business Status',
-    initStatus:'Actived Status',
-    runStatus:'Driving Status',
-    gpsStatus:'GPS&GSM Status',
-    lockStatus:'Locked Status',
-    securityLock:'Locked for Stolen',
-    arrearageLock:'Locked for Owed',
-    mileageValue:'Total Distance Travelled',
-    batteryNumber:'Battery Number',
-    connectStatus:'ConnectStatus',
-    expirationDate:'Expiration Date(Day)',
-    produceTime:'Produce Date',
-    UnlinkwithClient:'Unlink with Client',
-    UnlinkwithUser:'Unlink with User',
-    client:'By Client',
-    client:'By Store',
-    salesChannel:'Please input Sales Channel',
-    please:'Please input ',
-    nameOfClient: 'Name of Client',
-    pleaseSelect: 'Please select ',
-    sold:'Sold',
-    notSold:'Not sold',
-    activated:'Activated',
-    inactivated:'Inactivated',
-    running:'Running',
-    stopped:'Stopped',
-    targeted:'Targeted',
-    untargeted:'Untargeted',
-    locked:'Locked',
-    NotLocked:'Not locked',
-    notConnected:'Not connected'
-=======
   scooter: {
     vincode: "VIN",
     name: "Name of Motorcycle",
@@ -194,7 +152,6 @@ export default {
     locked: "Locked",
     NotLocked: "Not locked",
     notConnected: "Not connected"
->>>>>>> f37b229815ff14b436a3ec4f2c018d70969aef7e
   },
   battery: {
     batteryCode: "Battery ID Number",
@@ -230,7 +187,7 @@ export default {
     connectCbinet: "Connect and change cabinet",
     connectCars: "Connect electric cars",
     communicationError: "Communication error",
-    moduleError: "Module error",
+    moduleError: "Module error"
   },
   station: {
     stationCode: "Swap Station ID Number",
@@ -265,85 +222,15 @@ export default {
     emailverification: "Email verification"
   },
 
-<<<<<<< HEAD
-supplier:{
-  supplierName:'Supplier Name',
-  linkman:'Link Man',
-  contactNumber:'Contact Number',
-  address:'Address',
-  type:'Production',
-  batteryProduction:'Battery Production',
-  stationProduction:'Station Production',
-  scooterProduction:'Scooter Production',
-
-
-},
-store:{
-  storeName:'Store Name',
-  rentPeriod:'Settlement days',
-  rentPrice:'Rent Price',
-  electricityPrice:'Electricity Price',
-  linkman: "Link Man",
-  contactNumber:'Contact Number',
-  address:'Address',
-  storeStatus:'Store Status'
-},
-
-merchant:{
-  merchantName:'Name of Merchant',
-  countryId: 'Country',
-  city:'City',
-  status:'Status',
-  merchantId:'Merchant ID',
-  AssignMerchant:'Assign Merchant',
-
-},
-order:{
-  orderNo:'Order Number',
-  useName:'Name of User',
-  scooterCode:'VIN Number',
-  payStatus:'Pay Status',
-  PayTime:'Pay Time',
-  planTotal:' Plan Total Fee',
-  totalPrices:'Total Prices',
-  payChannel:'Pay Channel'
-
-},
-record:{
-  recordNumber:'Record Number',
-  userName:'User Name',
-  scooterCode:'Scooter Code',
-  batteryCode:'Battery Code',
-  stationCode:'Station Code',
-  warehouseCode:'Warehouse Code',
-  orderTimeS:'Order Start Time',
-  orderTimeE:'Order End Time',
-  orderStatus:'Order Status',
-
-},
-  tenant:{
-    tenantName:'Client Name',
-    area:'Area',
-    trade:'Trade',
-    linkman:'Emergency Contact Person',
-    UnlinkwithMotorcycle:'Unlink with Motorcycle',
-    tenantStatus:'Status of Account',
-    contactNumber:'contact Number',
-    users:'User Count',
-    scooters:'Motorcycle Count',
-    legalPerson:'Legal Person',
-    approveStatus:'Government Record File',
-    AssignScooter:'Assign Scooter',
-    Frozen:'Frozen'
-
-
-=======
   supplier: {
     supplierName: "Supplier Name",
     linkman: "Link Man",
     contactNumber: "Contact Number",
     address: "Address",
     type: "Production",
+    batteryProduction: "Battery Production",
+    stationProduction: "Station Production",
+    scooterProduction: "Scooter Production",
     electricVehicleSupplier: "Electric vehicle supplier",
     switchCabinetSupplier: "Switch cabinet supplier",
     batterySupplier: "Battery supplier"
@@ -359,8 +246,7 @@ record:{
     storeStatus: "Store Status",
     storeInformation: "Store Information",
     storeID: "Store ID",
-    ownedMerchant: "Owned merchant",
->>>>>>> f37b229815ff14b436a3ec4f2c018d70969aef7e
+    ownedMerchant: "Owned merchant"
   },
 
   merchant: {
@@ -372,7 +258,7 @@ record:{
     AssignMerchant: "Assign Merchant",
     have: "Have",
     no: "No",
-    unknown: "Unknown",
+    unknown: "Unknown"
   },
   order: {
     orderNo: "Order Number",
@@ -491,7 +377,7 @@ record:{
     comId: "Repair Merchant ID",
     repairerInformation: "Repairer information",
     legalRepresentative: "Legal representative",
-    Industrial: "Industrial and Commercial Record",
+    Industrial: "Industrial and Commercial Record"
   },
 
   area: {
@@ -502,13 +388,13 @@ record:{
     appVersoin: "APP Version ",
     updatedInstruction: "Updated Instruction",
     updatedTime: "Updated time",
-    versionInformation:"Version Information",
-    versionId:"Version id",
-    whetherToForceUpdate:"Whether to force update",
-    apkAddress:"apk address",
-    updateLog:"Update log",
-    yes:"Yes",
-    no:"No"
+    versionInformation: "Version Information",
+    versionId: "Version id",
+    whetherToForceUpdate: "Whether to force update",
+    apkAddress: "apk address",
+    updateLog: "Update log",
+    yes: "Yes",
+    no: "No"
   },
   billing: {
     bank: "Bank",
