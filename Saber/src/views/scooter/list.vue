@@ -81,7 +81,7 @@
         <el-tag>{{row.tenantName}}</el-tag>
       </template>
       <template slot-scope="{row}" slot="connectStatus">
-        <label :style="{color:row.connectStatus=='0'?'green':'red'}">{{row.connectStatus=="0"?"已连接":"未连接"}}</label>
+        <label :style="{color:row.connectStatus=='0'?'green':'red'}">{{row.connectStatus=="0"?"Connect":"Unconnect"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
@@ -179,7 +179,7 @@ export default {
         delBtn: true,
         align: "center",
         menuAlign: "center",
-        indexLabel: "序号",
+        indexLabel: "index",
         // columnBtn:false,
         // searchBtn:false,
         // defaultExpandAll:true,
@@ -929,9 +929,9 @@ export default {
     },
     delteant() {
       if (this.ids.length > 0) {
-        this.$confirm("确定将选择数据删除?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm("Are you sure you want to delete the selected data?", {
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
           type: "warning"
         }).then(() => {
           del(this.ids, "teant").then(() => {
@@ -945,7 +945,7 @@ export default {
       } else {
         this.$message({
           type: "error",
-          message: "请选择至少一条数据!"
+          message: "Please select at least one piece of data!"
         });
       }
     },
@@ -968,7 +968,7 @@ export default {
       } else {
         this.$message({
           type: "error",
-          message: "请选择至少一条数据!"
+          message: "Please select at least one piece of data!"
         });
       }
     },
@@ -984,7 +984,7 @@ export default {
       } else {
         this.$message({
           type: "error",
-          message: "请选择至少一条数据!"
+          message: "Please select at least one piece of data!"
         });
       }
     },
@@ -993,7 +993,7 @@ export default {
       if (this.ids.length == 0) {
         this.$message({
           type: "error",
-          message: "请选择至少一条数据!"
+          message: "Please select at least one piece of data!"
         });
       } else {
         this.dialogFormVisible = true;
@@ -1067,7 +1067,7 @@ export default {
           this.dialogFormVisible = false;
         });
       } else {
-        this.$message.error("请选择至少一条数据");
+        this.$message.error("Please select at least one piece of data");
       }
     },
 
@@ -1076,13 +1076,10 @@ export default {
     },
 
     rowDel(row) {
-      if (this.row.runStatus == 0) {
-        alert("行驶过程中的车不可删除");
-        return;
-      }
-      this.$confirm("确定将选择数据删除?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+    
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {
@@ -1105,10 +1102,10 @@ export default {
     },
     handleDelete() {
       if (this.selectionList.length === 0) {
-        this.$message.warning("请选择至少一条数据");
+        this.$message.warning("Please select at least one piece of data");
         return;
       }
-      this.$confirm("确定将选择数据删除?", {
+      this.$confirm("Are you sure you want to delete the selected data?", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"

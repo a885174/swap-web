@@ -44,8 +44,8 @@ export default {
   methods: {
     handleLogout() {
       this.$confirm("是否退出系统, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       }).then(() => {
         this.$store.dispatch("LogOut").then(() => {

@@ -53,7 +53,7 @@
           viewBtn: true,
           column: [
             {
-              label: "部门名称",
+              label: 'deptName',
               prop: "deptName",
               search: true,
               rules: [{
@@ -63,7 +63,7 @@
               }]
             },
             {
-              label: "所属租户",
+              label: "Tenant Group",
               prop: "tenantId",
               type: "tree",
               dicUrl: "/api/blade-system/tenant/select",
@@ -84,17 +84,17 @@
               }]
             },
             {
-              label: "部门全称",
+              label: "fullName",
               prop: "fullName",
               search: true,
               rules: [{
                 required: true,
-                message: "请输入部门全称",
+                message: "请输入fullName",
                 trigger: "blur"
               }]
             },
             {
-              label: "上级部门",
+              label: "parent ",
               prop: "parentId",
               dicData: [],
               type: "tree",
@@ -110,23 +110,23 @@
             },
 
             {
-              label: "排序",
+              label: "sort",
               prop: "sort",
               type: "number",
               rules: [{
                 required: true,
-                message: "请输入排序",
+                message: "请输入sort",
                 trigger: "blur"
               }]
             },
 
             {
-              label: "备注",
+              label: "remark",
               prop: "remark",
               span: 24,
               rules: [{
                 required: false,
-                message: "请输入备注",
+                message: "请输入remark",
                 trigger: "blur"
               }]
             }
@@ -181,9 +181,9 @@
         });
       },
       rowDel(row) {
-        this.$confirm("确定将选择数据删除?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm("Are you sure you want to delete the selected data?", {
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
           type: "warning"
         })
           .then(() => {
@@ -199,12 +199,12 @@
       },
       handleDelete() {
         if (this.selectionList.length === 0) {
-          this.$message.warning("请选择至少一条数据");
+          this.$message.warning("Please select at least one piece of data");
           return;
         }
-        this.$confirm("确定将选择数据删除?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm("Are you sure you want to delete the selected data?", {
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
           type: "warning"
         })
           .then(() => {

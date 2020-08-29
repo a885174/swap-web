@@ -98,18 +98,18 @@
           dialogHeight: 450,
           column: [
             {
-              label: "登录账号",
+              label:"loginName",
               prop: "account",
               search: true,
               rules: [{
                 required: true,
-                message: "请输入登录账号",
+                message: "请输入loginName",
                 trigger: "blur"
               }],
               span: website.tenantMode ? 12 : 24,
             },
             {
-              label: "所属租户",
+              label: "Tenant Group",
               prop: "tenantId",
               type: "tree",
               dicUrl: "/api/blade-system/tenant/select",
@@ -129,7 +129,7 @@
               }]
             },
             {
-              label: '密码',
+              label: 'Password',
               prop: 'password',
               hide: true,
               editDisplay: false,
@@ -137,7 +137,7 @@
               rules: [{required: true, validator: validatePass, trigger: 'blur'}]
             },
             {
-              label: '确认密码',
+              label: 'Password 2',
               prop: 'password2',
               hide: true,
               editDisplay: false,
@@ -145,26 +145,26 @@
               rules: [{required: true, validator: validatePass2, trigger: 'blur'}]
             },
             {
-              label: "用户昵称",
+              label: "name",
               prop: "name",
               search: true,
               rules: [{
                 required: true,
-                message: "请输入用户昵称",
+                message: "请输入name",
                 trigger: "blur"
               }]
             },
             {
-              label: "用户姓名",
+              label: "realName",
               prop: "realName",
               rules: [{
                 required: true,
-                message: "请输入用户姓名",
+                message: "请输入realName",
                 trigger: "blur"
               }]
             },
             {
-              label: "所属角色",
+              label: "ROLE",
               prop: "roleId",
               multiple: true,
               type: "tree",
@@ -175,12 +175,12 @@
               slot: true,
               rules: [{
                 required: true,
-                message: "请选择所属角色",
+                message: "请选择ROLE",
                 trigger: "click"
               }]
             },
             {
-              label: "所属部门",
+              label: "Department",
               prop: "deptId",
               type: "tree",
               multiple: true,
@@ -196,38 +196,35 @@
               }]
             },
             {
-              label: "手机号码",
+              label: "phone",
               prop: "phone",
               overHidden: true
             },
             {
-              label: "电子邮箱",
+              label: "email",
               prop: "email",
               hide: true,
               overHidden: true
             },
             {
-              label: "用户性别",
+              label: "sex",
               prop: "sex",
               type: "select",
               dicData: [
                 {
-                  label: "男",
+                  label: "man",
                   value: 1
                 },
                 {
-                  label: "女",
+                  label: "woman",
                   value: 2
                 },
-                {
-                  label: "未知",
-                  value: 3
-                }
+             
               ],
               hide: true
             },
             {
-              label: "用户生日",
+              label: "birthday",
               type: "date",
               prop: "birthday",
               format: "yyyy-MM-dd hh:mm:ss",
@@ -235,7 +232,7 @@
               hide: true
             },
             {
-              label: "账号状态",
+              label: "status",
               prop: "statusName",
               hide: true,
               display: false
@@ -309,9 +306,9 @@
         });
       },
       rowDel(row) {
-        this.$confirm("确定将选择数据删除?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm("Are you sure you want to delete the selected data?", {
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
           type: "warning"
         })
           .then(() => {
@@ -338,12 +335,12 @@
       },
       handleDelete() {
         if (this.selectionList.length === 0) {
-          this.$message.warning("请选择至少一条数据");
+          this.$message.warning("Please select at least one piece of data");
           return;
         }
-        this.$confirm("确定将选择数据删除?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm("Are you sure you want to delete the selected data?", {
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
           type: "warning"
         })
           .then(() => {
@@ -360,12 +357,12 @@
       },
       handleReset() {
         if (this.selectionList.length === 0) {
-          this.$message.warning("请选择至少一条数据");
+          this.$message.warning("Please select at least one piece of data");
           return;
         }
         this.$confirm("确定将选择账号密码重置为123456?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
           type: "warning"
         })
           .then(() => {

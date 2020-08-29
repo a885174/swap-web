@@ -7,7 +7,7 @@ export default {
   search: '请输入搜索内容',
   menuTip: '没有发现菜单',
   import:'导入',
-  delte:'批量删除',
+  delte:'批2量删除',
   assignClient:'分配商家',
   UnlinkwithClient:'解除客户关联',
   chakan:'查看',
