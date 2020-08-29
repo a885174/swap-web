@@ -78,14 +78,8 @@
           size="small"
           icon="el-icon-picture-outline"
           @click.stop="getGridData(scope.row)"
-<<<<<<< HEAD
-        >{{$t(`pictureManagement`)}}</el-button>&nbsp;&nbsp;
-
-          <el-button
-=======
-        >图片管理</el-button>&nbsp;&nbsp;
+        >pictureManagement</el-button>&nbsp;&nbsp;
         <el-button
->>>>>>> f37b229815ff14b436a3ec4f2c018d70969aef7e
           type="text"
           size="small"
           icon="el-icon-document-copy"
@@ -382,13 +376,8 @@ export default {
       uploadform: {},
       fileform: {},
       center: {
-<<<<<<< HEAD
-           lat: 40.4167754,
-           lng: -3.7037902,
-=======
         lat: 40.4167754,
         lng: -3.7037902
->>>>>>> f37b229815ff14b436a3ec4f2c018d70969aef7e
       },
       markers: [],
       place: null,
