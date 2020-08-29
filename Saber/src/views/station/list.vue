@@ -596,19 +596,19 @@ export default {
             valueDefault: "0",
             dicData: [
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "0"
               },
               {
-                label: "故障",
+                label: this.$t(`battery.Fault`),
                 value: "1"
               },
               {
-                label: "维修",
+                label: this.$t(`battery.Repairing`),
                 value: "2"
               },
               {
-                label: "报废",
+                label: this.$t(`battery.Castoff`),
                 value: "3"
               }
             ],
@@ -880,16 +880,16 @@ export default {
       var stationStatus;
       switch (row.stationStatus) {
         case "0":
-          stationStatus = "正常";
+          stationStatus = this.$t(`battery.Normal`);
           break;
         case "1":
-          stationStatus = "故障";
+          stationStatus = this.$t(`battery.Fault`);
           break;
         case "2":
-          stationStatus = "维修";
+          stationStatus = this.$t(`battery.Repairing`);
           break;
         case "3":
-          stationStatus = "报废";
+          stationStatus = this.$t(`battery.Castoff`);
           break;
       }
       this.rowItem = {
