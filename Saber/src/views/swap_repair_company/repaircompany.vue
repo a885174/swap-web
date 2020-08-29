@@ -20,7 +20,7 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">批量删除</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
       </template>
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">查看</el-button>
@@ -276,9 +276,9 @@ export default {
       );
     },
     rowDel(row) {
-      this.$confirm("确定将选择数据删除?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {
@@ -294,12 +294,12 @@ export default {
     },
     handleDelete() {
       if (this.selectionList.length === 0) {
-        this.$message.warning("请选择至少一条数据");
+        this.$message.warning("Please select at least one piece of data");
         return;
       }
-      this.$confirm("确定将选择数据删除?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {

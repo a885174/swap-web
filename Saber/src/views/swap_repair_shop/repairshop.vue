@@ -66,7 +66,7 @@
       <el-button @click="timeFormVisible=true">新增营业时间</el-button>
 
       <el-table :data="timeData">
-        <el-table-column label="序号" width="70px">
+        <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="week" label="星期" width="150">
@@ -173,7 +173,7 @@
       <el-button @click="fileDialog=true">上传店铺图片</el-button>
 
       <el-table :data="gridData" class="tb-edit" highlight-current-row>
-        <el-table-column label="序号" width="70px">
+        <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
@@ -260,7 +260,7 @@
       <el-table :data="tabledData" @selection-change="changeFun" style="margin-top:50px;">
         <el-table-column type="selection" width="55"></el-table-column>
 
-        <el-table-column label="序号" width="70px">
+        <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
@@ -806,7 +806,7 @@ export default {
       } else {
         this.$message({
           type: "error",
-          message: "请选择至少一条数据!"
+          message: "Please select at least one piece of data!"
         });
       }
     },
@@ -823,14 +823,14 @@ export default {
       } else {
         this.$message({
           type: "error",
-          message: "请选择至少一条数据!"
+          message: "Please select at least one piece of data!"
         });
       }
     },
     rowDel(row) {
-      this.$confirm("确定将选择数据删除?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {
@@ -853,9 +853,9 @@ export default {
       });
     },
     deltime(row) {
-      this.$confirm("确定将选择数据删除?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {
@@ -891,9 +891,9 @@ export default {
     },
 
     deletePicture(row) {
-      this.$confirm("确定将选择数据删除?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {
@@ -912,12 +912,12 @@ export default {
     },
     handleDelete() {
       if (this.selectionList.length === 0) {
-        this.$message.warning("请选择至少一条数据");
+        this.$message.warning("Please select at least one piece of data");
         return;
       }
-      this.$confirm("确定将选择数据删除?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {
@@ -947,8 +947,8 @@ export default {
     },
     updateMain(row) {
       this.$confirm("是否设置为主图?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {

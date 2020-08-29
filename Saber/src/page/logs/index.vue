@@ -88,8 +88,8 @@ export default {
   methods: {
     send() {
       this.$confirm("确定上传本地日志到服务器?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {
@@ -105,8 +105,8 @@ export default {
     },
     clear() {
       this.$confirm("确定清空本地日志记录?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
         type: "warning"
       })
         .then(() => {
