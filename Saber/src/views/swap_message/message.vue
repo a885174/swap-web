@@ -28,11 +28,11 @@
       </template>
 
       <template slot="menu" slot-scope="scope">
-        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">查看</el-button>
+        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">{{$t(`chakan`)}}</el-button>
         <!-- <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button> -->
       </template>
     </avue-crud>
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -47,7 +47,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>

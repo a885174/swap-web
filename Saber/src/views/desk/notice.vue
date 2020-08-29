@@ -21,7 +21,7 @@
                    icon="el-icon-delete"
                    plain
                    v-if="permission.notice_delete"
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button>
       </template>
       <template slot-scope="{row}"

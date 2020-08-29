@@ -11,6 +11,7 @@ export default {
   UnlinkwithClient:'Unlink with Client',
   Connected:'Connected',
   Unconnected:'Unconnected',
+  Unfreeze:'Unfreeze',
   chakan:'view',
   wel: {
     info: 'Good morning, Smallwei, Avuex is a framework',
@@ -109,7 +110,7 @@ export default {
   scooter:{
     vincode:'VIN',
     name:'Name of Motorcycle',
-    licensePlate:'Car License ',
+    licensePlate:'License Plate Number ',
     scooterVersion:'Model Number',
     scooterStatus:'Motorcycle Status',
     sellChannel:'Sales Channel',
@@ -125,6 +126,8 @@ export default {
     connectStatus:'ConnectStatus',
     expirationDate:'Expiration Date(Day)',
     produceTime:'Produce Date',
+    UnlinkwithClient:'Unlink with Client',
+    UnlinkwithUser:'Unlink with User',
   },
   battery:{
     batteryCode:'Battery ID Number',
@@ -176,7 +179,12 @@ export default {
     job:'Job',
     sex:'Sex',
     birthday:'Birthday',
-    userStatus:'Status of Account'
+    userStatus:'Status of Account',
+    emergencyContact:'emergencyContact',
+    emergencyPhone:'emergencyPhone',
+    ipaddress:'ipaddress',
+    loginDate:'loginDate',
+    emailverification:'Email verification', 
   },
 
 supplier:{
@@ -233,6 +241,7 @@ record:{
     area:'Area',
     trade:'Trade',
     linkman:'Emergency Contact Person',
+    UnlinkwithMotorcycle:'Unlink with Motorcycle',
     tenantStatus:'Status of Account',
     contactNumber:'contact Number',
     users:'User Count',

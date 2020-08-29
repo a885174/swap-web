@@ -54,7 +54,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>

@@ -21,7 +21,7 @@
                    icon="el-icon-delete"
                    v-if="permission.menu_delete"
                    plain
-                   @click="handleDelete">删 除
+                   @click="handleDelete">{{$t(`delete`)}}
         </el-button>
       </template>
       <template slot-scope="{row}"
@@ -60,30 +60,30 @@
           viewBtn: true,
           column: [
             {
-              label: "菜单名称",
+              label: "name",
               prop: "name",
               search: true,
               rules: [
                 {
                   required: true,
-                  message: "请输入菜单名称",
+                  message: "请输入name",
                   trigger: "blur"
                 }
               ]
             },
             {
-              label: "路由地址",
+              label: "path",
               prop: "path",
               rules: [
                 {
                   required: true,
-                  message: "请输入路由地址",
+                  message: "请输入path",
                   trigger: "blur"
                 }
               ]
             },
             {
-              label: "上级菜单",
+              label: "paren Menu",
               prop: "parentId",
               type: "tree",
               dicUrl: "/api/blade-system/menu/tree",
@@ -100,7 +100,7 @@
               ]
             },
             {
-              label: "菜单图标",
+              label: "icon",
               prop: "source",
               type: "icon-select",
               slot: true,
@@ -108,34 +108,34 @@
               rules: [
                 {
                   required: true,
-                  message: "请输入菜单图标",
+                  message: "请输入icon",
                   trigger: "click"
                 }
               ]
             },
             {
-              label: "菜单编号",
+              label: "code",
               prop: "code",
               search: true,
               rules: [
                 {
                   required: true,
-                  message: "请输入菜单编号",
+                  message: "请输入code",
                   trigger: "blur"
                 }
               ]
             },
             {
-              label: "菜单类型",
+              label: "category",
               prop: "category",
               type: "radio",
               dicData: [
                 {
-                  label: "菜单",
+                  label: "menu",
                   value: 1
                 },
                 {
-                  label: "按钮",
+                  label: "button",
                   value: 2
                 }
               ],
@@ -149,31 +149,31 @@
               ]
             },
             {
-              label: "菜单别名",
+              label: "alias",
               prop: "alias",
               rules: [
                 {
                   required: true,
-                  message: "请输入菜单别名",
+                  message: "请输入menu alias",
                   trigger: "blur"
                 }
               ]
             },
             {
-              label: "按钮功能",
+              label: "ButtonType",
               prop: "action",
               type: "radio",
               dicData: [
                 {
-                  label: "工具栏",
+                  label: "Toolbar ",
                   value: 0
                 },
                 {
-                  label: "操作栏",
+                  label: "operation",
                   value: 1
                 },
                 {
-                  label: "工具操作栏",
+                  label: "Toolbar operation",
                   value: 2
                 }
               ],
@@ -187,35 +187,35 @@
               ]
             },
             {
-              label: "菜单排序",
+              label: "sort",
               prop: "sort",
               type: "number",
               rules: [
                 {
                   required: true,
-                  message: "请输入菜单排序",
+                  message: "请输入sort",
                   trigger: "blur"
                 }
               ]
             },
             {
-              label: "新窗口",
+              label: "isOpen",
               prop: "isOpen",
               type: "radio",
               dicData: [
                 {
-                  label: "否",
+                  label: "NO",
                   value: 0
                 },
                 {
-                  label: "是",
+                  label: "YES",
                   value: 1
                 },
               ],
               hide: true
             },
             {
-              label: "菜单备注",
+              label: "remark",
               prop: "remark",
               type: "textarea",
               span: 24,

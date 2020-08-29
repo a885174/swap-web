@@ -66,7 +66,7 @@
           icon="el-icon-view"
           @click.stop="getrowViews(scope.row)"
         >{{$t(`chakan`)}}</el-button>
-        <!-- <el-button type="text" icon="el-icon-view" size="small" @click.stop="getrowViews(scope.row)">查看</el-button> -->
+        <!-- <el-button type="text" icon="el-icon-view" size="small" @click.stop="getrowViews(scope.row)">{{$t(`chakan`)}}</el-button> -->
         <el-button
           type="text"
           size="small"
@@ -279,7 +279,7 @@
         <el-table-column property="bt" label="当前充电电池的最高温度" width="150"></el-table-column>
       </el-table>
     </el-dialog>
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
+    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -294,7 +294,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisibles = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisibles = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>

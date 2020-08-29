@@ -23,7 +23,7 @@
                    icon="el-icon-delete"
                    plain
                    v-if="permission.picture_delete"
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button>
       </template>
     </avue-crud>

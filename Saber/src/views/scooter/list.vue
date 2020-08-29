@@ -66,12 +66,12 @@
         </el-dialog>
 
         <template>
-          <el-button @click.stop="delteant">解除客户关联</el-button>
+          <el-button @click.stop="delteant">{{$t(`scooter.UnlinkwithClient`)}}</el-button>
         </template>
         <template>
-          <el-button @click.stop="userdel">解除用户关联</el-button>
+          <el-button @click.stop="userdel">{{$t(`scooter.arrearageLock`)}}</el-button>
         </template>
-        <el-button @click.stop="Updatelock">欠费锁车</el-button>
+        <el-button @click.stop="Updatelock">{{$t(`scooter.arrearageLock`)}}</el-button>
         </template>
 
       <template slot-scope="{row}" slot="userId">
@@ -104,7 +104,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -657,7 +657,7 @@ export default {
             ]
           },
           {
-            label: this.$t(`battery.produceTime`),
+            label: this.$t(`scooter.produceTime`),
             width: 100,
             hide: true,
             prop: "produceTime",
@@ -668,7 +668,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入出厂时间",
+                message: "请输入"+this.$t(`scooter.produceTime`),
                 trigger: "blur"
               }
             ]
@@ -740,20 +740,20 @@ export default {
           //     trigger: "blur"
           //   }]
           // },
-          {
-            label: "备注",
-            prop: "remark",
-            hide: true,
-            editDisabled: true,
-            editDisplay: false,
-            rules: [
-              {
-                required: false,
-                message: "请输入备注",
-                trigger: "blur"
-              }
-            ]
-          }
+          // {
+          //   label: "备注",
+          //   prop: "remark",
+          //   hide: true,
+          //   editDisabled: true,
+          //   editDisplay: false,
+          //   rules: [
+          //     {
+          //       required: false,
+          //       message: "请输入备注",
+          //       trigger: "blur"
+          //     }
+          //   ]
+          // }
           // {
           //   label: "删除状态",
           //   prop: "delFlag",

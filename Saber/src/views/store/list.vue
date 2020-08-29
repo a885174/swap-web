@@ -25,10 +25,10 @@
         <el-button @click="dialogFormVisible = true">分配商户</el-button>
 
         <template>
-          <el-button @click.stop="delteant">冻结</el-button>
+          <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>
         </template>
         <template>
-          <el-button @click.stop="userdel">解除冻结</el-button>
+          <el-button @click.stop="userdel">{{$t(`Unfreeze`)}}</el-button>
         </template>
       </template>
 
@@ -54,7 +54,7 @@
           icon="el-icon-document-copy"
           @click="openmap(scope.row)"
         >地址选取</el-button>
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">查看</el-button>
+        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
 
         <el-button type="text" size="small" icon="el-icon-date" @click="opentable(scope.row)">营业时间分配</el-button>&nbsp;&nbsp;
         <el-button
@@ -315,7 +315,7 @@
         <el-button type="primary" @click="insertShopPicature()">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -330,7 +330,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>

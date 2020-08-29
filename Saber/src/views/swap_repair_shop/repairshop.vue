@@ -32,7 +32,7 @@
       <template slot-scope="{row}" slot="shopStatus">
         <label
           :style="{color:row.shopStatus=='0'?'green':'red'}"
-        >{{row.shopStatus=="0"?"正常":(row.shopStatus=="1"?"Sale":"Take Off")}}</label>
+        >{{row.shopStatus=="0"?"Sale":"Take OFF"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
 
@@ -40,7 +40,6 @@
         <el-button type="text" icon="el-icon-date" size="small" @click="opentable(scope.row)">营业时间分配</el-button>
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
         <el-button type="text" icon="el-icon-picture-outline" size="small" @click="getGridData(scope.row)">图片管理</el-button>
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">查看</el-button>
         <el-button
           type="text"
           icon="el-icon-picture-outline"
@@ -291,7 +290,7 @@
       </el-table>
     </el-dialog>
 
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -306,7 +305,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -704,13 +703,13 @@ export default {
             ]
           },
           {
-            label: "地址",
+            label: "address",
             prop: "address",
             hide: true,
             rules: [
               {
                 required: true,
-                message: "请输入地址",
+                message: "请输入address",
                 trigger: "blur"
               }
             ]
@@ -854,6 +853,7 @@ export default {
                 prop: row.shopStatus == "0" ? this.$t(`plan.sale`) : "this.$t(`plan.takeOff`) "
               }
             ]
+            
           }
         ]
       };

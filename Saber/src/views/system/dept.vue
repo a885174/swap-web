@@ -21,7 +21,7 @@
                    icon="el-icon-delete"
                    v-if="permission.dept_delete"
                    plain
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button>
       </template>
     </avue-crud>
@@ -58,7 +58,7 @@
               search: true,
               rules: [{
                 required: true,
-                message: "请输入部门名称",
+                message: "请输入deptName",
                 trigger: "blur"
               }]
             },

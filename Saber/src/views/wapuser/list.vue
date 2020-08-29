@@ -36,10 +36,9 @@
         <el-button >删除</el-button>-->
 
         <!-- <template>
-          <el-button @click.stop="delteant">冻结</el-button>
-        </template>
+  <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>        </template>
         <template>
-          <el-button @click.stop="userdel">解除冻结</el-button>
+          <el-button @click.stop="userdel">{{$t(`Unfreeze`)}}</el-button>
         </template>-->
       </template>
       <!-- <template slot-scope="{row}" slot="userStatus">
@@ -51,7 +50,7 @@
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
-    <el-dialog title="查看" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -66,7 +65,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -434,13 +433,13 @@ export default {
               { label: this.$t(`user.sex`), prop: row.sex },
               { label: this.$t(`user.birthday`), prop: row.birthday },
               { label: this.$t(`user.userStatus`), prop: row.userStatus },
-              { label: "ID card", prop: data.idcard },
-              { label: "address", prop: data.address },
-              { label: "紧急联系人", prop: data.emergencyContact },
-              { label: "紧急联系电话", prop: data.emergencyPhone },
-              { label: "邮箱已验证", prop: data.checkEmail=="0"?"未验证":"已验证" },
-              { label: "ip address", prop: data.loginIp },
-              { label: "最后登陆时间", prop: data.loginDate },
+              { label: "ID card", prop: row.idcard },
+              { label: "address", prop: row.address },
+              { label: this.$t(`user.emergencyContact`), prop: row.emergencyContact },
+              { label: this.$t(`user.emergencyPhone`), prop: row.emergencyPhone },
+              { label: this.$t(`user.emailverification`), prop: row.checkEmail=="0"?"NO":"YES" },
+              { label: this.$t(`user.loginIp`), prop: row.loginIp },
+              { label: this.$t(`user.loginDate`), prop: row.loginDate },
             ]
           }
         ]
