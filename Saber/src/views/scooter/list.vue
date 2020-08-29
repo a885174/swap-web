@@ -20,7 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
 
         <!--     
           <el-button type="primary"
@@ -72,7 +78,7 @@
           <el-button @click.stop="userdel">{{$t(`scooter.arrearageLock`)}}</el-button>
         </template>
         <el-button @click.stop="Updatelock">{{$t(`scooter.arrearageLock`)}}</el-button>
-        </template>
+      </template>
 
       <template slot-scope="{row}" slot="userId">
         <el-tag>{{row.loginName}}</el-tag>
@@ -81,15 +87,28 @@
         <el-tag>{{row.tenantName}}</el-tag>
       </template>
       <template slot-scope="{row}" slot="connectStatus">
-        <label :style="{color:row.connectStatus=='0'?'green':'red'}">{{row.connectStatus=="0"?"Connect":"Unconnect"}}</label>
+        <label
+          :style="{color:row.connectStatus=='0'?'green':'red'}"
+        >{{row.connectStatus=="0"?"Connect":"Unconnect"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="View"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -104,7 +123,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -205,11 +224,11 @@ export default {
             editDisabled: true,
             search: true,
             span: 20,
-            labelWidth:120,
+            labelWidth: 120,
             rules: [
               {
                 required: true,
-                message: "请输入"+this.$t(`scooter.vincode`),
+                message: this.$t(`scooter.please`) + this.$t(`scooter.vincode`),
                 trigger: "blur"
               }
             ]
@@ -219,11 +238,12 @@ export default {
             prop: "licensePlate",
             span: 20,
             search: true,
-            labelWidth:120,
+            labelWidth: 120,
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`scooter.licensePlate`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.licensePlate`),
                 trigger: "blur"
               }
             ]
@@ -294,26 +314,27 @@ export default {
             addDisplay: false,
             dicData: [
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "0"
               },
               {
-                label: "故障",
+                label: this.$t(`battery.Fault`),
                 value: "1"
               },
               {
-                label: "维修",
+                label: this.$t(`battery.Repairing`),
                 value: "2"
               },
               {
-                label: "报废",
+                label: this.$t(`battery.Castoff`),
                 value: "3"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入车辆状态",
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.scooterStatus`),
                 trigger: "blur"
               }
             ]
@@ -327,18 +348,18 @@ export default {
             prop: "sellChannel",
             dicData: [
               {
-                label: "客户",
+                label: this.$t(`scooter.client`),
                 value: "0"
               },
               {
-                label: "门店",
+                label: this.$t(`scooter.store`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入销售渠道",
+                message: this.$t(`scooter.salesChannel`),
                 trigger: "blur"
               }
             ]
@@ -373,7 +394,7 @@ export default {
             ]
           },
           {
-            label: "所属客户",
+            label: this.$t(`scooter.nameOfClient`),
             prop: "tenantId",
             type: "tree",
             hide: true,
@@ -383,7 +404,16 @@ export default {
             props: {
               label: "tenantName",
               value: "tenantId"
-            }
+            },
+            rules: [
+              {
+                required: false,
+                message:
+                  this.$t(`scooter.pleaseSelect`) +
+                  this.$t(`scooter.nameOfClient`),
+                trigger: "blur"
+              }
+            ]
           },
           // {
           //     label: "所属用户户",
@@ -565,7 +595,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`scooter.batteryNumber`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.batteryNumber`),
                 trigger: "blur"
               }
             ]
@@ -582,7 +613,10 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入："+this.$t(`scooter.mileageValue`),
+                message:
+                  this.$t(`scooter.please`) +
+                  "：" +
+                  this.$t(`scooter.mileageValue`),
                 trigger: "blur"
               }
             ]
@@ -668,7 +702,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`scooter.produceTime`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.produceTime`),
                 trigger: "blur"
               }
             ]
@@ -686,7 +721,7 @@ export default {
                 trigger: "blur"
               }
             ]
-          },
+          }
           // {
           //   label: "创建人",
           //   prop: "createUser",
@@ -816,103 +851,130 @@ export default {
     rowView(row) {
       getDetail(row.scooterId).then(res => {
         this.form = res.data.data;
-      this.dialogViewVisible = true;
-      var scooterStatus;
-      switch (row.scooterStatus) {
-        case "0":
-          scooterStatus = "正常"; 
-          break;
-        case "1":
-          scooterStatus = "故障";
-          break;
-        case "2":
-          scooterStatus = "维修";
-          break;
-        case "3":
-          scooterStatus = "报废";
-          break;
-      }
-      this.rowItem = {
-        item: [
-          {
-            title: "Scooter",
-            column: [
-              { label: this.$t(`scooter.vincode`), prop: row.scooterCode },
-              {
-                label: this.$t(`scooter.licensePlate`),
-                prop: row.licensePlate
-              },
-              {
-                label: this.$t(`scooter.scooterVersion`),
-                prop: row.scooterVersion
-              },
-              { label: this.$t(`scooter.batteryNumber`), prop: row.batteryNumber },
-              { label: "IMEI", prop: row.imei },
-              {
-                label: this.$t(`scooter.mileageValue`),
-                prop: row.mileageValue == null ? "0" : row.mileageValue + "km"
-              },
-              { label:this.$t(`scooter.expirationDate`), prop: row.expirationDate + "month" },
-              { label: this.$t(`scooter.produceTime`), prop: row.produceTime },
-              {
-                label: this.$t(`scooter.sellChannel`),
-                prop: row.sellChannel == 0 ? "客户" : "门店"
-              }
-            ]
-          },
-          {
-            title:  this.$t(`scooter.scooterStatus`),
-            column: [
-              {
-                label:  this.$t(`scooter.scooterStatus`),
-                prop: scooterStatus
-              },
-              {
-                label: this.$t(`scooter.sellStatus`),
-                prop: row.sellStatus == "0" ? "已销售 " : "未销售"
-              },
-              {
-                label: this.$t(`scooter.initStatus`),
-                prop: row.initStatus == "0" ? "已激活 " : "未激活"
-              },
-              {
-                label: this.$t(`scooter.runStatus`),
-                prop: row.runStatus == "0" ? "运行中 " : "已停止"
-              },
-              {
-                label: this.$t(`scooter.gpsStatus`),
-                prop: row.gpsStatus == "0" ? "已定位 " : "已定位"
-              },
-              {
-                label: this.$t(`scooter.lockStatus`),
-                prop: row.lockStatus == "0" ? "已锁定 " : "未锁定"
-              },
-              {
-                label:this.$t(`scooter.connectStatus`),
-                prop:row.connectStatus == "0" ? this.$t(`Connected`):this.$t(`Unconnected`)
-              },
-              {
-                label: this.$t(`scooter.securityLock`),
-                prop: row.securityLock == "0" ? "已锁定 " : "未连接"
-              },
-              {
-                label: this.$t(`scooter.arrearageLock`),
-                prop: row.arrearageLock == "0" ? "已锁定 " : "未连接"
-              },
-              {
-                label: this.$t(`scooter.arrearageLock`),
-                prop: row.arrearageLock == "0" ? "已锁定 " : "未连接"
-              }
-            ]
-          }
-        ],
-        // fullItem: [
-        //   {
-        //     title: "备注",
-        //     prop: row.remark
-        //   }
-        // ]
-      };
+        this.dialogViewVisible = true;
+        var scooterStatus;
+        switch (row.scooterStatus) {
+          case "0":
+            scooterStatus = this.$t(`battery.Normal`);
+            break;
+          case "1":
+            scooterStatus = this.$t(`battery.Fault`);
+            break;
+          case "2":
+            scooterStatus = this.$t(`battery.Repairing`);
+            break;
+          case "3":
+            scooterStatus = this.$t(`battery.Castoff`);
+            break;
+        }
+        this.rowItem = {
+          item: [
+            {
+              title: "Scooter",
+              column: [
+                { label: this.$t(`scooter.vincode`), prop: row.scooterCode },
+                {
+                  label: this.$t(`scooter.licensePlate`),
+                  prop: row.licensePlate
+                },
+                {
+                  label: this.$t(`scooter.scooterVersion`),
+                  prop: row.scooterVersion
+                },
+                {
+                  label: this.$t(`scooter.batteryNumber`),
+                  prop: row.batteryNumber
+                },
+                { label: "IMEI", prop: row.imei },
+                {
+                  label: this.$t(`scooter.mileageValue`),
+                  prop: row.mileageValue == null ? "0" : row.mileageValue + "km"
+                },
+                {
+                  label: this.$t(`scooter.expirationDate`),
+                  prop: row.expirationDate + "month"
+                },
+                {
+                  label: this.$t(`scooter.produceTime`),
+                  prop: row.produceTime
+                },
+                {
+                  label: this.$t(`scooter.sellChannel`),
+                  prop:
+                    row.sellChannel == 0
+                      ? this.$t(`scooter.client`)
+                      : this.$t(`scooter.store`)
+                }
+              ]
+            },
+            {
+              title: this.$t(`scooter.scooterStatus`),
+              column: [
+                {
+                  label: this.$t(`scooter.scooterStatus`),
+                  prop: scooterStatus
+                },
+                {
+                  label: this.$t(`scooter.sellStatus`),
+                  prop:
+                    row.sellStatus == "0"
+                      ? this.$t(`scooter.sold`)
+                      : this.$t(`scooter.notSold`)
+                },
+                {
+                  label: this.$t(`scooter.initStatus`),
+                  prop:
+                    row.initStatus == "0"
+                      ? this.$t(`scooter.activated`)
+                      : this.$t(`scooter.inactivated`)
+                },
+                {
+                  label: this.$t(`scooter.runStatus`),
+                  prop:
+                    row.runStatus == "0"
+                      ? this.$t(`scooter.running`)
+                      : this.$t(`scooter.stopped`)
+                },
+                {
+                  label: this.$t(`scooter.gpsStatus`),
+                  prop:
+                    row.gpsStatus == "0"
+                      ? this.$t(`scooter.targeted`)
+                      : this.$t(`scooter.untargeted`)
+                },
+                {
+                  label: this.$t(`scooter.lockStatus`),
+                  prop: row.lockStatus == "0" ? this.$t(`scooter.locked`) : this.$t(`scooter.NotLocked`)
+                },
+                {
+                  label: this.$t(`scooter.connectStatus`),
+                  prop:
+                    row.connectStatus == "0"
+                      ? this.$t(`Connected`)
+                      : this.$t(`Unconnected`)
+                },
+                {
+                  label: this.$t(`scooter.securityLock`),
+                  prop: row.securityLock == "0" ? this.$t(`scooter.locked`) : this.$t(`scooter.notConnected`)
+                },
+                {
+                  label: this.$t(`scooter.arrearageLock`),
+                  prop: row.arrearageLock == "0" ? this.$t(`scooter.locked`) : this.$t(`scooter.notConnected`)
+                },
+                // {
+                //   label: this.$t(`scooter.arrearageLock`),
+                //   prop: row.arrearageLock == "0" ? "已锁定 " : "未连接"
+                // }
+              ]
+            }
+          ]
+          // fullItem: [
+          //   {
+          //     title: "备注",
+          //     prop: row.remark
+          //   }
+          // ]
+        };
       });
     },
     customUpload(file) {
@@ -1077,7 +1139,6 @@ export default {
     },
 
     rowDel(row) {
-    
       this.$confirm("Are you sure you want to delete the selected data?", {
         confirmButtonText: "sure",
         cancelButtonText: "cancel",
