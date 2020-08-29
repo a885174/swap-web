@@ -421,7 +421,7 @@ export default {
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "0",
-            value: "正常",
+            value: this.$t(`battery.Normal`),
             hide:true,
             dicData: [
               {

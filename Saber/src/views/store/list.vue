@@ -44,7 +44,7 @@
       <template slot-scope="{row}" slot="storeStatus">
         <label
           :style="{color:row.storeStatus=='0'?'green':'red'}"
-        >{{row.storeStatus=="0"?"冻结":"正常"}}</label>
+        >{{row.storeStatus=="0"?"冻结":this.$t(`battery.Normal`)}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="scope" slot="menu">
@@ -726,7 +726,7 @@ export default {
                 value: "0"
               },
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "1"
               }
             ],
@@ -836,7 +836,7 @@ export default {
               { label: "地址", prop: row.address },
               {
                 label: "店铺状态",
-                prop: row.storeStatus == "0" ? "冻结" : "正常"
+                prop: row.storeStatus == "0" ? "冻结" : this.$t(`battery.Normal`)
               }
             ]
           }

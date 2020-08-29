@@ -44,7 +44,7 @@
       <!-- <template slot-scope="{row}" slot="userStatus">
         <label
           :style="{color:row.userStatus=='0'?'green':'red'}"
-        >{{row.userStatus=="0"?"正常":(row.userStatus=="1"?"已冻结":"欠费锁定")}}</label>
+        >{{row.userStatus=="0"?this.$t(`battery.Normal`):(row.userStatus=="1"?"已冻结":"欠费锁定")}}</label>
       </template>-->
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
@@ -262,7 +262,7 @@ export default {
             slot: true,
             dicData: [
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "0"
               },
               {

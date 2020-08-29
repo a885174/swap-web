@@ -23,7 +23,7 @@
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
       </template>
       <template slot-scope="{row}" slot="status">
-        <label :style="{color:row.status=='0'?'green':'red'}">{{row.status=="0"?"正常":"关闭"}}</label>
+        <label :style="{color:row.status=='0'?'green':'red'}">{{row.status=="0"?this.$t(`battery.Normal`):"关闭"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
 
@@ -169,7 +169,7 @@ export default {
             slot: true,
             dicData: [
               {
-                label: "正常",
+                label: this.$t(`battery.Normal`),
                 value: "0"
               },
               {
@@ -337,7 +337,7 @@ export default {
                 label: "公告类型",
                 prop: row.messageType == "0" ? "通知" : "公告"
               },
-              { label: "公告状态", prop: row.status == "0" ? "正常" : "关闭" },
+              { label: "公告状态", prop: row.status == "0" ? this.$t(`battery.Normal`) : "关闭" },
               { label: "发布人", prop: row.publisher },
               { label: "发布人", prop: pushService },
               { label: "推送结果", prop: row.pushResult }
