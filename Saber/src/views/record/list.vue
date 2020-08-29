@@ -22,7 +22,7 @@
                    size="small"
                    icon="el-icon-delete"
                    plain
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button> -->
         
           <!-- <el-button type="primary"

@@ -21,7 +21,7 @@
                    icon="el-icon-delete"
                    v-if="permission.param_delete"
                    plain
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button>
       </template>
     </avue-crud>
@@ -51,27 +51,27 @@
           viewBtn: true,
           column: [
             {
-              label: "参数名称",
+              label: "paramName",
               prop: "paramName",
               search: true,
               rules: [{
                 required: true,
-                message: "请输入参数名称",
+                message: "请输入paramName",
                 trigger: "blur"
               }]
             },
             {
-              label: "参数键名",
+              label: "paramKey",
               prop: "paramKey",
               search: true,
               rules: [{
                 required: true,
-                message: "请输入参数键名",
+                message: "请输入paramKey",
                 trigger: "blur"
               }]
             },
             {
-              label: "参数键值",
+              label: "paramValue",
               prop: "paramValue",
               rules: [{
                 required: true,

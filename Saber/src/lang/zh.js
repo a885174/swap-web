@@ -12,7 +12,10 @@ export default {
   UnlinkwithClient:'解除客户关联',
   chakan:'查看',
   Connected:'已连接',
+  Unfreeze:'解除冻结',
   Unconnected:'未连接',
+  
+  
   wel: {
     info: '早安，Smallwei，Avuex一款超乎你想象的框架！',
     dept: '我是avue团队下的一个部门-哈皮部门-哈皮职位',
@@ -120,6 +123,7 @@ export default {
     lockStatus:'上锁状态',
     securityLock:'防盗锁定',
     arrearageLock:'欠费锁车',
+    UnlinkwithClient:'解除客户关联',
     mileageValue:'行车总里程',
     batteryNumber:'电池数',
     expirationDate:'保质期',
@@ -239,7 +243,12 @@ store:{
     job:'职业',
     sex:'用户性别',
     birthday:'出生日期',
+    emergencyContact:'紧急联系人',
+    emergencyPhone:'紧急联系电话',
     userStatus:'用户状态',
+    ipaddress:'登录 ip',
+    loginDate:'登录日期',
+    emailverification:'邮箱验证', 
   },
   suggest:{
     userName:'用户姓名',

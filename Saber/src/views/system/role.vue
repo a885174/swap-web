@@ -20,7 +20,7 @@
                    icon="el-icon-delete"
                    v-if="permission.role_delete"
                    plain
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button>
         <el-button size="small"
                    icon="el-icon-delete"

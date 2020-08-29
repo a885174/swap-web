@@ -26,7 +26,7 @@
           <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>
         </template>
         <template>
-          <el-button @click.stop="userdel">解除冻结</el-button>
+          <el-button @click.stop="userdel">{{$t(`Unfreeze`)}}</el-button>
         </template>
       </template>
 
@@ -55,7 +55,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>

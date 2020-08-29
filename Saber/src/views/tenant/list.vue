@@ -31,13 +31,12 @@
         </el-dialog>
 
         <template>
-          <el-button @click.stop="delteant">冻结</el-button>
+  <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>        </template>
+        <template>
+          <el-button @click.stop="delscooter">{{$t(`tenant.UnlinkwithMotorcycle`)}}</el-button>
         </template>
         <template>
-          <el-button @click.stop="delscooter">解除关联</el-button>
-        </template>
-        <template>
-          <el-button @click.stop="userdel">解除冻结</el-button>
+          <el-button @click.stop="userdel">{{$t(`Unfreeze`)}}</el-button>
         </template>
       </template>
       <template slot-scope="{row}" slot="tenantStatus">
@@ -83,7 +82,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisibles = false">返 回</el-button>
+        <el-button type="primary" @click="dialogViewVisibles = false">Back </el-button>
       </span>
     </el-dialog>
   </basic-container>

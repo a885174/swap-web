@@ -23,7 +23,7 @@
                    icon="el-icon-delete"
                    v-if="permission.code_delete"
                    plain
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button>
         <el-button type="primary"
                    size="small"

@@ -21,7 +21,7 @@
                    icon="el-icon-delete"
                    v-if="permission.dict_delete"
                    plain
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button>
       </template>
     </avue-crud>
@@ -52,28 +52,28 @@
           viewBtn: true,
           column: [
             {
-              label: "字典编号",
+              label: "code",
               prop: "code",
               search: true,
               span: 24,
               rules: [{
                 required: true,
-                message: "请输入字典编号",
+                message: "请输入code",
                 trigger: "blur"
               }]
             },
             {
-              label: "字典名称",
+              label: "dictValue",
               prop: "dictValue",
               search: true,
               rules: [{
                 required: true,
-                message: "请输入字典名称",
+                message: "请输入dictValue",
                 trigger: "blur"
               }]
             },
             {
-              label: "上级字典",
+              label: "parentt Dict",
               prop: "parentId",
               type: "tree",
               dicData: [],
@@ -88,27 +88,27 @@
               }]
             },
             {
-              label: "字典键值",
+              label: "dictKey",
               prop: "dictKey",
               type: "number",
               rules: [{
                 required: true,
-                message: "请输入字典键值",
+                message: "请输入dictKey",
                 trigger: "blur"
               }]
             },
             {
-              label: "字典排序",
+              label: "sort",
               prop: "sort",
               type: "number",
               rules: [{
                 required: true,
-                message: "请输入字典排序",
+                message: "请输入sort",
                 trigger: "blur"
               }]
             },
             {
-              label: "字典备注",
+              label: "remark",
               prop: "remark",
               search: true,
               span: 24,

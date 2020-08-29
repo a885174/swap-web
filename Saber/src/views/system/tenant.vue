@@ -21,7 +21,7 @@
                    icon="el-icon-delete"
                    v-if="permission.tenant_delete"
                    plain
-                   @click="handleDelete">删 除
+                      @click="handleDelete">{{$t(`delete`)}}
         </el-button>
       </template>
     </avue-crud>
@@ -53,7 +53,7 @@
           dialogHeight: 400,
           column: [
             {
-              label: "租户ID",
+              label: "tenantId",
               prop: "tenantId",
               search: true,
               addDisplay: false,
@@ -61,39 +61,39 @@
               span: 24,
               rules: [{
                 required: true,
-                message: "请输入租户ID",
+                message: "请输入tenantId",
                 trigger: "blur"
               }]
             },
             {
-              label: "租户名称",
+              label: "tenantName",
               prop: "tenantName",
               search: true,
               span: 24,
               rules: [{
                 required: true,
-                message: "请输入参数名称",
+                message: "请输入",
                 trigger: "blur"
               }]
             },
             {
-              label: "联系人",
+              label: this.$t(`supplier.linkman`),
               prop: "linkman",
               search: true,
               span: 24,
               rules: [{
                 required: true,
-                message: "请输入联系人",
+                message: "请输入"+this.$t(`supplier.linkman`),
                 trigger: "blur"
               }]
             },
             {
-              label: "联系电话",
+              label:this.$t(`supplier.contactNumber`),
               prop: "contactNumber",
               span: 24,
             },
             {
-              label: "联系地址",
+              label: "address",
               prop: "address",
               span: 24,
               minRows: 6,
