@@ -15,6 +15,9 @@ export default {
   Unfreeze:'解除冻结',
   Unconnected:'未连接',
   transactionNum:'交易编号',
+  AssignStore:'分配店铺',
+  getlocaton:'选取地址',
+  coordinate:'获取经纬度',
   
   
   wel: {
@@ -333,7 +336,9 @@ store:{
 billing:{
   bank:'银行',
   totalPrices:'总价',
-  status:'状态'
+  status:'状态',
+  jiesuan:'结算',
+  upload:'上传凭证',
 },
 
 }

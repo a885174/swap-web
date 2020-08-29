@@ -51,12 +51,12 @@
           size="small"
           icon="el-icon-document-copy"
           @click="openmap(scope.row)"
-        >地址选取</el-button>
+        >{{$t(`getlocation`)}}</el-button>
       </template>
     </avue-crud>
 
     <el-dialog
-      title="地图"
+      title="Map"
       :visible.sync="mapDialogVisible"
       :append-to-body="true"
       width="30%"

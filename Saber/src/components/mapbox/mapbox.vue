@@ -11,7 +11,7 @@
                width="60%"
                append-to-body
                modal-append-to-body
-               title="选择坐标"
+               title="coordinate"
                @close="handleClose"
                :visible.sync="box">
       <div class="avue-map__content"
@@ -109,7 +109,7 @@ export default {
       return this.lnglat.R || 0;
     },
     textTitle() {
-      return this.poi.name === undefined ? "选择坐标" : "重新选择";
+      return this.poi.name === undefined ? "choose coordinate" : "retry choose coordinate ";
     }
   },
   methods: {
