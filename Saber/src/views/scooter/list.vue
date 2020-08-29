@@ -630,7 +630,6 @@ export default {
             valueFormat: "yyyy-MM-dd hh:mm:ss",
             addDisabled: true,
             addDisplay: false,
-            hide: true,
             editDisabled: true,
             editDisplay: false,
             rules: [
@@ -645,7 +644,6 @@ export default {
             label: "供应商id",
             hide: true,
             prop: "supplierId",
-            hide: true,
             editDisabled: true,
             editDisplay: false,
             addDisabled: true,
@@ -659,7 +657,7 @@ export default {
             ]
           },
           {
-            label: "出厂时间",
+            label: this.$t(`battery.produceTime`),
             width: 100,
             hide: true,
             prop: "produceTime",
@@ -816,11 +814,13 @@ export default {
   },
   methods: {
     rowView(row) {
+      getDetail(row.scooterId).then(res => {
+        this.form = res.data.data;
       this.dialogViewVisible = true;
       var scooterStatus;
       switch (row.scooterStatus) {
         case "0":
-          scooterStatus = "正常";
+          scooterStatus = "正常"; 
           break;
         case "1":
           scooterStatus = "故障";
@@ -913,6 +913,7 @@ export default {
         //   }
         // ]
       };
+      });
     },
     customUpload(file) {
       //

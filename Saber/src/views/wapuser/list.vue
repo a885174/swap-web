@@ -40,7 +40,7 @@
         </template>
         <template>
           <el-button @click.stop="userdel">解除冻结</el-button>
-        </template> -->
+        </template>-->
       </template>
       <!-- <template slot-scope="{row}" slot="userStatus">
         <label
@@ -434,6 +434,13 @@ export default {
               { label: this.$t(`user.sex`), prop: row.sex },
               { label: this.$t(`user.birthday`), prop: row.birthday },
               { label: this.$t(`user.userStatus`), prop: row.userStatus },
+              { label: "ID card", prop: data.idcard },
+              { label: "address", prop: data.address },
+              { label: "紧急联系人", prop: data.emergencyContact },
+              { label: "紧急联系电话", prop: data.emergencyPhone },
+              { label: "邮箱已验证", prop: data.checkEmail=="0"?"未验证":"已验证" },
+              { label: "ip address", prop: data.loginIp },
+              { label: "最后登陆时间", prop: data.loginDate },
             ]
           }
         ]
@@ -602,4 +609,29 @@ export default {
 </script>
 
 <style>
+.abow_dialog .el-dialog .el-dialog__body {
+  padding: 0 30px;
+}
+.abow_dialog .title {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.847058823529412);
+  line-height: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.abow_dialog .item {
+  overflow: hidden;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  border-bottom: 1px solid #ebebeb;
+}
+.abow_dialog .item label {
+  line-height: 32px;
+}
+.abow_dialog .fullItem {
+  padding-bottom: 12px;
+  padding-top: 12px;
+  line-height: 20px;
+  border-bottom: 1px solid #ebebeb;
+}
 </style>
