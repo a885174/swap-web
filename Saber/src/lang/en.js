@@ -12,7 +12,12 @@ export default {
   Connected:'Connected',
   Unconnected:'Unconnected',
   Unfreeze:'Unfreeze',
-  transactionNum:'transaction Num',
+  transactionNum:'Clearing Number',
+  AssignStore:'Assign Store',
+  getlocaton:'getlocaton',
+  coordinate:'Get latitude and longitude',
+  UnlinkwithStore:'Unlink with Store',
+
   chakan:'view',
   wel: {
     info: 'Good morning, Smallwei, Avuex is a framework',
