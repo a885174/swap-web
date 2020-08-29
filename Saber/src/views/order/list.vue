@@ -32,15 +32,26 @@
       <template slot-scope="{row}" slot="payStatus">
         <label
           :style="{color:row.payStatus=='0'?'green':'red'}"
-        >{{row.payStatus=="0"?"到账成功":(row.payStatus=="1"?"已支付未到帐":(row.payStatus=="2"?"待支付":(row.payStatus=="3"?"支付失败":"取消支付")))}}</label>
+        >{{row.payStatus=="0"?$t(`order.successfully`):(row.payStatus=="1"?$t(`order.paidButNotPaid`):(row.payStatus=="2"?$t(`order.toBePaid`):(row.payStatus=="3"?$t(`order.paymentFailed`):$t(`order.cancelPayment`))))}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="View"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -55,7 +66,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -117,7 +128,7 @@ export default {
             ]
           },
           {
-            label:this.$t(`order.orderNo`),
+            label: this.$t(`order.orderNo`),
             // width: 190,
             search: true,
             editDisabled: true,
@@ -244,7 +255,7 @@ export default {
             ]
           },
           {
-            label: this.$t(`order.plantTotal`),
+            label: this.$t(`order.planTotal`),
             prop: "planTotal",
             hide: true,
             rules: [
@@ -323,23 +334,23 @@ export default {
             slot: true,
             dicData: [
               {
-                label: "到账成功",
+                label: this.$t(`order.successfully`),
                 value: "0"
               },
               {
-                label: "已支付未到帐",
+                label: this.$t(`order.paidButNotPaid`),
                 value: "1"
               },
               {
-                label: "待支付",
+                label: this.$t(`order.toBePaid`),
                 value: "2"
               },
               {
-                label: "支付失败",
+                label: this.$t(`order.paymentFailed`),
                 value: "3"
               },
               {
-                label: "取消支付",
+                label: this.$t(`order.cancelPayment`),
                 value: "4"
               }
             ],
@@ -494,19 +505,19 @@ export default {
       var payStatus;
       switch (row.payStatus) {
         case "0":
-          payStatus = "到账成功";
+          payStatus = this.$t(`order.successfully`);
           break;
         case "1":
-          payStatus = "已支付未到帐";
+          payStatus = this.$t(`order.paidButNotPaid`);
           break;
         case "2":
-          payStatus = "待支付";
+          payStatus = this.$t(`order.toBePaid`);
           break;
         case "3":
-          payStatus = "支付失败";
+          payStatus = this.$t(`order.paymentFailed`);
           break;
         case "4":
-          payStatus = "取消支付";
+          payStatus = this.$t(`order.cancelPayment`);
           break;
       }
       this.rowItem = {
@@ -516,8 +527,8 @@ export default {
             column: [
               // { label: "订单id", prop: row.orderId },
               { label: this.$t(`order.orderNo`), prop: row.orderCode },
-              { label: "套餐单价", prop: row.planPrice },
-              { label: "套餐里程", prop: row.distance },
+              { label: this.$t(`order.packagePrice`), prop: row.planPrice },
+              { label: this.$t(`order.packageMileage`), prop: row.distance },
               { label: this.$t(`user.username`), prop: row.userName },
               { label: this.$t(`scooter.name`), prop: row.scooterCode },
               // { label: "套餐折扣", prop: row.discount },
@@ -525,18 +536,18 @@ export default {
               // { label: "套餐总价", prop: row.planTotal },
               // { label: "优惠券", prop: row.discounts },
               { label: this.$t(`order.totalPrices`), prop: row.totalPrices },
-              { label: "套餐总里程", prop: row.distanceSum },
+              { label: this.$t(`scooter.totalMileag`), prop: row.distanceSum },
               {
                 label: this.$t(`order.payChannel`),
                 prop: row.payChannel == "0" ? "ovo" : "gopay"
               },
               { label: this.$t(`order.payStatus`), prop: payStatus },
-              { label: "第三方支付编号", prop: row.payCode },
+              { label: this.$t(`order.thirdParty`), prop: row.payCode },
               // { label: "第三方支付回调结果", prop: row.callbackResult },
               { label: this.$t(`order.PayTime`), prop: row.payTime }
             ]
           }
-        ],
+        ]
         // fullItem: [
         //   {
         //     title: "备注",

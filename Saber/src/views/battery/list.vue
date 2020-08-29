@@ -386,23 +386,23 @@ export default {
             hide:true,
             dicData: [
               {
-                label: "连接换电归",
+                label: this.$t(`battery.connectCbinet`),
                 value: "0"
               },
               {
-                label: "连接电动车",
+                label: this.$t(`battery.connectCars`),
                 value: "1"
               },
               {
-                label: "未连接",
+                label: this.$t(`Unconnected`),
                 value: "2"
               },
               {
-                label: "通讯错误",
+                label: this.$t(`battery.communicationError`),
                 value: "3"
               },
               {
-                label: "模块错误",
+                label: this.$t(`battery.moduleError`),
                 value: "4"
               }
             ],
@@ -672,19 +672,19 @@ export default {
       }
       switch (row.connectStatus) {
         case "0":
-          connectStatus = "连接换电归";
+          connectStatus = this.$t(`battery.connectCbinet`);
           break;
         case "1":
-          connectStatus = "连接电动车";
+          connectStatus = this.$t(`battery.connectCars`);
           break;
         case "2":
-          connectStatus = "未连接";
+          connectStatus = this.$t(`Unconnected`);
           break;
         case "3":
-          connectStatus = "通讯错误";
+          connectStatus = this.$t(`battery.communicationError`);
           break;
         case "4":
-          connectStatus = "模块错误";
+          connectStatus = this.$t(`battery.moduleError`);
           break;
       }
       switch (row.systemStatus) {
