@@ -17,6 +17,10 @@ export default {
   getlocaton:'getlocaton',
   coordinate:'Get latitude and longitude',
   UnlinkwithStore:'Unlink with Store',
+  pictureManagement:'Picture Management',
+  BusinessHours:'BusinessHours Management',
+
+
 
   chakan:'view',
   wel: {
@@ -134,7 +138,7 @@ export default {
     produceTime:'Produce Date',
     UnlinkwithClient:'Unlink with Client',
     UnlinkwithUser:'Unlink with User',
-    client:'By Client',
+    // client:'By Client',
     client:'By Store',
     salesChannel:'Please input Sales Channel',
     please:'Please input ',
@@ -215,7 +219,11 @@ supplier:{
   linkman:'Link Man',
   contactNumber:'Contact Number',
   address:'Address',
-  type:'Production'
+  type:'Production',
+  batteryProduction:'Battery Production',
+  stationProduction:'Station Production',
+  scooterProduction:'Scooter Production',
+
 
 },
 store:{
