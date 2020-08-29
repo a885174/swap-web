@@ -130,7 +130,7 @@ export default {
             ]
           },
           {
-            label: "法律代表",
+            label: this.$t(`repaircompany.legalRepresentative`),
             prop: "legalPerson",
             hide: true,
             rules: [
@@ -142,7 +142,7 @@ export default {
             ]
           },
           {
-            label: "工商备案",
+            label: this.$t(`repaircompany.Industrial`),
             prop: "filingStatus",
             hide: true,
             rules: [
@@ -230,13 +230,13 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "维修商信息",
+            title: this.$t(`repaircompany.repairerInformation`),
             column: [
               { label: this.$t(`repaircompany.comName`), prop: row.comName },
               { label: this.$t(`supplier.linkman`), prop: row.linkman },
               { label: this.$t(`supplier.contactNumber`), prop: row.contactNumber },
-              { label: "法律代表", prop: row.legalPerson },
-              { label: "工商备案", prop: row.filingStatus },
+              { label: this.$t(`repaircompany.legalRepresentative`), prop: row.legalPerson },
+              { label: this.$t(`repaircompany.Industrial`), prop: row.filingStatus },
               { label: "address", prop: row.address },
             ]
           }

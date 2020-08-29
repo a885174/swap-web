@@ -20,8 +20,14 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
-    
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
+
         <el-button @click="dialogFormVisible = true">{{$t(`AssignStore`)}}</el-button>
         <template>
           <el-button @click.stop="delstore">{{$t(`UnlinkwithStore`)}}</el-button>
@@ -73,14 +79,12 @@
           icon="el-icon-picture-outline"
           @click.stop="getGridData(scope.row)"
         >图片管理</el-button>&nbsp;&nbsp;
-
-          <el-button
+        <el-button
           type="text"
           size="small"
           icon="el-icon-document-copy"
           @click.stop="openmap(scope.row)"
         >{{$t(`getlocaton`)}}</el-button>
-  
       </template>
     </avue-crud>
     <el-dialog
@@ -91,7 +95,7 @@
       center
     >
       <mapbox-map mapWidth="60%" mapHeight="600px" :lnglat="lnglat" @sendiptVal="showChildMsg"></mapbox-map>
-<!-- 
+      <!-- 
    <el-form
           ref="editForm"
           :model="editData"
@@ -122,7 +126,7 @@
                             </gmap-map>
                         </div>
           </el-form-item>
-   </el-form> -->
+      </el-form>-->
       <div slot="footer" class="dialog-footer">
         <el-button @click="mapDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
@@ -153,7 +157,6 @@
           <el-button type="primary" @click="insertShopPicature()">确 定</el-button>
         </div>
       </el-dialog>
-
 
       <el-table :data="gridData" class="tb-edit" highlight-current-row>
         <el-table-column label="index" width="70px">
@@ -279,7 +282,13 @@
         <el-table-column property="bt" label="当前充电电池的最高温度" width="150"></el-table-column>
       </el-table>
     </el-dialog>
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisibles"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -294,7 +303,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisibles = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisibles = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -343,10 +352,10 @@ export default {
       tabledData: [],
       show: false,
       multipleSelection: [],
-      currentPlace: '',
+      currentPlace: "",
       query: {},
       chaData: [],
-      editData:{},
+      editData: {},
       dialogFormVisible: false,
       dialogTableVisible: false,
       mapDialogVisible: false,
@@ -367,8 +376,8 @@ export default {
       uploadform: {},
       fileform: {},
       center: {
-           lat: 40.4167754,
-                        lng: -3.7037902,
+        lat: 40.4167754,
+        lng: -3.7037902
       },
       markers: [],
       place: null,
@@ -659,11 +668,11 @@ export default {
             // hide:true,
             dicData: [
               {
-                label: this.$t(`Connect`),
+                label: this.$t(`Connected`),
                 value: "0"
               },
               {
-                label: "Unconnect",
+                label: "Unconnected",
                 value: "1"
               }
             ],
@@ -734,7 +743,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`scooter.produceTime`),
+                message: "请输入" + this.$t(`scooter.produceTime`),
                 trigger: "blur"
               }
             ]
@@ -895,7 +904,7 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "换电柜信息",
+            title: this.$t(`station.info`),
             column: [
               { label: this.$t(`station.stationCode`), prop: row.stationCode },
               { label: this.$t(`station.imei`), prop: row.imei },
@@ -918,29 +927,35 @@ export default {
             ]
           },
           {
-            title: "换电柜状态",
+            title: this.$t(`station.stationStatus`),
             column: [
               { label: this.$t(`station.stationStatus`), prop: stationStatus },
               {
                 label: this.$t(`station.locationStatus`),
-                prop: row.locationStatus == "0" ? "已定位" : "未定位"
+                prop:
+                  row.locationStatus == "0"
+                    ? this.$t(`scooter.targeted`)
+                    : this.$t(`scooter.untargeted`)
               },
               {
                 label: this.$t(`station.connectStatus`),
-                prop: row.connectStatus == "0" ? "已连接" : "未连接"
+                prop:
+                  row.connectStatus == "0"
+                    ? this.$t(`Connected`)
+                    : this.$t(`Unconnected`)
               }
             ]
           },
           {
-            title: "关联商家及店铺信息",
+            title: this.$t(`station.associated`),
             column: [
-              { label: "分配店铺", prop: row.storeName },
-              { label: "电表实时读数", prop: row.ammeterValue },
-              { label: "读数时间", prop: row.ammeterTime },
-              { label: "营业开始时间", prop: row.businessTimeS },
-              { label: "营业结束时间", prop: row.businessTimeE },
+              { label: this.$t(`AssignStore`), prop: row.storeName },
+              { label: this.$t(`station.reading`), prop: row.ammeterValue },
+              { label: this.$t(`station.readingTime`), prop: row.ammeterTime },
+              { label: this.$t(`station.startTime`), prop: row.businessTimeS },
+              { label: this.$t(`station.endTime`), prop: row.businessTimeE },
               { label: this.$t(`station.address`), prop: row.address },
-              { label: "关联供应商", prop: row.supplierId }
+              { label: this.$t(`station.supplier`), prop: row.supplierId }
             ]
           }
         ],
@@ -994,45 +1009,46 @@ export default {
       this.lnglat.latitude = row.latitude;
       this.lnglat.stationId = row.stationId;
       this.mapDialogVisible = true;
-
     },
-                // 设置位置
-        setPlace(place) {
-            this.currentPlace = null
-            this.currentPlace = place
+    // 设置位置
+    setPlace(place) {
+      this.currentPlace = null;
+      this.currentPlace = place;
+    },
+    // 获取当前位置
+    geolocate() {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          console.log("获取当前位置", position);
+          this.center = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
         },
-        // 获取当前位置
-        geolocate() {
-            navigator.geolocation.getCurrentPosition(position => {
-                    console.log('获取当前位置', position)
-                    this.center = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    }
-                },
-                () => {
-                    this.center = {
-                        lat: 40.4167754,
-                        lng: -3.7037902,
-                    }
-                })
-        },
-        updateMaker(event) {
-                this.markers[0].position = {
-                    lat: event.latLng.lat(),
-                    lng: event.latLng.lng()
-                }
-            },
-            addMarker() {
-                if (this.currentPlace) {
-                    const marker = {
-                        lat: this.currentPlace.geometry.location.lat(),
-                        lng: this.currentPlace.geometry.location.lng()
-                    }
-                    this.markers.push({position: marker})
-                    this.center = marker
-                }
-            },
+        () => {
+          this.center = {
+            lat: 40.4167754,
+            lng: -3.7037902
+          };
+        }
+      );
+    },
+    updateMaker(event) {
+      this.markers[0].position = {
+        lat: event.latLng.lat(),
+        lng: event.latLng.lng()
+      };
+    },
+    addMarker() {
+      if (this.currentPlace) {
+        const marker = {
+          lat: this.currentPlace.geometry.location.lat(),
+          lng: this.currentPlace.geometry.location.lng()
+        };
+        this.markers.push({ position: marker });
+        this.center = marker;
+      }
+    },
     showChildMsg(value) {
       var obj = JSON.parse(value);
       this.lnglat.longitude = obj.lng;
@@ -1105,7 +1121,7 @@ export default {
         this.$message.error("上传图片大小不能超过 2MB!");
       }
       // return isJPG && isLt2M;
-      return  isLt2M;
+      return isLt2M;
     },
 
     handleSuccess(res, file) {

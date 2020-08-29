@@ -293,11 +293,11 @@ export default {
             slot: true,
             dicData: [
               {
-                label: "已处理",
+                label: this.$t(`suggest.processed`),
                 value: "1"
               },
               {
-                label: "未处理",
+                label: this.$t(`suggest.untreated`),
                 value: "0"
               }
             ],
@@ -418,7 +418,7 @@ export default {
               // { label: "客户端类型", prop: clientType },
               // { label: "客户端ip", prop: row.clientIp },
               // { label: "是否匿名", prop: row.anonymityStatus=="1"?"是":"否" },
-              { label: this.$t(`suggest.suggestStatus`), prop: row.suggestStatus=="1"?"已处理":"未处理" },
+              { label: this.$t(`suggest.suggestStatus`), prop: row.suggestStatus=="1"?this.$t(`suggest.processed`):this.$t(`suggest.untreated`) },
               { label: this.$t(`suggest.result`), prop: row.result }
               // { label: this.$t(`suggest.detials`), prop: row.content }
             ]

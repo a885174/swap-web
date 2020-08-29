@@ -434,7 +434,7 @@ export default {
             ]
           },
           {
-            label: "维修区域",
+            label: this.$t(`repairshop.repairArea`),
             prop: "areaId",
             type: "tree",
             hide: true,
@@ -453,7 +453,7 @@ export default {
             }
           },
           {
-            label: "所属维修商",
+            label: this.$t(`repairshop.ownedRepairer`),
             prop: "comId",
             type: "tree",
             hide: true,
@@ -472,7 +472,7 @@ export default {
             }
           },
           // {
-          //   label: "所属维修商",
+          //   label: this.$t(`repairshop.ownedRepairer`),
           //   prop: "comId",
           //   rules: [{
           //     required: true,
@@ -840,11 +840,11 @@ export default {
             column: [
               // { label: "维修店铺id", prop: row.shopId },
               { label: this.$t(`repairshop.shopeName`), prop: row.shopName },
-              // { label: "维修区域", prop: row.areaId },
-              { label: "维修区域", prop: row.areaName },
-              { label: "所属维修商", prop: row.comId },
-              { label: "营业开始时间", prop: row.businessTimeS },
-              { label: "营业结束时间", prop: row.businessTimeE },
+              // { label: this.$t(`repairshop.repairArea`), prop: row.areaId },
+              { label: this.$t(`repairshop.repairArea`), prop: row.areaName },
+              { label: this.$t(`repairshop.ownedRepairer`), prop: row.comId },
+              { label: this.$t(`station.startTime`), prop: row.businessTimeS },
+              { label: this.$t(`station.endTime`), prop: row.businessTimeE },
               { label: "addrees", prop: row.address },
               { label: this.$t(`supplier.linkman`), prop: row.linkman },
               { label: this.$t(`supplier.contactNumber`), prop: row.contactNumber },
