@@ -38,10 +38,8 @@
 
       <template slot-scope="scope" slot="menu">
         <el-button type="text" icon="el-icon-date" size="small" @click="opentable(scope.row)">营业时间分配</el-button>
-<<<<<<< HEAD
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
         <el-button type="text" icon="el-icon-picture-outline" size="small" @click="getGridData(scope.row)">图片管理</el-button>
-=======
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">查看</el-button>
         <el-button
           type="text"
@@ -49,7 +47,6 @@
           size="small"
           @click="getGridData(scope.row)"
         >图片管理</el-button>
->>>>>>> 5bcdd9ba84440fa505b99f2adc645508988506ab
         <el-button
           type="text"
           size="small"
