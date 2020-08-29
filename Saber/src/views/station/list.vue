@@ -382,13 +382,8 @@ export default {
       uploadform: {},
       fileform: {},
       center: {
-<<<<<<< HEAD
-           lat: 40.4167754,
-           lng: -3.7037902,
-=======
         lat: 40.4167754,
         lng: -3.7037902
->>>>>>> f37b229815ff14b436a3ec4f2c018d70969aef7e
       },
       markers: [],
       place: null,
