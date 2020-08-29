@@ -22,12 +22,12 @@
       <template slot="menuLeft">
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
     
-        <el-button @click="dialogFormVisible = true">分配店铺</el-button>
+        <el-button @click="dialogFormVisible = true">{{$t(`AssignStore`)}}</el-button>
         <template>
-          <el-button @click.stop="delstore">解除店铺关联</el-button>
+          <el-button @click.stop="delstore">{{$t(`UnlinkwithStore`)}}</el-button>
         </template>
 
-        <el-dialog title="分配店铺" :visible.sync="dialogFormVisible" width="30%" center>
+        <el-dialog title="AssignStore" :visible.sync="dialogFormVisible" width="30%" center>
           <span slot="footer" class="dialog-footer">
             <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
           </span>
@@ -59,7 +59,7 @@
           size="small"
           icon="el-icon-box"
           @click.stop="getListData(scope.row)"
-        >充电仓管理</el-button>
+        >warhouse management</el-button>
         <el-button
           type="text"
           size="small"
@@ -79,12 +79,12 @@
           size="small"
           icon="el-icon-document-copy"
           @click.stop="openmap(scope.row)"
-        >地址选取</el-button>
+        >{{$t(`getlocaton`)}}</el-button>
   
       </template>
     </avue-crud>
     <el-dialog
-      title="地图"
+      title="Map"
       :visible.sync="mapDialogVisible"
       :append-to-body="true"
       width="30%"
@@ -97,7 +97,7 @@
           :model="editData"
           label-width="140px"
         >
-          <el-form-item label="地图">
+          <el-form-item label="Map">
             <div style="height: 370px;">
                             <label>
                                 <GmapAutocomplete @place_changed="setPlace" ref="gampautocomplete"/>
@@ -255,7 +255,7 @@
     </el-dialog>
 
     <el-dialog
-      title="充电仓管理"
+      title="warehouse"
       :visible.sync="chaTableVisible"
       :append-to-body="true"
       :fullscreen="false"
@@ -265,10 +265,10 @@
         <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
-        <el-table-column property="station_code" label="充电柜编码 " width="150"></el-table-column>
+        <el-table-column property="station_code" label="station code " width="150"></el-table-column>
         <el-table-column property="name" label="仓位" width="200"></el-table-column>
         <el-table-column property="lt" label="电池仓锁状态" width="200"></el-table-column>
-        <el-table-column property="ct" label="电池仓状态"></el-table-column>
+        <el-table-column property="ct" label="status"></el-table-column>
         <el-table-column property="v" label="电池仓电压 " width="150"></el-table-column>
         <el-table-column property="i" label="电池仓电流" width="200"></el-table-column>
         <el-table-column property="t" label="电池仓温度" width="150"></el-table-column>
@@ -659,11 +659,11 @@ export default {
             // hide:true,
             dicData: [
               {
-                label: "已连接",
+                label: this.$t(`Connect`),
                 value: "0"
               },
               {
-                label: "未连接",
+                label: "Unconnect",
                 value: "1"
               }
             ],

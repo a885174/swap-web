@@ -53,7 +53,7 @@
           size="small"
           icon="el-icon-document-copy"
           @click="openmap(scope.row)"
-        >地址选取</el-button>
+        >{{$t(`getlocation`)}}</el-button>
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
 
         <el-button type="text" size="small" icon="el-icon-date" @click="opentable(scope.row)">营业时间分配</el-button>&nbsp;&nbsp;
@@ -74,9 +74,9 @@
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="week" label="星期" width="150">
-          <template slot-scope="scope">
+          <!-- <template slot-scope="scope">
             <el-tag>{{scope.row.week===0? '七天24小时':'星期'+scope.row.week}}</el-tag>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column property="business_time_s" label="营业开始时间" width="200"></el-table-column>
         <el-table-column property="business_time_e" label="营业结束时间"></el-table-column>
@@ -275,13 +275,13 @@
       </el-dialog>
     </el-dialog>
 
-    <el-dialog title="Assign Merchant" :visible.sync="dialogFormVisible" width="40%" center>
+    <el-dialog title="AssignMerchant" :visible.sync="dialogFormVisible" width="40%" center>
       <span slot="footer" class="dialog-footer">
         <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
       </span>
     </el-dialog>
     <el-dialog
-      title="地图"
+      title="Map"
       :visible.sync="centerDialogVisible"
       :append-to-body="true"
       width="30%"
