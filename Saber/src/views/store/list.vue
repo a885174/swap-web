@@ -62,7 +62,7 @@
           size="small"
           icon="el-icon-picture-outline"
           @click="getGridData(scope.row)"
-        >图片管理</el-button>
+        >{{$(`pictureManagement`)}}</el-button>
       </template>
     </avue-crud>
 

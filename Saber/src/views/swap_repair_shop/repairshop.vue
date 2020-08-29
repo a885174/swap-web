@@ -68,7 +68,7 @@
         <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="营业时间分配" :visible.sync="tableVisible" :append-to-body="true">
+    <el-dialog title="BusinessHours" :visible.sync="tableVisible" :append-to-body="true">
       <el-button @click="timeFormVisible=true">新增营业时间</el-button>
 
       <el-table :data="timeData">
@@ -76,9 +76,9 @@
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="week" label="星期" width="150">
-          <template slot-scope="scope">
+          <!-- <template slot-scope="scope">
             <el-tag>{{scope.row.week===0? '七天24小时':'星期'+scope.row.week}}</el-tag>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column property="business_time_s" label="营业开始时间" width="200"></el-table-column>
         <el-table-column property="business_time_e" label="营业结束时间"></el-table-column>
@@ -174,7 +174,7 @@
     </el-dialog>
 
     <el-dialog title="店铺图片" :visible.sync="dialogTableVisible" :append-to-body="true" center>
-      <el-button @click="getTableData()">分配图片</el-button>
+      <el-button @click="getTableData()">{{$t(`pictureManagement`)}}</el-button>
 
       <el-button @click="fileDialog=true">上传店铺图片</el-button>
 
@@ -182,10 +182,10 @@
         <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
-        <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
+        <el-table-column property="picture_id" label="picture_id" v-if="show"></el-table-column>
         <el-table-column property="repair_id" label="换电柜id" v-if="show"></el-table-column>
-        <el-table-column property="store_picture_id" label="编号" v-if="show"></el-table-column>
-        <el-table-column prop="picture_main_url" label="图片" min-width="20%">
+        <el-table-column property="store_picture_id" label="Number" v-if="show"></el-table-column>
+        <el-table-column prop="picture_main_url" label="pictureUrl" min-width="20%">
           <!-- 图片的显示 -->
           <template slot-scope="scope">
             <img :src="scope.row.picture_main_url" min-width="70" height="70" />
