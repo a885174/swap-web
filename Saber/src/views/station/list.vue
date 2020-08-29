@@ -72,7 +72,7 @@
           size="small"
           icon="el-icon-picture-outline"
           @click.stop="getGridData(scope.row)"
-        >图片管理</el-button>&nbsp;&nbsp;
+        >{{$t(`pictureManagement`)}}</el-button>&nbsp;&nbsp;
 
           <el-button
           type="text"
@@ -368,7 +368,7 @@ export default {
       fileform: {},
       center: {
            lat: 40.4167754,
-                        lng: -3.7037902,
+           lng: -3.7037902,
       },
       markers: [],
       place: null,
@@ -959,7 +959,7 @@ export default {
         let link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
         //配置下载的文件名
-        link.download = "导出换电柜数据列表.xls";
+        link.download = "stationList.xls";
         link.click();
       });
     },

@@ -107,7 +107,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入供应商名称",
+                message: "请输入"+this.$t(`supplier.supplierName`),
                 trigger: "blur"
               }
             ]
@@ -120,15 +120,15 @@ export default {
             search: true,
             dicData: [
               {
-                label: "电动车供应商",
+                label: this.$t(`scooterProduction`),
                 value: "1"
               },
               {
-                label: "换电柜供应商",
+                label: this.$t(`stationProduction`),
                 value: "2"
               },
               {
-                label: "电池供应商",
+                label: this.$t(`batteryProduction`),
                 value: "3"
               }
             ],
