@@ -120,15 +120,15 @@ export default {
             search: true,
             dicData: [
               {
-                label: "电动车供应商",
+                label: this.$t(`supplier.electricVehicleSupplier`),
                 value: "1"
               },
               {
-                label: "换电柜供应商",
+                label: this.$t(`supplier.switchCabinetSupplier`),
                 value: "2"
               },
               {
-                label: "电池供应商",
+                label: this.$t(`supplier.batterySupplier`),
                 value: "3"
               }
             ],
@@ -254,13 +254,13 @@ export default {
       var supplierType;
       switch (row.supplierType) {
         case "1":
-          supplierType = "电动车供应商";
+          supplierType = this.$t(`supplier.electricVehicleSupplier`);
           break;
         case "2":
-          supplierType = "换电柜供应商";
+          supplierType = this.$t(`supplier.switchCabinetSupplier`);
           break;
         case "3":
-          supplierType = "电池供应商";
+          supplierType = this.$t(`supplier.batterySupplier`);
           break;
       }
       this.rowItem = {

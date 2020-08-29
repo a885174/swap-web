@@ -114,11 +114,11 @@ export default {
             type: "select",
             dicData: [
               {
-                label: "电动车",
+                label: this.$t(`solution.electricVehicle`),
                 value: "1"
               },
               {
-                label: "电池",
+                label: this.$t(`solution.battery`),
                 value: "2"
               }
             ],
@@ -176,7 +176,7 @@ export default {
 
           },
           {
-            label: "创建人",
+            label: this.$t(`solution.creator`),
             prop: "createUser",
             hide: true,
             rules: [
@@ -188,7 +188,7 @@ export default {
             ]
           },
           {
-            label: "创建时间",
+            label: this.$t(`solution.createdTime`),
             prop: "createTime",
             hide: true,
             rules: [
@@ -200,7 +200,7 @@ export default {
             ]
           },
           {
-            label: "更新人",
+            label: this.$t(`solution.updatePeople`),
             prop: "updateUser",
             hide: true,
             rules: [
@@ -212,7 +212,7 @@ export default {
             ]
           },
           {
-            label: "更新时间",
+            label: this.$t(`solution.updateTime`),
             prop: "updateTime",
             hide: true,
             rules: [
@@ -252,25 +252,25 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "故障信息",
+            title: this.$t(`solution.faultInformation`),
             column: [
-              { label: "故障编号", prop: row.faultCode },
+              { label: this.$t(`solution.faultCode`), prop: row.faultCode },
               {
-                label: "故障类型",
-                prop: row.faultType == "1" ? "电动车" : "电池"
+                label: this.$t(`solution.faultType`),
+                prop: row.faultType == "1" ? this.$t(`solution.electricVehicle`) : this.$t(`solution.battery`)
               },
-              { label: "故障代码", prop: row.faultKey },
-              { label: "故障值", prop: row.faultValue },
-              { label: "故障名称", prop: row.faultName },
-              // { label: "解决方案", prop: row.faultSolution },
-              { label: "创建人", prop: row.createUser },
-              { label: "创建时间", prop: row.createTime },
-              { label: "更新人", prop: row.updateUser },
-              { label: "更新时间", prop: row.updateTime }
+              { label: this.$t(`solution.faultCode`), prop: row.faultKey },
+              { label: this.$t(`solution.failureValue`), prop: row.faultValue },
+              { label: this.$t(`solution.faultName`), prop: row.faultName },
+              // { label: this.$t(`solution.Solution`), prop: row.faultSolution },
+              { label: this.$t(`solution.creator`), prop: row.createUser },
+              { label: this.$t(`solution.createdTime`), prop: row.createTime },
+              { label: this.$t(`solution.updatePeople`), prop: row.updateUser },
+              { label: this.$t(`solution.updateTime`), prop: row.updateTime }
             ]
           },
           {
-            title: "解决方案",
+            title: this.$t(`solution.Solution`),
             column: [{  prop: row.faultSolution }]
           }
         ]
