@@ -127,7 +127,24 @@ export default {
     mileageValue:'行车总里程',
     batteryNumber:'电池数',
     expirationDate:'保质期',
-    produceTime:'出厂时间'
+    produceTime:'出厂时间',
+    client:'客户',
+    store:'门店',
+    salesChannel:'请输入销售渠道',
+    please:'请输入',
+    nameOfClient: '所属客户',
+    pleaseSelect: '请选择',
+    sold:'已销售',
+    notSold:'未销售',
+    activated:'已激活',
+    inactivated:'未激活',
+    running:'运行中',
+    stopped:'已停止',
+    targeted:'已定位',
+    untargeted:'未定位',
+    locked:'已锁定',
+    NotLocked:'未锁定',
+    notConnected:'未连接'
 
   },
   battery:{
