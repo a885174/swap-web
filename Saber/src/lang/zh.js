@@ -14,6 +14,7 @@ export default {
   Connected:'已连接',
   Unfreeze:'解除冻结',
   Unconnected:'未连接',
+  transactionNum:'交易编号',
   
   
   wel: {
@@ -124,6 +125,7 @@ export default {
     securityLock:'防盗锁定',
     arrearageLock:'欠费锁车',
     UnlinkwithClient:'解除客户关联',
+    UnlinkwithUser:'解除用户关联',
     mileageValue:'行车总里程',
     batteryNumber:'电池数',
     expirationDate:'保质期',
@@ -219,10 +221,13 @@ store:{
     tenantStatus:'客户状态',
     legalPerson:'法定代表',
     Frozen:'冻结',
+    UnlinkwithMotorcycle:'解除关联电动车',
     approveStatus:'工商备案',
+    AssignScooter:'分配电动车',
   },
   merchant:{
     merchantName:'商户名',
+    AssignMerchant:'分配商家',
     countryId:'国家',
     city:'城市',
     status:'商户状态',
@@ -323,6 +328,12 @@ store:{
     appVersoin:'版本号',
     updatedInstruction:'更新说明',
     updatedTime:'更新时间'
-}
+},
+
+billing:{
+  bank:'银行',
+  totalPrices:'总价',
+  status:'状态'
+},
 
 }

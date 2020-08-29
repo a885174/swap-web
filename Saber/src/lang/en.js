@@ -12,6 +12,7 @@ export default {
   Connected:'Connected',
   Unconnected:'Unconnected',
   Unfreeze:'Unfreeze',
+  transactionNum:'transaction Num',
   chakan:'view',
   wel: {
     info: 'Good morning, Smallwei, Avuex is a framework',
@@ -229,6 +230,8 @@ merchant:{
   city:'City',
   status:'Status',
   merchantId:'Merchant ID',
+  AssignMerchant:'Assign Merchant',
+
 },
 order:{
   orderNo:'Order Number',
@@ -265,6 +268,7 @@ record:{
     scooters:'Motorcycle Count',
     legalPerson:'Legal Person',
     approveStatus:'Government Record File',
+    AssignScooter:'Assign Scooter',
     Frozen:'Frozen'
 
 
@@ -328,5 +332,13 @@ record:{
       updatedInstruction:'Updated Instruction',
       updatedTime:'Updated time'
   }
+  ,
+  billing:{
+    bank:'Bank',
+    totalPrices:'totalPrices',
+    status:'Status',
+    jiesuan:'Go to Clearing',
+    upload:' update certification.'
+  },
 
 }

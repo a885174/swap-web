@@ -63,30 +63,30 @@
           icon="el-icon-document-copy"
           v-if="scope.row.orderStatus!='1' "
           @click="upload(scope.row)"
-        >上传凭证</el-button>
+        >{{$t(`billing.upload`)}}</el-button>
 
-        <el-dialog title="上传凭证" :visible.sync="centerDialogVisible" :append-to-body="true" center>
+        <el-dialog title="upload" :visible.sync="centerDialogVisible" :append-to-body="true" center>
           <basic-container>
             <avue-form :option="formoption" v-model="form" @submit="handleSubmit()"></avue-form>
           </basic-container>
         </el-dialog>&nbsp;&nbsp;&nbsp;
-        <el-button type="text" @click="pagedetial(scope.row)">账单详情</el-button>
+        <el-button type="text" @click="pagedetial(scope.row)">Detail</el-button>
 
-        <el-dialog title="账单详情" :visible.sync="dialogTableVisible" :append-to-body="true">
+        <el-dialog title="Detail" :visible.sync="dialogTableVisible" :append-to-body="true">
           <el-table :data="gridData">
-            <el-table-column property="station_code" label="换电柜编号" width="200"></el-table-column>
-            <el-table-column property="init_read" label="上次读数" width="150"></el-table-column>
-            <el-table-column property="init_time" label="上次读取时间" width="200"></el-table-column>
-            <el-table-column property="end_read" label="本次读数"></el-table-column>
-            <el-table-column property="end_time" label="本次读取数时间" width="200"></el-table-column>
-            <el-table-column property="electricity_price" label="电费单价"></el-table-column>
-            <el-table-column property="electricity_sum" label="实用电量"></el-table-column>
-            <el-table-column property="total_prices" label="计费总价"></el-table-column>
-            <el-table-column property="is_bill" label="状态"></el-table-column>
-            <el-table-column property="remark" label="备注"></el-table-column>
+            <el-table-column property="station_code" label="station code" width="200"></el-table-column>
+            <el-table-column property="init_read" label="Previous Clearing Time" width="150"></el-table-column>
+            <el-table-column property="init_time" label="Previous Reading Time" width="200"></el-table-column>
+            <el-table-column property="end_read" label="Reading Time"></el-table-column>
+            <el-table-column property="end_time" label="Electrical Meter Reading" width="200"></el-table-column>
+            <el-table-column property="electricity_price" label="electricity price"></el-table-column>
+            <el-table-column property="electricity_sum" label="Power Consumption"></el-table-column>
+            <el-table-column property="total_prices" label="totalprices"></el-table-column>
+            <el-table-column property="is_bill" label="status"></el-table-column>
+            <!-- <el-table-column property="remark" label="备注"></el-table-column> -->
           </el-table>
         </el-dialog>&nbsp;&nbsp;&nbsp;
-        <el-button type="text" @click.stop="finish(scope.row)">结算</el-button>
+        <el-button type="text" @click.stop="finish(scope.row)">{{$t(`billing.jiesuan`)}}</el-button>
       </template>
     </avue-crud>
   </basic-container>
@@ -123,15 +123,15 @@ export default {
       formoption: {
         column: [
           {
-            label: "附件上传",
+            label: "Please update the payment certification.",
             prop: "imgUrl",
             type: "upload",
-            loadText: "附件上传中，请稍等",
+            loadText: "wait",
             span: 24,
             propsHttp: {
               res: "data"
             },
-            tip: "只能上传jpg/png文件，且不超过500kb",
+            tip: ".png/.jpg",
             action: "/api//blade-resource/oss/endpoint//uploadFile"
           }
           //     {
@@ -167,7 +167,7 @@ export default {
           //   }]
           // },
           {
-            label: "交易编号",
+            label: this.$t(`transactionNum`),
             search: true,
             prop: "transactionNum",
             rules: [
@@ -179,7 +179,7 @@ export default {
             ]
           },
           {
-            label: "店铺名",
+            label: this.$t(`storeName`),
             prop: "storeName",
             rules: [
               {
@@ -199,7 +199,7 @@ export default {
           //   }]
           // },
           {
-            label: "银行卡号",
+            label: "Bank cardNo",
             prop: "cardNo",
             hide: true,
             rules: [
@@ -211,7 +211,7 @@ export default {
             ]
           },
           {
-            label: "持卡人",
+            label: "cardholder",
             prop: "cardholder",
             hide: true,
             rules: [
@@ -223,7 +223,7 @@ export default {
             ]
           },
           {
-            label: "发行银行",
+            label: "Bank",
             prop: "initTime",
             hide: true,
             rules: [
@@ -282,7 +282,7 @@ export default {
           //   }]
           // },
           {
-            label: "计费总价",
+            label: "totalPrices",
             prop: "totalPrices",
             slot: true,
             rules: [
@@ -294,7 +294,7 @@ export default {
             ]
           },
           {
-            label: "订单状态 ",
+            label: this.$t(`billing.status`),
             prop: "orderStatus",
             type: "select",
             slot: true,

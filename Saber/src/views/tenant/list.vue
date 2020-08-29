@@ -22,9 +22,9 @@
       <template slot="menuLeft">
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delte`)}}</el-button>
 
-        <el-button @click="dialogFormVisible = true">分配电动车</el-button>
+        <el-button @click="dialogFormVisible = true">{{$t(`tenant.AssignScooter`)}}</el-button>
 
-        <el-dialog title="分配电动车" :visible.sync="dialogFormVisible" width="30%" center>
+        <el-dialog title="Assign Scooter" :visible.sync="dialogFormVisible" width="30%" center>
           <span slot="footer" class="dialog-footer">
             <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
           </span>
