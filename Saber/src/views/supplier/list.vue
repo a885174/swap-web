@@ -107,7 +107,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入供应商名称",
+                message: "请输入"+this.$t(`supplier.supplierName`),
                 trigger: "blur"
               }
             ]

@@ -585,14 +585,14 @@ export default {
       }
     },
 
-    getListData(row) {
-    getChaList(row.stationCode).then(res => {
-      console.log("返回结果:"+res.data)
-        this.chaData = res.data.data;
-        console.log("cha:"+this.chaData);
-      });
-    this.chaTableVisible=true;
-    },
+    // getListData(row) {
+    // getChaList(row.stationCode).then(res => {
+    //   console.log("返回结果:"+res.data)
+    //     this.chaData = res.data.data;
+    //     console.log("cha:"+this.chaData);
+    //   });
+    // this.chaTableVisible=true;
+    // },
 
     rowUpdate(row, index, loading, done) {
       update(row).then(
