@@ -105,11 +105,11 @@ export default {
           //   type: "select",
           //   dicData: [
           //     {
-          //       label: "否",
+          //       label: this.$t(`AppVseroin.no`),
           //       value: "1"
           //     },
           //     {
-          //       label: "是",
+          //       label: this.$t(`AppVseroin.yes`),
           //       value: "0"
           //     }
           //   ],
@@ -122,7 +122,7 @@ export default {
           //   ]
           // },
           {
-            label: "apk地址",
+            label: this.$t(`AppVseroin.apkAddress`),
             prop: "apkUrl",
             rules: [
               {
@@ -184,14 +184,14 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "版本信息",
+            title: this.$t(`AppVseroin.versionInformation`),
             column: [
-              { label: "版本id", prop: row.id },
-              { label: "版本号", prop: row.versoin },
-              { label: "是否强制更新", prop: row.isForcedUpdate=="0"?"是":"否" },
-              { label: "apk地址", prop: row.apkUrl },
-              { label: "更新日志", prop: row.versoinLog },
-              { label: "更新时间", prop: row.updateTime },
+              { label: this.$t(`AppVseroin.versionId`), prop: row.id },
+              { label: this.$t(`AppVseroin.appVersoin`), prop: row.versoin },
+              { label: this.$t(`AppVseroin.whetherToForceUpdate`), prop: row.isForcedUpdate=="0"?this.$t(`AppVseroin.yes`):this.$t(`AppVseroin.no`) },
+              { label: this.$t(`AppVseroin.apkAddress`), prop: row.apkUrl },
+              { label: this.$t(`AppVseroin.updateLog`), prop: row.versoinLog },
+              { label: this.$t(`AppVseroin.updatedTime`), prop: row.updateTime },
             ]
           }
         ]

@@ -438,7 +438,7 @@ export default {
               { label: this.$t(`user.emergencyContact`), prop: row.emergencyContact },
               { label: this.$t(`user.emergencyPhone`), prop: row.emergencyPhone },
               { label: this.$t(`user.emailverification`), prop: row.checkEmail=="0"?"NO":"YES" },
-              { label: this.$t(`user.loginIp`), prop: row.loginIp },
+              { label: this.$t(`user.ipaddress`), prop: row.loginIp },
               { label: this.$t(`user.loginDate`), prop: row.loginDate },
             ]
           }

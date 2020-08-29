@@ -512,7 +512,7 @@ export default {
       formoption: {
         column: [
           {
-            label: "所属商户",
+            label: this.$t(`store.ownedMerchant`),
             prop: "merchantId",
             type: "tree",
             slot: true,
@@ -547,7 +547,7 @@ export default {
         menuWidth: 250,
         column: [
           {
-            label: "店铺ID",
+            label: this.$t(`store.storeID`),
             prop: "storeId",
             addDisabled: true,
             editDisabled: true,
@@ -576,7 +576,7 @@ export default {
             ]
           },
           {
-            label: "所属商户",
+            label: this.$t(`store.ownedMerchant`),
             prop: "merchantId",
             type: "tree",
             slot: true,
@@ -823,20 +823,20 @@ export default {
       this.rowItem = {
         item: [
           {
-            title: "店铺信息",
+            title: this.$t(`store.storeInformation`),
             column: [
-              { label: "店铺ID", prop: row.storeId },
-              { label: "店铺名", prop: row.storeName },
-              { label: "所属商户", prop: row.merchantId },
-              { label: "结算周期（天）", prop: row.rentPeriod },
-              { label: "租金", prop: row.rentPrice },
-              { label: "电费单价", prop: row.electricityPrice },
-              { label: "联系人", prop: row.linkman },
-              { label: "联系电话", prop: row.contactNumber },
-              { label: "地址", prop: row.address },
+              { label: this.$t(`store.storeID`), prop: row.storeId },
+              { label: this.$t(`store.storeName`), prop: row.storeName },
+              { label: this.$t(`store.ownedMerchant`), prop: row.merchantId },
+              { label: this.$t(`store.rentPeriod`), prop: row.rentPeriod },
+              { label: this.$t(`store.rentPrice`), prop: row.rentPrice },
+              { label: this.$t(`store.electricityPrice`), prop: row.electricityPrice },
+              { label: this.$t(`store.linkman`), prop: row.linkman },
+              { label: this.$t(`store.contactNumber`), prop: row.contactNumber },
+              { label: this.$t(`store.address`), prop: row.address },
               {
-                label: "店铺状态",
-                prop: row.storeStatus == "0" ? "冻结" : this.$t(`battery.Normal`)
+                label: this.$t(`store.storeStatus`),
+                prop: row.storeStatus == "0" ? this.$t(`tenant.Frozen`) : this.$t(`battery.Normal`)
               }
             ]
           }

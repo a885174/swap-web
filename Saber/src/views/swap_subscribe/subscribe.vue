@@ -30,11 +30,22 @@
         >删 除</el-button>
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -49,7 +60,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -121,7 +132,7 @@ export default {
             ]
           },
           {
-            label:this.$t(`subscribe.batteryName`),
+            label: this.$t(`subscribe.batteryName`),
             prop: "batteryName",
             rules: [
               {
@@ -132,7 +143,7 @@ export default {
             ]
           },
           {
-            label: this.$t(`subscribe.Warehouse`),
+            label: this.$t(`subscribe.warehouse`),
             prop: "warehouse",
             rules: [
               {
@@ -154,7 +165,7 @@ export default {
             ]
           },
           {
-            label:this.$t(`subscribe.succeedTime`),
+            label: this.$t(`subscribe.succeedTime`),
             prop: "succeedTime",
             rules: [
               {
@@ -165,7 +176,7 @@ export default {
             ]
           },
           {
-            label:this.$t(`subscribe.effectiveTime`),
+            label: this.$t(`subscribe.effectiveTime`),
             prop: "effectiveTime",
             rules: [
               {
@@ -176,28 +187,28 @@ export default {
             ]
           },
           {
-            label:this.$t(`subscribe.subscribeState`),
+            label: this.$t(`subscribe.subscribeState`),
             prop: "subscribeState",
             type: "select",
             dicData: [
               {
-                label: "预约中",
+                label:this.$t(`subscribe.booking`),
                 value: "0"
               },
               {
-                label: "预约成功",
+                label:this.$t(`subscribe.appointmentSuccessful`),
                 value: "1"
               },
               {
-                label: "预约失败",
+                label:this.$t(`subscribe.appointmentFailed`),
                 value: "2"
               },
               {
-                label: "已过期",
+                label:this.$t(`subscribe.expired`),
                 value: "3"
               },
               {
-                label: "已取电池",
+                label:this.$t(`subscribe.batteryRemoved`),
                 value: "4"
               }
             ],
@@ -275,35 +286,50 @@ export default {
       var subscribeState;
       switch (row.subscribeState) {
         case "0":
-          subscribeState = "预约中";
+          subscribeState =this.$t(`subscribe.booking`);
           break;
         case "1":
-          subscribeState = "预约成功";
+          subscribeState =this.$t(`subscribe.appointmentSuccessful`);
           break;
         case "2":
-          subscribeState = "预约失败";
+          subscribeState =this.$t(`subscribe.appointmentFailed`);
           break;
         case "3":
-          subscribeState = "已过期";
+          subscribeState =this.$t(`subscribe.expired`);
           break;
         case "4":
-          subscribeState = "已取电池";
+          subscribeState =this.$t(`subscribe.batteryRemoved`);
           break;
       }
       this.rowItem = {
         item: [
           {
-            title: "预约id",
+            title: this.$t(`subscribe.subscribeState`),
             column: [
-              { label: "订单id", prop: row.subscribeId },
-              { label: "充电柜编号", prop: row.stationName },
-              { label: "预约用户", prop: row.userName },
-              { label: "电池", prop: row.batteryName },
-              { label: "充电仓编号", prop: row.warehouse },
-              { label: "发起预约时间", prop: row.subscribeTime },
-              { label: "预约成功时间", prop: row.succeedTime },
-              { label: "有效时间 分钟", prop: row.effectiveTime },
-              { label: "预约状态", prop: subscribeState }
+              { label: this.$t(`subscribe.orderId`), prop: row.subscribeId },
+              {
+                label: this.$t(`subscribe.cabinetNumber`),
+                prop: row.stationName
+              },
+              { label: this.$t(`subscribe.username`), prop: row.userName },
+              { label: this.$t(`subscribe.battery`), prop: row.batteryName },
+              { label: this.$t(`subscribe.battery`), prop: row.warehouse },
+              {
+                label: this.$t(`subscribe.compartmentNumber`),
+                prop: row.subscribeTime
+              },
+              {
+                label: this.$t(`subscribe.successTime`),
+                prop: row.succeedTime
+              },
+              {
+                label: this.$t(`subscribe.effectiveTime`),
+                prop: row.effectiveTime
+              },
+              {
+                label: this.$t(`subscribe.subscribeState`),
+                prop: subscribeState
+              }
             ]
           }
         ]

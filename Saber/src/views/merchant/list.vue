@@ -240,15 +240,15 @@ export default {
             hide: true,
             dicData: [
               {
-                label: "有",
+                label: this.$t(`merchant.have`),
                 value: "0"
               },
               {
-                label: "无",
+                label: this.$t(`merchant.no`),
                 value: "1"
               },
               {
-                label: "无知",
+                label: this.$t(`merchant.unknown`),
                 value: "2"
               }
             ],
@@ -383,13 +383,13 @@ export default {
       var filingStatus;
       switch (row.filingStatus) {
         case "0":
-          filingStatus = "有";
+          filingStatus = this.$t(`merchant.have`);
           break;
         case "1":
-          filingStatus = "无";
+          filingStatus = this.$t(`merchant.no`);
           break;
         case "2":
-          filingStatus = "无知";
+          filingStatus = this.$t(`merchant.unknown`);
           break;
       }
       this.rowItem = {
