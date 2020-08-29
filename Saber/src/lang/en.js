@@ -12,6 +12,7 @@ export default {
   Connected:'Connected',
   Unconnected:'Unconnected',
   Unfreeze:'Unfreeze',
+  transactionNum:'transaction Num',
   chakan:'view',
   wel: {
     info: 'Good morning, Smallwei, Avuex is a framework',
@@ -314,5 +315,13 @@ record:{
       updatedInstruction:'Updated Instruction',
       updatedTime:'Updated time'
   }
+  ,
+  billing:{
+    bank:'Bank',
+    totalPrices:'totalPrices',
+    status:'Status',
+    jiesuan:'Go to Clearing',
+    upload:' update certification.'
+  },
 
 }
