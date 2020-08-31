@@ -17,6 +17,11 @@ export default {
   getlocaton: "getlocaton",
   coordinate: "Get latitude and longitude",
   UnlinkwithStore: "Unlink with Store",
+<<<<<<< HEAD
+=======
+  pictureManagement: "Picture Management",
+  BusinessHours: "BusinessHours Management",
+>>>>>>> 9186f57bff8c6ca9dbebad044a3699f6af7c679c
 
   chakan: "view",
   wel: {
@@ -134,7 +139,7 @@ export default {
     UnlinkwithClient: "Unlink with Client",
     UnlinkwithUser: "Unlink with User",
     client: "By Client",
-    client: "By Store",
+    store: "By Store",
     salesChannel: "Please input Sales Channel",
     please: "Please input ",
     nameOfClient: "Name of Client",
@@ -185,7 +190,7 @@ export default {
     connectCbinet: "Connect and change cabinet",
     connectCars: "Connect electric cars",
     communicationError: "Communication error",
-    moduleError: "Module error",
+    moduleError: "Module error"
   },
   station: {
     stationCode: "Swap Station ID Number",
@@ -226,6 +231,9 @@ export default {
     contactNumber: "Contact Number",
     address: "Address",
     type: "Production",
+    batteryProduction: "Battery Production",
+    stationProduction: "Station Production",
+    scooterProduction: "Scooter Production",
     electricVehicleSupplier: "Electric vehicle supplier",
     switchCabinetSupplier: "Switch cabinet supplier",
     batterySupplier: "Battery supplier"
@@ -241,7 +249,11 @@ export default {
     storeStatus: "Store Status",
     storeInformation: "Store Information",
     storeID: "Store ID",
+<<<<<<< HEAD
     ownedMerchant: "Owned merchant",
+=======
+    ownedMerchant: "Owned merchant"
+>>>>>>> 9186f57bff8c6ca9dbebad044a3699f6af7c679c
   },
 
   merchant: {
@@ -253,7 +265,7 @@ export default {
     AssignMerchant: "Assign Merchant",
     have: "Have",
     no: "No",
-    unknown: "Unknown",
+    unknown: "Unknown"
   },
   order: {
     orderNo: "Order Number",
@@ -372,7 +384,7 @@ export default {
     comId: "Repair Merchant ID",
     repairerInformation: "Repairer information",
     legalRepresentative: "Legal representative",
-    Industrial: "Industrial and Commercial Record",
+    Industrial: "Industrial and Commercial Record"
   },
 
   area: {
@@ -383,13 +395,13 @@ export default {
     appVersoin: "APP Version ",
     updatedInstruction: "Updated Instruction",
     updatedTime: "Updated time",
-    versionInformation:"Version Information",
-    versionId:"Version id",
-    whetherToForceUpdate:"Whether to force update",
-    apkAddress:"apk address",
-    updateLog:"Update log",
-    yes:"Yes",
-    no:"No"
+    versionInformation: "Version Information",
+    versionId: "Version id",
+    whetherToForceUpdate: "Whether to force update",
+    apkAddress: "apk address",
+    updateLog: "Update log",
+    yes: "Yes",
+    no: "No"
   },
   billing: {
     bank: "Bank",
