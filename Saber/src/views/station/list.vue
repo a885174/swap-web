@@ -56,7 +56,7 @@
       <template slot-scope="{row}" slot="connectStatus">
         <label
           :style="{color:row.connectStatus=='0'?'green':'red'}"
-        >{{row.connectStatus=="0"?"已连接":"未连接"}}</label>
+        >{{row.connectStatus=="0"?$t(`Connected`):$t(`Unconnected`)}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="scope" slot="menu">
@@ -128,20 +128,20 @@
           </el-form-item>
       </el-form>-->
       <div slot="footer" class="dialog-footer">
-        <el-button @click="mapDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
+        <el-button @click="mapDialogVisible = false">{{$t(`submitText`)}}</el-button>
+        <el-button type="primary" @click="sumbitAddres()">{{$t(`cancelText`)}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="换电柜图片" :visible.sync="dialogTableVisible" :append-to-body="true" center>
-      <el-button @click="getTableData()">分配图片</el-button>
+    <el-dialog :title="$t(`station.cabinetPicture`)" :visible.sync="dialogTableVisible" :append-to-body="true" center>
+      <el-button @click="getTableData()">{{$t(`station.assignPicture`)}}</el-button>
 
-      <el-button @click="fileDialog=true">上传换电柜图片</el-button>
-      <el-dialog width="50%" title="上传换电柜图片" :visible.sync="fileDialog" append-to-body>
+      <el-button @click="fileDialog=true">{{$t(`station.uploadCabinetPicture`)}}</el-button>
+      <el-dialog width="50%" :title="$t(`station.uploadCabinetPicture`)" :visible.sync="fileDialog" append-to-body>
         <el-form :model="fileform">
-          <el-form-item label="上传图片" :label-width="formLabelWidth">
+          <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
             <el-upload
               class="avatar-uploader"
-              action="http://localhost/api//blade-resource/oss/endpoint//upload"
+              action="http://47.112.171.131//api//blade-resource/oss/endpoint//upload"
               :show-file-list="false"
               :headers="myHeaders"
               :on-success="handleSuccess"
@@ -153,8 +153,8 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="fileDialog = false">取 消</el-button>
-          <el-button type="primary" @click="insertShopPicature()">确 定</el-button>
+          <el-button @click="fileDialog = false">{{$t(`submitText`)}}</el-button>
+          <el-button type="primary" @click="insertShopPicature()">{{$t(`cancelText`)}}</el-button>
         </div>
       </el-dialog>
 
@@ -162,44 +162,44 @@
         <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
-        <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
-        <el-table-column property="station_picture_id" label="编号" v-if="show"></el-table-column>
-        <el-table-column property="station_id" label="编号" v-if="show"></el-table-column>
-        <el-table-column prop="picture_main_url" label="图片" min-width="20%">
+        <el-table-column property="picture_id" :label="$t(`station.pictureId`)" v-if="show"></el-table-column>
+        <el-table-column property="station_picture_id" :label="$t(`station.numbering`)" v-if="show"></el-table-column>
+        <el-table-column property="station_id" :label="$t(`station.numbering`)" v-if="show"></el-table-column>
+        <el-table-column prop="picture_main_url" :label="$t(`station.image`)" min-width="20%">
           <!-- 图片的显示 -->
           <template slot-scope="scope">
             <img :src="scope.row.picture_main_url" min-width="70" height="70" />
           </template>
         </el-table-column>
 
-        <el-table-column prop="sort" label="权重">
+        <el-table-column prop="sort" :label="$t(`station.weights`)">
           <template slot-scope="scope">
             <el-input
               size="small"
               style="width:80px"
               v-model="scope.row.sort"
-              placeholder="请输入权重"
+              :placeholder="$t(`station.enterWeight`)"
               @change="handleEdit(scope.$index, scope.row)"
             ></el-input>
             <span>{{scope.row.sort}}</span>
           </template>
         </el-table-column>
-        <el-table-column property="is_default" label="是否为主图" width="200">
+        <el-table-column property="is_default" :label="$t(`station.mainImage`)" width="200">
           <template slot-scope="scope">
-            <el-tag>{{scope.row.is_default==="0"? '是':'否'}}</el-tag>
+            <el-tag>{{scope.row.is_default==="0"? $t(`AppVseroin.yes`):$t(`AppVseroin.no`)}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column fixed="right" :label="$t(`station.operating`)" width="200">
           <template slot-scope="scope">
-            <el-button type="text" @click="deletePicture(scope.row)" size="small">删除</el-button>
-            <el-button type="text" @click="updateMain(scope.row)">设置为主图</el-button>
+            <el-button type="text" @click="deletePicture(scope.row)" size="small">{{$t(`station.delete`)}}</el-button>
+            <el-button type="text" @click="updateMain(scope.row)">{{$t(`station.setMainImage`)}}</el-button>
           </template>
         </el-table-column>
       </el-table>
 
-      <el-dialog width="50%" title="图片素材" :visible.sync="innerVisible" append-to-body>
-        <el-button @click="submitPicture()">关联图片</el-button>
-        <el-button @click="uploadDialog=true">上传图片</el-button>
+      <el-dialog width="50%" :title="$t(`station.pictureMaterial`)" :visible.sync="innerVisible" append-to-body>
+        <el-button @click="submitPicture()">{{$t(`station.AssociatedPicture`)}}</el-button>
+        <el-button @click="uploadDialog=true">{{$t(`station.uploadMaterial`)}}</el-button>
 
         <el-table :data="tabledData" @selection-change="changeFun" style="margin-top:50px;">
           <el-table-column type="selection" width="55"></el-table-column>
@@ -207,19 +207,19 @@
           <el-table-column label="index" width="70px">
             <template slot-scope="scope">{{scope.$index+1}}</template>
           </el-table-column>
-          <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
-          <el-table-column prop="picture_main_url" label="图片" min-width="20%">
+          <el-table-column property="picture_id" :label="$t(`station.pictureId`)" v-if="show"></el-table-column>
+          <el-table-column prop="picture_main_url" :label="$t(`station.image`)" min-width="20%">
             <template slot-scope="scope">
               <img :src="scope.row.picture_main_url" min-width="70" height="70" />
             </template>
           </el-table-column>
-          <el-table-column prop="picture86Url" label="图片86" min-width="20%">
+          <el-table-column prop="picture86Url" :label="$t(`station.image`)+'86'" min-width="20%">
             <!-- 图片的显示 -->
             <template slot-scope="scope">
               <img :src="scope.row.picture86Url" min-width="70" height="70" />
             </template>
           </el-table-column>
-          <el-table-column prop="picture324Url" label="图片324" min-width="20%">
+          <el-table-column prop="picture324Url" :label="$t(`station.image`)+'324'" min-width="20%">
             <!-- 图片的显示 -->
             <template slot-scope="scope">
               <img :src="scope.row.picture324Url" min-width="70" height="70" />
@@ -228,14 +228,14 @@
         </el-table>
 
         <el-dialog
-          title="上传素材"
+          :title="$t(`station.uploadMaterial`)"
           :visible.sync="uploadDialog"
           :append-to-body="true"
           width="40%"
           center
         >
           <el-form :model="uploadform">
-            <el-form-item label="上传图片" :label-width="formLabelWidth">
+            <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
               <el-upload
                 class="avatar-uploader"
                 action="/api//blade-resource/oss/endpoint//upload"
@@ -250,8 +250,8 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="uploadDialog = false">取 消</el-button>
-            <el-button type="primary" @click="insertPicature()">确 定</el-button>
+            <el-button @click="uploadDialog = false">{{$t(`submitText`)}}</el-button>
+            <el-button type="primary" @click="insertPicature()">{{$t(`cancelText`)}}</el-button>
           </div>
         </el-dialog>
       </el-dialog>
@@ -269,17 +269,17 @@
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
         <el-table-column property="station_code" label="station code " width="150"></el-table-column>
-        <el-table-column property="name" label="仓位" width="200"></el-table-column>
-        <el-table-column property="lt" label="电池仓锁状态" width="200"></el-table-column>
+        <el-table-column property="name" :label="$t(`station.position`)" width="200"></el-table-column>
+        <el-table-column property="lt" :label="$t(`station.lockState`)" width="200"></el-table-column>
         <el-table-column property="ct" label="status"></el-table-column>
-        <el-table-column property="v" label="电池仓电压 " width="150"></el-table-column>
-        <el-table-column property="i" label="电池仓电流" width="200"></el-table-column>
-        <el-table-column property="t" label="电池仓温度" width="150"></el-table-column>
-        <el-table-column property="tmz" label="电池仓累计时间充电"></el-table-column>
-        <el-table-column property="tm" label="当前充电时间 " width="150"></el-table-column>
-        <el-table-column property="bs" label="当前剩余电池" width="200"></el-table-column>
-        <el-table-column property="bm" label="充电电池的MOS最高温度" width="150"></el-table-column>
-        <el-table-column property="bt" label="当前充电电池的最高温度" width="150"></el-table-column>
+        <el-table-column property="v" :label="$t(`station.voltage`)" width="150"></el-table-column>
+        <el-table-column property="i" :label="$t(`station.current`)" width="200"></el-table-column>
+        <el-table-column property="t" :label="$t(`station.temperature`)" width="150"></el-table-column>
+        <el-table-column property="tmz" :label="$t(`station.timeToCharge`)"></el-table-column>
+        <el-table-column property="tm" :label="$t(`station.currentChargingTime`)" width="150"></el-table-column>
+        <el-table-column property="bs" :label="$t(`station.remainingBattery`)" width="200"></el-table-column>
+        <el-table-column property="bm" :label="$t(`station.maximumTemperature`)" width="150"></el-table-column>
+        <el-table-column property="bt" :label="$t(`station.currentMaximumTemperature`)" width="150"></el-table-column>
       </el-table>
     </el-dialog>
     <el-dialog
@@ -393,7 +393,7 @@ export default {
       formoption: {
         column: [
           {
-            label: "分配店铺",
+            label: this.$t(`AssignStore`),
             prop: "storeId",
             type: "tree",
             span: 24,
@@ -401,7 +401,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请选择店铺",
+                message: this.$t(`station.selectStore`),
                 trigger: "blur"
               }
             ],
@@ -451,7 +451,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入换电柜编号（UID）",
+                message: this.$t(`station.enterSwitchCabinetNumber`),
                 trigger: "blur"
               }
             ]
@@ -463,7 +463,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入换电柜型号",
+                message: this.$t(`station.enterModel`),
                 trigger: "blur"
               }
             ]
@@ -477,7 +477,7 @@ export default {
                 required: false,
                 addDisabled: true,
                 addDisplay: false,
-                message: "请输入设备IMEI码",
+                message: this.$t(`station.enterDeviceCode`),
                 trigger: "blur"
               }
             ]
@@ -492,13 +492,13 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入充电仓数",
+                message: this.$t(`station.enterNumber`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "分配店铺",
+            label: this.$t(`AssignStore`),
             width: 140,
             prop: "storeId",
             type: "tree",
@@ -507,7 +507,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请选择店铺",
+                message: this.$t(`station.selectStore`),
                 trigger: "blur"
               }
             ],
@@ -518,7 +518,7 @@ export default {
             }
           },
           {
-            label: "电表实时读数",
+            label: this.$t(`station.reading`),
             width: 120,
             prop: "ammeterValue",
             addDisabled: true,
@@ -527,13 +527,13 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电表实时读数",
+                message: this.$t(`station.inputReading`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "读数时间",
+            label: this.$t(`station.readingTime`),
             width: 160,
             prop: "ammeterTime",
             type: "datetime",
@@ -545,7 +545,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入读数时间",
+                message: this.$t(`station.inputReadingTime`),
                 trigger: "blur"
               }
             ]
@@ -588,7 +588,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入地址",
+                message: this.$t(`station.enterAddress`),
                 trigger: "blur"
               }
             ]
@@ -624,7 +624,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入换电柜状态 数据字典",
+                message:this.$t(`station.enterStatus`),
                 trigger: "blur"
               }
             ]
@@ -640,18 +640,18 @@ export default {
             hide: true,
             dicData: [
               {
-                label: "已定位",
+                label: this.$t(`scooter.targeted`),
                 value: "0"
               },
               {
-                label: "未定位",
+                label: this.$t(`scooter.untargeted`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入定位状态",
+                message: this.$t(`station.enterPositioningStatus`),
                 trigger: "blur"
               }
             ]
@@ -679,7 +679,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入连接状态 0:已连接 1:未连接",
+                message: this.$t(`scooter.connectionStatus`),
                 trigger: "blur"
               }
             ]
@@ -692,13 +692,13 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入保质期(月)",
+                message: this.$t(`scooter.enterShelfLife`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "关联供应商",
+            label: this.$t(`station.supplier`),
             width: 160,
             prop: "supplierId",
             type: "tree",
@@ -712,7 +712,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请选择供应商",
+                message: this.$t(`station.selectSupplier`),
                 trigger: "click"
               }
             ]
@@ -743,7 +743,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入" + this.$t(`scooter.produceTime`),
+                message: this.$t(`scooter.please`) + this.$t(`scooter.produceTime`),
                 trigger: "blur"
               }
             ]
@@ -1118,7 +1118,7 @@ export default {
       //   this.$message.error("上传图片只能是 JPG 格式!");
       // }
       if (!isLt2M) {
-        this.$message.error("上传图片大小不能超过 2MB!");
+        this.$message.error(this.$t(`station.exceed`));
       }
       // return isJPG && isLt2M;
       return isLt2M;
@@ -1135,7 +1135,7 @@ export default {
       if (this.data.pictureUrl == "") {
         this.$message({
           type: "error",
-          message: "请上传图片"
+          message: this.$t(`station.pUploadPicture`)
         });
         return;
       }
@@ -1158,7 +1158,7 @@ export default {
       if (this.pictureMainUrl == "") {
         this.$message({
           type: "error",
-          message: "请上传图片"
+          message: this.$t(`station.pUploadPicture`)
         });
         return;
       }
@@ -1193,7 +1193,7 @@ export default {
       return isJPG && isLt2M;
     },
     updateMain(row) {
-      this.$confirm("确定将此图设置为主图吗?", {
+      this.$confirm(this.$t(`station.setImage`), {
         confirmButtonText: "sure",
         cancelButtonText: "cancel",
         type: "warning"

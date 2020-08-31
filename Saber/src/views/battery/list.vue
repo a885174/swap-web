@@ -119,7 +119,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入"+this.$t(`battery.batteryCode`),
+                message: this.$t(`scooter.please`)+this.$t(`battery.batteryCode`),
                 trigger: "blur"
               }
             ]
@@ -133,7 +133,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`battery.batteryName`),
+                message: this.$t(`scooter.please`)+this.$t(`battery.batteryName`),
                 trigger: "blur"
               }
             ]
@@ -148,7 +148,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`battery.batteryVersion`),
+                message: this.$t(`scooter.please`)+this.$t(`battery.batteryVersion`),
                 trigger: "blur"
               }
             ]
@@ -162,7 +162,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`battery.voltage`),
+                message: this.$t(`scooter.please`)+this.$t(`battery.voltage`),
                 trigger: "blur"
               }
             ]
@@ -176,7 +176,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`battery.electricity`),
+                message: this.$t(`scooter.please`)+this.$t(`battery.electricity`),
                 trigger: "blur"
               }
             ]
@@ -192,7 +192,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电池循环次数",
+                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.cycleIndex`),
                 trigger: "blur"
               }
             ]
@@ -207,7 +207,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入预估行驶里程",
+                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.surplusMileage`),
                 trigger: "blur"
               }
             ]
@@ -221,7 +221,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入剩余电量",
+                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.surplusElectric`),
                 trigger: "blur"
               }
             ]
@@ -237,7 +237,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电池健康值 0-100",
+                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.healthValue`)+" (0-100)",
                 trigger: "blur"
               }
             ]
@@ -272,7 +272,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请选择"+this.$t(`battery.batteryStatus`),
+                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.batteryStatus`),
                 trigger: "blur"
               }
             ]
@@ -298,7 +298,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入锁定状态 0:已锁定 1:未锁定",
+                message: this.$t(`battery.enterlockStatus`),
                 trigger: "blur"
               }
             ]
@@ -317,11 +317,11 @@ export default {
                 value: "0"
               },
               {
-                label: "放电中",
+                label: this.$t(`battery.Out`),
                 value: "1"
               },
               {
-                label: "搁置",
+                label: this.$t(`battery.Close`),
                 value: "2"
               }
             ],
@@ -329,7 +329,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入充电状态 0:充电中 1:放电中 2:搁置",
+                message: this.$t(`battery.enterpowerStatus`),
                 trigger: "blur"
               }
             ]
@@ -345,18 +345,18 @@ export default {
             hide:true,
             dicData: [
               {
-                label: "已激活",
+                label: this.$t(`scooter.activated`),
                 value: "0"
               },
               {
-                label: "未激活",
+                label: this.$t(`scooter.inactivated`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入激活状态 0已激活 1:未激活",
+                message: this.$t(`scooter.activationStatus`),
                 trigger: "blur"
               }
             ]
@@ -370,7 +370,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电池温度 ℃",
+                message:this.$t(`scooter.pleaseSelect`)+this.$t(`battery.temperature`)+ " ℃",
                 trigger: "blur"
               }
             ]
@@ -409,7 +409,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请选择输入连接状态 ）",
+                message: this.$t(`scooter.connectionStatus`),
                 trigger: "blur"
               }
             ]
@@ -444,7 +444,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入系统模式 数据字典",
+                message: this.$t(`scooter.please`)+this.$t(`battery.systemStatus`),
                 trigger: "blur"
               }
             ]
@@ -460,7 +460,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入保质期",
+                message: this.$t(`scooter.please`)+this.$t(`scooter.expirationDate`),
                 trigger: "blur"
               }
             ]
@@ -509,7 +509,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入出厂时间",
+                message: this.$t(`scooter.please`)+this.$t(`scooter.produceTime`),
                 trigger: "blur"
               }
             ]
@@ -822,7 +822,7 @@ export default {
         let link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
         //配置下载的文件名
-        link.download = "导出电池数据列表.xls";
+        link.download = "Battery data list.xls";
         link.click();
       });
     },
