@@ -17,11 +17,8 @@ export default {
   getlocaton: "getlocaton",
   coordinate: "Get latitude and longitude",
   UnlinkwithStore: "Unlink with Store",
-<<<<<<< HEAD
-=======
   pictureManagement: "Picture Management",
   BusinessHours: "BusinessHours Management",
->>>>>>> 9186f57bff8c6ca9dbebad044a3699f6af7c679c
 
   chakan: "view",
   wel: {
@@ -249,11 +246,7 @@ export default {
     storeStatus: "Store Status",
     storeInformation: "Store Information",
     storeID: "Store ID",
-<<<<<<< HEAD
-    ownedMerchant: "Owned merchant",
-=======
     ownedMerchant: "Owned merchant"
->>>>>>> 9186f57bff8c6ca9dbebad044a3699f6af7c679c
   },
 
   merchant: {
