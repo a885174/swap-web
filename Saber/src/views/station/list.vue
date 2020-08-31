@@ -141,7 +141,7 @@
           <el-form-item label="上传图片" :label-width="formLabelWidth">
             <el-upload
               class="avatar-uploader"
-              action="http://47.112.171.131/api//blade-resource/oss/endpoint//upload"
+              action="http://localhost/api//blade-resource/oss/endpoint//upload"
               :show-file-list="false"
               :headers="myHeaders"
               :on-success="handleSuccess"
