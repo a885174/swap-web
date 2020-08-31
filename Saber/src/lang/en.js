@@ -17,11 +17,8 @@ export default {
   getlocaton: "getlocaton",
   coordinate: "Get latitude and longitude",
   UnlinkwithStore: "Unlink with Store",
-<<<<<<< HEAD
-=======
   pictureManagement: "Picture Management",
   BusinessHours: "BusinessHours Management",
->>>>>>> 9186f57bff8c6ca9dbebad044a3699f6af7c679c
 
   chakan: "view",
   wel: {
@@ -154,7 +151,35 @@ export default {
     untargeted: "Untargeted",
     locked: "Locked",
     NotLocked: "Not locked",
-    notConnected: "Not connected"
+    notConnected: "Not connected",
+    fileName: "File name",
+    selectFile: "Select file",
+    uploadToServer: "Upload to server",
+    importTemplate: "Import template",
+    selectCustomer: "Please select customer",
+    vehicleModel: "Please enter the electric vehicle model",
+    IMEICode: "Please enter the IMEI code of the device",
+    connectionStatus:
+      "Please enter the connection status 0: connected 1: not connected",
+    businessStatus: "Please enter the business status (0: sold 1: not sold)",
+    activationStatus: "Please select activation status",
+    drivingStatus: "Please enter the driving status (0: running 1: stopped)",
+    positioningStatus:
+      "Please enter the positioning status (0: positioned 1: not positioned)",
+    lockedState: "Please enter the locked state",
+    antiTheftLock: "Please enter anti-theft lock",
+    arrearsLockCar:
+      "Please enter arrears to lock the car (0: locked 1: not locked)",
+    mileageReading: "Mileage reading time",
+    enterMileageReading: "Please enter the mileage reading time",
+    initialOdometer: "Initial odometer reading",
+    enterInitialOdometer: "Please enter the initial odometer reading",
+    initialMileageTime: "Initial mileage reading time",
+    enterInitialMileageTime: "Please enter the initial mileage reading time",
+    supplierId: "Supplier id",
+    enterSupplierId: "Please enter supplier id",
+    enterShelfLife: "Please enter the shelf life (months)",
+    userAssociation: "Are you sure to resolve user associations?"
   },
   battery: {
     batteryCode: "Battery ID Number",
@@ -190,7 +215,9 @@ export default {
     connectCbinet: "Connect and change cabinet",
     connectCars: "Connect electric cars",
     communicationError: "Communication error",
-    moduleError: "Module error"
+    moduleError: "Module error",
+    enterlockStatus:"Please enter the lock status 0: Locked 1: Unlocked",
+    enterpowerStatus:"Please enter the charging status 0: charging 1: discharging 2: shelving"
   },
   station: {
     stationCode: "Swap Station ID Number",
@@ -207,7 +234,50 @@ export default {
     readingTime: "Reading time",
     startTime: "Business start time",
     endTime: "Business end time",
-    supplier: "Associated Supplier"
+    supplier: "Associated Supplier",
+
+    cabinetPicture: "Replacement cabinet picture",
+    assignPicture: "Assign picture",
+    uploadCabinetPicture: "Upload switch cabinet picture",
+    uploadPicture: "upload image",
+    pictureId: "Picture id",
+    numbering: "Numbering",
+    image: "image",
+    weights: "Weights",
+    enterWeight: "Please enter weight",
+    mainImage: "Whether the main image",
+    operating: "operating",
+    delete: "delete",
+    setMainImage: "Set as main image",
+    AssociatedPicture: "Associated picture",
+    uploadMaterial: "Upload material",
+    position: "Position",
+    lockState: "Battery compartment lock status",
+    voltage: "Battery compartment voltage",
+    current: "Battery compartment current",
+    temperature: "Battery compartment temperature",
+    timeToCharge: "Accumulated time to charge the battery compartment",
+    currentChargingTime: "Current charging time",
+    remainingBattery: "Current remaining battery",
+    maximumTemperature: "Maximum MOS temperature of rechargeable battery",
+    currentMaximumTemperature: "The current maximum temperature of the rechargeable battery",
+    selectStore: "Please select a store",
+    enterSwitchCabinetNumber: "Please enter the switch cabinet number (UID)",
+    enterModel: "Please enter the switch cabinet model",
+    enterDeviceCode: "Please enter the IMEI code of the device",
+    enterNumber: "Please enter the number of charging bins",
+    inputReading: "Please enter the real-time reading of the meter",
+    inputReadingTime: "Please enter the reading time",
+    enterAddress: "Please enter the address",
+    enterStatus: "Please enter the status of the switch cabinet",
+    enterPositioningStatus: "Please enter location status",
+    selectSupplier: "Please select a supplier",
+    returnResult: "Return result:",
+    getCurrentLocation: "Get current location",
+    exceed: "Upload image size cannot exceed 2MB!",
+    pUploadPicture: "Please upload a picture",
+    setImage: "Are you sure to set this picture as the main picture?",
+    pictureMaterial:"Picture material"
   },
   user: {
     loginName: "Login Name",
@@ -249,11 +319,7 @@ export default {
     storeStatus: "Store Status",
     storeInformation: "Store Information",
     storeID: "Store ID",
-<<<<<<< HEAD
-    ownedMerchant: "Owned merchant",
-=======
     ownedMerchant: "Owned merchant"
->>>>>>> 9186f57bff8c6ca9dbebad044a3699f6af7c679c
   },
 
   merchant: {
