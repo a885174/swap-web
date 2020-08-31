@@ -37,7 +37,7 @@
 
         <el-popover placement="right" width="400" trigger="click">
           <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="文件名称">
+            <el-form-item :label="$t(`scooter.fileName`)">
               <el-upload
                 class="upload-demo"
                 ref="upload"
@@ -48,14 +48,14 @@
                 :on-remove="handleRemove"
                 :auto-upload="false"
               >
-                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                <el-button slot="trigger" size="small" type="primary">{{$t(`scooter.selectFile`)}}</el-button>
                 <el-button
                   style="margin-left: 10px;"
                   size="small"
                   type="success"
                   @click="submitUpload"
-                >上传到服务器</el-button>
-                <el-button size="small" type="infor" @click="download">导入模板</el-button>
+                >{{$t(`scooter.uploadToServer`)}}</el-button>
+                <el-button size="small" type="infor" @click="download">{{$t(`scooter.importTemplate`)}}</el-button>
                 <div slot="tip" class="el-upload__tip">please select xls</div>
               </el-upload>
             </el-form-item>
@@ -172,7 +172,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请选择客户",
+                message: this.$t(`scooter.selectCustomer`),
                 trigger: "blur"
               }
             ],
@@ -256,7 +256,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入电动车型号",
+                message: this.$t(`scooter.vehicleModel`),
                 trigger: "blur"
               }
             ]
@@ -271,7 +271,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入设备IMEI码",
+                message: this.$t(`scooter.IMEICode`),
                 trigger: "blur"
               }
             ]
@@ -298,7 +298,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入连接状态 0:已连接 1:未连接",
+                message: this.$t(`scooter.connectionStatus`),
                 trigger: "blur"
               }
             ]
@@ -377,18 +377,18 @@ export default {
             valueDefault: "1",
             dicData: [
               {
-                label: "已销售 ",
+                label: this.$t(`scooter.sold`),
                 value: "0"
               },
               {
-                label: "未销售",
+                label: this.$t(`scooter.notSold`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入业务状态 （0：已销售 1：未销售）",
+                message: this.$t(`scooter.businessStatus`),
                 trigger: "blur"
               }
             ]
@@ -439,18 +439,18 @@ export default {
             type: "select",
             dicData: [
               {
-                label: "已激活",
+                label: this.$t(`scooter.activated`),
                 value: "0"
               },
               {
-                label: "未激活",
+                label: this.$t(`scooter.inactivated`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: true,
-                message: "请选择激活状态",
+                message: this.$t(`scooter.activationStatus`),
                 trigger: "blur"
               }
             ]
@@ -465,18 +465,18 @@ export default {
             valueDefault: "1",
             dicData: [
               {
-                label: "运行中",
+                label: this.$t(`scooter.running`),
                 value: "0"
               },
               {
-                label: "已停止",
+                label: this.$t(`scooter.stopped`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入行驶状态 （0：运行中 1：已停止）",
+                message: this.$t(`scooter.drivingStatus`),
                 trigger: "blur"
               }
             ]
@@ -491,18 +491,18 @@ export default {
             addDisplay: false,
             dicData: [
               {
-                label: "已定位",
+                label: this.$t(`scooter.targeted`),
                 value: "0"
               },
               {
-                label: "未定位",
+                label: this.$t(`scooter.untargeted`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入定位状态 （0：已定位 1：未定位）",
+                message: this.$t(`scooter.positioningStatus`),
                 trigger: "blur"
               }
             ]
@@ -517,18 +517,18 @@ export default {
             valueDefault: "1",
             dicData: [
               {
-                label: "已锁定",
+                label: this.$t(`scooter.locked`),
                 value: "0"
               },
               {
-                label: "未锁定",
+                label: this.$t(`scooter.NotLocked`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入上锁状态 ",
+                message: this.$t(`scooter.lockedState`),
                 trigger: "blur"
               }
             ]
@@ -543,18 +543,18 @@ export default {
             valueDefault: "1",
             dicData: [
               {
-                label: "已锁定",
+                label: this.$t(`scooter.locked`),
                 value: "0"
               },
               {
-                label: "未连接",
+                label: this.$t(`scooter.notConnected`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入防盗锁定 ",
+                message: this.$t(`scooter.antiTheftLock`),
                 trigger: "blur"
               }
             ]
@@ -569,18 +569,18 @@ export default {
             valueDefault: "1",
             dicData: [
               {
-                label: "已锁定",
+                label: this.$t(`scooter.locked`),
                 value: "0"
               },
               {
-                label: "未连接",
+                label: this.$t(`scooter.notConnected`),
                 value: "1"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入欠费锁车 （0：已锁定 1：未锁定）",
+                message: this.$t(`scooter.arrearsLockCar`),
                 trigger: "blur"
               }
             ]
@@ -622,7 +622,7 @@ export default {
             ]
           },
           {
-            label: "里程读数时间",
+            label: this.$t(`scooter.mileageReading`),
             prop: "readTime",
             type: "datetime",
             hide: true,
@@ -633,13 +633,13 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入里程读数时间",
+                message: this.$t(`scooter.enterMileageReading`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "初始里程表读数",
+            label: this.$t(`scooter.initialOdometer`),
             hide: true,
             prop: "initRead",
             addDisabled: true,
@@ -650,13 +650,13 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入初始里程表读数",
+                message: this.$t(`scooter.enterInitialOdometer`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "初始里程读数时间",
+            label: this.$t(`scooter.initialMileageTime`),
             prop: "initTime",
             hide: true,
             type: "datetime",
@@ -669,13 +669,13 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入初始里程读数时间",
+                message: this.$t(`scooter.enterInitialMileageTime`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "供应商id",
+            label: this.$t(`scooter.supplierId`),
             hide: true,
             prop: "supplierId",
             editDisabled: true,
@@ -685,7 +685,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入供应商id",
+                message: this.$t(`scooter.enterSupplierId`),
                 trigger: "blur"
               }
             ]
@@ -717,7 +717,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入保质期 （月）",
+                message: this.$t(`scooter.enterShelfLife`),
                 trigger: "blur"
               }
             ]
@@ -1015,9 +1015,9 @@ export default {
 
     userdel() {
       if (this.ids.length > 0) {
-        this.$confirm("确定解决用户关联?", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm(this.$t(`scooter.userAssociation`), {
+          confirmButtonText: this.$t(`submitText`),
+          cancelButtonText: this.$t(`cancelText`),
           type: "warning"
         }).then(() => {
           del(this.ids, "user").then(() => {
@@ -1168,8 +1168,8 @@ export default {
         return;
       }
       this.$confirm("Are you sure you want to delete the selected data?", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+        confirmButtonText: this.$t(`submitText`),
+        cancelButtonText: this.$t(`cancelText`),
         type: "warning"
       })
         .then(() => {
