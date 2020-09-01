@@ -23,7 +23,7 @@
         <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
       </template>
       <template slot-scope="{row}" slot="status">
-        <label :style="{color:row.status=='0'?'green':'red'}">{{row.status=="0"?this.$t(`battery.Normal`):"关闭"}}</label>
+        <label :style="{color:row.status=='0'?'green':'red'}">{{row.status=="0"?(`Normal`):"Close"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
 

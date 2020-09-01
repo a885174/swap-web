@@ -1,5 +1,5 @@
 <script>
-  const BASE_URL = 'http://47.112.171.131//';
+  const BASE_URL = 'http://localhost/';
   export default{
     BASE_URL
   }
