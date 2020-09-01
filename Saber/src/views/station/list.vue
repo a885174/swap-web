@@ -141,7 +141,7 @@
           <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
             <el-upload
               class="avatar-uploader"
-              action="http://localhost//api//blade-resource/oss/endpoint//upload"
+              action="http://47.112.171.131//api//blade-resource/oss/endpoint//upload"
               :show-file-list="false"
               :headers="myHeaders"
               :on-success="handleSuccess"
@@ -551,7 +551,7 @@ export default {
             ]
           },
           // {
-          //   label: "营业开始时间",
+          //   label: this.$t(`station.startTime`),
           //   prop: "businessTimeS",
           //   type: "time",
           //   format: " HH:mm ",
@@ -560,13 +560,13 @@ export default {
           //   rules: [
           //     {
           //       required: false,
-          //       message: "请输入营业开始时间",
+          //       message: this.$t(`scooter.please`)+this.$t(`station.startTime`),
           //       trigger: "blur"
           //     }
           //   ]
           // },
           // {
-          //   label: "营业结束时间",
+          //   label: this.$t(`station.endTime`),
           //   prop: "businessTimeE",
           //   hide: true,
           //   type: "time",
@@ -575,7 +575,7 @@ export default {
           //   rules: [
           //     {
           //       required: false,
-          //       message: "请输入营业结束时间",
+          //       message: this.$t(`scooter.please`)+this.$t(`station.endTime`),
           //       trigger: "blur"
           //     }
           //   ]

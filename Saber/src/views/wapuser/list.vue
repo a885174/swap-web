@@ -33,7 +33,7 @@
           <el-button >解除客户关联</el-button>
           <el-button >解除用户关联</el-button>
           <el-button >欠费锁车</el-button>
-        <el-button >删除</el-button>-->
+        <el-button >{{$t(`delete`)}}</el-button>-->
 
         <!-- <template>
   <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>        </template>

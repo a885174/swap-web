@@ -71,13 +71,13 @@ import {
 } from "@/api/swap_plan/plan";
 import { mapGetters } from "vuex";
 
-const validateNumber = (rule, value, callback) => {
-  if (value < 0 || value > 100) {
-    callback(new Error("请输入大于0或小宇于100的数字"));
-  } else {
-    callback();
-  }
-};
+// const validateNumber = (rule, value, callback) => {
+//   if (value < 0 || value > 100) {
+//     callback(new Error(this.$t(`plan.lessHundred`)));
+//   } else {
+//     callback();
+//   }
+// };
 
 export default {
   data() {
@@ -118,7 +118,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入"+this.$t(`plan.planName`),
+                message: this.$t(`scooter.please`)+this.$t(`plan.planName`),
                 trigger: "blur"
               }
             ]
@@ -129,7 +129,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`plan.price`),
+                message: this.$t(`scooter.please`)+this.$t(`plan.price`),
                 trigger: "blur"
               }
             ]
@@ -140,7 +140,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+ this.$t(`plan.distanceSum`),
+                message: this.$t(`scooter.please`)+ this.$t(`plan.distanceSum`),
                 trigger: "blur"
               }
             ]
@@ -168,7 +168,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入"+this.$t(`plan.ailableTime`),
+                message: this.$t(`scooter.please`)+this.$t(`plan.ailableTime`),
                 trigger: "blur"
               }
             ]
@@ -192,7 +192,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入套餐状态",
+                message: this.$t(`scooter.please`)+this.$t(`plan.planStatus`),
                 trigger: "blur"
               }
             ]

@@ -67,7 +67,7 @@
               prop: "areaName",
               rules: [{
                 required: true,
-                message: "请输入"+this.$t(`area.areaName`),
+                message: this.$t(`scooter.please`)+this.$t(`area.areaName`),
                 trigger: "blur"
               }]
             },

@@ -103,7 +103,7 @@
               prop: "storeId",
               rules: [{
                 required: true,
-                message: "请输入店铺id",
+                message: this.$t(`scooter.please`)+this.$t(`store.storeID`),
                 trigger: "blur"
               }]
             },
@@ -126,20 +126,20 @@
               }]
             },
             {
-              label: "营业开始时间",
+              label: this.$t(`station.startTime`),
               prop: "businessTimeS",
               rules: [{
                 required: true,
-                message: "请输入营业开始时间",
+                message: this.$t(`scooter.please`)+this.$t(`station.startTime`),
                 trigger: "blur"
               }]
             },
             {
-              label: "营业结束时间",
+              label: this.$t(`station.endTime`),
               prop: "businessTimeE",
               rules: [{
                 required: true,
-                message: "请输入营业结束时间",
+                message: this.$t(`scooter.please`)+this.$t(`station.endTime`),
                 trigger: "blur"
               }]
             },
@@ -148,7 +148,7 @@
               prop: "address",
               rules: [{
                 required: true,
-                message: "请输入地址",
+                message: this.$t(`scooter.please`)+this.$t(`store.address`),
                 trigger: "blur"
               }]
             },

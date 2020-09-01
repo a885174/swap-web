@@ -37,15 +37,15 @@
       </template>
 
       <template slot-scope="scope" slot="menu">
-        <el-button type="text" icon="el-icon-date" size="small" @click="opentable(scope.row)">营业时间分配</el-button>
+        <el-button type="text" icon="el-icon-date" size="small" @click="opentable(scope.row)">{{$t(`store.timeManagement`)}}</el-button>
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
-        <el-button type="text" icon="el-icon-picture-outline" size="small" @click="getGridData(scope.row)">图片管理</el-button>
+        <el-button type="text" icon="el-icon-picture-outline" size="small" @click="getGridData(scope.row)">{{$t(`pictureManagement`)}}</el-button>
         <el-button
           type="text"
           icon="el-icon-picture-outline"
           size="small"
           @click="getGridData(scope.row)"
-        >图片管理</el-button>
+        >{{$t(`pictureManagement`)}}</el-button>
         <el-button
           type="text"
           size="small"
@@ -64,54 +64,54 @@
     >
       <mapbox-map mapWidth="100%" mapHeight="600px" :lnglat="lnglat" @sendiptVal="showChildMsg"></mapbox-map>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="mapDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="sumbitAddres()">确 定</el-button>
+        <el-button @click="mapDialogVisible = false">{{$t(`cancelText`)}}</el-button>
+        <el-button type="primary" @click="sumbitAddres()">{{$t(`submitText`)}}</el-button>
       </div>
     </el-dialog>
     <el-dialog title="BusinessHours" :visible.sync="tableVisible" :append-to-body="true">
-      <el-button @click="timeFormVisible=true">新增营业时间</el-button>
+      <el-button @click="timeFormVisible=true">{{$t(`store.addBusinessHours`)}}</el-button>
 
       <el-table :data="timeData">
         <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
-        <el-table-column property="week" label="星期" width="150">
+        <el-table-column property="week" :label="$t(`store.week`)" width="150">
           <!-- <template slot-scope="scope">
             <el-tag>{{scope.row.week===0? '七天24小时':'星期'+scope.row.week}}</el-tag>
           </template> -->
         </el-table-column>
-        <el-table-column property="business_time_s" label="营业开始时间" width="200"></el-table-column>
-        <el-table-column property="business_time_e" label="营业结束时间"></el-table-column>
+        <el-table-column property="business_time_s" :label="$t(`station.startTime`)" width="200"></el-table-column>
+        <el-table-column property="business_time_e" :label="$t(`station.endTime`)"></el-table-column>
 
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column fixed="right" :label="$t(`station.operating`)" width="200">
           <template slot-scope="scope">
-            <el-button type="text" size="small" @click="deltime(scope.row)">删除</el-button>
+            <el-button type="text" size="small" @click="deltime(scope.row)">{{$t(`delete`)}}</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-dialog>
     <el-dialog
-      title="新增营业时间"
+      :title="$t(`store.addBusinessHours`)"
       :visible.sync="timeFormVisible"
       :append-to-body="true"
       width="40%"
       center
     >
       <el-form :model="addform">
-        <el-form-item label="星期" :label-width="formLabelWidth">
-          <el-select v-model="addform.week" placeholder="请选择星期">
-            <el-option label="七天24小时" value="0"></el-option>
-            <el-option label="星期一" value="1"></el-option>
-            <el-option label="星期二" value="2"></el-option>
-            <el-option label="星期三" value="3"></el-option>
-            <el-option label="星期四" value="4"></el-option>
-            <el-option label="星期五" value="5"></el-option>
-            <el-option label="星期六" value="6"></el-option>
-            <el-option label="星期天" value="7"></el-option>
+        <el-form-item :label="$t(`store.week`)" :label-width="formLabelWidth">
+          <el-select v-model="addform.week" :placeholder="$t(`store.selectWeek`)">
+            <el-option :label="$t(`store.allDay`)" value="0"></el-option>
+            <el-option :label="$t(`store.monday`)" value="1"></el-option>
+            <el-option :label="$t(`store.tuesday`)" value="2"></el-option>
+            <el-option :label="$t(`store.wednesday`)" value="3"></el-option>
+            <el-option :label="$t(`store.thursday`)" value="4"></el-option>
+            <el-option :label="$t(`store.friday`)" value="5"></el-option>
+            <el-option :label="$t(`store.saturday`)" value="6"></el-option>
+            <el-option :label="$t(`store.sunday`)" value="7"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="Start TIME" :label-width="formLabelWidth">
-          <el-select v-model="addform.businessTimeS" placeholder="请选择时间">
+          <el-select v-model="addform.businessTimeS" :placeholder="$t(`store.chooseTime`)">
             <el-option label="1:00" value="1:00"></el-option>
             <el-option label="2:00" value="2:00"></el-option>
             <el-option label="3:00" value="3:00"></el-option>
@@ -139,7 +139,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="END Time" :label-width="formLabelWidth">
-          <el-select v-model="addform.businessTimeE" placeholder="请选择时间">
+          <el-select v-model="addform.businessTimeE" :placeholder="$t(`store.chooseTime`)">
             <el-option label="1:00" value="1:00"></el-option>
             <el-option label="2:00" value="2:00"></el-option>
             <el-option label="3:00" value="3:00"></el-option>
@@ -168,15 +168,15 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="timeFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="Submittime()">确 定</el-button>
+        <el-button @click="timeFormVisible = false">{{$t(`cancelText`)}}</el-button>
+        <el-button type="primary" @click="Submittime()">{{$t(`submitText`)}}</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog title="店铺图片" :visible.sync="dialogTableVisible" :append-to-body="true" center>
+    <el-dialog :title="$t(`store.storePicture`)" :visible.sync="dialogTableVisible" :append-to-body="true" center>
       <el-button @click="getTableData()">{{$t(`pictureManagement`)}}</el-button>
 
-      <el-button @click="fileDialog=true">上传店铺图片</el-button>
+      <el-button @click="fileDialog=true">{{$t(`store.uStorePicture`)}}</el-button>
 
       <el-table :data="gridData" class="tb-edit" highlight-current-row>
         <el-table-column label="index" width="70px">
@@ -192,34 +192,34 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="sort" label="权重">
+        <el-table-column prop="sort" :label="$t(`station.weights`)">
           <template slot-scope="scope">
             <el-input
               size="small"
               style="width:80px"
               v-model="scope.row.sort"
-              placeholder="请输入权重"
+              :placeholder="$t(`station.enterWeight`)"
               @change="handleEdit(scope.$index, scope.row)"
             ></el-input>
             <span>{{scope.row.sort}}</span>
           </template>
         </el-table-column>
-        <el-table-column property="is_default" label="是否为主图" width="200">
+        <el-table-column property="is_default" :label="$t(`station.mainImage`)" width="200">
           <template slot-scope="scope">
-            <el-tag>{{scope.row.is_default==="0"? '是':'否'}}</el-tag>
+            <el-tag>{{scope.row.is_default==="0"? $t(`AppVseroin.yes`):$t(`AppVseroin.no`)}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column fixed="right" :label="$t(`station.operating`)" width="200">
           <template slot-scope="scope">
-            <el-button type="text" @click="deletePicture(scope.row)" size="small">删除</el-button>
-            <el-button type="text" @click="updateMain(scope.row)">设置为主图</el-button>
+            <el-button type="text" @click="deletePicture(scope.row)" size="small">{{$t(`delete`)}}</el-button>
+            <el-button type="text" @click="updateMain(scope.row)">{{$t(`station.setMainImage`)}}</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-dialog>
-    <el-dialog width="50%" title="上传店铺图片" :visible.sync="fileDialog" append-to-body>
+    <el-dialog width="50%" :title="$t(`store.uStorePicture`)" :visible.sync="fileDialog" append-to-body>
       <el-form :model="fileform">
-        <el-form-item label="上传图片" :label-width="formLabelWidth">
+        <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
           <el-upload
             class="avatar-uploader"
             action="/api//blade-resource/oss/endpoint//upload"
@@ -234,13 +234,13 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="fileDialog = false">取 消</el-button>
-        <el-button type="primary" @click="insertShopPicature()">确 定</el-button>
+        <el-button @click="fileDialog = false">{{$t(`cancelText`)}}</el-button>
+        <el-button type="primary" @click="insertShopPicature()">{{$t(`submitText`)}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="上传素材" :visible.sync="uploadDialog" :append-to-body="true" width="40%" center>
+    <el-dialog :title="$t(`station.uploadMaterial`)" :visible.sync="uploadDialog" :append-to-body="true" width="40%" center>
       <el-form :model="uploadform">
-        <el-form-item label="上传图片" :label-width="formLabelWidth">
+        <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
           <el-upload
             class="avatar-uploader"
             action="/api//blade-resource/oss/endpoint//upload"
@@ -255,13 +255,13 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="uploadDialog = false">取 消</el-button>
-        <el-button type="primary" @click="insertPicature()">确 定</el-button>
+        <el-button @click="uploadDialog = false">{{$t(`cancelText`)}}</el-button>
+        <el-button type="primary" @click="insertPicature()">{{$t(`submitText`)}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog width="50%" title="图片素材" :visible.sync="innerVisible" append-to-body>
-      <el-button @click="submitPicture()">关联图片</el-button>
-      <el-button @click="uploadDialog=true">上传图片</el-button>
+    <el-dialog width="50%" :title="$t(`station.pictureMaterial`)" :visible.sync="innerVisible" append-to-body>
+      <el-button @click="submitPicture()">{{$t(`station.AssociatedPicture`)}}</el-button>
+      <el-button @click="uploadDialog=true">{{$t(`station.uploadPicture`)}}</el-button>
 
       <el-table :data="tabledData" @selection-change="changeFun" style="margin-top:50px;">
         <el-table-column type="selection" width="55"></el-table-column>
@@ -269,19 +269,19 @@
         <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
-        <el-table-column property="picture_id" label="图片id" v-if="show"></el-table-column>
-        <el-table-column prop="picture_main_url" label="图片" min-width="20%">
+        <el-table-column property="picture_id" :label="$t(`station.pictureId`)" v-if="show"></el-table-column>
+        <el-table-column prop="picture_main_url" :label="$t(`station.image`)" min-width="20%">
           <template slot-scope="scope">
             <img :src="scope.row.picture_main_url" min-width="70" height="70" />
           </template>
         </el-table-column>
-        <el-table-column prop="picture86Url" label="图片86" min-width="20%">
+        <el-table-column prop="picture86Url" :label="$t(`station.image`)+'86'" min-width="20%">
           <!-- 图片的显示 -->
           <template slot-scope="scope">
             <img :src="scope.row.picture86Url" min-width="70" height="70" />
           </template>
         </el-table-column>
-        <el-table-column prop="picture324Url" label="图片324" min-width="20%">
+        <el-table-column prop="picture324Url" :label="$t(`station.image`)+'324'" min-width="20%">
           <!-- 图片的显示 -->
           <template slot-scope="scope">
             <img :src="scope.row.picture324Url" min-width="70" height="70" />
@@ -416,7 +416,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入维修店铺id",
+                message: this.$t(`scooter.please`)+this.$t(`repairshop.shopId`),
                 trigger: "blur"
               }
             ]
@@ -428,7 +428,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入店铺名称",
+                message: this.$t(`scooter.please`)+this.$t(`repairshop.shopeName`),
                 trigger: "blur"
               }
             ]
@@ -443,7 +443,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入所属维修商",
+                message: this.$t(`scooter.please`)+this.$t(`repairshop.repairArea`),
                 trigger: "blur"
               }
             ],
@@ -460,7 +460,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入所属维修商",
+                message: this.$t(`scooter.please`)+this.$t(`repairshop.repairArea`),
                 trigger: "blur"
               }
             ],
@@ -476,12 +476,12 @@ export default {
           //   prop: "comId",
           //   rules: [{
           //     required: true,
-          //     message: "请输入所属维修商",
+          //     message: this.$t(`scooter.please`)+this.$t(`repairshop.repairArea`),
           //     trigger: "blur"
           //   }]
           // },
           {
-            label: "营业开始时间",
+            label: this.$t(`station.startTime`),
             prop: "businessTimeS",
             hide: true,
             type: "select",
@@ -586,13 +586,13 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入营业开始时间",
+                message: this.$t(`scooter.please`)+this.$t(`station.startTime`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "营业结束时间",
+            label: this.$t(`station.endTime`),
             prop: "businessTimeE",
             hide: true,
             type: "select",
@@ -697,7 +697,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入营业结束时间",
+                message: this.$t(`scooter.please`)+this.$t(`station.endTime`),
                 trigger: "blur"
               }
             ]
@@ -709,7 +709,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入address",
+                message: this.$t(`scooter.please`)+this.$t(`supplier.address`),
                 trigger: "blur"
               }
             ]
@@ -721,7 +721,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`stoe.linkman`),
+                message: this.$t(`scooter.please`)+this.$t(`stoe.linkman`),
                 trigger: "blur"
               }
             ]
@@ -733,7 +733,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`stoe.contactNumber`),
+                message: this.$t(`scooter.please`)+this.$t(`stoe.contactNumber`),
                 trigger: "blur"
               }
             ]
@@ -757,7 +757,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入"+this.$t(`repairshop.shopStatus`),
+                message: this.$t(`scooter.please`)+this.$t(`repairshop.shopStatus`),
                 trigger: "blur"
               }
             ]
@@ -908,7 +908,7 @@ export default {
       if (this.pictureMainUrl == "") {
         this.$message({
           type: "error",
-          message: "请上传图片"
+          message: this.$t(`station.pUploadPicture`)
         });
         return;
       }
@@ -930,7 +930,7 @@ export default {
       if (this.data.pictureUrl == "") {
         this.$message({
           type: "error",
-          message: "请上传图片"
+          message: this.$t(`station.pUploadPicture`)
         });
         return;
       }
@@ -1153,7 +1153,7 @@ export default {
       updateSort(row);
     },
     updateMain(row) {
-      this.$confirm("是否设置为主图?", {
+      this.$confirm(this.$t(`station.setImage`), {
         confirmButtonText: "sure",
         cancelButtonText: "cancel",
         type: "warning"

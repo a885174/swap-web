@@ -37,7 +37,7 @@
       <span slot="footer"
             class="dialog-footer">
         <el-button type="primary"
-                   @click="handleSubmit()">确 定</el-button>
+                   @click="handleSubmit()">{{$t(`submitText`)}}</el-button>
       </span>
     </el-dialog>
   </div>

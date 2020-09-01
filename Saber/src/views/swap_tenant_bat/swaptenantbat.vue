@@ -103,7 +103,7 @@
               prop: "linkman",
               rules: [{
                 required: true,
-                message: "请输入联系人",
+                message: this.$t(`scooter.please`)+this.$t(`store.linkman`),
                 trigger: "blur"
               }]
             },
@@ -112,7 +112,7 @@
               prop: "contactNumber",
               rules: [{
                 required: true,
-                message: "请输入联系电话",
+                message: this.$t(`scooter.please`)+this.$t(`store.contactNumber`),
                 trigger: "blur"
               }]
             },

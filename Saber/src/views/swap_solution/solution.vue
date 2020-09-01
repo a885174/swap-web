@@ -254,7 +254,7 @@ export default {
           {
             title: this.$t(`solution.faultInformation`),
             column: [
-              { label: this.$t(`solution.faultCode`), prop: row.faultCode },
+              { label: this.$t(`solution.faultNum`), prop: row.faultCode },
               {
                 label: this.$t(`solution.faultType`),
                 prop: row.faultType == "1" ? this.$t(`solution.electricVehicle`) : this.$t(`solution.battery`)

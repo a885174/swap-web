@@ -207,7 +207,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`tenant.area`),
+                message: this.$t(`scooter.please`)+this.$t(`tenant.area`),
                 trigger: "blur"
               }
             ]
@@ -219,7 +219,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+ this.$t(`tenant.trade`),
+                message: this.$t(`scooter.please`)+ this.$t(`tenant.trade`),
                 trigger: "blur"
               }
             ]
@@ -231,7 +231,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`tenant.linkman`),
+                message: this.$t(`scooter.please`)+this.$t(`tenant.linkman`),
                 trigger: "blur"
               }
             ]
@@ -243,7 +243,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入联系电话",
+                message: this.$t(`scooter.please`)+this.$t(`store.contactNumber`),
                 trigger: "blur"
               }
             ]
@@ -279,7 +279,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`tenant.legalPerson`),
+                message: this.$t(`scooter.please`)+this.$t(`tenant.legalPerson`),
                 trigger: "blur"
               }
             ]

@@ -83,7 +83,7 @@
               span: 24,
               rules: [{
                 required: true,
-                message: "请输入"+this.$t(`supplier.linkman`),
+                message: this.$t(`scooter.please`)+this.$t(`supplier.linkman`),
                 trigger: "blur"
               }]
             },

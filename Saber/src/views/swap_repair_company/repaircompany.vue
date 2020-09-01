@@ -112,7 +112,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`supplier.linkman`),
+                message: this.$t(`scooter.please`)+this.$t(`supplier.linkman`),
                 trigger: "blur"
               }
             ]
@@ -124,7 +124,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`suppliercontactNumber`),
+                message: this.$t(`scooter.please`)+this.$t(`suppliercontactNumber`),
                 trigger: "blur"
               }
             ]
@@ -160,7 +160,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入地址",
+                message: this.$t(`scooter.please`)+this.$t(`store.address`),
                 trigger: "blur"
               }
             ]

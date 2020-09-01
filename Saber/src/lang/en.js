@@ -7,7 +7,7 @@ export default {
   search: "Please input search content",
   menuTip: "none menu list",
   import: "Import",
-  delte:"Batch deletion",
+  delte: "Batch deletion",
   assignClient: "Assign Client",
   UnlinkwithClient: "Unlink with Client",
   Connected: "Connected",
@@ -218,8 +218,9 @@ export default {
     connectCars: "Connect electric cars",
     communicationError: "Communication error",
     moduleError: "Module error",
-    enterlockStatus:"Please enter the lock status 0: Locked 1: Unlocked",
-    enterpowerStatus:"Please enter the charging status 0: charging 1: discharging 2: shelving"
+    enterlockStatus: "Please enter the lock status 0: Locked 1: Unlocked",
+    enterpowerStatus:
+      "Please enter the charging status 0: charging 1: discharging 2: shelving"
   },
   station: {
     stationCode: "Swap Station ID Number",
@@ -262,7 +263,8 @@ export default {
     currentChargingTime: "Current charging time",
     remainingBattery: "Current remaining battery",
     maximumTemperature: "Maximum MOS temperature of rechargeable battery",
-    currentMaximumTemperature: "The current maximum temperature of the rechargeable battery",
+    currentMaximumTemperature:
+      "The current maximum temperature of the rechargeable battery",
     selectStore: "Please select a store",
     enterSwitchCabinetNumber: "Please enter the switch cabinet number (UID)",
     enterModel: "Please enter the switch cabinet model",
@@ -279,7 +281,7 @@ export default {
     exceed: "Upload image size cannot exceed 2MB!",
     pUploadPicture: "Please upload a picture",
     setImage: "Are you sure to set this picture as the main picture?",
-    pictureMaterial:"Picture material"
+    pictureMaterial: "Picture material"
   },
   user: {
     loginName: "Login Name",
@@ -321,7 +323,28 @@ export default {
     storeStatus: "Store Status",
     storeInformation: "Store Information",
     storeID: "Store ID",
-    ownedMerchant: "Owned merchant"
+    ownedMerchant: "Owned merchant",
+    timeManagement: "Business hours allocation",
+    addBusinessHours: "Add business hours",
+    serialNumber: "Serial number",
+    week: "Week",
+    selectWeek: "Please select week",
+    allDay: "7 days 24 hours",
+    monday: "Monday",
+    tuesday: "Tuesday",
+    wednesday: "Wednesday",
+    thursday: "Thursday",
+    friday: "Friday",
+    saturday: "Saturday",
+    sunday: "Sunday",
+    chooseTime: "Please choose time",
+    storePicture: "Store Picture",
+    uStorePicture: "Upload shop image",
+    shop: "Store",
+    greaterZero:"Please enter a number greater than 0 or equal to 0",
+    enterNum:"Please enter the number",
+    chooseMerchant:"Choose a merchant",
+    enterRentPeriod:"Please enter the billing period (days)"
   },
 
   merchant: {
@@ -394,7 +417,6 @@ export default {
     battery: "Battery",
     compartmentNumber: "Charging compartment number",
     successTime: "Successful appointment time",
-    effectiveTime: "Effective time",
     booking: "Booking",
     appointmentSuccessful: "Appointment successful",
     appointmentFailed: "Appointment failed",
@@ -412,7 +434,7 @@ export default {
   },
 
   solution: {
-    faultCode: "Malfunction ID",
+    faultNum: "Malfunction ID",
     faultType: "Type of Malfunction",
     faultName: "Malfunction",
     Solution: "Solution",
@@ -440,7 +462,8 @@ export default {
     ailableTime: "Duration",
     planStatus: "Status of Top-up",
     sale: "For Sale",
-    takeOff: "Take Off"
+    takeOff: "Take Off",
+    lessHundred:"Please enter a number greater than 0 or Xiaoyu less than 100"
   },
   message: {
     messageTitle: "Title",
