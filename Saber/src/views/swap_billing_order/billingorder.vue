@@ -173,7 +173,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入店铺id",
+                message: this.$t(`scooter.please`)+this.$t(`store.storeID`),
                 trigger: "blur"
               }
             ]

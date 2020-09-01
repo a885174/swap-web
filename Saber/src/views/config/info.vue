@@ -35,8 +35,8 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="formVisible = false">取 消</el-button>
-          <el-button type="primary" @click="formVisible = false">确 定</el-button>
+          <el-button @click="formVisible = false">{{$t(`cancelText`)}}</el-button>
+          <el-button type="primary" @click="formVisible = false">{{$t(`submitText`)}}</el-button>
         </div>
       </span>
     </el-dialog>

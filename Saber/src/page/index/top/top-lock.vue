@@ -19,7 +19,7 @@
       <span slot="footer"
             class="dialog-footer">
         <el-button type="primary"
-                   @click="handleSetLock">确 定</el-button>
+                   @click="handleSetLock">{{$t(`submitText`)}}</el-button>
       </span>
     </el-dialog>
   </span>

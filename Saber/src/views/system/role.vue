@@ -41,9 +41,9 @@
       </el-tree>
       <span slot="footer"
             class="dialog-footer">
-        <el-button @click="box = false">取 消</el-button>
+        <el-button @click="box = false">{{$t(`cancelText`)}}</el-button>
         <el-button type="primary"
-                   @click="submit">确 定</el-button>
+                   @click="submit">{{$t(`submitText`)}}</el-button>
       </span>
     </el-dialog>
   </basic-container>

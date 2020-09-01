@@ -212,8 +212,8 @@ export default {
     connectCars: "连接电动车",
     communicationError: "通讯错误",
     moduleError: "模块错误",
-    enterlockStatus:"请输入锁定状态 0:已锁定 1:未锁定",
-    enterpowerStatus:"请输入充电状态 0:充电中 1:放电中 2:搁置"
+    enterlockStatus: "请输入锁定状态 0:已锁定 1:未锁定",
+    enterpowerStatus: "请输入充电状态 0:充电中 1:放电中 2:搁置"
   },
   station: {
     stationCode: "换电柜编号（UID）",
@@ -231,7 +231,6 @@ export default {
     startTime: "营业开始时间",
     endTime: "营业结束时间",
     supplier: "关联供应商",
-
     cabinetPicture: "换电柜图片",
     assignPicture: "分配图片",
     uploadCabinetPicture: "上传换电柜图片",
@@ -273,7 +272,7 @@ export default {
     exceed: "上传图片大小不能超过 2MB!",
     pUploadPicture: "请上传图片",
     setImage: "确定将此图设置为主图吗?",
-    pictureMaterial:"图片素材"
+    pictureMaterial: "图片素材"
   },
 
   supplier: {
@@ -301,9 +300,25 @@ export default {
     ownedMerchant: "所属商户",
     timeManagement: "营业时间分配",
     addBusinessHours: "新增营业时间",
-    serialNumber:"序号",
-    week:"星期",
-    selectWeek:"请选择星期"
+    serialNumber: "序号",
+    week: "星期",
+    selectWeek: "请选择星期",
+    allDay: "七天24小时",
+    monday: "星期一",
+    tuesday: "星期二",
+    wednesday: "星期三",
+    thursday: "星期四",
+    friday: "星期五",
+    saturday: "星期六",
+    sunday: "星期天",
+    chooseTime: "请选择时间",
+    storePicture: "店铺图片",
+    uStorePicture: "上传店铺图片",
+    shop:"店铺",
+    greaterZero:"请输入大于0或等于0的数字",
+    enterNum:"请输入数字",
+    chooseMerchant:"选择商户",
+    enterRentPeriod:"请输入结算周期（天)"
   },
   tenant: {
     tenantName: "客户名称",
@@ -388,7 +403,6 @@ export default {
     username: "预约用户",
     batteryName: "电池编号",
     warehouse: "换电仓",
-    effectiveTime: "有效时间",
     subscribeTime: "发起预约时间",
     subscribeState: "预约状态",
     orderId: "订单id",
@@ -415,7 +429,7 @@ export default {
     areaName: "区域名称"
   },
   solution: {
-    faultCode: "故障编号",
+    faultNum: "故障编号",
     faultType: "故障类型",
     faultName: "故障名称",
     Solution: "解决方案",
@@ -436,7 +450,8 @@ export default {
     ailableTime: "使用天数",
     planStatus: "套餐状态",
     sale: "上架",
-    TakeOff: "下架"
+    TakeOff: "下架",
+    lessHundred:"请输入大于0或小宇于100的数字"
   },
   message: {
     messageTitle: "标题",

@@ -107,7 +107,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入"+this.$t(`supplier.supplierName`),
+                message: this.$t(`scooter.please`)+this.$t(`supplier.supplierName`),
                 trigger: "blur"
               }
             ]
@@ -159,7 +159,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入联系电话",
+                message: this.$t(`scooter.please`)+this.$t(`store.contactNumber`),
                 trigger: "blur"
               }
             ]
@@ -171,7 +171,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入地址",
+                message: this.$t(`scooter.please`)+this.$t(`store.address`),
                 trigger: "blur"
               }
             ]
