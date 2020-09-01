@@ -27,7 +27,7 @@
           plain
           v-if="permission.billingorder_delete"
           @click="handleDelete"
-        >删 除</el-button>
+        >{{$t(`delete`)}}</el-button>
       </template>
 
       <template slot-scope="{row}" slot="rentPrice">
@@ -43,11 +43,11 @@
       </template>
       <template
         slot-scope="{row}"
-        slot="totalPrices"
+        slot="orderStatus"
       >
         <label
-          :style="{color:row.totalPrices=='0'?'green':'red'}"
-        >{{row.totalPrices=="0"?"已出账单未付款":(row.totalPrices=="1"?"未出账单":(row.totalPrices=="2"?"已付款":(row.totalPrices=="3"?"异常状态":"正在结算")))}}</label>
+          :style="{color:row.orderStatus=='0'?'green':'red'}"
+        >{{row.orderStatus=="0"?$t(`billing.billed`):(row.orderStatus=="1"?$t(`billing.unbilled`):(row.orderStatus=="2"?$t(`billing.paid`):(row.orderStatus=="3"?$t(`billing.abnormal`):$t(`billing.billing`))))}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <!-- 
@@ -179,7 +179,7 @@ export default {
             ]
           },
           {
-            label: this.$t(`storeName`),
+            label: this.$t(`store.storeName`),
             prop: "storeName",
             rules: [
               {
@@ -282,9 +282,8 @@ export default {
           //   }]
           // },
           {
-            label: "totalPrices",
+            label: this.$t(`billing.totalPrices`),
             prop: "totalPrices",
-            slot: true,
             rules: [
               {
                 required: true,
@@ -300,23 +299,23 @@ export default {
             slot: true,
             dicData: [
               {
-                label: "已出账单未付款 ",
+                label: this.$t(`billing.billed`),
                 value: "0"
               },
               {
-                label: "未出账单",
+                label: this.$t(`billing.unbilled`),
                 value: "1"
               },
               {
-                label: "已付款",
+                label: this.$t(`billing.paid`),
                 value: "2"
               },
               {
-                label: "异常状态",
+                label: this.$t(`billing.abnormal`),
                 value: "3"
               },
               {
-                label: "正在结算",
+                label: this.$t(`billing.billing`),
                 value: "4"
               }
             ],
