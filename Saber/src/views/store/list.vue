@@ -20,7 +20,7 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delte`)}}</el-button>
 
         <el-button @click="dialogFormVisible = true">{{$t(`merchant.AssignMerchant`)}}</el-button>
 
@@ -33,7 +33,7 @@
       </template>
 
       <template slot-scope="{row}" slot="merchantId">
-        <el-tag>{{row.merchantId===0? '无':''+row.merchantName}}</el-tag>
+        <el-tag>{{row.merchantId===0? $t(`merchant.no`):''+row.merchantName}}</el-tag>
       </template>
       <template slot-scope="{row}" slot="rentPrice">
         <el-tag>{{row.rentPrice+'.00'}}</el-tag>
@@ -44,7 +44,7 @@
       <template slot-scope="{row}" slot="storeStatus">
         <label
           :style="{color:row.storeStatus=='0'?'green':'red'}"
-        >{{row.storeStatus=="0"?"冻结":this.$t(`battery.Normal`)}}</label>
+        >{{row.storeStatus=="0"?"冻结":$t(`battery.Normal`)}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="scope" slot="menu">
@@ -53,7 +53,7 @@
           size="small"
           icon="el-icon-document-copy"
           @click="openmap(scope.row)"
-        >{{$t(`getlocation`)}}</el-button>
+        >{{$t(`getlocaton`)}}</el-button>
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
 
         <el-button type="text" size="small" icon="el-icon-date" @click="opentable(scope.row)">营业时间分配</el-button>&nbsp;&nbsp;
@@ -62,7 +62,7 @@
           size="small"
           icon="el-icon-picture-outline"
           @click="getGridData(scope.row)"
-        >{{$(`pictureManagement`)}}</el-button>
+        >{{$t(`pictureManagement`)}}</el-button>
       </template>
     </avue-crud>
 
@@ -722,7 +722,7 @@ export default {
             slot: true,
             dicData: [
               {
-                label: "冻结",
+                label: this.$t(`tenant.Frozen`),
                 value: "0"
               },
               {
