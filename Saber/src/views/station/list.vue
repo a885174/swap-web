@@ -711,7 +711,7 @@ export default {
             slot: true,
             rules: [
               {
-                required: true,
+                required: false,
                 message: this.$t(`station.selectSupplier`),
                 trigger: "click"
               }

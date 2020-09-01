@@ -129,7 +129,7 @@ export default {
     gpsStatus: "GPS&GSM Status",
     lockStatus: "Locked Status",
     securityLock: "Locked for Stolen",
-    arrearageLock: "Locked for Owed",
+    arrearageLock: "Unlink with user",
     mileageValue: "Total Distance Travelled",
     batteryNumber: "Battery Number",
     connectStatus: "ConnectStatus",
@@ -181,7 +181,7 @@ export default {
     supplierId: "Supplier id",
     enterSupplierId: "Please enter supplier id",
     enterShelfLife: "Please enter the shelf life (months)",
-    userAssociation: "Are you sure to resolve user associations?"
+    userAssociation: "Are you sure to unlink with client?"
   },
   battery: {
     batteryCode: "Battery ID Number",
@@ -341,10 +341,10 @@ export default {
     storePicture: "Store Picture",
     uStorePicture: "Upload shop image",
     shop: "Store",
-    greaterZero:"Please enter a number greater than 0 or equal to 0",
-    enterNum:"Please enter the number",
-    chooseMerchant:"Choose a merchant",
-    enterRentPeriod:"Please enter the billing period (days)"
+    greaterZero: "Please enter a number greater than 0 or equal to 0",
+    enterNum: "Please enter the number",
+    chooseMerchant: "Choose a merchant",
+    enterRentPeriod: "Please enter the billing period (days)"
   },
 
   merchant: {
@@ -463,7 +463,7 @@ export default {
     planStatus: "Status of Top-up",
     sale: "For Sale",
     takeOff: "Take Off",
-    lessHundred:"Please enter a number greater than 0 or Xiaoyu less than 100"
+    lessHundred: "Please enter a number greater than 0 or Xiaoyu less than 100"
   },
   message: {
     messageTitle: "Title",
@@ -499,6 +499,11 @@ export default {
     totalPrices: "totalPrices",
     status: "Status",
     jiesuan: "Go to Clearing",
-    upload: " update certification."
+    upload: " update certification.",
+    billed: "Billed but not paid",
+    unbilled: "Unbilled",
+    paid: "Paid",
+    abnormal: "Abnormal state",
+    billing: "Billing"
   }
 };

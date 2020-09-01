@@ -18,7 +18,7 @@ export default {
   AssignStore: "分配店铺",
   getlocaton: "选取地址",
   coordinate: "获取经纬度",
-  delete: "删除",
+  delete: "删 除",
   pictureManagement: "图片管理",
 
   wel: {
@@ -484,6 +484,11 @@ export default {
     totalPrices: "总价",
     status: "状态",
     jiesuan: "结算",
-    upload: "上传凭证"
+    upload: "上传凭证",
+    billed:"已出账单未付款",
+    unbilled:"未出账单",
+    paid:"已付款",
+    abnormal:"异常状态",
+    billing:"正在结算"
   }
 };
