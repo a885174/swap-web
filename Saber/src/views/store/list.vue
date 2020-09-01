@@ -44,7 +44,7 @@
       <template slot-scope="{row}" slot="storeStatus">
         <label
           :style="{color:row.storeStatus=='0'?'green':'red'}"
-        >{{row.storeStatus=="0"?"冻结":$t(`battery.Normal`)}}</label>
+        >{{row.storeStatus=="0"?$t(`tenant.Frozen`):$t(`battery.Normal`)}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="scope" slot="menu">
