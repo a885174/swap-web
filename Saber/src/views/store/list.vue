@@ -44,7 +44,7 @@
       <template slot-scope="{row}" slot="storeStatus">
         <label
           :style="{color:row.storeStatus=='0'?'green':'red'}"
-        >{{row.storeStatus=="0"?"冻结":this.$t(`battery.Normal`)}}</label>
+        >{{row.storeStatus=="0"?"'FFROZEN'":''}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="scope" slot="menu">
@@ -62,7 +62,7 @@
           size="small"
           icon="el-icon-picture-outline"
           @click="getGridData(scope.row)"
-        >{{$(`pictureManagement`)}}</el-button>
+        >{{$t(`pictureManagement`)}}</el-button>
       </template>
     </avue-crud>
 
