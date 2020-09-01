@@ -19,6 +19,7 @@ export default {
   getlocaton: "选取地址",
   coordinate: "获取经纬度",
   delete: "删除",
+  pictureManagement: "图片管理",
 
   wel: {
     info: "早安，Smallwei，Avuex一款超乎你想象的框架！",
@@ -297,7 +298,12 @@ export default {
     storeStatus: "店铺状态",
     storeInformation: "店铺信息",
     storeID: "店铺ID",
-    ownedMerchant: "所属商户"
+    ownedMerchant: "所属商户",
+    timeManagement: "营业时间分配",
+    addBusinessHours: "新增营业时间",
+    serialNumber:"序号",
+    week:"星期",
+    selectWeek:"请选择星期"
   },
   tenant: {
     tenantName: "客户名称",
