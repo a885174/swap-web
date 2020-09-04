@@ -181,7 +181,9 @@ export default {
     supplierId: "Supplier id",
     enterSupplierId: "Please enter supplier id",
     enterShelfLife: "Please enter the shelf life (months)",
-    userAssociation: "Are you sure to unlink with client?"
+    userAssociation: "Are you sure to unlink with client?",
+    lock:"lock",
+    unlock:"unlok"
   },
   battery: {
     batteryCode: "Battery ID Number",
@@ -310,7 +312,7 @@ export default {
     scooterProduction: "Scooter Production",
     electricVehicleSupplier: "Electric vehicle supplier",
     switchCabinetSupplier: "Switch cabinet supplier",
-    batterySupplier: "Battery supplier"
+    batterySupplier: "Battery supplier",
   },
   store: {
     storeName: "Store Name",
