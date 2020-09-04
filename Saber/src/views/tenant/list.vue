@@ -20,18 +20,17 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delte`)}}</el-button>
-
-        <el-button @click="dialogFormVisible = true">{{$t(`tenant.AssignScooter`)}}</el-button>
-
-        <el-dialog title="Assign Scooter" :visible.sync="dialogFormVisible" width="30%" center>
-          <span slot="footer" class="dialog-footer">
-            <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
-          </span>
-        </el-dialog>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delte`)}}</el-button>
 
         <template>
-  <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>        </template>
+          <el-button @click.stop="delteant">{{$t(`tenant.Frozen`)}}</el-button>
+        </template>
         <template>
           <el-button @click.stop="delscooter">{{$t(`tenant.UnlinkwithMotorcycle`)}}</el-button>
         </template>
@@ -40,14 +39,53 @@
         </template>
       </template>
       <template slot-scope="{row}" slot="tenantStatus">
-        <label :style="{color:row.tenantStatus=='0'?'green':'red'}">{{row.tenantStatus=="0"?'Normal':'Fezon'}}</label>
+        <label
+          :style="{color:row.tenantStatus=='0'?'green':'red'}"
+        >{{row.tenantStatus=="0"?'Normal':'Fezon'}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot="menu" slot-scope="scope">
-        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          size="small"
+          icon="el-icon-view"
+          @click.stop="rowViews(scope.row)"
+        >{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          size="small"
+          @click.stop="selectForm(scope.row)"
+        >{{$t(`tenant.AssignScooter`)}}</el-button>
+
         <!-- <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button> -->
       </template>
     </avue-crud>
+    <!-- 分配电动车dialog -->
+    <el-dialog title="Assign Scooter" :visible.sync="dialogFormVisible" width="60%" center>
+      <avue-crud
+        :option="selectOption"
+        :table-loading="loading"
+        :data="selectData"
+        :page="selectPage"
+        v-model="scooterForm"
+        ref="selectCrud"
+        @search-change="searchScooterChange"
+        @search-reset="searchScooterReset"
+        @selection-change="scooterSelect"
+        @current-change="currentscooterChange"
+        @size-change="scootersizeChange"
+      >
+        <template slot="menuLeft">
+          <!-- 保存按钮 -->
+          <template>
+            <el-button @click.stop="updateScooter">{{$t(`submitText`)}}</el-button>
+          </template>
+        </template>
+      </avue-crud>
+      <!-- <span slot="footer" class="dialog-footer">
+        <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
+      </span>-->
+    </el-dialog>
     <el-dialog
       title="充电仓管理"
       :visible.sync="chaTableVisible"
@@ -67,7 +105,13 @@
       </el-table>
     </el-dialog>
 
-    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
+    <el-dialog
+      title="View"
+      width="60%"
+      :visible.sync="dialogViewVisibles"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -82,7 +126,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisibles = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisibles = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -98,7 +142,8 @@ import {
   importxls,
   del,
   saveSccoterList,
-  delSccoterList
+  delSccoterList,
+  selectSccoterList
 } from "@/api/swap_tenant_bat/swaptenantbat";
 import { mapGetters } from "vuex";
 
@@ -110,6 +155,7 @@ export default {
       rowItem: {},
       form: {},
       query: {},
+      squery: {},
       loading: true,
       dialogFormVisible: false,
       chaTableVisible: false,
@@ -136,6 +182,87 @@ export default {
             }
           }
         ]
+      },
+      selectId: "", // 选中的客户id
+      selectData: [], // 当前的电动车列表
+      selectOption: {
+        tip: false,
+        border: true,
+        index: true,
+        selection: true,
+        align: "center",
+        menu: false,
+        indexLabel: "Index",
+        refreshBtn: false,
+        addBtn: false,
+        column: [
+          {
+            label: this.$t(`scooter.vincode`),
+            // width: 160,
+            prop: "scooterCode",
+            editDisabled: true,
+            search: true,
+            span: 20,
+            labelWidth: 120,
+            rules: [
+              {
+                required: true,
+                message: this.$t(`scooter.please`) + this.$t(`scooter.vincode`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: this.$t(`scooter.licensePlate`),
+            prop: "licensePlate",
+            span: 20,
+            search: true,
+            labelWidth: 120,
+            rules: [
+              {
+                required: false,
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.licensePlate`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: this.$t(`scooter.scooterVersion`),
+            // width: 120,
+            prop: "scooterVersion",
+            valueDefault: "",
+            rules: [
+              {
+                required: false,
+                message: this.$t(`scooter.vehicleModel`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: "IMEI",
+            // width: 160,
+            addDisabled: true,
+            addDisplay: false,
+            span: 8,
+            prop: "imei",
+            rules: [
+              {
+                required: false,
+                message: this.$t(`scooter.IMEICode`),
+                trigger: "blur"
+              }
+            ]
+          }
+        ]
+      },
+      scooterForm: {},
+      scooterIds: "",
+      selectPage: {
+        pageSize: 10,
+        currentPage: 1,
+        total: 0
       },
       page: {
         pageSize: 10,
@@ -207,7 +334,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`tenant.area`),
+                message: this.$t(`scooter.please`) + this.$t(`tenant.area`),
                 trigger: "blur"
               }
             ]
@@ -219,7 +346,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+ this.$t(`tenant.trade`),
+                message: this.$t(`scooter.please`) + this.$t(`tenant.trade`),
                 trigger: "blur"
               }
             ]
@@ -231,7 +358,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`tenant.linkman`),
+                message: this.$t(`scooter.please`) + this.$t(`tenant.linkman`),
                 trigger: "blur"
               }
             ]
@@ -243,7 +370,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`store.contactNumber`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`store.contactNumber`),
                 trigger: "blur"
               }
             ]
@@ -279,14 +407,14 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`tenant.legalPerson`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`tenant.legalPerson`),
                 trigger: "blur"
               }
             ]
           },
           {
-            
-            label:this.$t(`tenant.scooters`),
+            label: this.$t(`tenant.scooters`),
             prop: "scooters",
             editDisabled: true,
             editDisplay: false,
@@ -300,7 +428,7 @@ export default {
             ]
           },
           {
-            label:this.$t(`tenant.users`),
+            label: this.$t(`tenant.users`),
             prop: "users",
             editDisabled: true,
             editDisplay: false,
@@ -463,6 +591,69 @@ export default {
     }
   },
   methods: {
+    scootersizeChange(pageSize) {
+      this.selectPage.pageSize = pageSize;
+      this.scooterData(this.selectPage);
+    },
+    currentscooterChange(currentPage) {
+      this.selectPage.currentPage = currentPage;
+      this.scooterData(this.selectPage);
+    },
+    searchScooterReset() {
+      this.squery = {};
+      this.scooterData(this.selectPage);
+    },
+    searchScooterChange(params) {
+      this.squery = params;
+      this.scooterData(this.selectPage, params);
+    },
+    scooterData(page, params = {}) {
+      selectSccoterList(
+        page.currentPage,
+        page.pageSize,
+        Object.assign(params, this.squery)
+      ).then(res => {
+        const data = res.data.data;
+        this.selectPage.total = data.total;
+        this.selectData = data.records;
+        this.loading = false;
+        this.$refs.selectCrud.toggleSelection();
+        // this.selectionClear();
+        // this.selectData = res.data.records;
+      });
+    },
+
+    updateScooter() {
+      if (this.scooterIds.length > 0) {
+        saveSccoterList(this.scooterIds, this.scooterForm.tenantId).then(() => {
+          this.scooterData(this.selectPage);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+          this.scooterIds = "";
+          this.dialogFormVisible = false;
+        });
+      } else {
+        this.$message.error("Please select at least one piece of data");
+      }
+    },
+    // 选中的电动车ID
+    scooterSelect(list) {
+      let ids = [];
+      list.forEach(ele => {
+        ids.push(ele.scooterId);
+      });
+      this.scooterIds = ids.join(",");
+
+    },
+    // 打开分配电动车弹窗
+    selectForm(row) {
+      this.scooterIds = "";
+      this.scooterForm = row;
+      this.scooterData(this.selectPage);
+      this.dialogFormVisible = true;
+    },
     rowViews(row) {
       this.dialogViewVisibles = true;
       this.rowItem = {
@@ -484,10 +675,16 @@ export default {
               { label: this.$t(`tenant.legalPerson`), prop: row.legalPerson },
               { label: this.$t(`tenant.scooters`), prop: row.scooters },
               { label: this.$t(`tenant.users`), prop: row.users },
-              { label: this.$t(`tenant.approveStatus`), prop: row.approveStatus },
+              {
+                label: this.$t(`tenant.approveStatus`),
+                prop: row.approveStatus
+              },
               {
                 label: this.$t(`tenant.tenantStatus`),
-                prop: row.tenantStatus == "0" ? this.$t(`battery.Normal`) : this.$t(`teant.Frozen`)
+                prop:
+                  row.tenantStatus == "0"
+                    ? this.$t(`battery.Normal`)
+                    : this.$t(`teant.Frozen`)
               }
             ]
           }
@@ -537,20 +734,6 @@ export default {
         });
       }
     },
-    handleSubmit() {
-      if (this.ids.length > 0) {
-        saveSccoterList(this.ids, this.form.scooterId).then(() => {
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
-          });
-          this.dialogFormVisible = false;
-        });
-      } else {
-        this.$message.error("Please select at least one piece of data");
-      }
-    },
     delteant() {
       if (this.ids.length > 0) {
         del(this.ids, "1").then(() => {
@@ -587,9 +770,7 @@ export default {
 
     // getListData(row) {
     // getChaList(row.stationCode).then(res => {
-    //   console.log("返回结果:"+res.data)
     //     this.chaData = res.data.data;
-    //     console.log("cha:"+this.chaData);
     //   });
     // this.chaTableVisible=true;
     // },
@@ -702,7 +883,7 @@ export default {
 <style>
 .abow_dialog .el-dialog .el-dialog__body {
   padding: 0 30px;
-} 
+}
 .abow_dialog .title {
   font-size: 16px;
   color: rgba(0, 0, 0, 0.847058823529412);

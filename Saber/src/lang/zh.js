@@ -175,7 +175,9 @@ export default {
     supplierId: "供应商id",
     enterSupplierId: "请输入供应商id",
     enterShelfLife: "请输入保质期 （月）",
-    userAssociation: "确定解决用户关联?"
+    userAssociation: "确定解决用户关联?",
+    lock:"锁车",
+    unlock:"解锁"
   },
   battery: {
     batteryCode: "电池编号 BID",
