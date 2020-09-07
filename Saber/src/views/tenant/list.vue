@@ -18,7 +18,7 @@
       @current-change="currentChange"
       @size-change="sizeChange"
       @on-load="onLoad"
-    >
+    > 
       <template slot="menuLeft">
         <el-button
           type="danger"
@@ -870,7 +870,7 @@ export default {
         Object.assign(params, this.query)
       ).then(res => {
         const data = res.data.data;
-        this.page.total = data.total;
+        this.page.total = data.total;   
         this.data = data.records;
         this.loading = false;
         this.selectionClear();
