@@ -872,8 +872,9 @@ export default {
       getDetail(row.scooterId).then(res => {
         this.form = res.data.data;
         this.dialogViewVisible = true;
+        var data = res.data.data;
         var scooterStatus;
-        switch (row.scooterStatus) {
+        switch (data.scooterStatus) {
           case "0":
             scooterStatus = this.$t(`battery.Normal`);
             break;
@@ -892,36 +893,36 @@ export default {
             {
               title: "Scooter",
               column: [
-                { label: this.$t(`scooter.vincode`), prop: row.scooterCode },
+                { label: this.$t(`scooter.vincode`), prop: data.scooterCode },
                 {
                   label: this.$t(`scooter.licensePlate`),
-                  prop: row.licensePlate
+                  prop: data.licensePlate
                 },
                 {
                   label: this.$t(`scooter.scooterVersion`),
-                  prop: row.scooterVersion
+                  prop: data.scooterVersion
                 },
                 {
                   label: this.$t(`scooter.batteryNumber`),
-                  prop: row.batteryNumber
+                  prop: data.batteryNumber
                 },
-                { label: "IMEI", prop: row.imei },
+                { label: "IMEI", prop: data.imei },
                 {
                   label: this.$t(`scooter.mileageValue`),
-                  prop: row.mileageValue == null ? "0" : row.mileageValue + "km"
+                  prop: data.mileageValue == null ? "0" : data.mileageValue + "km"
                 },
                 {
                   label: this.$t(`scooter.expirationDate`),
-                  prop: row.expirationDate + "month"
+                  prop: data.expirationDate + "month"
                 },
                 {
                   label: this.$t(`scooter.produceTime`),
-                  prop: row.produceTime
+                  prop: data.produceTime
                 },
                 {
                   label: this.$t(`scooter.sellChannel`),
                   prop:
-                    row.sellChannel == 0
+                    data.sellChannel == 0
                       ? this.$t(`scooter.client`)
                       : this.$t(`scooter.store`)
                 }
@@ -937,56 +938,56 @@ export default {
                 {
                   label: this.$t(`scooter.sellStatus`),
                   prop:
-                    row.sellStatus == "0"
+                    data.sellStatus == "0"
                       ? this.$t(`scooter.sold`)
                       : this.$t(`scooter.notSold`)
                 },
                 {
                   label: this.$t(`scooter.initStatus`),
                   prop:
-                    row.initStatus == "0"
+                    data.initStatus == "0"
                       ? this.$t(`scooter.activated`)
                       : this.$t(`scooter.inactivated`)
                 },
                 {
                   label: this.$t(`scooter.runStatus`),
                   prop:
-                    row.runStatus == "0"
+                    data.runStatus == "0"
                       ? this.$t(`scooter.running`)
                       : this.$t(`scooter.stopped`)
                 },
                 {
                   label: this.$t(`scooter.gpsStatus`),
                   prop:
-                    row.gpsStatus == "0"
+                    data.gpsStatus == "0"
                       ? this.$t(`scooter.targeted`)
                       : this.$t(`scooter.untargeted`)
                 },
                 {
                   label: this.$t(`scooter.lockStatus`),
                   prop:
-                    row.lockStatus == "0"
+                    data.lockStatus == "0"
                       ? this.$t(`scooter.locked`)
                       : this.$t(`scooter.NotLocked`)
                 },
                 {
                   label: this.$t(`scooter.connectStatus`),
                   prop:
-                    row.connectStatus == "0"
+                    data.connectStatus == "0"
                       ? this.$t(`Connected`)
                       : this.$t(`Unconnected`)
                 },
                 {
                   label: this.$t(`scooter.securityLock`),
                   prop:
-                    row.securityLock == "0"
+                    data.securityLock == "0"
                       ? this.$t(`scooter.locked`)
                       : this.$t(`scooter.notConnected`)
                 },
                 {
                   label: this.$t(`scooter.arrearageLock`),
                   prop:
-                    row.arrearageLock == "0"
+                    data.arrearageLock == "0"
                       ? this.$t(`scooter.locked`)
                       : this.$t(`scooter.notConnected`)
                 }

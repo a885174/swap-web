@@ -18,7 +18,7 @@
       @current-change="currentChange"
       @size-change="sizeChange"
       @on-load="onLoad"
-    > 
+    >
       <template slot="menuLeft">
         <el-button
           type="danger"
@@ -645,7 +645,6 @@ export default {
         ids.push(ele.scooterId);
       });
       this.scooterIds = ids.join(",");
-
     },
     // 打开分配电动车弹窗
     selectForm(row) {
@@ -655,41 +654,44 @@ export default {
       this.dialogFormVisible = true;
     },
     rowViews(row) {
-      this.dialogViewVisibles = true;
-      this.rowItem = {
-        item: [
-          {
-            title: "Clinent Info",
-            column: [
-              // { label: "客户id", prop: row.tenantId },
-              { label: this.$t(`tenant.tenantName`), prop: row.tenantName },
-              { label: this.$t(`tenant.area`), prop: row.area },
-              { label: this.$t(`tenant.trade`), prop: row.trade },
-              { label: this.$t(`tenant.linkman`), prop: row.linkman },
-              {
-                label: this.$t(`tenant.contactNumber`),
-                prop: row.contactNumber
-              },
-              { label: "address", prop: row.address },
-              { label: "email", prop: row.email },
-              { label: this.$t(`tenant.legalPerson`), prop: row.legalPerson },
-              { label: this.$t(`tenant.scooters`), prop: row.scooters },
-              { label: this.$t(`tenant.users`), prop: row.users },
-              {
-                label: this.$t(`tenant.approveStatus`),
-                prop: row.approveStatus
-              },
-              {
-                label: this.$t(`tenant.tenantStatus`),
-                prop:
-                  row.tenantStatus == "0"
-                    ? this.$t(`battery.Normal`)
-                    : this.$t(`teant.Frozen`)
-              }
-            ]
-          }
-        ]
-      };
+      getDetail(row.tenantId).then(res => {
+        this.dialogViewVisibles = true;
+        var data = res.data.data;
+        this.rowItem = {
+          item: [
+            {
+              title: "Clinent Info",
+              column: [
+                // { label: "客户id", prop: row.tenantId },
+                { label: this.$t(`tenant.tenantName`), prop: data.tenantName },
+                { label: this.$t(`tenant.area`), prop: data.area },
+                { label: this.$t(`tenant.trade`), prop: data.trade },
+                { label: this.$t(`tenant.linkman`), prop: data.linkman },
+                {
+                  label: this.$t(`tenant.contactNumber`),
+                  prop: data.contactNumber
+                },
+                { label: "address", prop: data.address },
+                { label: "email", prop: data.email },
+                { label: this.$t(`tenant.legalPerson`), prop: data.legalPerson },
+                { label: this.$t(`tenant.scooters`), prop: data.scooters },
+                { label: this.$t(`tenant.users`), prop: data.users },
+                {
+                  label: this.$t(`tenant.approveStatus`),
+                  prop: data.approveStatus
+                },
+                {
+                  label: this.$t(`tenant.tenantStatus`),
+                  prop:
+                    data.tenantStatus == "0"
+                      ? this.$t(`battery.Normal`)
+                      : this.$t(`teant.Frozen`)
+                }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
@@ -870,7 +872,7 @@ export default {
         Object.assign(params, this.query)
       ).then(res => {
         const data = res.data.data;
-        this.page.total = data.total;   
+        this.page.total = data.total;
         this.data = data.records;
         this.loading = false;
         this.selectionClear();

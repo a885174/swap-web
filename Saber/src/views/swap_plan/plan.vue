@@ -20,7 +20,12 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" @click="handleDelete">{{`delete`}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          @click="handleDelete"
+        >{{`delete`}}</el-button>
 
         <template>
           <el-button @click.stop="delteant">{{$t(`plan.takeOff`)}}</el-button>
@@ -31,15 +36,28 @@
       </template>
 
       <template slot-scope="{row}" slot="planStatus">
-        <label :style="{color:row.planStatus=='0'?'green':'red'}">{{row.planStatus=="0"?"Sale":"Take Off"}}</label>
+        <label
+          :style="{color:row.planStatus=='0'?'green':'red'}"
+        >{{row.planStatus=="0"?"Sale":"Take Off"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -54,7 +72,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -118,7 +136,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`plan.planName`),
+                message: this.$t(`scooter.please`) + this.$t(`plan.planName`),
                 trigger: "blur"
               }
             ]
@@ -129,7 +147,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`plan.price`),
+                message: this.$t(`scooter.please`) + this.$t(`plan.price`),
                 trigger: "blur"
               }
             ]
@@ -140,7 +158,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+ this.$t(`plan.distanceSum`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`plan.distanceSum`),
                 trigger: "blur"
               }
             ]
@@ -168,7 +187,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`plan.ailableTime`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`plan.ailableTime`),
                 trigger: "blur"
               }
             ]
@@ -192,7 +212,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`plan.planStatus`),
+                message: this.$t(`scooter.please`) + this.$t(`plan.planStatus`),
                 trigger: "blur"
               }
             ]
@@ -267,23 +287,32 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      this.rowItem = {
-        item: [
-          {
-            title: "Detail",
-            column: [
-              // { label: "套餐id", prop: row.planId },
-              { label: this.$t(`plan.planName`), prop: row.planName },
-              { label: this.$t(`plan.price`), prop: row.price },
-              { label: this.$t(`plan.distanceSum`), prop: row.distanceSum },
-              // { label: "折扣(%)", prop: row.discount },
-              { label: this.$t(`plan.ailableTime`), prop: row.ailableTime },
-              { label: this.$t(`plan.planStatus`), prop: row.planStatus=="0"?this.$t(`plan.sale`):this.$t(`plan.takeOff`) },
-            ]
-          }
-        ]
-      };
+      getDetail(row.planId).then(res => {
+        var data = res.data.data;
+        this.dialogViewVisible = true;
+        this.rowItem = {
+          item: [
+            {
+              title: "Detail",
+              column: [
+                // { label: "套餐id", prop: row.planId },
+                { label: this.$t(`plan.planName`), prop: data.planName },
+                { label: this.$t(`plan.price`), prop: data.price },
+                { label: this.$t(`plan.distanceSum`), prop: data.distanceSum },
+                // { label: "折扣(%)", prop: data.discount },
+                { label: this.$t(`plan.ailableTime`), prop: data.ailableTime },
+                {
+                  label: this.$t(`plan.planStatus`),
+                  prop:
+                    data.planStatus == "0"
+                      ? this.$t(`plan.sale`)
+                      : this.$t(`plan.takeOff`)
+                }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
