@@ -406,7 +406,7 @@ export default {
           clientType = "Android";
           break;
         case "3":
-          clientType = "其他";
+          clientType = "Other";
           break;
       }
       this.rowItem = {

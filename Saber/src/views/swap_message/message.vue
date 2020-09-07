@@ -88,7 +88,7 @@ export default {
         indexLabel: "index",
         column: [
           // {
-          //   label: "公告ID",
+          //   label: this.$t(`message.id`),
           //   prop: "messageId",
           //   editDisabled: true,
           //   editDisplay: false,
@@ -123,11 +123,11 @@ export default {
             valeDefault: "1",
             dicData: [
               {
-                label: "通知",
+                label:this.$t(`message.notice`),
                 value: "1"
               },
               {
-                label: "公告",
+                label: this.$t(`message.bulletin`),
                 value: "2"
               }
             ],
@@ -173,7 +173,7 @@ export default {
                 value: "0"
               },
               {
-                label: "关闭",
+                label: this.$t(`message.close`),
                 value: "1"
               }
             ],
@@ -186,7 +186,7 @@ export default {
             ]
           },
           {
-            label: "发布人",
+            label: this.$t(`message.publisher`),
             prop: "publisher",
             hide: true,
             rules: [
@@ -198,29 +198,29 @@ export default {
             ]
           },
           {
-            label: "推送方式 ",
+            label: this.$t(`message.method`),
             prop: "pushService",
             type: "select",
             hide: true,
             dicData: [
               {
-                label: "无",
+                label: this.$t(`merchant.no`),
                 value: "0"
               },
               {
-                label: "状态栏",
+                label: this.$t(`message.statusBar`),
                 value: "1"
               },
               {
-                label: "锁屏",
+                label: this.$t(`message.lockScreen`),
                 value: "2"
               },
               {
-                label: "横幅通知",
+                label: this.$t(`message.banner`),
                 value: "3"
               },
               {
-                label: "短信",
+                label: this.$t(`message.SMS`),
                 value: "4"
               }
             ],
@@ -234,7 +234,7 @@ export default {
             ]
           },
           {
-            label: "推送结果 ",
+            label: this.$t(`message.results`),
             prop: "pushResult",
             hide: true,
             display: false,
@@ -311,36 +311,36 @@ export default {
       var pushService;
       switch (row.pushService) {
         case "0":
-          pushService = "无";
+          pushService = this.$t(`merchant.no`);
           break;
         case "1":
-          pushService = "状态栏";
+          pushService = this.$t(`message.statusBar`);
           break;
         case "2":
-          pushService = "锁屏";
+          pushService = this.$t(`message.lockScreen`);
           break;
         case "3":
-          pushService = "横幅通知";
+          pushService = this.$t(`message.banner`);
           break;
         case "4":
-          pushService = "短信";
+          pushService = this.$t(`message.SMS`);
           break;
       }
       this.rowItem = {
         item: [
           {
-            title: "消息详情",
+            title: this.$t(`message.details`),
             column: [
-              { label: "公告ID", prop: row.messageId },
-              { label: "公告标题", prop: row.messageTitle },
+              { label: this.$t(`message.id`), prop: row.messageId },
+              { label: this.$t(`message.title`), prop: row.messageTitle },
               {
-                label: "公告类型",
-                prop: row.messageType == "0" ? "通知" : "公告"
+                label: this.$t(`message.type`),
+                prop: row.messageType == "0" ? this.$t(`message.notice`) : this.$t(`message.bulletin`)
               },
-              { label: "公告状态", prop: row.status == "0" ? this.$t(`battery.Normal`) : "关闭" },
-              { label: "发布人", prop: row.publisher },
-              { label: "发布人", prop: pushService },
-              { label: "推送结果", prop: row.pushResult }
+              { label: this.$t(`message.status`), prop: row.status == "0" ? this.$t(`battery.Normal`) : this.$t(`message.close`) },
+              { label: this.$t(`message.publisher`), prop: row.publisher },
+              { label: this.$t(`message.method`), prop: pushService },
+              { label: this.$t(`message.results`), prop: row.pushResult }
             ]
           }
         ]
