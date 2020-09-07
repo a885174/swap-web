@@ -141,7 +141,7 @@
           <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
             <el-upload
               class="avatar-uploader"
-              action="http://47.112.171.131//api//blade-resource/oss/endpoint//upload"
+              action="http://localhost//api//blade-resource/oss/endpoint//upload"
               :show-file-list="false"
               :headers="myHeaders"
               :on-success="handleSuccess"
@@ -797,7 +797,7 @@ export default {
           //   addDisplay:false,
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },

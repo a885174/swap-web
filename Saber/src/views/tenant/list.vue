@@ -543,7 +543,7 @@ export default {
           //   addDisplay:false,
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },
