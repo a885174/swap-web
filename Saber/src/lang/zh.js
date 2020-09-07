@@ -176,8 +176,8 @@ export default {
     enterSupplierId: "请输入供应商id",
     enterShelfLife: "请输入保质期 （月）",
     userAssociation: "确定解决用户关联?",
-    lock:"锁车",
-    unlock:"解锁"
+    lock: "锁车",
+    unlock: "解锁"
   },
   battery: {
     batteryCode: "电池编号 BID",
@@ -316,11 +316,11 @@ export default {
     chooseTime: "请选择时间",
     storePicture: "店铺图片",
     uStorePicture: "上传店铺图片",
-    shop:"店铺",
-    greaterZero:"请输入大于0或等于0的数字",
-    enterNum:"请输入数字",
-    chooseMerchant:"选择商户",
-    enterRentPeriod:"请输入结算周期（天)"
+    shop: "店铺",
+    greaterZero: "请输入大于0或等于0的数字",
+    enterNum: "请输入数字",
+    chooseMerchant: "选择商户",
+    enterRentPeriod: "请输入结算周期（天)"
   },
   tenant: {
     tenantName: "客户名称",
@@ -453,12 +453,27 @@ export default {
     planStatus: "套餐状态",
     sale: "上架",
     TakeOff: "下架",
-    lessHundred:"请输入大于0或小宇于100的数字"
+    lessHundred: "请输入大于0或小宇于100的数字"
   },
   message: {
     messageTitle: "标题",
     messageType: "类型",
-    status: "状态"
+    status: "状态",
+    notice: "通知",
+    bulletin: "公告",
+    close: "关闭",
+    publisher: "发布人",
+    method: "推送方式",
+    statusBar: "状态栏",
+    lockScreen: "锁屏",
+    banner: "横幅通知",
+    SMS: "短信",
+    results: "推送结果",
+    details: "消息详情",
+    id: "公告ID",
+    title: "公告标题",
+    type: "公告类型",
+    results: "推送结果"
   },
   common: {},
   repairshop: {
@@ -487,10 +502,10 @@ export default {
     status: "状态",
     jiesuan: "结算",
     upload: "上传凭证",
-    billed:"已出账单未付款",
-    unbilled:"未出账单",
-    paid:"已付款",
-    abnormal:"异常状态",
-    billing:"正在结算"
+    billed: "已出账单未付款",
+    unbilled: "未出账单",
+    paid: "已付款",
+    abnormal: "异常状态",
+    billing: "正在结算"
   }
 };
