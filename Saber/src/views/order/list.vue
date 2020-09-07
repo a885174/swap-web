@@ -501,9 +501,11 @@ export default {
   },
   methods: {
     rowView(row) {
+        getDetail(row.orderId).then(res => {
+          var data = res.data.data;
       this.dialogViewVisible = true;
       var payStatus;
-      switch (row.payStatus) {
+      switch (data.payStatus) {
         case "0":
           payStatus = this.$t(`order.successfully`);
           break;
@@ -526,35 +528,36 @@ export default {
             title: "Order Info",
             column: [
               // { label: "订单id", prop: row.orderId },
-              { label: this.$t(`order.orderNo`), prop: row.orderCode },
-              { label: this.$t(`order.packagePrice`), prop: row.planPrice },
-              { label: this.$t(`order.packageMileage`), prop: row.distance },
-              { label: this.$t(`user.username`), prop: row.userName },
-              { label: this.$t(`scooter.name`), prop: row.scooterCode },
-              // { label: "套餐折扣", prop: row.discount },
-              // { label: "数量", prop: row.count },
-              // { label: "套餐总价", prop: row.planTotal },
-              // { label: "优惠券", prop: row.discounts },
-              { label: this.$t(`order.totalPrices`), prop: row.totalPrices },
-              { label: this.$t(`scooter.totalMileag`), prop: row.distanceSum },
+              { label: this.$t(`order.orderNo`), prop: data.orderCode },
+              { label: this.$t(`order.packagePrice`), prop: data.planPrice },
+              { label: this.$t(`order.packageMileage`), prop: data.distance },
+              { label: this.$t(`user.username`), prop: data.userName },
+              { label: this.$t(`scooter.name`), prop: data.scooterCode },
+              // { label: "套餐折扣", prop: data.discount },
+              // { label: "数量", prop: data.count },
+              // { label: "套餐总价", prop: data.planTotal },
+              // { label: "优惠券", prop: data.discounts },
+              { label: this.$t(`order.totalPrices`), prop: data.totalPrices },
+              { label: this.$t(`scooter.totalMileag`), prop: data.distanceSum },
               {
                 label: this.$t(`order.payChannel`),
-                prop: row.payChannel == "0" ? "ovo" : "gopay"
+                prop: data.payChannel == "0" ? "ovo" : "gopay"
               },
               { label: this.$t(`order.payStatus`), prop: payStatus },
-              { label: this.$t(`order.thirdParty`), prop: row.payCode },
-              // { label: "第三方支付回调结果", prop: row.callbackResult },
-              { label: this.$t(`order.PayTime`), prop: row.payTime }
+              { label: this.$t(`order.thirdParty`), prop: data.payCode },
+              // { label: "第三方支付回调结果", prop: data.callbackResult },
+              { label: this.$t(`order.PayTime`), prop: data.payTime }
             ]
           }
         ]
         // fullItem: [
         //   {
         //     title: "备注",
-        //     prop: row.remark
+        //     prop: data.remark
         //   }
         // ]
       };
+        });
     },
     rowSave(row, loading, done) {
       add(row).then(

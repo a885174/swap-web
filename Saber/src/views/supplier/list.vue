@@ -20,15 +20,32 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete  `)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete `)}}</el-button>
       </template>
 
       <template slot-scope="scope" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click="rowView(scope.row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -43,7 +60,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -87,7 +104,7 @@ export default {
           {
             label: "供应商id",
             prop: "supplierId",
-            hide:true,
+            hide: true,
             editDisabled: true,
             editDisplay: false,
             addDisabled: true,
@@ -107,7 +124,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`supplier.supplierName`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`supplier.supplierName`),
                 trigger: "blur"
               }
             ]
@@ -159,7 +177,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`store.contactNumber`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`store.contactNumber`),
                 trigger: "blur"
               }
             ]
@@ -171,11 +190,11 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`store.address`),
+                message: this.$t(`scooter.please`) + this.$t(`store.address`),
                 trigger: "blur"
               }
             ]
-          },
+          }
           // {
           //   label: "创建人",
           //   prop: "createUser",
@@ -249,41 +268,50 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      console.log(row);
-      var supplierType;
-      switch (row.supplierType) {
-        case "1":
-          supplierType = this.$t(`supplier.electricVehicleSupplier`);
-          break;
-        case "2":
-          supplierType = this.$t(`supplier.switchCabinetSupplier`);
-          break;
-        case "3":
-          supplierType = this.$t(`supplier.batterySupplier`);
-          break;
-      }
-      this.rowItem = {
-        item: [
-          {
-            title: "Suppllier Info  ",
-            column: [
-              // { label: "供应商id", prop: row.supplierId },
-              { label: this.$t(`supplier.supplierName`), prop: row.supplierName },
-              { label: this.$t(`supplier.type`), prop: supplierType },
-              { label: this.$t(`store.linkman`), prop: row.linkman },
-              { label: this.$t(`store.contactNumber`), prop: row.contactNumber },
-              { label: "address", prop: row.address }
-            ]
-          }
-        ],
-        fullItem: [
-          // {
-          //   title: "备注",
-          //   prop: row.remark
-          // }
-        ]
-      };
+      getDetail(row.supplierId).then(res => {
+        var data = res.data.data;
+        this.dialogViewVisible = true;
+        console.log(row);
+        var supplierType;
+        switch (data.supplierType) {
+          case "1":
+            supplierType = this.$t(`supplier.electricVehicleSupplier`);
+            break;
+          case "2":
+            supplierType = this.$t(`supplier.switchCabinetSupplier`);
+            break;
+          case "3":
+            supplierType = this.$t(`supplier.batterySupplier`);
+            break;
+        }
+        this.rowItem = {
+          item: [
+            {
+              title: "Suppllier Info  ",
+              column: [
+                // { label: "供应商id", prop: row.supplierId },
+                {
+                  label: this.$t(`supplier.supplierName`),
+                  prop: data.supplierName
+                },
+                { label: this.$t(`supplier.type`), prop: supplierType },
+                { label: this.$t(`store.linkman`), prop: data.linkman },
+                {
+                  label: this.$t(`store.contactNumber`),
+                  prop: data.contactNumber
+                },
+                { label: "address", prop: data.address }
+              ]
+            }
+          ],
+          fullItem: [
+            // {
+            //   title: "备注",
+            //   prop: data.remark
+            // }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(

@@ -20,7 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delte`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delte`)}}</el-button>
 
         <el-button @click="dialogFormVisible = true">{{$t(`merchant.AssignMerchant`)}}</el-button>
 
@@ -54,9 +60,19 @@
           icon="el-icon-document-copy"
           @click="openmap(scope.row)"
         >{{$t(`getlocaton`)}}</el-button>
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(scope.row)"
+        >{{$t(`chakan`)}}</el-button>
 
-        <el-button type="text" size="small" icon="el-icon-date" @click="opentable(scope.row)">{{$t(`store.timeManagement`)}}</el-button>&nbsp;&nbsp;
+        <el-button
+          type="text"
+          size="small"
+          icon="el-icon-date"
+          @click="opentable(scope.row)"
+        >{{$t(`store.timeManagement`)}}</el-button>&nbsp;&nbsp;
         <el-button
           type="text"
           size="small"
@@ -66,7 +82,11 @@
       </template>
     </avue-crud>
 
-    <el-dialog :title="$t(`store.timeManagement`)" :visible.sync="tableVisible" :append-to-body="true">
+    <el-dialog
+      :title="$t(`store.timeManagement`)"
+      :visible.sync="tableVisible"
+      :append-to-body="true"
+    >
       <el-button @click="timeFormVisible=true">{{$t(`store.addBusinessHours`)}}</el-button>
 
       <el-table :data="timeData">
@@ -76,7 +96,7 @@
         <el-table-column property="week" :label="$t(`store.week`)" width="150">
           <!-- <template slot-scope="scope">
             <el-tag>{{scope.row.week===0? '七天24小时':'星期'+scope.row.week}}</el-tag>
-          </template> -->
+          </template>-->
         </el-table-column>
         <el-table-column property="business_time_s" :label="$t(`station.startTime`)" width="200"></el-table-column>
         <el-table-column property="business_time_e" :label="$t(`station.endTime`)"></el-table-column>
@@ -171,8 +191,13 @@
         </div>
       </el-dialog>
     </el-dialog>
-    
-    <el-dialog :title="$t(`store.storePicture`)" :visible.sync="dialogTableVisible" :append-to-body="true" center>
+
+    <el-dialog
+      :title="$t(`store.storePicture`)"
+      :visible.sync="dialogTableVisible"
+      :append-to-body="true"
+      center
+    >
       <el-button @click="getTableData()">{{$t(`station.assignPicture`)}}</el-button>
       <el-button @click="fileDialog=true">{{$t(`store.uStorePicture`)}}</el-button>
 
@@ -215,7 +240,12 @@
         </el-table-column>
       </el-table>
 
-      <el-dialog width="50%" :title="$t(`station.pictureMaterial`)" :visible.sync="innerVisible" append-to-body>
+      <el-dialog
+        width="50%"
+        :title="$t(`station.pictureMaterial`)"
+        :visible.sync="innerVisible"
+        append-to-body
+      >
         <el-button @click="submitPicture()">{{$t(`station.AssociatedPicture`)}}</el-button>
         <el-button @click="uploadDialog=true">{{$t(`station.uploadPicture`)}}</el-button>
 
@@ -294,7 +324,12 @@
         <el-button type="primary" @click="sumbitAddres()">{{$t(`submitText`)}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog width="50%" :title="$t(`store.uStorePicture`)" :visible.sync="fileDialog" append-to-body>
+    <el-dialog
+      width="50%"
+      :title="$t(`store.uStorePicture`)"
+      :visible.sync="fileDialog"
+      append-to-body
+    >
       <el-form :model="fileform">
         <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
           <el-upload
@@ -315,7 +350,13 @@
         <el-button type="primary" @click="insertShopPicature()">{{$t(`submitText`)}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -330,7 +371,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -491,7 +532,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`station.startTime`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`station.startTime`),
                 trigger: "blur"
               }
             ]
@@ -502,7 +544,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`station.endTime`),
+                message: this.$t(`scooter.please`) + this.$t(`station.endTime`),
                 trigger: "blur"
               }
             ]
@@ -558,7 +600,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`store.storeID`),
+                message: this.$t(`scooter.please`) + this.$t(`store.storeID`),
                 trigger: "blur"
               }
             ]
@@ -570,7 +612,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`store.storeName`),
+                message: this.$t(`scooter.please`) + this.$t(`store.storeName`),
                 trigger: "blur"
               }
             ]
@@ -589,7 +631,7 @@ export default {
           },
 
           {
-            label:this.$t(`store.rentPeriod`),
+            label: this.$t(`store.rentPeriod`),
             prop: "rentPeriod",
             type: "number",
             valueDefault: 30,
@@ -619,7 +661,7 @@ export default {
           },
 
           {
-            label: this.$t('store.electricityPrice'),
+            label: this.$t("store.electricityPrice"),
             prop: "electricityPrice",
             slot: true,
             valueDefault: 0,
@@ -633,25 +675,26 @@ export default {
             ]
           },
           {
-            label:this.$t(`store.linkman`),
+            label: this.$t(`store.linkman`),
             prop: "linkman",
             hide: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`store.linkman`),
+                message: this.$t(`scooter.please`) + this.$t(`store.linkman`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label:this.$t('store.contactNumber'),
+            label: this.$t("store.contactNumber"),
             prop: "contactNumber",
             hide: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`store.contactNumber`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`store.contactNumber`),
                 trigger: "blur"
               }
             ]
@@ -663,7 +706,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`store.address`),
+                message: this.$t(`scooter.please`) + this.$t(`store.address`),
                 trigger: "blur"
               }
             ]
@@ -714,7 +757,7 @@ export default {
           //   listType:'picture-img',
           // },
           {
-            label:this.$t(`store.storeStatus`),
+            label: this.$t(`store.storeStatus`),
             prop: "storeStatus",
             search: true,
             valueDefault: "1",
@@ -733,7 +776,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`store.storeStatus`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`store.storeStatus`),
                 trigger: "blur"
               }
             ]
@@ -818,30 +862,45 @@ export default {
   },
   methods: {
     rowView(row) {
-      console.log(row);
-      this.dialogViewVisible = true;
-      this.rowItem = {
-        item: [
-          {
-            title: this.$t(`store.storeInformation`),
-            column: [
-              { label: this.$t(`store.storeID`), prop: row.storeId },
-              { label: this.$t(`store.storeName`), prop: row.storeName },
-              { label: this.$t(`store.ownedMerchant`), prop: row.merchantId },
-              { label: this.$t(`store.rentPeriod`), prop: row.rentPeriod },
-              { label: this.$t(`store.rentPrice`), prop: row.rentPrice },
-              { label: this.$t(`store.electricityPrice`), prop: row.electricityPrice },
-              { label: this.$t(`store.linkman`), prop: row.linkman },
-              { label: this.$t(`store.contactNumber`), prop: row.contactNumber },
-              { label: this.$t(`store.address`), prop: row.address },
-              {
-                label: this.$t(`store.storeStatus`),
-                prop: row.storeStatus == "0" ? this.$t(`tenant.Frozen`) : this.$t(`battery.Normal`)
-              }
-            ]
-          }
-        ]
-      };
+      getDetail(row.storeId).then(res => {
+        var data = res.data.data;
+        console.log(row);
+        this.dialogViewVisible = true;
+        this.rowItem = {
+          item: [
+            {
+              title: this.$t(`store.storeInformation`),
+              column: [
+                { label: this.$t(`store.storeID`), prop: data.storeId },
+                { label: this.$t(`store.storeName`), prop: data.storeName },
+                {
+                  label: this.$t(`store.ownedMerchant`),
+                  prop: data.merchantId
+                },
+                { label: this.$t(`store.rentPeriod`), prop: data.rentPeriod },
+                { label: this.$t(`store.rentPrice`), prop: data.rentPrice },
+                {
+                  label: this.$t(`store.electricityPrice`),
+                  prop: data.electricityPrice
+                },
+                { label: this.$t(`store.linkman`), prop: data.linkman },
+                {
+                  label: this.$t(`store.contactNumber`),
+                  prop: data.contactNumber
+                },
+                { label: this.$t(`store.address`), prop: data.address },
+                {
+                  label: this.$t(`store.storeStatus`),
+                  prop:
+                    data.storeStatus == "0"
+                      ? this.$t(`tenant.Frozen`)
+                      : this.$t(`battery.Normal`)
+                }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(

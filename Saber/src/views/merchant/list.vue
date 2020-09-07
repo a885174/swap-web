@@ -379,9 +379,11 @@ export default {
   },
   methods: {
     rowView(row) {
+        getDetail(row.merchantId).then(res => {
+          var data = res.data.data;
       this.dialogViewVisible = true;
       var filingStatus;
-      switch (row.filingStatus) {
+      switch (data.filingStatus) {
         case "0":
           filingStatus = this.$t(`merchant.have`);
           break;
@@ -397,25 +399,26 @@ export default {
           {
             title: "Merchant Info",
             column: [
-              { label: this.$t(`merchant.merchantName`), prop: row.merchantName },
-              { label: this.$t(`merchant.countryId`), prop: row.countryId },
-              { label: this.$t(`merchant.city`), prop: row.cityId },
-              { label: this.$t(`supplier.linkman`), prop: row.linkman },
-              { label: this.$t(`store.contactNumber`), prop: row.contactNumber },
-              { label: "address", prop: row.address },
-              // { label: "法律代表", prop: row.legalPerson },
+              { label: this.$t(`merchant.merchantName`), prop: data.merchantName },
+              { label: this.$t(`merchant.countryId`), prop: data.countryId },
+              { label: this.$t(`merchant.city`), prop: data.cityId },
+              { label: this.$t(`supplier.linkman`), prop: data.linkman },
+              { label: this.$t(`store.contactNumber`), prop: data.contactNumber },
+              { label: "address", prop: data.address },
+              // { label: "法律代表", prop: data.legalPerson },
               // { label: "工商备案", prop: filingStatus },
-              { label: this.$t(`teant.teantStatus`), prop: row.status == "0" ? this.$t(`battery.Normal`) :this.$t(`tenant.Frozen`) }
+              { label: this.$t(`teant.teantStatus`), prop: data.status == "0" ? this.$t(`battery.Normal`) :this.$t(`tenant.Frozen`) }
             ],
             fullItem: [
               {
                 title: "备注",
-                prop: row.remark
+                prop: data.remark
               }
             ]
           }
         ]
       };
+        });
     },
     rowSave(row, loading, done) {
       add(row).then(

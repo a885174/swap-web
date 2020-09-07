@@ -20,7 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
 
         <template>
           <el-button @click.stop="delteant">{{$t(`plan.takeOff`)}}</el-button>
@@ -37,9 +43,24 @@
       </template>
 
       <template slot-scope="scope" slot="menu">
-        <el-button type="text" icon="el-icon-date" size="small" @click="opentable(scope.row)">{{$t(`store.timeManagement`)}}</el-button>
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(scope.row)">{{$t(`chakan`)}}</el-button>
-        <el-button type="text" icon="el-icon-picture-outline" size="small" @click="getGridData(scope.row)">{{$t(`pictureManagement`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-date"
+          size="small"
+          @click="opentable(scope.row)"
+        >{{$t(`store.timeManagement`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(scope.row)"
+        >{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-picture-outline"
+          size="small"
+          @click="getGridData(scope.row)"
+        >{{$t(`pictureManagement`)}}</el-button>
         <el-button
           type="text"
           icon="el-icon-picture-outline"
@@ -78,7 +99,7 @@
         <el-table-column property="week" :label="$t(`store.week`)" width="150">
           <!-- <template slot-scope="scope">
             <el-tag>{{scope.row.week===0? '七天24小时':'星期'+scope.row.week}}</el-tag>
-          </template> -->
+          </template>-->
         </el-table-column>
         <el-table-column property="business_time_s" :label="$t(`station.startTime`)" width="200"></el-table-column>
         <el-table-column property="business_time_e" :label="$t(`station.endTime`)"></el-table-column>
@@ -173,7 +194,12 @@
       </div>
     </el-dialog>
 
-    <el-dialog :title="$t(`store.storePicture`)" :visible.sync="dialogTableVisible" :append-to-body="true" center>
+    <el-dialog
+      :title="$t(`store.storePicture`)"
+      :visible.sync="dialogTableVisible"
+      :append-to-body="true"
+      center
+    >
       <el-button @click="getTableData()">{{$t(`pictureManagement`)}}</el-button>
 
       <el-button @click="fileDialog=true">{{$t(`store.uStorePicture`)}}</el-button>
@@ -217,7 +243,12 @@
         </el-table-column>
       </el-table>
     </el-dialog>
-    <el-dialog width="50%" :title="$t(`store.uStorePicture`)" :visible.sync="fileDialog" append-to-body>
+    <el-dialog
+      width="50%"
+      :title="$t(`store.uStorePicture`)"
+      :visible.sync="fileDialog"
+      append-to-body
+    >
       <el-form :model="fileform">
         <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
           <el-upload
@@ -238,7 +269,13 @@
         <el-button type="primary" @click="insertShopPicature()">{{$t(`submitText`)}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog :title="$t(`station.uploadMaterial`)" :visible.sync="uploadDialog" :append-to-body="true" width="40%" center>
+    <el-dialog
+      :title="$t(`station.uploadMaterial`)"
+      :visible.sync="uploadDialog"
+      :append-to-body="true"
+      width="40%"
+      center
+    >
       <el-form :model="uploadform">
         <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
           <el-upload
@@ -259,7 +296,12 @@
         <el-button type="primary" @click="insertPicature()">{{$t(`submitText`)}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog width="50%" :title="$t(`station.pictureMaterial`)" :visible.sync="innerVisible" append-to-body>
+    <el-dialog
+      width="50%"
+      :title="$t(`station.pictureMaterial`)"
+      :visible.sync="innerVisible"
+      append-to-body
+    >
       <el-button @click="submitPicture()">{{$t(`station.AssociatedPicture`)}}</el-button>
       <el-button @click="uploadDialog=true">{{$t(`station.uploadPicture`)}}</el-button>
 
@@ -290,7 +332,13 @@
       </el-table>
     </el-dialog>
 
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -305,7 +353,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -416,19 +464,21 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`repairshop.shopId`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`repairshop.shopId`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label:this.$t(`repairshop.shopeName`),
+            label: this.$t(`repairshop.shopeName`),
             prop: "shopName",
             search: true,
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`repairshop.shopeName`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`repairshop.shopeName`),
                 trigger: "blur"
               }
             ]
@@ -443,7 +493,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`repairshop.repairArea`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`repairshop.repairArea`),
                 trigger: "blur"
               }
             ],
@@ -460,7 +511,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`repairshop.repairArea`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`repairshop.repairArea`),
                 trigger: "blur"
               }
             ],
@@ -709,7 +761,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`supplier.address`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`supplier.address`),
                 trigger: "blur"
               }
             ]
@@ -721,7 +774,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`stoe.linkman`),
+                message: this.$t(`scooter.please`) + this.$t(`stoe.linkman`),
                 trigger: "blur"
               }
             ]
@@ -733,7 +786,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`stoe.contactNumber`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`stoe.contactNumber`),
                 trigger: "blur"
               }
             ]
@@ -757,7 +811,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`repairshop.shopStatus`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`repairshop.shopStatus`),
                 trigger: "blur"
               }
             ]
@@ -832,31 +887,45 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      this.rowItem = {
-        item: [
-          {
-            title: "Detail",
-            column: [
-              // { label: "维修店铺id", prop: row.shopId },
-              { label: this.$t(`repairshop.shopeName`), prop: row.shopName },
-              // { label: this.$t(`repairshop.repairArea`), prop: row.areaId },
-              { label: this.$t(`repairshop.repairArea`), prop: row.areaName },
-              { label: this.$t(`repairshop.ownedRepairer`), prop: row.comId },
-              // { label: this.$t(`station.startTime`), prop: row.businessTimeS },
-              // { label: this.$t(`station.endTime`), prop: row.businessTimeE },
-              { label: "addrees", prop: row.address },
-              { label: this.$t(`supplier.linkman`), prop: row.linkman },
-              { label: this.$t(`supplier.contactNumber`), prop: row.contactNumber },
-              {
-                label: this.$t(`repairshop.shopStatus`),
-                prop: row.shopStatus == "0" ? this.$t(`plan.sale`) : "this.$t(`plan.takeOff`) "
-              }
-            ]
-            
-          }
-        ]
-      };
+      getDetail(row.shopId).then(res => {
+        var data = res.data.data;
+        this.dialogViewVisible = true;
+        this.rowItem = {
+          item: [
+            {
+              title: "Detail",
+              column: [
+                // { label: "维修店铺id", prop: row.shopId },
+                { label: this.$t(`repairshop.shopeName`), prop: data.shopName },
+                // { label: this.$t(`repairshop.repairArea`), prop: data.areaId },
+                {
+                  label: this.$t(`repairshop.repairArea`),
+                  prop: data.areaName
+                },
+                {
+                  label: this.$t(`repairshop.ownedRepairer`),
+                  prop: data.comId
+                },
+                // { label: this.$t(`station.startTime`), prop: data.businessTimeS },
+                // { label: this.$t(`station.endTime`), prop: data.businessTimeE },
+                { label: "addrees", prop: data.address },
+                { label: this.$t(`supplier.linkman`), prop: data.linkman },
+                {
+                  label: this.$t(`supplier.contactNumber`),
+                  prop: data.contactNumber
+                },
+                {
+                  label: this.$t(`repairshop.shopStatus`),
+                  prop:
+                    data.shopStatus == "0"
+                      ? this.$t(`plan.sale`)
+                      : "this.$t(`plan.takeOff`) "
+                }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(

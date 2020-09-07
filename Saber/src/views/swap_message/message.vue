@@ -20,7 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
       </template>
       <template slot-scope="{row}" slot="status">
         <label :style="{color:row.status=='0'?'green':'red'}">{{row.status=="0"?(`Normal`):"Close"}}</label>
@@ -28,11 +34,22 @@
       </template>
 
       <template slot="menu" slot-scope="scope">
-        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          size="small"
+          icon="el-icon-view"
+          @click.stop="rowViews(scope.row)"
+        >{{$t(`chakan`)}}</el-button>
         <!-- <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button> -->
       </template>
     </avue-crud>
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -47,7 +64,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -123,7 +140,7 @@ export default {
             valeDefault: "1",
             dicData: [
               {
-                label:this.$t(`message.notice`),
+                label: this.$t(`message.notice`),
                 value: "1"
               },
               {
@@ -162,7 +179,7 @@ export default {
           //   }
           // },
           {
-            label:this.$t(`message.status`),
+            label: this.$t(`message.status`),
             prop: "status",
             type: "select",
             valueDefault: "0",
@@ -307,44 +324,57 @@ export default {
   },
   methods: {
     rowViews(row) {
-      this.dialogViewVisible = true;
-      var pushService;
-      switch (row.pushService) {
-        case "0":
-          pushService = this.$t(`merchant.no`);
-          break;
-        case "1":
-          pushService = this.$t(`message.statusBar`);
-          break;
-        case "2":
-          pushService = this.$t(`message.lockScreen`);
-          break;
-        case "3":
-          pushService = this.$t(`message.banner`);
-          break;
-        case "4":
-          pushService = this.$t(`message.SMS`);
-          break;
-      }
-      this.rowItem = {
-        item: [
-          {
-            title: this.$t(`message.details`),
-            column: [
-              { label: this.$t(`message.id`), prop: row.messageId },
-              { label: this.$t(`message.title`), prop: row.messageTitle },
-              {
-                label: this.$t(`message.type`),
-                prop: row.messageType == "0" ? this.$t(`message.notice`) : this.$t(`message.bulletin`)
-              },
-              { label: this.$t(`message.status`), prop: row.status == "0" ? this.$t(`battery.Normal`) : this.$t(`message.close`) },
-              { label: this.$t(`message.publisher`), prop: row.publisher },
-              { label: this.$t(`message.method`), prop: pushService },
-              { label: this.$t(`message.results`), prop: row.pushResult }
-            ]
-          }
-        ]
-      };
+      getDetail(row.messageId).then(res => {
+        var data = res.data.data;
+
+        this.dialogViewVisible = true;
+        var pushService;
+        switch (data.pushService) {
+          case "0":
+            pushService = this.$t(`merchant.no`);
+            break;
+          case "1":
+            pushService = this.$t(`message.statusBar`);
+            break;
+          case "2":
+            pushService = this.$t(`message.lockScreen`);
+            break;
+          case "3":
+            pushService = this.$t(`message.banner`);
+            break;
+          case "4":
+            pushService = this.$t(`message.SMS`);
+            break;
+        }
+        this.rowItem = {
+          item: [
+            {
+              title: this.$t(`message.details`),
+              column: [
+                { label: this.$t(`message.id`), prop: data.messageId },
+                { label: this.$t(`message.title`), prop: data.messageTitle },
+                {
+                  label: this.$t(`message.type`),
+                  prop:
+                    data.messageType == "0"
+                      ? this.$t(`message.notice`)
+                      : this.$t(`message.bulletin`)
+                },
+                {
+                  label: this.$t(`message.status`),
+                  prop:
+                    data.status == "0"
+                      ? this.$t(`battery.Normal`)
+                      : this.$t(`message.close`)
+                },
+                { label: this.$t(`message.publisher`), prop: data.publisher },
+                { label: this.$t(`message.method`), prop: pushService },
+                { label: this.$t(`message.results`), prop: data.pushResult }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(

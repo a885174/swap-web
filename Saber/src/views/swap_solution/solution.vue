@@ -31,14 +31,20 @@
       </template>
       <!-- <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
-      </template> -->
+      </template>-->
     </avue-crud>
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
           <div v-for="column in item.column" :key="column.label" style="width:33%;float:left">
-            <label class="label" v-if="column.label!=null" >{{column.label}}：</label>
+            <label class="label" v-if="column.label!=null">{{column.label}}：</label>
             <label>{{column.prop}}</label>
           </div>
         </div>
@@ -48,7 +54,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -98,7 +104,7 @@ export default {
             ]
           },
           {
-            label:this.$t('faultCode'),
+            label: this.$t("faultCode"),
             prop: "faultCode",
             rules: [
               {
@@ -164,7 +170,7 @@ export default {
             ]
           },
           {
-            label:this.$t(`solution.Solution`),
+            label: this.$t(`solution.Solution`),
             prop: "faultSolution",
             rules: [
               {
@@ -173,7 +179,6 @@ export default {
                 trigger: "blur"
               }
             ]
-
           },
           {
             label: this.$t(`solution.creator`),
@@ -218,7 +223,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`AppVseroin.updatedTime`),
                 trigger: "blur"
               }
             ]
@@ -248,33 +254,49 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      this.rowItem = {
-        item: [
-          {
-            title: this.$t(`solution.faultInformation`),
-            column: [
-              { label: this.$t(`solution.faultNum`), prop: row.faultCode },
-              {
-                label: this.$t(`solution.faultType`),
-                prop: row.faultType == "1" ? this.$t(`solution.electricVehicle`) : this.$t(`solution.battery`)
-              },
-              { label: this.$t(`solution.faultCode`), prop: row.faultKey },
-              { label: this.$t(`solution.failureValue`), prop: row.faultValue },
-              { label: this.$t(`solution.faultName`), prop: row.faultName },
-              // { label: this.$t(`solution.Solution`), prop: row.faultSolution },
-              { label: this.$t(`solution.creator`), prop: row.createUser },
-              { label: this.$t(`solution.createdTime`), prop: row.createTime },
-              { label: this.$t(`solution.updatePeople`), prop: row.updateUser },
-              { label: this.$t(`solution.updateTime`), prop: row.updateTime }
-            ]
-          },
-          {
-            title: this.$t(`solution.Solution`),
-            column: [{  prop: row.faultSolution }]
-          }
-        ]
-      };
+      getDetail(row.id).then(res => {
+        var data = res.data.data;
+
+        this.dialogViewVisible = true;
+        this.rowItem = {
+          item: [
+            {
+              title: this.$t(`solution.faultInformation`),
+              column: [
+                { label: this.$t(`solution.faultNum`), prop: data.faultCode },
+                {
+                  label: this.$t(`solution.faultType`),
+                  prop:
+                    data.faultType == "1"
+                      ? this.$t(`solution.electricVehicle`)
+                      : this.$t(`solution.battery`)
+                },
+                { label: this.$t(`solution.faultCode`), prop: data.faultKey },
+                {
+                  label: this.$t(`solution.failureValue`),
+                  prop: data.faultValue
+                },
+                { label: this.$t(`solution.faultName`), prop: data.faultName },
+                // { label: this.$t(`solution.Solution`), prop: data.faultSolution },
+                { label: this.$t(`solution.creator`), prop: data.createUser },
+                {
+                  label: this.$t(`solution.createdTime`),
+                  prop: data.createTime
+                },
+                {
+                  label: this.$t(`solution.updatePeople`),
+                  prop: data.updateUser
+                },
+                { label: this.$t(`solution.updateTime`), prop: data.updateTime }
+              ]
+            },
+            {
+              title: this.$t(`solution.Solution`),
+              column: [{ prop: data.faultSolution }]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
