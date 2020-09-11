@@ -192,23 +192,23 @@ export default {
             type: "select",
             dicData: [
               {
-                label:this.$t(`subscribe.booking`),
+                label: this.$t(`subscribe.booking`),
                 value: "0"
               },
               {
-                label:this.$t(`subscribe.appointmentSuccessful`),
+                label: this.$t(`subscribe.appointmentSuccessful`),
                 value: "1"
               },
               {
-                label:this.$t(`subscribe.appointmentFailed`),
+                label: this.$t(`subscribe.appointmentFailed`),
                 value: "2"
               },
               {
-                label:this.$t(`subscribe.expired`),
+                label: this.$t(`subscribe.expired`),
                 value: "3"
               },
               {
-                label:this.$t(`subscribe.batteryRemoved`),
+                label: this.$t(`subscribe.batteryRemoved`),
                 value: "4"
               }
             ],
@@ -253,7 +253,7 @@ export default {
             //   prop: "updateTime",
             //   rules: [{
             //     required: true,
-            //     message: "请输入更新时间",
+            //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
             //     trigger: "blur"
             //   }]
           }
@@ -282,58 +282,62 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      var subscribeState;
-      switch (row.subscribeState) {
-        case "0":
-          subscribeState =this.$t(`subscribe.booking`);
-          break;
-        case "1":
-          subscribeState =this.$t(`subscribe.appointmentSuccessful`);
-          break;
-        case "2":
-          subscribeState =this.$t(`subscribe.appointmentFailed`);
-          break;
-        case "3":
-          subscribeState =this.$t(`subscribe.expired`);
-          break;
-        case "4":
-          subscribeState =this.$t(`subscribe.batteryRemoved`);
-          break;
-      }
-      this.rowItem = {
-        item: [
-          {
-            title: this.$t(`subscribe.subscribeState`),
-            column: [
-              { label: this.$t(`subscribe.orderId`), prop: row.subscribeId },
-              {
-                label: this.$t(`subscribe.cabinetNumber`),
-                prop: row.stationName
-              },
-              { label: this.$t(`subscribe.username`), prop: row.userName },
-              { label: this.$t(`subscribe.battery`), prop: row.batteryName },
-              { label: this.$t(`subscribe.battery`), prop: row.warehouse },
-              {
-                label: this.$t(`subscribe.compartmentNumber`),
-                prop: row.subscribeTime
-              },
-              {
-                label: this.$t(`subscribe.successTime`),
-                prop: row.succeedTime
-              },
-              {
-                label: this.$t(`subscribe.effectiveTime`),
-                prop: row.effectiveTime
-              },
-              {
-                label: this.$t(`subscribe.subscribeState`),
-                prop: subscribeState
-              }
-            ]
-          }
-        ]
-      };
+      getDetail(row.subscribeId).then(res => {
+        var data = res.data.data;
+
+        this.dialogViewVisible = true;
+        var subscribeState;
+        switch (data.subscribeState) {
+          case "0":
+            subscribeState = this.$t(`subscribe.booking`);
+            break;
+          case "1":
+            subscribeState = this.$t(`subscribe.appointmentSuccessful`);
+            break;
+          case "2":
+            subscribeState = this.$t(`subscribe.appointmentFailed`);
+            break;
+          case "3":
+            subscribeState = this.$t(`subscribe.expired`);
+            break;
+          case "4":
+            subscribeState = this.$t(`subscribe.batteryRemoved`);
+            break;
+        }
+        this.rowItem = {
+          item: [
+            {
+              title: this.$t(`subscribe.subscribeState`),
+              column: [
+                { label: this.$t(`subscribe.orderId`), prop: data.subscribeId },
+                {
+                  label: this.$t(`subscribe.cabinetNumber`),
+                  prop: data.stationName
+                },
+                { label: this.$t(`subscribe.username`), prop: data.userName },
+                { label: this.$t(`subscribe.battery`), prop: data.batteryName },
+                { label: this.$t(`subscribe.battery`), prop: data.warehouse },
+                {
+                  label: this.$t(`subscribe.compartmentNumber`),
+                  prop: data.subscribeTime
+                },
+                {
+                  label: this.$t(`subscribe.successTime`),
+                  prop: data.succeedTime
+                },
+                {
+                  label: this.$t(`subscribe.effectiveTime`),
+                  prop: data.effectiveTime
+                },
+                {
+                  label: this.$t(`subscribe.subscribeState`),
+                  prop: subscribeState
+                }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(

@@ -55,7 +55,11 @@
                   type="success"
                   @click="submitUpload"
                 >{{$t(`scooter.uploadToServer`)}}</el-button>
-                <el-button size="small" type="infor" @click="download">{{$t(`scooter.importTemplate`)}}</el-button>
+                <el-button
+                  size="small"
+                  type="infor"
+                  @click="download"
+                >{{$t(`scooter.importTemplate`)}}</el-button>
                 <div slot="tip" class="el-upload__tip">please select xls</div>
               </el-upload>
             </el-form-item>
@@ -77,7 +81,6 @@
         <template>
           <el-button @click.stop="userdel">{{$t(`scooter.arrearageLock`)}}</el-button>
         </template>
-        <el-button @click.stop="Updatelock">{{$t(`scooter.arrearageLock`)}}</el-button>
       </template>
 
       <template slot-scope="{row}" slot="userId">
@@ -99,6 +102,12 @@
           size="small"
           @click.stop="rowView(row)"
         >{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          :icon="row.lockStatus=='1'?'el-icon-lock':'el-icon-unlock'"
+          size="small"
+          @click.stop="Updatelock(row)"
+        >{{row.lockStatus=='1'?$t(`scooter.lock`):$t(`scooter.unlock`)}}</el-button>
       </template>
     </avue-crud>
 
@@ -590,8 +599,19 @@ export default {
             width: 100,
             hide: true,
             prop: "batteryNumber",
+            type: "select",
             valueDefault: "1",
-            type: "number",
+            dicData: [
+              {
+                label: 1,
+                value: "1"
+              },
+              {
+                label: 2,
+                value: "2"
+              }
+            ],
+            // type: "number",
             rules: [
               {
                 required: false,
@@ -771,7 +791,7 @@ export default {
           //   editDisplay:false,
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },
@@ -852,8 +872,9 @@ export default {
       getDetail(row.scooterId).then(res => {
         this.form = res.data.data;
         this.dialogViewVisible = true;
+        var data = res.data.data;
         var scooterStatus;
-        switch (row.scooterStatus) {
+        switch (data.scooterStatus) {
           case "0":
             scooterStatus = this.$t(`battery.Normal`);
             break;
@@ -872,36 +893,36 @@ export default {
             {
               title: "Scooter",
               column: [
-                { label: this.$t(`scooter.vincode`), prop: row.scooterCode },
+                { label: this.$t(`scooter.vincode`), prop: data.scooterCode },
                 {
                   label: this.$t(`scooter.licensePlate`),
-                  prop: row.licensePlate
+                  prop: data.licensePlate
                 },
                 {
                   label: this.$t(`scooter.scooterVersion`),
-                  prop: row.scooterVersion
+                  prop: data.scooterVersion
                 },
                 {
                   label: this.$t(`scooter.batteryNumber`),
-                  prop: row.batteryNumber
+                  prop: data.batteryNumber
                 },
-                { label: "IMEI", prop: row.imei },
+                { label: "IMEI", prop: data.imei },
                 {
                   label: this.$t(`scooter.mileageValue`),
-                  prop: row.mileageValue == null ? "0" : row.mileageValue + "km"
+                  prop: data.mileageValue == null ? "0" : data.mileageValue + "km"
                 },
                 {
                   label: this.$t(`scooter.expirationDate`),
-                  prop: row.expirationDate + "month"
+                  prop: data.expirationDate + "month"
                 },
                 {
                   label: this.$t(`scooter.produceTime`),
-                  prop: row.produceTime
+                  prop: data.produceTime
                 },
                 {
                   label: this.$t(`scooter.sellChannel`),
                   prop:
-                    row.sellChannel == 0
+                    data.sellChannel == 0
                       ? this.$t(`scooter.client`)
                       : this.$t(`scooter.store`)
                 }
@@ -917,50 +938,59 @@ export default {
                 {
                   label: this.$t(`scooter.sellStatus`),
                   prop:
-                    row.sellStatus == "0"
+                    data.sellStatus == "0"
                       ? this.$t(`scooter.sold`)
                       : this.$t(`scooter.notSold`)
                 },
                 {
                   label: this.$t(`scooter.initStatus`),
                   prop:
-                    row.initStatus == "0"
+                    data.initStatus == "0"
                       ? this.$t(`scooter.activated`)
                       : this.$t(`scooter.inactivated`)
                 },
                 {
                   label: this.$t(`scooter.runStatus`),
                   prop:
-                    row.runStatus == "0"
+                    data.runStatus == "0"
                       ? this.$t(`scooter.running`)
                       : this.$t(`scooter.stopped`)
                 },
                 {
                   label: this.$t(`scooter.gpsStatus`),
                   prop:
-                    row.gpsStatus == "0"
+                    data.gpsStatus == "0"
                       ? this.$t(`scooter.targeted`)
                       : this.$t(`scooter.untargeted`)
                 },
                 {
                   label: this.$t(`scooter.lockStatus`),
-                  prop: row.lockStatus == "0" ? this.$t(`scooter.locked`) : this.$t(`scooter.NotLocked`)
+                  prop:
+                    data.lockStatus == "0"
+                      ? this.$t(`scooter.locked`)
+                      : this.$t(`scooter.NotLocked`)
                 },
                 {
                   label: this.$t(`scooter.connectStatus`),
                   prop:
-                    row.connectStatus == "0"
+                    data.connectStatus == "0"
                       ? this.$t(`Connected`)
                       : this.$t(`Unconnected`)
                 },
                 {
                   label: this.$t(`scooter.securityLock`),
-                  prop: row.securityLock == "0" ? this.$t(`scooter.locked`) : this.$t(`scooter.notConnected`)
+                  prop:
+                    data.securityLock == "0"
+                      ? this.$t(`scooter.locked`)
+                      : this.$t(`scooter.notConnected`)
                 },
                 {
                   label: this.$t(`scooter.arrearageLock`),
-                  prop: row.arrearageLock == "0" ? this.$t(`scooter.locked`) : this.$t(`scooter.notConnected`)
-                },
+                  prop:
+                    data.arrearageLock == "0"
+                      ? this.$t(`scooter.locked`)
+                      : this.$t(`scooter.notConnected`)
+                }
                 // {
                 //   label: this.$t(`scooter.arrearageLock`),
                 //   prop: row.arrearageLock == "0" ? "已锁定 " : "未连接"
@@ -1035,21 +1065,31 @@ export default {
         });
       }
     },
-    Updatelock() {
-      if (this.ids.length > 0) {
-        del(this.ids).then(() => {
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
-          });
-        });
-      } else {
+    // Updatelock() {
+    //   if (this.ids.length > 0) {
+    //     del(this.ids).then(() => {
+    //       this.onLoad(this.page);
+    //       this.$message({
+    //         type: "success",
+    //         message: "success!"
+    //       });
+    //     });
+    //   } else {
+    //     this.$message({
+    //       type: "error",
+    //       message: "Please select at least one piece of data!"
+    //     });
+    //   }
+    // },
+    Updatelock(row) {
+      console.log(row);
+      del(row.scooterId).then(() => {
+        this.onLoad(this.page);
         this.$message({
-          type: "error",
-          message: "Please select at least one piece of data!"
+          type: "success",
+          message: "success!"
         });
-      }
+      });
     },
 
     openTenantWindos() {

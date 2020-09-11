@@ -20,7 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
       </template>
       <template slot-scope="{row}" slot="status">
         <label :style="{color:row.status=='0'?'green':'red'}">{{row.status=="0"?(`Normal`):"Close"}}</label>
@@ -28,11 +34,22 @@
       </template>
 
       <template slot="menu" slot-scope="scope">
-        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          size="small"
+          icon="el-icon-view"
+          @click.stop="rowViews(scope.row)"
+        >{{$t(`chakan`)}}</el-button>
         <!-- <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button> -->
       </template>
     </avue-crud>
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -47,7 +64,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -88,7 +105,7 @@ export default {
         indexLabel: "index",
         column: [
           // {
-          //   label: "公告ID",
+          //   label: this.$t(`message.id`),
           //   prop: "messageId",
           //   editDisabled: true,
           //   editDisplay: false,
@@ -123,11 +140,11 @@ export default {
             valeDefault: "1",
             dicData: [
               {
-                label: "通知",
+                label: this.$t(`message.notice`),
                 value: "1"
               },
               {
-                label: "公告",
+                label: this.$t(`message.bulletin`),
                 value: "2"
               }
             ],
@@ -162,7 +179,7 @@ export default {
           //   }
           // },
           {
-            label:this.$t(`message.status`),
+            label: this.$t(`message.status`),
             prop: "status",
             type: "select",
             valueDefault: "0",
@@ -173,7 +190,7 @@ export default {
                 value: "0"
               },
               {
-                label: "关闭",
+                label: this.$t(`message.close`),
                 value: "1"
               }
             ],
@@ -186,7 +203,7 @@ export default {
             ]
           },
           {
-            label: "发布人",
+            label: this.$t(`message.publisher`),
             prop: "publisher",
             hide: true,
             rules: [
@@ -198,29 +215,29 @@ export default {
             ]
           },
           {
-            label: "推送方式 ",
+            label: this.$t(`message.method`),
             prop: "pushService",
             type: "select",
             hide: true,
             dicData: [
               {
-                label: "无",
+                label: this.$t(`merchant.no`),
                 value: "0"
               },
               {
-                label: "状态栏",
+                label: this.$t(`message.statusBar`),
                 value: "1"
               },
               {
-                label: "锁屏",
+                label: this.$t(`message.lockScreen`),
                 value: "2"
               },
               {
-                label: "横幅通知",
+                label: this.$t(`message.banner`),
                 value: "3"
               },
               {
-                label: "短信",
+                label: this.$t(`message.SMS`),
                 value: "4"
               }
             ],
@@ -234,7 +251,7 @@ export default {
             ]
           },
           {
-            label: "推送结果 ",
+            label: this.$t(`message.results`),
             prop: "pushResult",
             hide: true,
             display: false,
@@ -278,7 +295,7 @@ export default {
           //   prop: "updateTime",
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },
@@ -307,44 +324,57 @@ export default {
   },
   methods: {
     rowViews(row) {
-      this.dialogViewVisible = true;
-      var pushService;
-      switch (row.pushService) {
-        case "0":
-          pushService = "无";
-          break;
-        case "1":
-          pushService = "状态栏";
-          break;
-        case "2":
-          pushService = "锁屏";
-          break;
-        case "3":
-          pushService = "横幅通知";
-          break;
-        case "4":
-          pushService = "短信";
-          break;
-      }
-      this.rowItem = {
-        item: [
-          {
-            title: "消息详情",
-            column: [
-              { label: "公告ID", prop: row.messageId },
-              { label: "公告标题", prop: row.messageTitle },
-              {
-                label: "公告类型",
-                prop: row.messageType == "0" ? "通知" : "公告"
-              },
-              { label: "公告状态", prop: row.status == "0" ? this.$t(`battery.Normal`) : "关闭" },
-              { label: "发布人", prop: row.publisher },
-              { label: "发布人", prop: pushService },
-              { label: "推送结果", prop: row.pushResult }
-            ]
-          }
-        ]
-      };
+      getDetail(row.messageId).then(res => {
+        var data = res.data.data;
+
+        this.dialogViewVisible = true;
+        var pushService;
+        switch (data.pushService) {
+          case "0":
+            pushService = this.$t(`merchant.no`);
+            break;
+          case "1":
+            pushService = this.$t(`message.statusBar`);
+            break;
+          case "2":
+            pushService = this.$t(`message.lockScreen`);
+            break;
+          case "3":
+            pushService = this.$t(`message.banner`);
+            break;
+          case "4":
+            pushService = this.$t(`message.SMS`);
+            break;
+        }
+        this.rowItem = {
+          item: [
+            {
+              title: this.$t(`message.details`),
+              column: [
+                { label: this.$t(`message.id`), prop: data.messageId },
+                { label: this.$t(`message.title`), prop: data.messageTitle },
+                {
+                  label: this.$t(`message.type`),
+                  prop:
+                    data.messageType == "0"
+                      ? this.$t(`message.notice`)
+                      : this.$t(`message.bulletin`)
+                },
+                {
+                  label: this.$t(`message.status`),
+                  prop:
+                    data.status == "0"
+                      ? this.$t(`battery.Normal`)
+                      : this.$t(`message.close`)
+                },
+                { label: this.$t(`message.publisher`), prop: data.publisher },
+                { label: this.$t(`message.method`), prop: pushService },
+                { label: this.$t(`message.results`), prop: data.pushResult }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(

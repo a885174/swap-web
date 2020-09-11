@@ -181,7 +181,9 @@ export default {
     supplierId: "Supplier id",
     enterSupplierId: "Please enter supplier id",
     enterShelfLife: "Please enter the shelf life (months)",
-    userAssociation: "Are you sure to unlink with client?"
+    userAssociation: "Are you sure to unlink with client?",
+    lock:"lock",
+    unlock:"unlok"
   },
   battery: {
     batteryCode: "Battery ID Number",
@@ -310,7 +312,7 @@ export default {
     scooterProduction: "Scooter Production",
     electricVehicleSupplier: "Electric vehicle supplier",
     switchCabinetSupplier: "Switch cabinet supplier",
-    batterySupplier: "Battery supplier"
+    batterySupplier: "Battery supplier",
   },
   store: {
     storeName: "Store Name",
@@ -424,7 +426,7 @@ export default {
     batteryRemoved: "Battery removed"
   },
   suggest: {
-    detials: "Result of Dispose",
+    detials: "detail",
     userName: "User Name",
     suggestStatus: "State of Dispose",
     Dispose: "Dispose",
@@ -468,7 +470,22 @@ export default {
   message: {
     messageTitle: "Title",
     messageType: "Type",
-    status: "Status"
+    status: "Status",
+    notice: "Notice",
+    bulletin: "Bulletin",
+    close: "Shut down",
+    publisher: "Publisher",
+    method: "Push method",
+    statusBar: "Status Bar",
+    lockScreen: "Lock screen",
+    banner: "Banner notification",
+    SMS: "SMS",
+    results: "Push results",
+    details: "Message details",
+    id: "Announcement ID",
+    title: "Announcement title",
+    type: "Announcement type",
+    results: "Push results"
   },
   repaircompany: {
     comName: "Name of Repair Merchant",

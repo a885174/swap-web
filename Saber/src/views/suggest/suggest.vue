@@ -20,7 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
       </template>
 
       <template slot-scope="{row}" slot="suggestStatus">
@@ -37,7 +43,12 @@
           icon="el-icon-document-copy"
           @click="deal(scope.row)"
         >{{$t('suggest.Dispose')}}</el-button>
-        <el-button type="text" size="small" icon="el-icon-view" @click.stop="rowViews(scope.row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          size="small"
+          icon="el-icon-view"
+          @click.stop="rowViews(scope.row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
     <el-dialog title="Dispose" :visible.sync="centerDialogVisible" :append-to-body="true" center>
@@ -45,7 +56,13 @@
         <avue-form :option="formoption" v-model="form" @submit="handleSubmit()"></avue-form>
       </basic-container>
     </el-dialog>
-    <el-dialog title="Detail" width="60%" :visible.sync="dialogViewVisibles" class="abow_dialog" center>
+    <el-dialog
+      title="Detail"
+      width="60%"
+      :visible.sync="dialogViewVisibles"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -60,17 +77,17 @@
         </div>
         <div class="imageItem" v-for="item in rowItem.imageItem" :key="item.title">
           <div class="title">{{item.title}}</div>
-          <el-popover placement="bottom" trigger="click" v-for="column in item.column"
-            :key="column">
+          <el-popover
+            placement="bottom"
+            trigger="click"
+            v-for="column in item.column"
+            :key="column"
+          >
             <!--trigger属性值：hover、click、focus 和 manual-->
             <a :href="column" target="_blank" title="查看最大化图片">
-              <img :src="column" class="bigimg"  />
+              <img :src="column" class="bigimg" />
             </a>
-            <img
-              slot="reference"
-              :src="column"
-              class="img"
-            />
+            <img slot="reference" :src="column" class="img" />
           </el-popover>
 
           <!-- <el-image
@@ -85,7 +102,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisibles = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisibles = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -144,7 +161,7 @@ export default {
         excelBtn: true,
         viewBtn: false,
         editBtn: false,
-        addBtn:false,
+        addBtn: false,
         delBtn: false,
         align: "center",
         menuAlign: "center",
@@ -167,7 +184,7 @@ export default {
           //   ]
           // },
           {
-            label:this.$t(`suggest.userName`),
+            label: this.$t(`suggest.userName`),
             prop: "userName",
             search: true,
             addDisabled: true,
@@ -310,7 +327,7 @@ export default {
             ]
           },
           {
-            label:this.$t(`suggest.result`),
+            label: this.$t(`suggest.result`),
             prop: "result",
             rules: [
               {
@@ -352,7 +369,7 @@ export default {
           //   prop: "updateTime",
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },
@@ -395,49 +412,58 @@ export default {
       // return final;
     },
     rowViews(row) {
-      this.dialogViewVisibles = true;
-      var imageItems = row.picUrl.split(";");
-      var clientType;
-      switch (row.clientType) {
-        case "1":
-          clientType = "IOS";
-          break;
-        case "2":
-          clientType = "Android";
-          break;
-        case "3":
-          clientType = "其他";
-          break;
-      }
-      this.rowItem = {
-        item: [
-          {
-            title: "Detail",
-            column: [
-              { label: this.$t(`suggest.userName`), prop: row.userName },
-              // { label: "客户端类型", prop: clientType },
-              // { label: "客户端ip", prop: row.clientIp },
-              // { label: "是否匿名", prop: row.anonymityStatus=="1"?"是":"否" },
-              { label: this.$t(`suggest.suggestStatus`), prop: row.suggestStatus=="1"?this.$t(`suggest.processed`):this.$t(`suggest.untreated`) },
-              { label: this.$t(`suggest.result`), prop: row.result }
-              // { label: this.$t(`suggest.detials`), prop: row.content }
-            ]
-          }
-        ],
-        fullItem: [
-          {
-            title: this.$t(`suggest.detials`),
-            prop: row.content
-          }
-        ],
-        imageItem: [
-          {
-            title: "picture",
-            column: imageItems,
-            srcList: imageItems
-          }
-        ]
-      };
+      getDetail(row.suggestId).then(res => {
+        var data = res.data.data;
+        this.dialogViewVisibles = true;
+        var imageItems = data.picUrl.split(";");
+        var clientType;
+        switch (data.clientType) {
+          case "1":
+            clientType = "IOS";
+            break;
+          case "2":
+            clientType = "Android";
+            break;
+          case "3":
+            clientType = "Other";
+            break;
+        }
+        this.rowItem = {
+          item: [
+            {
+              title: "Detail",
+              column: [
+                { label: this.$t(`suggest.userName`), prop: data.userName },
+                // { label: "客户端类型", prop: clientType },
+                // { label: "客户端ip", prop: data.clientIp },
+                // { label: "是否匿名", prop: data.anonymityStatus=="1"?"是":"否" },
+                {
+                  label: this.$t(`suggest.suggestStatus`),
+                  prop:
+                    data.suggestStatus == "1"
+                      ? this.$t(`suggest.processed`)
+                      : this.$t(`suggest.untreated`)
+                },
+                { label: this.$t(`suggest.result`), prop: data.result }
+                // { label: this.$t(`suggest.detials`), prop: data.content }
+              ]
+            }
+          ],
+          fullItem: [
+            {
+              title: this.$t(`suggest.detials`),
+              prop: data.content
+            }
+          ],
+          imageItem: [
+            {
+              title: "picture",
+              column: imageItems,
+              srcList: imageItems
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
@@ -616,9 +642,8 @@ export default {
 }
 .abow_dialog .imageItem .img {
   width: 240px;
-  cursor:pointer;
+  cursor: pointer;
   margin: 0 10px;
-  
 }
 .abow_dialog .imageItem .bigimg {
   width: 720px;

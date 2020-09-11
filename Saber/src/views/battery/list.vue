@@ -20,7 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
 
         <!-- <el-button type="primary"
                      icon="el-icon-check"
@@ -37,11 +43,22 @@
         </el-popover>
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
 
-    <el-dialog title="View" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="View"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -52,7 +69,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -119,7 +136,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`battery.batteryCode`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`battery.batteryCode`),
                 trigger: "blur"
               }
             ]
@@ -128,12 +146,13 @@ export default {
             label: this.$t(`battery.batteryName`),
             // width: 160,
             prop: "batteryName",
-            hide:true,
+            hide: true,
             search: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`battery.batteryName`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`battery.batteryName`),
                 trigger: "blur"
               }
             ]
@@ -148,7 +167,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`battery.batteryVersion`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`battery.batteryVersion`),
                 trigger: "blur"
               }
             ]
@@ -157,12 +177,12 @@ export default {
             label: this.$t(`battery.voltage`),
             prop: "voltage",
             addDisabled: true,
-            hide:true,
+            hide: true,
             addDisplay: false,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`battery.voltage`),
+                message: this.$t(`scooter.please`) + this.$t(`battery.voltage`),
                 trigger: "blur"
               }
             ]
@@ -172,11 +192,12 @@ export default {
             prop: "electricity",
             addDisabled: true,
             addDisplay: false,
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`battery.electricity`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`battery.electricity`),
                 trigger: "blur"
               }
             ]
@@ -188,11 +209,13 @@ export default {
             addDisabled: true,
             addDisplay: false,
             type: "number",
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.cycleIndex`),
+                message:
+                  this.$t(`scooter.pleaseSelect`) +
+                  this.$t(`battery.cycleIndex`),
                 trigger: "blur"
               }
             ]
@@ -203,11 +226,13 @@ export default {
             addDisabled: true,
             addDisplay: false,
             prop: "surplusMileage",
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.surplusMileage`),
+                message:
+                  this.$t(`scooter.pleaseSelect`) +
+                  this.$t(`battery.surplusMileage`),
                 trigger: "blur"
               }
             ]
@@ -217,11 +242,13 @@ export default {
             prop: "surplusElectric",
             addDisabled: true,
             addDisplay: false,
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.surplusElectric`),
+                message:
+                  this.$t(`scooter.pleaseSelect`) +
+                  this.$t(`battery.surplusElectric`),
                 trigger: "blur"
               }
             ]
@@ -233,11 +260,14 @@ export default {
             type: "number",
             addDisabled: true,
             addDisplay: false,
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.healthValue`)+" (0-100)",
+                message:
+                  this.$t(`scooter.pleaseSelect`) +
+                  this.$t(`battery.healthValue`) +
+                  " (0-100)",
                 trigger: "blur"
               }
             ]
@@ -250,7 +280,7 @@ export default {
             // addDisabled:true,
             addDisplay: false,
             valueDefault: "0",
-            hide:true,
+            hide: true,
             dicData: [
               {
                 label: this.$t(`battery.Normal`),
@@ -272,7 +302,9 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.pleaseSelect`)+this.$t(`battery.batteryStatus`),
+                message:
+                  this.$t(`scooter.pleaseSelect`) +
+                  this.$t(`battery.batteryStatus`),
                 trigger: "blur"
               }
             ]
@@ -284,7 +316,7 @@ export default {
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
-            hide:true,
+            hide: true,
             dicData: [
               {
                 label: this.$t(`battery.Locked`),
@@ -307,7 +339,7 @@ export default {
             label: this.$t(`battery.powerStatus`),
             prop: "powerStatus",
             type: "select",
-            hide:true,
+            hide: true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "2",
@@ -342,7 +374,7 @@ export default {
             valueDefault: "1",
             search: true,
             type: "select",
-            hide:true,
+            hide: true,
             dicData: [
               {
                 label: this.$t(`scooter.activated`),
@@ -366,11 +398,14 @@ export default {
             prop: "temperature",
             addDisabled: true,
             addDisplay: false,
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
-                message:this.$t(`scooter.pleaseSelect`)+this.$t(`battery.temperature`)+ " ℃",
+                message:
+                  this.$t(`scooter.pleaseSelect`) +
+                  this.$t(`battery.temperature`) +
+                  " ℃",
                 trigger: "blur"
               }
             ]
@@ -383,7 +418,7 @@ export default {
             prop: "connectStatus",
             search: true,
             type: "select",
-            hide:true,
+            hide: true,
             dicData: [
               {
                 label: this.$t(`battery.connectCbinet`),
@@ -422,7 +457,7 @@ export default {
             addDisplay: false,
             valueDefault: "0",
             value: this.$t(`battery.Normal`),
-            hide:true,
+            hide: true,
             dicData: [
               {
                 label: this.$t(`battery.Normal`),
@@ -444,7 +479,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`battery.systemStatus`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`battery.systemStatus`),
                 trigger: "blur"
               }
             ]
@@ -460,7 +496,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`scooter.expirationDate`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.expirationDate`),
                 trigger: "blur"
               }
             ]
@@ -505,11 +542,12 @@ export default {
             format: "yyyy-MM-dd",
             hide: true,
             valueFormat: "yyyy-MM-dd",
-            hide:true,
+            hide: true,
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`scooter.produceTime`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.produceTime`),
                 trigger: "blur"
               }
             ]
@@ -578,7 +616,7 @@ export default {
           //    type:'datetime',
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },
@@ -642,129 +680,146 @@ export default {
   },
   methods: {
     rowView(row) {
-      console.log(row);
-      this.dialogViewVisible = true;
-      var batteryStatus,powerStatus,connectStatus,systemStatus;
-      switch (row.batteryStatus) {
-        case "0":
-          batteryStatus = this.$t(`battery.Normal`);
-          break;
-        case "1":
-          batteryStatus = this.$t(`battery.Fault`);
-          break;
-        case "2":
-          batteryStatus = this.$t(`battery.Repairing`);
-          break;
-        case "3":
-          batteryStatus = this.$t(`battery.Castoff`);
-          break;
-      }
-      switch (row.powerStatus) {
-        case "0":
-          powerStatus = this.$t(`battery.charge`);
-          break;
-        case "1":
-          powerStatus = this.$t(`battery.Out`);
-          break;
-        case "2":
-          powerStatus = this.$t(`battery.Close`);
-          break;
-      }
-      switch (row.connectStatus) {
-        case "0":
-          connectStatus = this.$t(`battery.connectCbinet`);
-          break;
-        case "1":
-          connectStatus = this.$t(`battery.connectCars`);
-          break;
-        case "2":
-          connectStatus = this.$t(`Unconnected`);
-          break;
-        case "3":
-          connectStatus = this.$t(`battery.communicationError`);
-          break;
-        case "4":
-          connectStatus = this.$t(`battery.moduleError`);
-          break;
-      }
-      switch (row.systemStatus) {
-        case "0":
-          systemStatus = this.$t(`battery.Normal`);
-          break;
-        case "1":
-          systemStatus = this.$t(`battery.Safe`);
-          break;
-        case "2":
-          systemStatus = this.$t(`battery.Stolen`);
-          break;
-        case "3":
-          systemStatus = this.$t(`battery.Sleep`);
-          break;
-      }
-      this.rowItem = {
-        item: [
-          {
-            title: "Battery Info",
-            column: [
-              { label: this.$t(`battery.batteryCode`), prop: row.batteryCode },
-              {
-                label: this.$t(`battery.batteryName`),
-                prop: row.batteryName
-              },
-              {
-                label: this.$t(`battery.batteryVersion`),
-                prop: row.batteryVersion
-              },
-              { label: this.$t(`battery.voltage`), prop: row.voltage },
-              // { label: "设备IMEI码", prop: row.imei },
-              {
-                label: this.$t(`battery.electricity`),
-                prop: row.electricity
-              },
-              { label: this.$t(`battery.cycleIndex`), prop: row.cycleIndex },
-              { label: this.$t(`battery.surplusElectric`), prop: row.surplusElectric },
-              {
-                label: this.$t(`battery.surplusMileage`),
-                prop: row.surplusMileage
-              }
-            ]
-          },
-          {
-            title: this.$t(`battery.batteryStatus`),
-            column: [
-              {
-                label: this.$t(`battery.batteryStatus`),
-                prop: batteryStatus
-              },
-              {
-                label: this.$t(`battery.lockStatus`),
-                prop: row.lockStatus == "0" ? this.$t(`battery.Locked`) :this.$t(`battery.Unlocked`)
-              },
-              {
-                label:  this.$t(`battery.powerStatus`),
-                prop: powerStatus
-              },
-              {
-                label: this.$t(`battery.activateStatus`),
-                prop: row.activateStatus == "0" ? this.$t(`battery.Actived`) : this.$t(`battery.Unactivated`)
-              },
-              {
-                label: this.$t(`battery.temperature`),
-                prop: row.temperature
-              },
-              {
-                label: this.$t(`battery.connectStatus`),
-                prop: connectStatus=="0"? this.$t(`Connected`):this.$t(`Unconnected`)
-              },
-              {
-                label: this.$t(`battery.systemStatus`),
-                prop: systemStatus
-              }
-            ]
-          }
-        ]
-      };
-      console.log(this.rowItem);
+      getDetail(row.batteryId).then(res => {
+        var data = res.data.data;
+        this.dialogViewVisible = true;
+        var batteryStatus, powerStatus, connectStatus, systemStatus;
+        switch (data.batteryStatus) {
+          case "0":
+            batteryStatus = this.$t(`battery.Normal`);
+            break;
+          case "1":
+            batteryStatus = this.$t(`battery.Fault`);
+            break;
+          case "2":
+            batteryStatus = this.$t(`battery.Repairing`);
+            break;
+          case "3":
+            batteryStatus = this.$t(`battery.Castoff`);
+            break;
+        }
+        switch (data.powerStatus) {
+          case "0":
+            powerStatus = this.$t(`battery.charge`);
+            break;
+          case "1":
+            powerStatus = this.$t(`battery.Out`);
+            break;
+          case "2":
+            powerStatus = this.$t(`battery.Close`);
+            break;
+        }
+        switch (data.connectStatus) {
+          case "0":
+            connectStatus = this.$t(`battery.connectCbinet`);
+            break;
+          case "1":
+            connectStatus = this.$t(`battery.connectCars`);
+            break;
+          case "2":
+            connectStatus = this.$t(`Unconnected`);
+            break;
+          case "3":
+            connectStatus = this.$t(`battery.communicationError`);
+            break;
+          case "4":
+            connectStatus = this.$t(`battery.moduleError`);
+            break;
+        }
+        switch (data.systemStatus) {
+          case "0":
+            systemStatus = this.$t(`battery.Normal`);
+            break;
+          case "1":
+            systemStatus = this.$t(`battery.Safe`);
+            break;
+          case "2":
+            systemStatus = this.$t(`battery.Stolen`);
+            break;
+          case "3":
+            systemStatus = this.$t(`battery.Sleep`);
+            break;
+        }
+        this.rowItem = {
+          item: [
+            {
+              title: "Battery Info",
+              column: [
+                {
+                  label: this.$t(`battery.batteryCode`),
+                  prop: data.batteryCode
+                },
+                {
+                  label: this.$t(`battery.batteryName`),
+                  prop: data.batteryName
+                },
+                {
+                  label: this.$t(`battery.batteryVersion`),
+                  prop: data.batteryVersion
+                },
+                { label: this.$t(`battery.voltage`), prop: data.voltage },
+                // { label: "设备IMEI码", prop: data.imei },
+                {
+                  label: this.$t(`battery.electricity`),
+                  prop: data.electricity
+                },
+                { label: this.$t(`battery.cycleIndex`), prop: data.cycleIndex },
+                {
+                  label: this.$t(`battery.surplusElectric`),
+                  prop: data.surplusElectric
+                },
+                {
+                  label: this.$t(`battery.surplusMileage`),
+                  prop: data.surplusMileage
+                }
+              ]
+            },
+            {
+              title: this.$t(`battery.batteryStatus`),
+              column: [
+                {
+                  label: this.$t(`battery.batteryStatus`),
+                  prop: batteryStatus
+                },
+                {
+                  label: this.$t(`battery.lockStatus`),
+                  prop:
+                    data.lockStatus == "0"
+                      ? this.$t(`battery.Locked`)
+                      : this.$t(`battery.Unlocked`)
+                },
+                {
+                  label: this.$t(`battery.powerStatus`),
+                  prop: powerStatus
+                },
+                {
+                  label: this.$t(`battery.activateStatus`),
+                  prop:
+                    data.activateStatus == "0"
+                      ? this.$t(`battery.Actived`)
+                      : this.$t(`battery.Unactivated`)
+                },
+                {
+                  label: this.$t(`battery.temperature`),
+                  prop: data.temperature
+                },
+                {
+                  label: this.$t(`battery.connectStatus`),
+                  prop:
+                    connectStatus == "0"
+                      ? this.$t(`Connected`)
+                      : this.$t(`Unconnected`)
+                },
+                {
+                  label: this.$t(`battery.systemStatus`),
+                  prop: systemStatus
+                }
+              ]
+            }
+          ]
+        };
+        console.log(this.rowItem);
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
@@ -899,7 +954,7 @@ export default {
 <style>
 .abow_dialog .el-dialog .el-dialog__body {
   padding: 0 30px;
-} 
+}
 .abow_dialog .title {
   font-size: 16px;
   color: rgba(0, 0, 0, 0.847058823529412);

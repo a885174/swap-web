@@ -132,11 +132,21 @@
         <el-button type="primary" @click="sumbitAddres()">{{$t(`cancelText`)}}</el-button>
       </div>
     </el-dialog>
-    <el-dialog :title="$t(`station.cabinetPicture`)" :visible.sync="dialogTableVisible" :append-to-body="true" center>
+    <el-dialog
+      :title="$t(`station.cabinetPicture`)"
+      :visible.sync="dialogTableVisible"
+      :append-to-body="true"
+      center
+    >
       <el-button @click="getTableData()">{{$t(`station.assignPicture`)}}</el-button>
 
       <el-button @click="fileDialog=true">{{$t(`station.uploadCabinetPicture`)}}</el-button>
-      <el-dialog width="50%" :title="$t(`station.uploadCabinetPicture`)" :visible.sync="fileDialog" append-to-body>
+      <el-dialog
+        width="50%"
+        :title="$t(`station.uploadCabinetPicture`)"
+        :visible.sync="fileDialog"
+        append-to-body
+      >
         <el-form :model="fileform">
           <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
             <el-upload
@@ -191,13 +201,22 @@
         </el-table-column>
         <el-table-column fixed="right" :label="$t(`station.operating`)" width="200">
           <template slot-scope="scope">
-            <el-button type="text" @click="deletePicture(scope.row)" size="small">{{$t(`station.delete`)}}</el-button>
+            <el-button
+              type="text"
+              @click="deletePicture(scope.row)"
+              size="small"
+            >{{$t(`station.delete`)}}</el-button>
             <el-button type="text" @click="updateMain(scope.row)">{{$t(`station.setMainImage`)}}</el-button>
           </template>
         </el-table-column>
       </el-table>
 
-      <el-dialog width="50%" :title="$t(`station.pictureMaterial`)" :visible.sync="innerVisible" append-to-body>
+      <el-dialog
+        width="50%"
+        :title="$t(`station.pictureMaterial`)"
+        :visible.sync="innerVisible"
+        append-to-body
+      >
         <el-button @click="submitPicture()">{{$t(`station.AssociatedPicture`)}}</el-button>
         <el-button @click="uploadDialog=true">{{$t(`station.uploadMaterial`)}}</el-button>
 
@@ -624,7 +643,7 @@ export default {
             rules: [
               {
                 required: false,
-                message:this.$t(`station.enterStatus`),
+                message: this.$t(`station.enterStatus`),
                 trigger: "blur"
               }
             ]
@@ -743,7 +762,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`) + this.$t(`scooter.produceTime`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.produceTime`),
                 trigger: "blur"
               }
             ]
@@ -797,7 +817,7 @@ export default {
           //   addDisplay:false,
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },
@@ -885,87 +905,102 @@ export default {
       );
     },
     getrowViews(row) {
-      this.dialogViewVisibles = true;
-      var stationStatus;
-      switch (row.stationStatus) {
-        case "0":
-          stationStatus = this.$t(`battery.Normal`);
-          break;
-        case "1":
-          stationStatus = this.$t(`battery.Fault`);
-          break;
-        case "2":
-          stationStatus = this.$t(`battery.Repairing`);
-          break;
-        case "3":
-          stationStatus = this.$t(`battery.Castoff`);
-          break;
-      }
-      this.rowItem = {
-        item: [
-          {
-            title: this.$t(`station.info`),
-            column: [
-              { label: this.$t(`station.stationCode`), prop: row.stationCode },
-              { label: this.$t(`station.imei`), prop: row.imei },
-              {
-                label: this.$t(`station.stationModel`),
-                prop: row.stationModel
-              },
-              {
-                label: this.$t(`station.warehouseNumber`),
-                prop: row.warehouseNumber
-              },
-              {
-                label: this.$t(`station.expirationDate`),
-                prop: row.expirationDate
-              },
-              {
-                label: this.$t(`scooter.produceTime`),
-                prop: row.produceTime
-              }
-            ]
-          },
-          {
-            title: this.$t(`station.stationStatus`),
-            column: [
-              { label: this.$t(`station.stationStatus`), prop: stationStatus },
-              {
-                label: this.$t(`station.locationStatus`),
-                prop:
-                  row.locationStatus == "0"
-                    ? this.$t(`scooter.targeted`)
-                    : this.$t(`scooter.untargeted`)
-              },
-              {
-                label: this.$t(`station.connectStatus`),
-                prop:
-                  row.connectStatus == "0"
-                    ? this.$t(`Connected`)
-                    : this.$t(`Unconnected`)
-              }
-            ]
-          },
-          {
-            title: this.$t(`station.associated`),
-            column: [
-              { label: this.$t(`AssignStore`), prop: row.storeName },
-              { label: this.$t(`station.reading`), prop: row.ammeterValue },
-              { label: this.$t(`station.readingTime`), prop: row.ammeterTime },
-              { label: this.$t(`station.startTime`), prop: row.businessTimeS },
-              { label: this.$t(`station.endTime`), prop: row.businessTimeE },
-              { label: this.$t(`station.address`), prop: row.address },
-              { label: this.$t(`station.supplier`), prop: row.supplierId }
-            ]
-          }
-        ],
-        fullItem: [
-          // {
-          //   title: "备注",
-          //   prop: row.remark
-          // }
-        ]
-      };
+      getDetail(row.stationId).then(res => {
+        var data = res.data.data;
+        this.dialogViewVisibles = true;
+        var stationStatus;
+        switch (data.stationStatus) {
+          case "0":
+            stationStatus = this.$t(`battery.Normal`);
+            break;
+          case "1":
+            stationStatus = this.$t(`battery.Fault`);
+            break;
+          case "2":
+            stationStatus = this.$t(`battery.Repairing`);
+            break;
+          case "3":
+            stationStatus = this.$t(`battery.Castoff`);
+            break;
+        }
+        this.rowItem = {
+          item: [
+            {
+              title: this.$t(`station.info`),
+              column: [
+                {
+                  label: this.$t(`station.stationCode`),
+                  prop: data.stationCode
+                },
+                { label: this.$t(`station.imei`), prop: data.imei },
+                {
+                  label: this.$t(`station.stationModel`),
+                  prop: data.stationModel
+                },
+                {
+                  label: this.$t(`station.warehouseNumber`),
+                  prop: data.warehouseNumber
+                },
+                {
+                  label: this.$t(`station.expirationDate`),
+                  prop: data.expirationDate
+                },
+                {
+                  label: this.$t(`scooter.produceTime`),
+                  prop: data.produceTime
+                }
+              ]
+            },
+            {
+              title: this.$t(`station.stationStatus`),
+              column: [
+                {
+                  label: this.$t(`station.stationStatus`),
+                  prop: stationStatus
+                },
+                {
+                  label: this.$t(`station.locationStatus`),
+                  prop:
+                    data.locationStatus == "0"
+                      ? this.$t(`scooter.targeted`)
+                      : this.$t(`scooter.untargeted`)
+                },
+                {
+                  label: this.$t(`station.connectStatus`),
+                  prop:
+                    data.connectStatus == "0"
+                      ? this.$t(`Connected`)
+                      : this.$t(`Unconnected`)
+                }
+              ]
+            },
+            {
+              title: this.$t(`station.associated`),
+              column: [
+                { label: this.$t(`AssignStore`), prop: data.storeName },
+                { label: this.$t(`station.reading`), prop: data.ammeterValue },
+                {
+                  label: this.$t(`station.readingTime`),
+                  prop: data.ammeterTime
+                },
+                {
+                  label: this.$t(`station.startTime`),
+                  prop: data.businessTimeS
+                },
+                { label: this.$t(`station.endTime`), prop: data.businessTimeE },
+                { label: this.$t(`station.address`), prop: data.address },
+                { label: this.$t(`station.supplier`), prop: data.supplierId }
+              ]
+            }
+          ],
+          fullItem: [
+            // {
+            //   title: "备注",
+            //   prop: data.remark
+            // }
+          ]
+        };
+      });
     },
     goimportxls() {
       importxls().then(response => {
