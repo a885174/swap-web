@@ -20,7 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
 
         <!-- <el-button type="primary"
                      icon="el-icon-check"
@@ -47,10 +53,21 @@
         >{{row.userStatus=="0"?this.$t(`battery.Normal`):(row.userStatus=="1"?"已冻结":"欠费锁定")}}</label>
       </template>-->
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -65,7 +82,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -101,7 +118,7 @@ export default {
         tip: false,
         border: true,
         viewBtn: false,
-        addBtn:false,
+        addBtn: false,
         index: true,
         selection: true,
         excelBtn: true,
@@ -362,7 +379,7 @@ export default {
           //   addDisplay:false,
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },
@@ -419,31 +436,43 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      this.rowItem = {
-        item: [
-          {
-            title: "User Info",
-            column: [
-              { label: this.$t(`user.loginName`), prop: row.loginName },
-              { label: this.$t(`user.username`), prop: row.username },
-              { label: this.$t(`user.email`), prop: row.email },
-              { label: this.$t(`user.phoneNumber`), prop: row.phoneNumber },
-              { label: this.$t(`user.job`), prop: row.job },
-              { label: this.$t(`user.sex`), prop: row.sex },
-              { label: this.$t(`user.birthday`), prop: row.birthday },
-              { label: this.$t(`user.userStatus`), prop: row.userStatus },
-              { label: "ID card", prop: row.idcard },
-              { label: "address", prop: row.address },
-              { label: this.$t(`user.emergencyContact`), prop: row.emergencyContact },
-              { label: this.$t(`user.emergencyPhone`), prop: row.emergencyPhone },
-              { label: this.$t(`user.emailverification`), prop: row.checkEmail=="0"?"NO":"YES" },
-              { label: this.$t(`user.ipaddress`), prop: row.loginIp },
-              { label: this.$t(`user.loginDate`), prop: row.loginDate },
-            ]
-          }
-        ]
-      };
+      getDetail(row.userId).then(res => {
+        var data = res.data.data;
+        this.dialogViewVisible = true;
+        this.rowItem = {
+          item: [
+            {
+              title: "User Info",
+              column: [
+                { label: this.$t(`user.loginName`), prop: data.loginName },
+                { label: this.$t(`user.username`), prop: data.username },
+                { label: this.$t(`user.email`), prop: data.email },
+                { label: this.$t(`user.phoneNumber`), prop: data.phoneNumber },
+                { label: this.$t(`user.job`), prop: data.job },
+                { label: this.$t(`user.sex`), prop: data.sex },
+                { label: this.$t(`user.birthday`), prop: data.birthday },
+                { label: this.$t(`user.userStatus`), prop: data.userStatus },
+                { label: "ID card", prop: data.idcard },
+                { label: "address", prop: data.address },
+                {
+                  label: this.$t(`user.emergencyContact`),
+                  prop: data.emergencyContact
+                },
+                {
+                  label: this.$t(`user.emergencyPhone`),
+                  prop: data.emergencyPhone
+                },
+                {
+                  label: this.$t(`user.emailverification`),
+                  prop: data.checkEmail == "0" ? "NO" : "YES"
+                },
+                { label: this.$t(`user.ipaddress`), prop: data.loginIp },
+                { label: this.$t(`user.loginDate`), prop: data.loginDate }
+              ]
+            }
+          ]
+        };
+      });
     },
     goimportxls() {
       importxls().then(response => {

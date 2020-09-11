@@ -79,13 +79,25 @@ export const delSccoterList = (ids) => {
   })
 }
 
-export const saveSccoterList = (ids,scooterId) => {
+export const saveSccoterList = (ids,tenantId) => {
   return request({
     url: '/api/swap_tenant_bat/swaptenantbat/saveSccoterList',
     method: 'post',
     params:{
       ids,
-      scooterId
+      tenantId
     }    
+  })
+}
+
+export const selectSccoterList = (current, size, params) => {
+  return request({
+    url: '/api/swap_scooter/scooter/select',
+    method: 'Get',
+    params: {
+      ...params,
+      current,
+      size,
+    }
   })
 }

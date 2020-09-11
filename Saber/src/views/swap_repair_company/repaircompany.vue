@@ -20,13 +20,30 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">{{$t(`delete`)}}</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -41,7 +58,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -82,17 +99,19 @@ export default {
         indexLabel: "index",
         column: [
           {
-            label:this.$t(`repaircompany.comId`),
+            label: this.$t(`repaircompany.comId`),
             prop: "comId",
-            editDisabled:true,
-            editDisplay:false,
-            addDisabled:true,
-            addDisplay:false,
-            rules: [{
-              required: true,
-              message: "请输入维修商id",
-              trigger: "blur"
-            }]
+            editDisabled: true,
+            editDisplay: false,
+            addDisabled: true,
+            addDisplay: false,
+            rules: [
+              {
+                required: true,
+                message: "请输入维修商id",
+                trigger: "blur"
+              }
+            ]
           },
           {
             label: this.$t(`repaircompany.comName`),
@@ -112,7 +131,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`supplier.linkman`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`supplier.linkman`),
                 trigger: "blur"
               }
             ]
@@ -124,7 +144,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`suppliercontactNumber`),
+                message:
+                  this.$t(`scooter.please`) + this.$t(`suppliercontactNumber`),
                 trigger: "blur"
               }
             ]
@@ -160,7 +181,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`)+this.$t(`store.address`),
+                message: this.$t(`scooter.please`) + this.$t(`store.address`),
                 trigger: "blur"
               }
             ]
@@ -197,7 +218,7 @@ export default {
           //   prop: "updateTime",
           //   rules: [{
           //     required: true,
-          //     message: "请输入更新时间",
+          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
           //     trigger: "blur"
           //   }]
           // },
@@ -226,22 +247,35 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      this.rowItem = {
-        item: [
-          {
-            title: this.$t(`repaircompany.repairerInformation`),
-            column: [
-              { label: this.$t(`repaircompany.comName`), prop: row.comName },
-              { label: this.$t(`supplier.linkman`), prop: row.linkman },
-              { label: this.$t(`supplier.contactNumber`), prop: row.contactNumber },
-              { label: this.$t(`repaircompany.legalRepresentative`), prop: row.legalPerson },
-              { label: this.$t(`repaircompany.Industrial`), prop: row.filingStatus },
-              { label: "address", prop: row.address },
-            ]
-          }
-        ]
-      };
+      getDetail(row.comId).then(res => {
+        var data = res.data.data;
+
+        this.dialogViewVisible = true;
+        this.rowItem = {
+          item: [
+            {
+              title: this.$t(`repaircompany.repairerInformation`),
+              column: [
+                { label: this.$t(`repaircompany.comName`), prop: data.comName },
+                { label: this.$t(`supplier.linkman`), prop: data.linkman },
+                {
+                  label: this.$t(`supplier.contactNumber`),
+                  prop: data.contactNumber
+                },
+                {
+                  label: this.$t(`repaircompany.legalRepresentative`),
+                  prop: data.legalPerson
+                },
+                {
+                  label: this.$t(`repaircompany.Industrial`),
+                  prop: data.filingStatus
+                },
+                { label: "address", prop: data.address }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(

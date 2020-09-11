@@ -20,13 +20,30 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button type="danger" size="small" icon="el-icon-delete" plain @click="handleDelete">删 除</el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
       </template>
       <template slot-scope="{row}" slot="menu">
-        <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          size="small"
+          @click.stop="rowView(row)"
+        >{{$t(`chakan`)}}</el-button>
       </template>
     </avue-crud>
-    <el-dialog title="view" width="60%" :visible.sync="dialogViewVisible" class="abow_dialog" center>
+    <el-dialog
+      title="view"
+      width="60%"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
       <div ref="form" :model="rowItem">
         <div v-for="item in rowItem.item" :key="item.id" :title="item.title" class="item">
           <div class="title">{{item.title}}</div>
@@ -41,7 +58,7 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogViewVisible = false">Back </el-button>
+        <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
   </basic-container>
@@ -144,13 +161,14 @@ export default {
             ]
           },
           {
-            label: "更新时间",
+            label: this.$t(`AppVseroin.updatedTime`),
             prop: "updateTime",
             hide: true,
             rules: [
               {
                 required: true,
-                message: "请输入更新时间",
+                message:
+                  this.$t(`scooter.please`) + this.$t(`AppVseroin.updatedTime`),
                 trigger: "blur"
               }
             ]
@@ -180,22 +198,37 @@ export default {
   },
   methods: {
     rowView(row) {
-      this.dialogViewVisible = true;
-      this.rowItem = {
-        item: [
-          {
-            title: this.$t(`AppVseroin.versionInformation`),
-            column: [
-              { label: this.$t(`AppVseroin.versionId`), prop: row.id },
-              { label: this.$t(`AppVseroin.appVersoin`), prop: row.versoin },
-              { label: this.$t(`AppVseroin.whetherToForceUpdate`), prop: row.isForcedUpdate=="0"?this.$t(`AppVseroin.yes`):this.$t(`AppVseroin.no`) },
-              { label: this.$t(`AppVseroin.apkAddress`), prop: row.apkUrl },
-              { label: this.$t(`AppVseroin.updateLog`), prop: row.versoinLog },
-              { label: this.$t(`AppVseroin.updatedTime`), prop: row.updateTime },
-            ]
-          }
-        ]
-      };
+      getDetail(row.id).then(res => {
+        var data = res.data.data;
+        this.dialogViewVisible = true;
+        this.rowItem = {
+          item: [
+            {
+              title: this.$t(`AppVseroin.versionInformation`),
+              column: [
+                { label: this.$t(`AppVseroin.versionId`), prop: data.id },
+                { label: this.$t(`AppVseroin.appVersoin`), prop: data.versoin },
+                {
+                  label: this.$t(`AppVseroin.whetherToForceUpdate`),
+                  prop:
+                    data.isForcedUpdate == "0"
+                      ? this.$t(`AppVseroin.yes`)
+                      : this.$t(`AppVseroin.no`)
+                },
+                { label: this.$t(`AppVseroin.apkAddress`), prop: data.apkUrl },
+                {
+                  label: this.$t(`AppVseroin.updateLog`),
+                  prop: data.versoinLog
+                },
+                {
+                  label: this.$t(`AppVseroin.updatedTime`),
+                  prop: data.updateTime
+                }
+              ]
+            }
+          ]
+        };
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
