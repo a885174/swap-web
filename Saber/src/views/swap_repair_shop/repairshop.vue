@@ -127,7 +127,7 @@
             <el-option :label="$t(`store.wednesday`)" value="3"></el-option>
             <el-option :label="$t(`store.thursday`)" value="4"></el-option>
             <el-option :label="$t(`store.friday`)" value="5"></el-option>
-            <el-option :label="$t(`store.saturday`)" value="6"></el-option>
+            <elq-option :label="$t(`store.saturday`)" value="6"></el-option>
             <el-option :label="$t(`store.sunday`)" value="7"></el-option>
           </el-select>
         </el-form-item>
@@ -919,7 +919,7 @@ export default {
                   prop:
                     data.shopStatus == "0"
                       ? this.$t(`plan.sale`)
-                      : "this.$t(`plan.takeOff`) "
+                      : this.$t(`plan.takeOff`) 
                 }
               ]
             }
