@@ -631,6 +631,7 @@ export default {
             type: "success",
             message: "success!"
           });
+          this.onLoad(this.page);
           this.scooterIds = "";
           this.dialogFormVisible = false;
         });
@@ -650,8 +651,8 @@ export default {
     selectForm(row) {
       this.scooterIds = "";
       this.scooterForm = row;
-      this.scooterData(this.selectPage);
       this.dialogFormVisible = true;
+      this.scooterData(this.selectPage);
     },
     rowViews(row) {
       getDetail(row.tenantId).then(res => {
