@@ -28,7 +28,7 @@ export default {
     };
   },
   created() {
-    this.getMenu();
+    // this.getMenu();
   },
   computed: {
     ...mapGetters(["tagCurrent", "menu"])
