@@ -317,7 +317,6 @@ export default {
             prop: "scooterStatus",
             type: "select",
             search: true,
-            hide: true,
             // addDisabled:true,
             valueDefault: "0",
             addDisplay: false,
@@ -424,18 +423,22 @@ export default {
               }
             ]
           },
-          // {
-          //     label: "所属用户户",
-          //     prop: "userId",
-          //     type: "tree",
-          //     slot: true,
-          //     valueDefault:"",
-          //     dicUrl: "/api/swap_user/wapuser/select",
-          //     props: {
-          //       label: "loginName",
-          //       value: "userId"
-          //     },
-          //   },
+          {
+            label: this.$t(`user.username`),
+            prop: "username",
+            editDisabled:true,
+            editDisplay: false,
+            addDisabled:true,
+            addDisplay: false,
+            },
+            {
+            label: this.$t(`tenant.tenantName`),
+            prop: "tenantName",
+            editDisabled:true,
+            editDisplay: false,
+            addDisabled:true,
+            addDisplay: false,
+            },
           {
             label: this.$t(`scooter.initStatus`),
             prop: "initStatus",
@@ -468,7 +471,7 @@ export default {
             label: this.$t(`scooter.runStatus`),
             prop: "runStatus",
             type: "select",
-            hide: true,
+            hide:true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -521,7 +524,6 @@ export default {
             prop: "lockStatus",
             addDisabled: true,
             addDisplay: false,
-            hide: true,
             type: "select",
             valueDefault: "1",
             dicData: [
@@ -546,7 +548,7 @@ export default {
             label: this.$t(`scooter.securityLock`),
             prop: "securityLock",
             type: "select",
-            hide: true,
+            hide:true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -572,7 +574,7 @@ export default {
             label: this.$t(`scooter.arrearageLock`),
             prop: "arrearageLock",
             type: "select",
-            hide: true,
+            hide:true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -666,7 +668,6 @@ export default {
             addDisplay: false,
             editDisabled: true,
             editDisplay: false,
-            hide: true,
             rules: [
               {
                 required: false,
@@ -742,96 +743,6 @@ export default {
               }
             ]
           }
-          // {
-          //   label: "创建人",
-          //   prop: "createUser",
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "创建时间",
-          //   prop: "createTime",
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   type:'datetime',
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建时间",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新人",
-          //   prop: "updateUser",
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入更新人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新时间",
-          //   prop: "updateTime",
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "备注",
-          //   prop: "remark",
-          //   hide: true,
-          //   editDisabled: true,
-          //   editDisplay: false,
-          //   rules: [
-          //     {
-          //       required: false,
-          //       message: "请输入备注",
-          //       trigger: "blur"
-          //     }
-          //   ]
-          // }
-          // {
-          //   label: "删除状态",
-          //   prop: "delFlag",
-          //   type:'select',
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   dicData:[
-          //     {
-          //       label:'存在',
-          //       value:'0'
-          //     },{
-          //       label:'已删除',
-          //       value:'1'
-          //     }
-          //   ],
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入删除状态 0代表存在 1代表删除",
-          //     trigger: "blur"
-          //   }]
-          // },
         ]
       },
 

@@ -87,6 +87,7 @@
         >{{$t(`getlocaton`)}}</el-button>
       </template>
     </avue-crud>
+    
     <el-dialog
       title="Map"
       :visible.sync="mapDialogVisible"
