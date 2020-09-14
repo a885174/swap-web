@@ -477,7 +477,7 @@ export default {
 
     finish(row) {
       row.orderStatus = "4";
-      this.$confirm("确定结算?", {
+      this.$confirm("Are you sure?", {
         confirmButtonText: "sure",
         cancelButtonText: "cancel",
         type: "warning"

@@ -34,11 +34,11 @@ export default {
     ...mapGetters(["tagCurrent", "menu"])
   },
   methods: {
-    getMenu() {
-      this.$store.dispatch("GetTopMenu").then(res => {
-        this.items = res;
-      });
-    },
+    // getMenu() {
+    //   this.$store.dispatch("GetTopMenu").then(res => {
+    //     this.items = res;
+    //   });
+    // },
     generateTitle(item) {
       return this.$router.$avueRouter.generateTitle(
         item.label,
