@@ -2,7 +2,7 @@ import request from '@/router/axios';
 
 export const getList = (current, size, params) => {
   return request({
-    url: '/api/swap_message/message/list',
+    url: '/api/swap_update_record/updaterecord/list',
     method: 'get',
     params: {
       ...params,
@@ -12,19 +12,19 @@ export const getList = (current, size, params) => {
   })
 }
 
-export const getDetail = (messageId) => {
+export const getDetail = (id) => {
   return request({
-    url: '/api/swap_message/message/detail',
+    url: '/api/swap_update_record/updaterecord/detail',
     method: 'get',
     params: {
-      messageId
+      id
     }
   })
 }
 
 export const remove = (ids) => {
   return request({
-    url: '/api/swap_message/message/remove',
+    url: '/api/swap_update_record/updaterecord/remove',
     method: 'post',
     params: {
       ids,
@@ -34,7 +34,7 @@ export const remove = (ids) => {
 
 export const add = (row) => {
   return request({
-    url: '/api/swap_message/message/save',
+    url: '/api/swap_update_record/updaterecord/submit',
     method: 'post',
     data: row
   })
@@ -42,7 +42,7 @@ export const add = (row) => {
 
 export const update = (row) => {
   return request({
-    url: '/api/swap_message/message/submit',
+    url: '/api/swap_update_record/updaterecord/submit',
     method: 'post',
     data: row
   })

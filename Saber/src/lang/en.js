@@ -478,6 +478,7 @@ export default {
     method: "Push method",
     statusBar: "Status Bar",
     lockScreen: "Lock screen",
+    messageContent: 'Content',
     banner: "Banner notification",
     SMS: "SMS",
     results: "Push results",

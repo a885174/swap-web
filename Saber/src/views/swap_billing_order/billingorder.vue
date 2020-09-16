@@ -335,69 +335,7 @@ export default {
             hide: true,
             listType: "picture-img"
           }
-          // {
-          //   label: "付款时间",
-          //   prop: "payTime",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入付款时间",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "创建人",
-          //   prop: "createUser",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "创建时间",
-          //   prop: "createTime",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建时间",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新人",
-          //   prop: "updateUser",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入更新人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新时间",
-          //   prop: "updateTime",
-          //   rules: [{
-          //     required: true,
-          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "备注",
-          //   prop: "remark",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入备注",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "删除状态 0代表存在 1代表删除",
-          //   prop: "delFlag",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入删除状态 0代表存在 1代表删除",
-          //     trigger: "blur"
-          //   }]
-          // },
+    
         ]
       },
       data: []
