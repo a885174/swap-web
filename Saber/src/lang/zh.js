@@ -471,6 +471,7 @@ export default {
     results: "推送结果",
     details: "消息详情",
     id: "公告ID",
+    messageContent:'正文',
     title: "公告标题",
     type: "公告类型",
     results: "推送结果"

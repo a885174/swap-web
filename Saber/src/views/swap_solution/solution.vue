@@ -109,7 +109,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入故障编号",
+                message: "请输入"+this.$t("faultCode"),
                 trigger: "blur"
               }
             ]
@@ -164,7 +164,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入故障名称",
+                message: "请输入"+this.$t(`solution.faultName`),
                 trigger: "blur"
               }
             ]
@@ -175,7 +175,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入解决方案",
+                message: "请输入"+this.$t(`solution.Solution`),
                 trigger: "blur"
               }
             ]

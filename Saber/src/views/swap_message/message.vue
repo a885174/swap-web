@@ -104,21 +104,6 @@ export default {
         menuAlign: "center",
         indexLabel: "index",
         column: [
-          // {
-          //   label: this.$t(`message.id`),
-          //   prop: "messageId",
-          //   editDisabled: true,
-          //   editDisplay: false,
-          //   addDisabled: true,
-          //   addDisplay: false,
-          //   rules: [
-          //     {
-          //       required: true,
-          //       message: "请输入公告ID",
-          //       trigger: "blur"
-          //     }
-          //   ]
-          // },
           {
             label: this.$t(`message.messageTitle`),
             width: 280,
@@ -127,7 +112,35 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入公告标题",
+                message: "请输入"+ this.$t(`message.messageTitle`),
+                trigger: "blur"
+              }
+            ]
+          },
+              {
+            label: "icon",
+            width: 280,
+            prop: "messageIcon",
+            type: "select",
+            valueDefault: "SUCCESS",
+            dicData: [
+              {
+                label: "SUCCESS",
+                value: "SUCCESS"
+              },
+              {
+                label: "FAIL",
+                value: "FAIL"
+              },
+              {
+                label:"WARN",
+                value: "WARN"
+              }
+            ],
+            rules: [
+              {
+                required: true,
+                message: "请输入icon",
                 trigger: "blur"
               }
             ]
@@ -136,8 +149,7 @@ export default {
             label: this.$t(`message.messageType`),
             prop: "messageType",
             type: "select",
-            valueDefault: "0",
-            valeDefault: "1",
+            valueDefault: "2",
             dicData: [
               {
                 label: this.$t(`message.notice`),
@@ -151,33 +163,20 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入公告类型",
+                message: "请输入"+this.$t(`message.messageType`),
                 trigger: "blur"
               }
             ]
           },
-          // {
-          //   label: "公告内容",
-          //   prop: "messageContent",
-          //   rules: [{
-          //     required: false,
-          //     message: "请输入公告内容",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "公告内容",
-          //   prop: "messageContent",
-          //   component: "ueditor",
-          //   options: {
-          //     //普通图片上传
-          //     action: "https://avuejs.com/upload",
-          //     props: {
-          //       res: "data",
-          //       url: "url"
-          //     }
-          //   }
-          // },
+          {
+            label:this.$t(`message.messageContent`),
+            prop: "messageContent",
+            rules: [{
+              required: true,
+              message: "请输入"+this.$t(`message.messageContent`),
+              trigger: "blur"
+            }]
+          },
           {
             label: this.$t(`message.status`),
             prop: "status",
@@ -197,19 +196,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入公告状态 （0正常 1关闭）",
-                trigger: "blur"
-              }
-            ]
-          },
-          {
-            label: this.$t(`message.publisher`),
-            prop: "publisher",
-            hide: true,
-            rules: [
-              {
-                required: false,
-                message: "请输入发布人",
+                message: "请输入"+this.$t(`message.status`),
                 trigger: "blur"
               }
             ]
