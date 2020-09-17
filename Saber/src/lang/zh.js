@@ -20,7 +20,7 @@ export default {
   coordinate: "获取经纬度",
   delete: "删 除",
   pictureManagement: "图片管理",
-
+  add: "新 增",
   wel: {
     info: "早安，Smallwei，Avuex一款超乎你想象的框架！",
     dept: "我是avue团队下的一个部门-哈皮部门-哈皮职位",
@@ -474,7 +474,8 @@ export default {
     messageContent:'正文',
     title: "公告标题",
     type: "公告类型",
-    results: "推送结果"
+    save:"保存",
+    cancel:"取消"
   },
   common: {},
   repairshop: {

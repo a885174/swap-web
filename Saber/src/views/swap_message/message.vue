@@ -1,5 +1,6 @@
 <template>
   <basic-container>
+    <!-- <tinymce-editor id="tinymce" v-model="editfrom.msg" ></tinymce-editor> -->
     <avue-crud
       :option="option"
       :table-loading="loading"
@@ -21,6 +22,13 @@
     >
       <template slot="menuLeft">
         <el-button
+          type="primary"
+          size="small"
+          icon="el-icon-plus"
+          plain
+          @click="handleAdd"
+        >{{$t(`add`)}}</el-button>
+        <el-button
           type="danger"
           size="small"
           icon="el-icon-delete"
@@ -33,15 +41,15 @@
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
 
-      <template slot="menu" slot-scope="scope">
+      <!-- <template slot="menu" slot-scope="scope">
         <el-button
           type="text"
           size="small"
           icon="el-icon-view"
           @click.stop="rowViews(scope.row)"
         >{{$t(`chakan`)}}</el-button>
-        <!-- <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button> -->
-      </template>
+        <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button>
+      </template> -->
     </avue-crud>
     <el-dialog
       title="view"
@@ -67,6 +75,86 @@
         <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog :title="title" width="60%" :visible.sync="dialogEditVisible" class="abow_dialog">
+      <el-form ref="editfrom" :model="editfrom" label-width="80px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t(`message.messageTitle`)">
+              <el-input
+                v-model="editfrom.messageTitle"
+                :placeholder="$t(`scooter.please`) + $t(`message.messageTitle`)"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="icon">
+              <el-select
+                style="width:100%"
+                v-model="editfrom.messageIcon"
+                :placeholder="$t(`scooter.please`) +'icon'"
+              >
+                <el-option label="SUCCESS" value="SUCCESS"></el-option>
+                <el-option label="FAIL" value="FAIL"></el-option>
+                <el-option label="WARN" value="WARN"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t(`message.messageType`)">
+              <el-select
+                style="width:100%"
+                v-model="editfrom.messageType"
+                :placeholder="$t(`scooter.please`) +$t(`message.messageType`)"
+              >
+                <el-option :label="$t(`message.notice`)" value="1"></el-option>
+                <el-option :label="$t(`message.bulletin`)" value="2"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t(`message.status`)">
+              <el-select
+                style="width:100%"
+                v-model="editfrom.status"
+                :placeholder="$t(`scooter.please`) +$t(`message.status`)"
+              >
+                <el-option :label="$t(`battery.Normal`)" value="0"></el-option>
+                <el-option :label="$t(`message.close`)" value="1"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t(`message.method`)">
+              <el-select
+                style="width:100%"
+                v-model="editfrom.pushService"
+                :placeholder="$t(`scooter.please`) +$t(`message.method`)"
+              >
+                <el-option :label="$t(`merchant.no`)" value="0"></el-option>
+                <el-option :label="$t(`message.statusBar`)" value="1"></el-option>
+                <el-option :label="$t(`message.lockScreen`)" value="2"></el-option>
+                <el-option :label="$t(`message.banner`)" value="3"></el-option>
+                <el-option :label="$t(`message.SMS`)" value="4"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-form-item :label="$t(`message.messageContent`)">
+            <tinymce-editor v-model="editfrom.messageContent" ref="editor"></tinymce-editor>
+          </el-form-item>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="saveUpdate()">{{$t(`message.save`)}}</el-button>
+        <el-button @click="resetForm()">{{$t(`message.cancel`)}}</el-button>
+      </div>
+    </el-dialog>
   </basic-container>
 </template>
 
@@ -79,10 +167,20 @@ import {
   remove
 } from "@/api/swap_message/message";
 import { mapGetters } from "vuex";
-
 export default {
   data() {
     return {
+      editfrom: {
+        messageTitle: "",
+        messageIcon: "SUCCESS",
+        messageType: "2",
+        status: "0",
+        pushService: "0",
+        messageContent: ""
+      },
+      oldId: 0,
+      title: "",
+      dialogEditVisible: false,
       dialogViewVisible: false,
       rowItem: {},
       form: {},
@@ -98,7 +196,8 @@ export default {
         tip: false,
         border: true,
         index: true,
-        viewBtn: false,
+        editBtn: false,
+        viewBtn: true,
         selection: true,
         align: "center",
         menuAlign: "center",
@@ -112,12 +211,12 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入"+ this.$t(`message.messageTitle`),
+                message: "请输入" + this.$t(`message.messageTitle`),
                 trigger: "blur"
               }
             ]
           },
-              {
+          {
             label: "icon",
             width: 280,
             prop: "messageIcon",
@@ -133,7 +232,7 @@ export default {
                 value: "FAIL"
               },
               {
-                label:"WARN",
+                label: "WARN",
                 value: "WARN"
               }
             ],
@@ -163,19 +262,10 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`message.messageType`),
+                message: "请输入" + this.$t(`message.messageType`),
                 trigger: "blur"
               }
             ]
-          },
-          {
-            label:this.$t(`message.messageContent`),
-            prop: "messageContent",
-            rules: [{
-              required: true,
-              message: "请输入"+this.$t(`message.messageContent`),
-              trigger: "blur"
-            }]
           },
           {
             label: this.$t(`message.status`),
@@ -196,7 +286,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入"+this.$t(`message.status`),
+                message: "请输入" + this.$t(`message.status`),
                 trigger: "blur"
               }
             ]
@@ -249,7 +339,21 @@ export default {
                 trigger: "blur"
               }
             ]
-          }
+          },
+          {
+            label: this.$t(`message.messageContent`),
+            prop: "messageContent",
+            component: "Ueditor",
+            hide: true,
+            span: 100,
+            rules: [
+              {
+                required: true,
+                message: "请输入" + this.$t(`message.messageContent`),
+                trigger: "blur"
+              }
+            ]
+          },
           // {
           //   label: "创建人",
           //   prop: "createUser",
@@ -291,11 +395,14 @@ export default {
       data: []
     };
   },
+  // mounted() {
+  //   tinymce.init({})
+  // },
   computed: {
     ...mapGetters(["permission"]),
     permissionList() {
       return {
-        // addBtn: this.vaildData(this.permission.message_add, false),
+        addBtn: this.vaildData(this.permission.message_add, false)
         // viewBtn: this.vaildData(this.permission.message_view, false),
         // delBtn: this.vaildData(this.permission.message_delete, false),
         // editBtn: this.vaildData(this.permission.message_edit, false)
@@ -310,6 +417,49 @@ export default {
     }
   },
   methods: {
+    HTMLEncode(html) {
+      var temp = document.createElement("div");
+      temp.textContent != null
+        ? (temp.textContent = html)
+        : (temp.innerText = html);
+      var output = temp.innerHTML;
+      temp = null;
+      return output;
+    },
+    saveUpdate() {
+      console.log(this.editfrom);
+      this.editfrom.messageContent = this.HTMLEncode(
+        this.editfrom.messageContent
+      );
+      console.log(this.editfrom);
+      add(this.editfrom).then(
+        () => {
+          this.onLoad(this.page);
+          this.dialogEditVisible = true;
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    },
+    resetForm() {
+      this.editfrom = {
+        messageTitle: "",
+        select: "SUCCESS",
+        messageType: "2",
+        status: "0",
+        pushService: "0",
+        messageContent: ""
+      };
+    },
+    handleAdd() {
+      this.title = "新 增";
+      this.dialogEditVisible = true;
+    },
     rowViews(row) {
       getDetail(row.messageId).then(res => {
         var data = res.data.data;
