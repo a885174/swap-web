@@ -48,3 +48,11 @@ export const update = (row) => {
   })
 }
 
+export const uploadPics = (formData) => {
+  return request({
+    url: '/api/blade-resource/oss/endpoint/upload',
+    method: 'post',
+    data: formData
+  })
+}
+

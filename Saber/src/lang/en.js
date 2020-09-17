@@ -423,7 +423,8 @@ export default {
     appointmentSuccessful: "Appointment successful",
     appointmentFailed: "Appointment failed",
     expired: "Expired",
-    batteryRemoved: "Battery removed"
+    batteryRemoved: "Battery removed",
+    add: "add",
   },
   suggest: {
     detials: "detail",
@@ -486,7 +487,8 @@ export default {
     id: "Announcement ID",
     title: "Announcement title",
     type: "Announcement type",
-    results: "Push results"
+    save:"Save",
+    cancel:"Cancel"
   },
   repaircompany: {
     comName: "Name of Repair Merchant",
