@@ -236,6 +236,9 @@
               prop: "statusName",
               hide: true,
               display: false
+            },{
+              label:"关联客户",
+              prop:'clientName',
             }
           ]
         },
