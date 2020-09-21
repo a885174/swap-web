@@ -156,6 +156,32 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
+    var validateDeviceName = (rule, value, callback) => {
+      var reg = /^[a-zA-Z0-9]+$/;
+      if (reg.test(value)) {
+        callback(new Error("请输入英文+数字"));
+      } else {
+        callback();
+      }
+    };
+    // VIN码 验证
+    var validateVin = (rule, value, callback) => {
+      var reg = /^(MC)\d{14}$/;
+      if (!reg.test(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    };
+    // 车牌号 验证
+    var validateLicense = (rule, value, callback) => {
+      var reg = /^[A-Za-z]{1,2}[0-9]{1,4}[A-Za-z]{0,3}$/;
+      if (!reg.test(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    };
     return {
       produceTime: "",
       dialogFormVisible: false,
@@ -236,8 +262,9 @@ export default {
             labelWidth: 120,
             rules: [
               {
+                validator: validateVin,
                 required: true,
-                message: this.$t(`scooter.please`) + this.$t(`scooter.vincode`),
+                message: this.$t(`scooter.enterVin`),
                 trigger: "blur"
               }
             ]
@@ -250,9 +277,9 @@ export default {
             labelWidth: 120,
             rules: [
               {
+                validator: validateLicense,
                 required: false,
-                message:
-                  this.$t(`scooter.please`) + this.$t(`scooter.licensePlate`),
+                message: this.$t(`scooter.enterLicensePlate`),
                 trigger: "blur"
               }
             ]
@@ -426,19 +453,19 @@ export default {
           {
             label: this.$t(`user.username`),
             prop: "username",
-            editDisabled:true,
+            editDisabled: true,
             editDisplay: false,
-            addDisabled:true,
-            addDisplay: false,
-            },
-            {
+            addDisabled: true,
+            addDisplay: false
+          },
+          {
             label: this.$t(`tenant.tenantName`),
             prop: "tenantName",
-            editDisabled:true,
+            editDisabled: true,
             editDisplay: false,
-            addDisabled:true,
-            addDisplay: false,
-            },
+            addDisabled: true,
+            addDisplay: false
+          },
           {
             label: this.$t(`scooter.initStatus`),
             prop: "initStatus",
@@ -471,7 +498,7 @@ export default {
             label: this.$t(`scooter.runStatus`),
             prop: "runStatus",
             type: "select",
-            hide:true,
+            hide: true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -548,7 +575,7 @@ export default {
             label: this.$t(`scooter.securityLock`),
             prop: "securityLock",
             type: "select",
-            hide:true,
+            hide: true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -574,7 +601,7 @@ export default {
             label: this.$t(`scooter.arrearageLock`),
             prop: "arrearageLock",
             type: "select",
-            hide:true,
+            hide: true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "1",
@@ -718,8 +745,8 @@ export default {
             prop: "produceTime",
             default: true,
             type: "datetime",
-            format: "yyyy-MM-dd",
-            valueFormat: "yyyy-MM-dd",
+            format: "dd-MM-yyyy",
+            valueFormat: "dd-MM-yyyy",
             rules: [
               {
                 required: false,
@@ -820,7 +847,8 @@ export default {
                 { label: "IMEI", prop: data.imei },
                 {
                   label: this.$t(`scooter.mileageValue`),
-                  prop: data.mileageValue == null ? "0" : data.mileageValue + "km"
+                  prop:
+                    data.mileageValue == null ? "0" : data.mileageValue + "km"
                 },
                 {
                   label: this.$t(`scooter.expirationDate`),

@@ -26,7 +26,7 @@
           icon="el-icon-delete"
           plain
           @click="handleDelete"
-        >{{$t(`delete `)}}</el-button>
+        >{{$t(`delete`)}}</el-button>
       </template>
 
       <template slot-scope="scope" slot="menu">
@@ -78,6 +78,50 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
+    // 联系电话/手机 验证
+    var validateContactNumber = (rule, value, callback) => {
+      var reg = /^(08)\d{7,12}$/;
+      if (!reg.test(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    };
+
+    // 设备类名称 验证
+    var validateDeviceName = (rule, value, callback) => {
+      var reg = /^[a-zA-Z0-9]+$/;
+      if (!reg.test(value)) {
+        callback(new Error("请输入英文+数字"));
+      } else {
+        callback();
+      }
+    };
+
+    // 人名类 验证
+    var validateUserName = (rule, value, callback) => {
+      var reg = /^[A-Za-z]{1}[ A-Za-z_-]{1,35}$/;
+      if (!reg.test(value)) {
+        callback(new Error("请输入主要联系人"));
+      } else {
+        callback();
+      }
+    };
+
+    // 企业名类 验证
+    var validateStoreName = (rule, value, callback) => {
+      var reg = /^[0-9]+$/;
+      if (value.length <= 0) {
+        callback(
+          new Error(this.$t(`scooter.please`) + this.$t(`store.storeName`))
+        );
+      } else if (reg.test(value)) {
+        callback(this.$t(`store.pureNumber`));
+      } else {
+        callback();
+      }
+    };
+
     return {
       dialogViewVisible: false,
       rowItem: {},
@@ -123,6 +167,7 @@ export default {
             search: true,
             rules: [
               {
+                validator: validateUserName,
                 required: true,
                 message:
                   this.$t(`scooter.please`) + this.$t(`supplier.supplierName`),
@@ -164,8 +209,10 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateUserName,
                 required: false,
-                message: "请输入主要联系人",
+                message:
+                  this.$t(`scooter.please`) + this.$t(`supplier.linkman`),
                 trigger: "blur"
               }
             ]
@@ -176,6 +223,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateContactNumber,
                 required: false,
                 message:
                   this.$t(`scooter.please`) + this.$t(`store.contactNumber`),
@@ -189,6 +237,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateStoreName,
                 required: false,
                 message: this.$t(`scooter.please`) + this.$t(`store.address`),
                 trigger: "blur"

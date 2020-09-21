@@ -36,6 +36,27 @@
 
   export default {
     data() {
+    var validateDeviceName = (rule, value, callback) => {
+      var reg = /^[a-zA-Z0-9]+$/;
+      if (reg.test(value)) {
+        callback(new Error("请输入英文+数字"));
+      } else {
+        callback();
+      }
+    };
+    // 企业名类 验证
+    var validateStoreName = (rule, value, callback) => {
+      var reg = /^[0-9]+$/;
+      if (value.length <= 0) {
+        callback(
+          new Error(this.$t(`scooter.please`) + this.$t(`store.storeName`))
+        );
+      } else if (reg.test(value)) {
+        callback(this.$t(`store.pureNumber`));
+      } else {
+        callback();
+      }
+    };
       return {
         form: {},
         query: {},
@@ -66,8 +87,9 @@
               label: "客户名称",
               prop: "tenantName",
               rules: [{
+                validator: validateStoreName,
                 required: true,
-                message: "请输入客户名称",
+                // message: "请输入客户名称",
                 trigger: "blur"
               }]
             },
@@ -111,6 +133,7 @@
               label: "联系电话",
               prop: "contactNumber",
               rules: [{
+                validator: validateContactNumber,
                 required: true,
                 message: this.$t(`scooter.please`)+this.$t(`store.contactNumber`),
                 trigger: "blur"
@@ -120,6 +143,7 @@
               label: "联系地址",
               prop: "address",
               rules: [{
+                validator: validateStoreName,
                 required: true,
                 message: "请输入联系地址",
                 trigger: "blur"

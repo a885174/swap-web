@@ -218,7 +218,20 @@ export default {
           },
           {
             label: "可装电池数",
+            width: 100,
             prop: "batteryNumber",
+            type: "select",
+            valueDefault: "1",
+            dicData: [
+              {
+                label: 1,
+                value: "1"
+              },
+              {
+                label: 2,
+                value: "2"
+              }
+            ],
             rules: [
               {
                 required: true,

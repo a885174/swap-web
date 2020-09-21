@@ -182,8 +182,11 @@ export default {
     enterSupplierId: "Please enter supplier id",
     enterShelfLife: "Please enter the shelf life (months)",
     userAssociation: "Are you sure to unlink with client?",
-    lock:"lock",
-    unlock:"unlok"
+    lock: "lock",
+    unlock: "unlok",
+    enterVin: "Please enter the Vin code (for example: MC+14 digits)",
+    enterLicensePlate:
+      "Please enter the license plate number (for example: 1-2 English letters + 1-4 numbers + 0-3 English letters)"
   },
   battery: {
     batteryCode: "Battery ID Number",
@@ -222,7 +225,8 @@ export default {
     moduleError: "Module error",
     enterlockStatus: "Please enter the lock status 0: Locked 1: Unlocked",
     enterpowerStatus:
-      "Please enter the charging status 0: charging 1: discharging 2: shelving"
+      "Please enter the charging status 0: charging 1: discharging 2: shelving",
+    enterBID: "Please enter the battery number (for example: BA/BT+14 numbers)"
   },
   station: {
     stationCode: "Swap Station ID Number",
@@ -268,9 +272,9 @@ export default {
     currentMaximumTemperature:
       "The current maximum temperature of the rechargeable battery",
     selectStore: "Please select a store",
-    enterSwitchCabinetNumber: "Please enter the switch cabinet number (UID)",
+    enterSwitchCabinetNumber: "Please enter the switch cabinet number (UID) (for example: SS+14 number)",
     enterModel: "Please enter the switch cabinet model",
-    enterDeviceCode: "Please enter the IMEI code of the device",
+    enterDeviceCode: "Please enter the IMEI code of the device (for example: 15-17 digits)",
     enterNumber: "Please enter the number of charging bins",
     inputReading: "Please enter the real-time reading of the meter",
     inputReadingTime: "Please enter the reading time",
@@ -312,7 +316,7 @@ export default {
     scooterProduction: "Scooter Production",
     electricVehicleSupplier: "Electric vehicle supplier",
     switchCabinetSupplier: "Switch cabinet supplier",
-    batterySupplier: "Battery supplier",
+    batterySupplier: "Battery supplier"
   },
   store: {
     storeName: "Store Name",
@@ -346,7 +350,8 @@ export default {
     greaterZero: "Please enter a number greater than 0 or equal to 0",
     enterNum: "Please enter the number",
     chooseMerchant: "Choose a merchant",
-    enterRentPeriod: "Please enter the billing period (days)"
+    enterRentPeriod: "Please enter the billing period (days)",
+    pureNumber: "Store name cannot be a pure number"
   },
 
   merchant: {
@@ -424,7 +429,7 @@ export default {
     appointmentFailed: "Appointment failed",
     expired: "Expired",
     batteryRemoved: "Battery removed",
-    add: "add",
+    add: "add"
   },
   suggest: {
     detials: "detail",
@@ -479,7 +484,7 @@ export default {
     method: "Push method",
     statusBar: "Status Bar",
     lockScreen: "Lock screen",
-    messageContent: 'Content',
+    messageContent: "Content",
     banner: "Banner notification",
     SMS: "SMS",
     results: "Push results",
@@ -487,8 +492,8 @@ export default {
     id: "Announcement ID",
     title: "Announcement title",
     type: "Announcement type",
-    save:"Save",
-    cancel:"Cancel"
+    save: "Save",
+    cancel: "Cancel"
   },
   repaircompany: {
     comName: "Name of Repair Merchant",
