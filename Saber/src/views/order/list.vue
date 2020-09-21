@@ -538,7 +538,7 @@ export default {
               // { label: "套餐总价", prop: data.planTotal },
               // { label: "优惠券", prop: data.discounts },
               { label: this.$t(`order.totalPrices`), prop: data.totalPrices },
-              { label: this.$t(`scooter.totalMileag`), prop: data.distanceSum },
+              { label: this.$t(`order.totalMileag`), prop: data.distanceSum },
               {
                 label: this.$t(`order.payChannel`),
                 prop: data.payChannel == "0" ? "ovo" : "gopay"

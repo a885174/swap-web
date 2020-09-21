@@ -88,6 +88,24 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
+    // 设备类名称 验证
+    var validateDeviceName = (rule, value, callback) => {
+      var reg = /^[a-zA-Z0-9]+$/;
+      if (!reg.test(value)) {
+        callback(new Error("请输入英文+数字"));
+      } else {
+        callback();
+      }
+    };
+    // 电池BID码 验证
+    var validateBID = (rule, value, callback) => {
+      var reg = /^(BA|BT|ba|bt)\d{14}$/;
+      if (!reg.test(value)) {
+        callback(new Error("请输入英文+数字"));
+      } else {
+        callback();
+      }
+    };
     return {
       dialogViewVisible: false,
       form: {},
@@ -135,9 +153,9 @@ export default {
             search: true,
             rules: [
               {
+                validator: validateBID,
                 required: true,
-                message:
-                  this.$t(`scooter.please`) + this.$t(`battery.batteryCode`),
+                message: this.$t(`battery.enterBID`),
                 trigger: "blur"
               }
             ]
@@ -150,6 +168,7 @@ export default {
             search: true,
             rules: [
               {
+                validator: validateDeviceName,
                 required: false,
                 message:
                   this.$t(`scooter.please`) + this.$t(`battery.batteryName`),
