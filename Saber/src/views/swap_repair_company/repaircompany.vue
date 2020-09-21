@@ -76,6 +76,28 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
+    // 联系电话/手机 验证
+    var validateContactNumber = (rule, value, callback) => {
+      var reg = /^(08)\d{7,12}$/;
+      if (!reg.test(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    };
+    // 企业名类 验证
+    var validateStoreName = (rule, value, callback) => {
+      var reg = /^[0-9]+$/;
+      if (value.length <= 0) {
+        callback(
+          new Error(this.$t(`scooter.please`) + this.$t(`store.storeName`))
+        );
+      } else if (reg.test(value)) {
+        callback(this.$t(`store.pureNumber`));
+      } else {
+        callback();
+      }
+    };
     return {
       dialogViewVisible: false,
       rowItem: {},
@@ -143,6 +165,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateContactNumber,
                 required: false,
                 message:
                   this.$t(`scooter.please`) + this.$t(`suppliercontactNumber`),
@@ -180,6 +203,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateStoreName,
                 required: false,
                 message: this.$t(`scooter.please`) + this.$t(`store.address`),
                 trigger: "blur"

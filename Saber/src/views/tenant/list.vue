@@ -149,6 +149,29 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
+    // 联系电话/手机 验证
+    var validateContactNumber = (rule, value, callback) => {
+      var reg = /^(08)\d{7,12}$/;
+      if (!reg.test(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    };
+
+    // 企业名类 验证
+    var validateStoreName = (rule, value, callback) => {
+      var reg = /^[0-9]+$/;
+      if (value.length <= 0) {
+        callback(
+          new Error(this.$t(`scooter.please`) + this.$t(`store.storeName`))
+        );
+      } else if (reg.test(value)) {
+        callback(this.$t(`store.pureNumber`));
+      } else {
+        callback();
+      }
+    };
     this.viewBtn = true;
     return {
       dialogViewVisibles: false,
@@ -369,6 +392,7 @@ export default {
             prop: "contactNumber",
             rules: [
               {
+                validator: validateContactNumber,
                 required: true,
                 message:
                   this.$t(`scooter.please`) + this.$t(`store.contactNumber`),
@@ -382,6 +406,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateStoreName,
                 required: false,
                 message: "请输入联系地址",
                 trigger: "blur"
@@ -674,7 +699,10 @@ export default {
                 },
                 { label: "address", prop: data.address },
                 { label: "email", prop: data.email },
-                { label: this.$t(`tenant.legalPerson`), prop: data.legalPerson },
+                {
+                  label: this.$t(`tenant.legalPerson`),
+                  prop: data.legalPerson
+                },
                 { label: this.$t(`tenant.scooters`), prop: data.scooters },
                 { label: this.$t(`tenant.users`), prop: data.users },
                 {

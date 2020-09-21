@@ -102,6 +102,16 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
+
+    // 联系电话/手机 验证
+    var validateContactNumber = (rule, value, callback) => {
+      var reg = /^(08)\d{7,12}$/;
+      if (!reg.test(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    };
     return {
       dialogViewVisible: false,
       rowItem: {},
@@ -180,6 +190,7 @@ export default {
             search: true,
             rules: [
               {
+                validator: validateContactNumber,
                 required: false,
                 message: "请输入手机号码",
                 trigger: "blur"

@@ -177,7 +177,9 @@ export default {
     enterShelfLife: "请输入保质期 （月）",
     userAssociation: "确定解决用户关联?",
     lock: "锁车",
-    unlock: "解锁"
+    unlock: "解锁",
+    enterVin: "请输入Vin码（例如：MC+14位数字）",
+    enterLicensePlate: "请输入车牌号（例如：1-2个英文字母 + 1-4个数字 + 0-3个英文字母）"
   },
   battery: {
     batteryCode: "电池编号 BID",
@@ -215,7 +217,8 @@ export default {
     communicationError: "通讯错误",
     moduleError: "模块错误",
     enterlockStatus: "请输入锁定状态 0:已锁定 1:未锁定",
-    enterpowerStatus: "请输入充电状态 0:充电中 1:放电中 2:搁置"
+    enterpowerStatus: "请输入充电状态 0:充电中 1:放电中 2:搁置",
+    enterBID: "请输入电池编号（例如：BA/BT+14数字）"
   },
   station: {
     stationCode: "换电柜编号（UID）",
@@ -259,9 +262,9 @@ export default {
     maximumTemperature: "充电电池的MOS最高温度",
     currentMaximumTemperature: "当前充电电池的最高温度",
     selectStore: "请选择店铺",
-    enterSwitchCabinetNumber: "请输入换电柜编号（UID）",
+    enterSwitchCabinetNumber: "请输入换电柜编号(UID)(例如:SS+14数字)",
     enterModel: "请输入换电柜型号",
-    enterDeviceCode: "请输入设备IMEI码",
+    enterDeviceCode: "请输入设备IMEI码(例如:15~17位数字)",
     enterNumber: "请输入充电仓数",
     inputReading: "请输入电表实时读数",
     inputReadingTime: "请输入读数时间",
@@ -320,7 +323,8 @@ export default {
     greaterZero: "请输入大于0或等于0的数字",
     enterNum: "请输入数字",
     chooseMerchant: "选择商户",
-    enterRentPeriod: "请输入结算周期（天)"
+    enterRentPeriod: "请输入结算周期（天)",
+    pureNumber: "店铺名不能为纯数字"
   },
   tenant: {
     tenantName: "客户名称",
