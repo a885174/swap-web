@@ -41,10 +41,7 @@
       <template slot-scope="{row}" slot="totalPrices">
         <el-tag>{{row.totalPrices/100}}</el-tag>
       </template>
-      <template
-        slot-scope="{row}"
-        slot="orderStatus"
-      >
+      <template slot-scope="{row}" slot="orderStatus">
         <label
           :style="{color:row.orderStatus=='0'?'green':'red'}"
         >{{row.orderStatus=="0"?$t(`billing.billed`):(row.orderStatus=="1"?$t(`billing.unbilled`):(row.orderStatus=="2"?$t(`billing.paid`):(row.orderStatus=="3"?$t(`billing.abnormal`):$t(`billing.billing`))))}}</label>
@@ -107,6 +104,19 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
+    // 企业名类 验证
+    var validateStoreName = (rule, value, callback) => {
+      var reg = /^[0-9]+$/;
+      if (value.length <= 0) {
+        callback(
+          new Error(this.$t(`scooter.please`) + this.$t(`store.storeName`))
+        );
+      } else if (reg.test(value)) {
+        callback(this.$t(`store.pureNumber`));
+      } else {
+        callback();
+      }
+    };
     return {
       form: {},
       uploadorderId: "",
@@ -173,7 +183,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`)+this.$t(`store.storeID`),
+                message: this.$t(`scooter.please`) + this.$t(`store.storeID`),
                 trigger: "blur"
               }
             ]
@@ -183,6 +193,7 @@ export default {
             prop: "storeName",
             rules: [
               {
+                validator: validateStoreName,
                 required: true,
                 message: "请输入店铺",
                 trigger: "blur"
@@ -335,7 +346,6 @@ export default {
             hide: true,
             listType: "picture-img"
           }
-    
         ]
       },
       data: []

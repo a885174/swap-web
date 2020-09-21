@@ -394,6 +394,28 @@ var auth = `Basic ${Base64.encode(
 
 export default {
   data() {
+    // 联系电话/手机 验证
+    var validateContactNumber = (rule, value, callback) => {
+      var reg = /^(08)\d{7,12}$/;
+      if (!reg.test(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    };
+    // 企业名类 验证
+    var validateStoreName = (rule, value, callback) => {
+      var reg = /^[0-9]+$/;
+      if (value.length <= 0) {
+        callback(
+          new Error(this.$t(`scooter.please`) + this.$t(`store.storeName`))
+        );
+      } else if (reg.test(value)) {
+        callback(this.$t(`store.pureNumber`));
+      } else {
+        callback();
+      }
+    };
     return {
       dialogViewVisible: false,
       rowItem: {},
@@ -760,6 +782,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateStoreName,
                 required: true,
                 message:
                   this.$t(`scooter.please`) + this.$t(`supplier.address`),
@@ -785,6 +808,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateContactNumber,
                 required: false,
                 message:
                   this.$t(`scooter.please`) + this.$t(`stoe.contactNumber`),
@@ -919,7 +943,7 @@ export default {
                   prop:
                     data.shopStatus == "0"
                       ? this.$t(`plan.sale`)
-                      : this.$t(`plan.takeOff`) 
+                      : this.$t(`plan.takeOff`)
                 }
               ]
             }

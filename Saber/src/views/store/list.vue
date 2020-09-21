@@ -418,6 +418,7 @@ export default {
   name: "test",
   components: { mapbox },
   data() {
+    // 金额类 验证
     const validateNumber = (rule, value, callback) => {
       if (isNumber(value)) {
         if (value < 0) {
@@ -427,6 +428,30 @@ export default {
         }
       } else {
         callback(new Error(this.$t(`store.enterNum`)));
+      }
+    };
+
+    // 联系电话/手机 验证
+    var validateContactNumber = (rule, value, callback) => {
+      var reg = /^(08)\d{7,12}$/;
+      if (!reg.test(value)) {
+        callback(new Error());
+      } else {
+        callback();
+      }
+    };
+
+    // 企业名类 验证
+    var validateStoreName = (rule, value, callback) => {
+      var reg = /^[0-9]+$/;
+      if (value.length <= 0) {
+        callback(
+          new Error(this.$t(`scooter.please`) + this.$t(`store.storeName`))
+        );
+      } else if (reg.test(value)) {
+        callback(this.$t(`store.pureNumber`));
+      } else {
+        callback();
       }
     };
 
@@ -611,8 +636,9 @@ export default {
             search: true,
             rules: [
               {
+                validator: validateStoreName,
                 required: true,
-                message: this.$t(`scooter.please`) + this.$t(`store.storeName`),
+                // message: this.$t(`scooter.please`) + this.$t(`store.storeName`),
                 trigger: "blur"
               }
             ]
@@ -692,6 +718,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateContactNumber,
                 required: false,
                 message:
                   this.$t(`scooter.please`) + this.$t(`store.contactNumber`),
@@ -705,6 +732,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateStoreName,
                 required: false,
                 message: this.$t(`scooter.please`) + this.$t(`store.address`),
                 trigger: "blur"

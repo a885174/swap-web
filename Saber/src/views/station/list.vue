@@ -87,7 +87,7 @@
         >{{$t(`getlocaton`)}}</el-button>
       </template>
     </avue-crud>
-    
+
     <el-dialog
       title="Map"
       :visible.sync="mapDialogVisible"
@@ -364,6 +364,38 @@ var auth = `Basic ${Base64.encode(
 )}`;
 export default {
   data() {
+    // 企业名类 验证
+    var validateStoreName = (rule, value, callback) => {
+      var reg = /^[0-9]+$/;
+      if (value.length <= 0) {
+        callback(
+          new Error(this.$t(`scooter.please`) + this.$t(`store.storeName`))
+        );
+      } else if (reg.test(value)) {
+        callback(this.$t(`store.pureNumber`));
+      } else {
+        callback();
+      }
+    };
+    // 换电柜SID码 验证
+    var validateSID = (rule, value, callback) => {
+      var reg = /^(SS|ss)\d{14}$/;
+      if (!reg.test(value)) {
+        callback(new Error("请输入英文+数字"));
+      } else {
+        callback();
+      }
+    };
+
+    // IMEI码 验证
+    var validateIMEI = (rule, value, callback) => {
+      var reg = /^\d{15,17}$/;
+      if (!reg.test(value)) {
+        callback(new Error("请输入英文+数字"));
+      } else {
+        callback();
+      }
+    };
     return {
       dialogViewVisibles: false,
       rowItem: {},
@@ -470,6 +502,7 @@ export default {
             search: true,
             rules: [
               {
+                validator: validateSID,
                 required: true,
                 message: this.$t(`station.enterSwitchCabinetNumber`),
                 trigger: "blur"
@@ -494,6 +527,7 @@ export default {
             prop: "imei",
             rules: [
               {
+                validator: validateIMEI,
                 required: false,
                 addDisabled: true,
                 addDisplay: false,
@@ -607,6 +641,7 @@ export default {
             hide: true,
             rules: [
               {
+                validator: validateStoreName,
                 required: false,
                 message: this.$t(`station.enterAddress`),
                 trigger: "blur"
