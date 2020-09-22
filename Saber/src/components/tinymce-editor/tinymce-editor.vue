@@ -69,6 +69,11 @@ export default {
         plugins: this.plugins,
         toolbar: this.toolbar,
         branding: false,
+        convert_urls: false,
+        // images_upload_url: `http://47.112.171.131/`,
+        // images_upload_credentials:true,
+        // relative_urls: false,
+        // remove_script_host: false,
         // menubar: false,
         //此处为图片上传处理函数，这个直接用了base64的图片形式上传图片，
         //如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
