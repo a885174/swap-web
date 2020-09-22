@@ -11,12 +11,25 @@ export const getList = (current, size, params) => {
     }
   })
 }
+
+
 export const remove = (ids) => {
   return request({
     url: '/api/blade-user/remove',
     method: 'post',
     params: {
       ids,
+    }
+  })
+}
+
+export const SavueTeant = (ids,tenantId) => {
+  return request({
+    url: '/api/blade-user/SavueTeant',
+    method: 'post',
+    params: {
+      ids,
+      tenantId
     }
   })
 }

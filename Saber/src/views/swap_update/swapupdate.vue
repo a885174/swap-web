@@ -63,7 +63,11 @@
           </el-input>
         </el-form-item>
         <el-form-item label="版本号" prop="versionNumber ">
-          <el-input v-model="formData.versionNumber " placeholder="请输入版本号" clearable :style="{width: '100%'}" :disabled="true">
+          <el-input v-model="formData.versionNumber " placeholder="请输入版本号" clearable :style="{width: '100%'}" >
+          </el-input>
+        </el-form-item>
+        <el-form-item label="硬件版本号" prop="hardwareVersion ">
+          <el-input v-model="formData.hardwareVersion " placeholder="请输入版本号" clearable :style="{width: '100%'}" >
           </el-input>
         </el-form-item>
         <el-form-item label="字节长度" prop="byteLength">
@@ -194,15 +198,15 @@ var auth = `Basic ${Base64.encode(
                 trigger: "blur"
               }]
             },
-            // {
-            //   label: "创建人",
-            //   prop: "createUser",
-            //   rules: [{
-            //     required: true,
-            //     message: "请输入创建人",
-            //     trigger: "blur"
-            //   }]
-            // },
+            {
+              label: "硬件版本号",
+              prop: "hardwareVersion",
+              rules: [{
+                required: true,
+                message: "请输入创建人",
+                trigger: "blur"
+              }]
+            },
             // {
             //   label: "创建时间",
             //   prop: "createTime",
@@ -239,6 +243,7 @@ var auth = `Basic ${Base64.encode(
         patchContent:undefined,
         versionNumber: undefined,
         byteLength: undefined,
+        hardwareVersion:undefined,
         patchType: undefined,
        
       },
@@ -433,7 +438,7 @@ var auth = `Basic ${Base64.encode(
         console.log(res);
         this.formData.patchUrl=res.data.patchUrl;
         this.formData.content=res.data.content;
-        this.formData.versionNumber=res.data.versionNumber;
+        // this.formData.versionNumber=res.data.versionNumber;
         this.formData.byteLength=res.data.byteLength;
         this.formData.patchUrl=res.data.patchUrl;
       }
