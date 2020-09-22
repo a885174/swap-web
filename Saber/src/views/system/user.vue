@@ -35,7 +35,7 @@
 
         <el-dialog title="Assign Client" :visible.sync="dialogFormVisible" width="30%" center>
           <span slot="footer" class="dialog-footer">
-            <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
+            <avue-form :option="formoption" v-model="form2" @submit="handleSubmit"></avue-form>
           </span>
         </el-dialog>
       </template>
@@ -86,6 +86,7 @@
       };
       return {
         form: {},
+         form2: {},
         selectionList: [],
         query: {},
         page: {
@@ -369,7 +370,7 @@
     },
         handleSubmit() {
       if (this.ids.length > 0) {
-        SavueTeant(this.ids, this.form.tenantId).then(() => {
+        SavueTeant(this.ids, this.form2.tenantId).then(() => {
           this.onLoad(this.page);
           this.$message({
             type: "success",
