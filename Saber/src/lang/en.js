@@ -205,7 +205,8 @@ export default {
     temperature: "Temperature",
     connectStatus: "Connected Status",
     systemStatus: "System Model",
-    Normal: "Normal",
+    release: "Publish",
+    ubrelease: "Unpublished",
     Fault: "Fault",
     Repairing: "Repairing",
     Castoff: "Cast off",
@@ -272,9 +273,11 @@ export default {
     currentMaximumTemperature:
       "The current maximum temperature of the rechargeable battery",
     selectStore: "Please select a store",
-    enterSwitchCabinetNumber: "Please enter the switch cabinet number (UID) (for example: SS+14 number)",
+    enterSwitchCabinetNumber:
+      "Please enter the switch cabinet number (UID) (for example: SS+14 number)",
     enterModel: "Please enter the switch cabinet model",
-    enterDeviceCode: "Please enter the IMEI code of the device (for example: 15-17 digits)",
+    enterDeviceCode:
+      "Please enter the IMEI code of the device (for example: 15-17 digits)",
     enterNumber: "Please enter the number of charging bins",
     inputReading: "Please enter the real-time reading of the meter",
     inputReadingTime: "Please enter the reading time",

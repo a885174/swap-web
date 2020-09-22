@@ -37,8 +37,19 @@
         >{{$t(`delete`)}}</el-button>
       </template>
       <template slot-scope="{row}" slot="status">
-        <label :style="{color:row.status=='0'?'green':'red'}">{{row.status=="0"?(`Normal`):"Close"}}</label>
+        <label
+          :style="{color:row.status=='0'?'green':'red'}"
+        >{{row.status=="0"?(`Publish`):"Unpublished"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
+      <template slot-scope="scope" slot="menu">
+        <el-button
+          v-if="scope.row.status == 1"
+          type="text"
+          size="small"
+          icon="el-icon-thumb"
+          @click.stop="updateStuats(scope.row)"
+        >{{$t(`battery.release`)}}</el-button>
       </template>
 
       <!-- <template slot="menu" slot-scope="scope">
@@ -49,7 +60,7 @@
           @click.stop="rowViews(scope.row)"
         >{{$t(`chakan`)}}</el-button>
         <el-button type="text" @click="getListData(scope.row)">客户绑定详情</el-button>
-      </template> -->
+      </template>-->
     </avue-crud>
     <el-dialog
       title="view"
@@ -77,10 +88,10 @@
     </el-dialog>
 
     <el-dialog :title="title" width="60%" :visible.sync="dialogEditVisible" class="abow_dialog">
-      <el-form ref="editfrom" :model="editfrom" label-width="80px">
-        <el-row>
+      <el-form ref="editfrom" :model="editfrom" :rules="rules" label-width="80px">
+        <el-row style="height:100px">
           <el-col :span="12">
-            <el-form-item :label="$t(`message.messageTitle`)">
+            <el-form-item :label="$t(`message.messageTitle`)" prop="messageTitle">
               <el-input
                 v-model="editfrom.messageTitle"
                 :placeholder="$t(`scooter.please`) + $t(`message.messageTitle`)"
@@ -89,20 +100,22 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="icon">
-              <el-select
-                style="width:100%"
-                v-model="editfrom.messageIcon"
-                :placeholder="$t(`scooter.please`) +'icon'"
+              <el-upload
+                class="avatar-uploader"
+                action="http://47.112.171.131/api//blade-resource/oss/endpoint//upload"
+                :headers="myHeaders"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
               >
-                <el-option label="SUCCESS" value="SUCCESS"></el-option>
-                <el-option label="FAIL" value="FAIL"></el-option>
-                <el-option label="WARN" value="WARN"></el-option>
-              </el-select>
+                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item :label="$t(`message.messageType`)">
               <el-select
                 style="width:100%"
@@ -113,7 +126,7 @@
                 <el-option :label="$t(`message.bulletin`)" value="2"></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col>-->
           <el-col :span="12">
             <el-form-item :label="$t(`message.status`)">
               <el-select
@@ -121,13 +134,11 @@
                 v-model="editfrom.status"
                 :placeholder="$t(`scooter.please`) +$t(`message.status`)"
               >
-                <el-option :label="$t(`battery.Normal`)" value="0"></el-option>
-                <el-option :label="$t(`message.close`)" value="1"></el-option>
+                <el-option :label="$t(`battery.release`)" value="0"></el-option>
+                <el-option :label="$t(`battery.ubrelease`)" value="1"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item :label="$t(`message.method`)">
               <el-select
@@ -144,6 +155,23 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <!-- <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t(`message.method`)">
+              <el-select
+                style="width:100%"
+                v-model="editfrom.pushService"
+                :placeholder="$t(`scooter.please`) +$t(`message.method`)"
+              >
+                <el-option :label="$t(`merchant.no`)" value="0"></el-option>
+                <el-option :label="$t(`message.statusBar`)" value="1"></el-option>
+                <el-option :label="$t(`message.lockScreen`)" value="2"></el-option>
+                <el-option :label="$t(`message.banner`)" value="3"></el-option>
+                <el-option :label="$t(`message.SMS`)" value="4"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>-->
         <el-row>
           <el-form-item :label="$t(`message.messageContent`)">
             <tinymce-editor v-model="editfrom.messageContent" ref="editor"></tinymce-editor>
@@ -151,7 +179,7 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveUpdate()">{{$t(`message.save`)}}</el-button>
+        <el-button type="primary" @click="saveUpdate('editfrom')">{{$t(`message.save`)}}</el-button>
         <el-button @click="resetForm()">{{$t(`message.cancel`)}}</el-button>
       </div>
     </el-dialog>
@@ -167,9 +195,27 @@ import {
   remove
 } from "@/api/swap_message/message";
 import { mapGetters } from "vuex";
+import website from "@/config/website";
+import { getToken } from "@/util/auth";
+var token = getToken(); // 要保证取到
+var auth = `Basic ${Base64.encode(
+  `${website.clientId}:${website.clientSecret}`
+)}`;
 export default {
   data() {
     return {
+      rules: {
+        messageTitle: [
+          {
+            required: true,
+            message:
+              this.$t(`scooter.please`) + this.$t(`message.messageTitle`),
+            trigger: "blur"
+          }
+        ]
+      },
+      imageUrl: "",
+      myHeaders: { Authorization: auth, "Blade-Auth": "bearer " + token },
       editfrom: {
         messageTitle: "",
         messageIcon: "SUCCESS",
@@ -220,22 +266,9 @@ export default {
             label: "icon",
             width: 280,
             prop: "messageIcon",
-            type: "select",
-            valueDefault: "SUCCESS",
-            dicData: [
-              {
-                label: "SUCCESS",
-                value: "SUCCESS"
-              },
-              {
-                label: "FAIL",
-                value: "FAIL"
-              },
-              {
-                label: "WARN",
-                value: "WARN"
-              }
-            ],
+            type: "upload",
+            imgWidth: 60,
+            listType: "picture-img",
             rules: [
               {
                 required: true,
@@ -275,11 +308,11 @@ export default {
             slot: true,
             dicData: [
               {
-                label: this.$t(`battery.Normal`),
+                label: this.$t(`battery.release`),
                 value: "0"
               },
               {
-                label: this.$t(`message.close`),
+                label: this.$t(`battery.ubrelease`),
                 value: "1"
               }
             ],
@@ -353,7 +386,7 @@ export default {
                 trigger: "blur"
               }
             ]
-          },
+          }
           // {
           //   label: "创建人",
           //   prop: "createUser",
@@ -417,25 +450,31 @@ export default {
     }
   },
   methods: {
-    HTMLEncode(html) {
-      var temp = document.createElement("div");
-      temp.textContent != null
-        ? (temp.textContent = html)
-        : (temp.innerText = html);
-      var output = temp.innerHTML;
-      temp = null;
-      return output;
+    handleAvatarSuccess(res, file) {
+      console.log(res);
+      this.imageUrl = URL.createObjectURL(file.raw);
+      this.editfrom.messageIcon = res.data.url;
     },
-    saveUpdate() {
-      console.log(this.editfrom);
-      this.editfrom.messageContent = this.HTMLEncode(
-        this.editfrom.messageContent
-      );
-      console.log(this.editfrom);
-      add(this.editfrom).then(
+    beforeAvatarUpload(file) {
+      console.log("111111");
+      // const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!');
+      // }
+      if (!isLt2M) {
+        this.$message.error("上传图片大小不能超过 2MB!");
+      }
+      return isLt2M;
+    },
+    updateStuats(row) {
+      row.status = "0";
+      row.messageContent = this.HTMLEncode(row.messageContent);
+      console.log(row);
+      update(row).then(
         () => {
           this.onLoad(this.page);
-          this.dialogEditVisible = true;
           this.$message({
             type: "success",
             message: "success!"
@@ -446,6 +485,42 @@ export default {
         }
       );
     },
+    HTMLEncode(html) {
+      var temp = document.createElement("div");
+      temp.textContent != null
+        ? (temp.textContent = html)
+        : (temp.innerText = html);
+      var output = temp.innerHTML;
+      temp = null;
+      return output;
+    },
+    saveUpdate(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          console.log(this.editfrom);
+          this.editfrom.messageContent = this.HTMLEncode(
+            this.editfrom.messageContent
+          );
+          console.log(this.editfrom);
+          add(this.editfrom).then(
+            () => {
+              this.onLoad(this.page);
+              this.dialogEditVisible = false;
+              this.$message({
+                type: "success",
+                message: "success!"
+              });
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
     resetForm() {
       this.editfrom = {
         messageTitle: "",
@@ -455,9 +530,18 @@ export default {
         pushService: "0",
         messageContent: ""
       };
+      this.dialogEditVisible = false;
     },
     handleAdd() {
       this.title = "新 增";
+      this.editfrom = {
+        messageTitle: "",
+        select: "SUCCESS",
+        messageType: "2",
+        status: "0",
+        pushService: "0",
+        messageContent: ""
+      };
       this.dialogEditVisible = true;
     },
     rowViews(row) {
@@ -501,8 +585,8 @@ export default {
                   label: this.$t(`message.status`),
                   prop:
                     data.status == "0"
-                      ? this.$t(`battery.Normal`)
-                      : this.$t(`message.close`)
+                      ? this.$t(`battery.release`)
+                      : this.$t(`battery.ubrelease`)
                 },
                 { label: this.$t(`message.publisher`), prop: data.publisher },
                 { label: this.$t(`message.method`), prop: pushService },
@@ -656,5 +740,29 @@ export default {
   padding-top: 12px;
   line-height: 20px;
   border-bottom: 1px solid #ebebeb;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+.avatar {
+  width: 100px;
+  height: 100px;
+  display: block;
 }
 </style>

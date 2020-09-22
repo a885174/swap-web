@@ -101,7 +101,7 @@
             type: "tree",
             dicUrl: "/api/blade-system/tenant/select",
             addDisplay: false,
-            editDisplay: false,
+            // editDisplay: false,
             viewDisplay: website.tenantMode,
             span: 24,
             props: {
