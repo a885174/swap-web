@@ -31,6 +31,13 @@
                    icon="el-icon-refresh"
                    @click="handleReset">密码重置
         </el-button>
+                <el-button size="small"  @click="openTenantWindos()">{{$t(`assignClient`)}}</el-button>
+
+        <el-dialog title="Assign Client" :visible.sync="dialogFormVisible" width="30%" center>
+          <span slot="footer" class="dialog-footer">
+            <avue-form :option="formoption" v-model="form" @submit="handleSubmit"></avue-form>
+          </span>
+        </el-dialog>
       </template>
       <template slot-scope="{row}"
                 slot="roleId">
@@ -49,6 +56,7 @@
     getList,
     getUser,
     remove,
+    SavueTeant,
     update,
     add,
     resetPassword
@@ -89,6 +97,30 @@
           roleTree: [],
           deptTree: [],
         },
+        dialogFormVisible:false,
+        formoption: {
+        column: [
+          {
+            label: this.$t(`assignClient`),
+            prop: "tenantId",
+            type: "tree",
+            span: 24,
+            slot: true,
+            rules: [
+              {
+                required: true,
+                message: this.$t(`scooter.selectCustomer`),
+                trigger: "blur"
+              }
+            ],
+            dicUrl: "/api/swap_tenant_bat/swaptenantbat/select",
+            props: {
+              label: "tenantName",
+              value: "tenantId"
+            }
+          }
+        ]
+      },
         option: {
           tip: false,
           border: true,
@@ -236,6 +268,9 @@
               prop: "statusName",
               hide: true,
               display: false
+            },{
+              label:"关联客户",
+              prop:'clientName',
             }
           ]
         },
@@ -322,6 +357,30 @@
             });
           });
       },
+      openTenantWindos() {
+      if (this.ids.length == 0) {
+        this.$message({
+          type: "error",
+          message: "Please select at least one piece of data!"
+        });
+      } else {
+        this.dialogFormVisible = true;
+      }
+    },
+        handleSubmit() {
+      if (this.ids.length > 0) {
+        SavueTeant(this.ids, this.form.tenantId).then(() => {
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+          this.dialogFormVisible = false;
+        });
+      } else {
+        this.$message.error("Please select at least one piece of data");
+      }
+    },
       searchReset() {
         this.query = {};
         this.onLoad(this.page);
