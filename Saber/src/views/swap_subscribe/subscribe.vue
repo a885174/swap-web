@@ -99,15 +99,6 @@ export default {
         menuWidth: 120,
         align: "center",
         column: [
-          // {
-          //   label: "预约id",
-          //   prop: "subscribeId",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入预约id",
-          //     trigger: "blur"
-          //   }]
-          // },
           {
             label: this.$t(`subscribe.stationName`),
             prop: "stationName",
@@ -119,7 +110,6 @@ export default {
               }
             ]
           },
-
           {
             label: this.$t(`subscribe.username`),
             prop: "userName",
@@ -220,42 +210,6 @@ export default {
                 trigger: "blur"
               }
             ]
-            // },
-            // {
-            //   label: "创建人",
-            //   prop: "createUser",
-            //   rules: [{
-            //     required: true,
-            //     message: "请输入创建人",
-            //     trigger: "blur"
-            //   }]
-            // },
-            // {
-            //   label: "创建时间",
-            //   prop: "createTime",
-            //   rules: [{
-            //     required: true,
-            //     message: "请输入创建时间",
-            //     trigger: "blur"
-            //   }]
-            // },
-            // {
-            //   label: "更新人",
-            //   prop: "updateUser",
-            //   rules: [{
-            //     required: true,
-            //     message: "请输入更新人",
-            //     trigger: "blur"
-            //   }]
-            // },
-            // {
-            //   label: "更新时间",
-            //   prop: "updateTime",
-            //   rules: [{
-            //     required: true,
-            //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
-            //     trigger: "blur"
-            //   }]
           }
         ]
       },

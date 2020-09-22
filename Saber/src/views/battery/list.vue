@@ -559,7 +559,6 @@ export default {
             prop: "produceTime",
             type: "datetime",
             format: "yyyy-MM-dd",
-            hide: true,
             valueFormat: "yyyy-MM-dd",
             hide: true,
             rules: [

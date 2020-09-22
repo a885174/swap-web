@@ -167,15 +167,6 @@ export default {
         menuAlign: "center",
         indexLabel: "index",
         column: [
-          // {
-          //   label: "订单id",
-          //   prop: "orderId",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入订单id",
-          //     trigger: "blur"
-          //   }]
-          // },
           {
             label: this.$t(`transactionNum`),
             search: true,
@@ -200,98 +191,6 @@ export default {
               }
             ]
           },
-          // {
-          //   label: "充电柜id",
-          //   prop: "stationId",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入充电柜id",
-          //     trigger: "blur"
-          //   }]
-          // },
-          {
-            label: "Bank cardNo",
-            prop: "cardNo",
-            hide: true,
-            rules: [
-              {
-                required: true,
-                message: "请输入店铺",
-                trigger: "blur"
-              }
-            ]
-          },
-          {
-            label: "cardholder",
-            prop: "cardholder",
-            hide: true,
-            rules: [
-              {
-                required: true,
-                message: "请输入电表初读数",
-                trigger: "blur"
-              }
-            ]
-          },
-          {
-            label: "Bank",
-            prop: "initTime",
-            hide: true,
-            rules: [
-              {
-                required: true,
-                message: "请输入初读数时间",
-                trigger: "blur"
-              }
-            ]
-          },
-          // {
-          //   label: "电表始读数",
-          //   prop: "endRead",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入电表始读数",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "始读数时间",
-          //   prop: "endTime",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入始读数时间",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "实用电量",
-          //   prop: "electricitySum",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入实用电量",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "电费单价",
-          //   prop: "electricityPrice",
-          //     slot:true,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入电费单价",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "租金",
-          //   prop: "rentPrice",
-          //   slot:true,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入租金",
-          //     trigger: "blur"
-          //   }]
-          // },
           {
             label: this.$t(`billing.totalPrices`),
             prop: "totalPrices",

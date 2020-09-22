@@ -34,7 +34,7 @@ export const remove = (ids) => {
 
 export const add = (row) => {
   return request({
-    url: '/api/swap_update/swapupdate/submit',
+    url: '/api/swap_update/swapupdate/save',
     method: 'post',
     data: row
   })
