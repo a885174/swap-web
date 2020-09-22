@@ -990,9 +990,7 @@ export default {
     },
 
     handleSuccess(res, file) {
-      // console.log(res);
       // console.log(URL.createObjectURL(file.raw));
-      // this.photoUrl = URL.createObjectURL(file.raw);
       // this.data.pictureUrl = res.data.url;
       this.photoUrl = res.data.url;
       this.data.pictureUrl = res.data.url;
