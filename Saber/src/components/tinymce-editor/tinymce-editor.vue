@@ -70,7 +70,7 @@ export default {
         toolbar: this.toolbar,
         branding: false,
         convert_urls: false,
-        // images_upload_url: `http://47.112.171.131/`,
+        // images_upload_url: `http://localhost/`,
         // images_upload_credentials:true,
         // relative_urls: false,
         // remove_script_host: false,
