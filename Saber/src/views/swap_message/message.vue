@@ -87,7 +87,7 @@
       </span>
     </el-dialog>
 
-    <el-dialog :title="title" width="60%" :visible.sync="dialogEditVisible" class="abow_dialog">
+    <el-dialog :title="title" width="100%" :fullscreen="true" :visible.sync="dialogEditVisible" class="abow_dialog">
       <el-form ref="editfrom" :model="editfrom" :rules="rules" label-width="80px">
         <el-row style="height:100px">
           <el-col :span="12">
@@ -174,7 +174,7 @@
         </el-row>-->
         <el-row>
           <el-form-item :label="$t(`message.messageContent`)">
-            <tinymce-editor v-model="editfrom.messageContent" ref="editor"></tinymce-editor>
+            <tinymce-editor v-model="editfrom.messageContent" ref="editor" height="600"></tinymce-editor>
           </el-form-item>
         </el-row>
       </el-form>
