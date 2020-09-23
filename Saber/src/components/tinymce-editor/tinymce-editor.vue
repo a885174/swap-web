@@ -51,12 +51,16 @@ export default {
       type: String
     },
     accept: {
-      default: "image/jpeg, image/png",
+      default: " image/jpeg, image/png",
       type: String
     },
     withCredentials: {
       default: false,
       type: Boolean
+    },
+    height: {
+      default: 300,
+      type: Number
     }
   },
   data() {
@@ -65,7 +69,7 @@ export default {
       //初始化配置
       init: {
         // skin_url: '/static/tinymce/skins/lightgray',
-        height: 300,
+        height: this.height,
         plugins: this.plugins,
         toolbar: this.toolbar,
         branding: false,
@@ -86,6 +90,8 @@ export default {
           if (blobInfo.blob().size > self.maxSize) {
             failure("文件体积过大");
           }
+          console.log(self.accept);
+          console.log(blobInfo.blob().type);
           if (self.accept.indexOf(blobInfo.blob().type) > 0) {
             uploadPic();
           } else {
