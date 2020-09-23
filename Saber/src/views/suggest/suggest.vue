@@ -415,7 +415,8 @@ export default {
       getDetail(row.suggestId).then(res => {
         var data = res.data.data;
         this.dialogViewVisibles = true;
-        var imageItems = data.picUrl.split(";");
+        var imageItems = data.picUrl.split(",");
+        console.log(imageItems);
         var clientType;
         switch (data.clientType) {
           case "1":
