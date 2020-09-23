@@ -184,7 +184,7 @@ export default {
     userAssociation: "Are you sure to unlink with client?",
     lock: "lock",
     unlock: "unlok",
-    enterVin: "Please enter the Vin code (for example: MC+14 digits)",
+    enterVin: "Please enter the QR code (for example: MC+14 digits)",
     enterLicensePlate:
       "Please enter the license plate number (for example: 1-2 English letters + 1-4 numbers + 0-3 English letters)"
   },
@@ -371,7 +371,7 @@ export default {
   order: {
     orderNo: "Order Number",
     useName: "Name of User",
-    scooterCode: "VIN Number",
+    scooterCode: "QR Number",
     payStatus: "Pay Status",
     PayTime: "Pay Time",
     planTotal: " Plan Total Fee",
