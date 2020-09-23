@@ -102,7 +102,7 @@
             <el-form-item label="icon">
               <el-upload
                 class="avatar-uploader"
-                action="http://47.112.171.131/api//blade-resource/oss/endpoint//upload"
+                action="/api//blade-resource/oss/endpoint//upload"
                 :headers="myHeaders"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
