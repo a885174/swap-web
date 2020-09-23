@@ -496,7 +496,8 @@ export default {
     title: "Announcement title",
     type: "Announcement type",
     save: "Save",
-    cancel: "Cancel"
+    cancel: "Cancel",
+    edit:"Edit"
   },
   repaircompany: {
     comName: "Name of Repair Merchant",

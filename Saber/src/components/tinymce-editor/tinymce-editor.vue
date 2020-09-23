@@ -59,7 +59,7 @@ export default {
       type: Boolean
     },
     height: {
-      default: 300,
+      default: 500,
       type: Number
     }
   },

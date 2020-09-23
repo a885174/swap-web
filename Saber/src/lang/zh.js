@@ -480,7 +480,8 @@ export default {
     title: "公告标题",
     type: "公告类型",
     save:"保存",
-    cancel:"取消"
+    cancel:"取消",
+    edit:"编辑"
   },
   common: {},
   repairshop: {
