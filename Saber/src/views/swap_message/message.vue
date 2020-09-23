@@ -44,7 +44,21 @@
       </template>
       <template slot-scope="scope" slot="menu">
         <el-button
-          v-if="scope.row.status == 1"
+          v-if="scope.row.status == '1'"
+          type="text"
+          size="small"
+          icon="el-icon-edit-outline"
+          @click.stop="updateDate(scope.row)"
+        >{{$t(`message.edit`)}}</el-button>
+        <el-button
+          v-if="scope.row.status == '0'"
+          type="text"
+          size="small"
+          icon="el-icon-view"
+          @click.stop="viewEdit(scope.row)"
+        >{{$t(`chakan`)}}</el-button>
+        <el-button
+          v-if="scope.row.status == '1'"
           type="text"
           size="small"
           icon="el-icon-thumb"
@@ -87,8 +101,20 @@
       </span>
     </el-dialog>
 
-    <el-dialog :title="title" width="100%" :fullscreen="true" :visible.sync="dialogEditVisible" class="abow_dialog">
-      <el-form ref="editfrom" :model="editfrom" :rules="rules" label-width="80px">
+    <el-dialog
+      :title="title"
+      width="100%"
+      :fullscreen="true"
+      :visible.sync="dialogEditVisible"
+      class="abow_dialog"
+    >
+      <el-form
+        ref="editfrom"
+        :model="editfrom"
+        :rules="rules"
+        label-width="80px"
+        :disabled="editDisable"
+      >
         <el-row style="height:100px">
           <el-col :span="12">
             <el-form-item :label="$t(`message.messageTitle`)" prop="messageTitle">
@@ -155,31 +181,19 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-row>
-          <el-col :span="12">
-            <el-form-item :label="$t(`message.method`)">
-              <el-select
-                style="width:100%"
-                v-model="editfrom.pushService"
-                :placeholder="$t(`scooter.please`) +$t(`message.method`)"
-              >
-                <el-option :label="$t(`merchant.no`)" value="0"></el-option>
-                <el-option :label="$t(`message.statusBar`)" value="1"></el-option>
-                <el-option :label="$t(`message.lockScreen`)" value="2"></el-option>
-                <el-option :label="$t(`message.banner`)" value="3"></el-option>
-                <el-option :label="$t(`message.SMS`)" value="4"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>-->
         <el-row>
           <el-form-item :label="$t(`message.messageContent`)">
-            <tinymce-editor v-model="editfrom.messageContent" ref="editor" height="600"></tinymce-editor>
+            <tinymce-editor
+              v-model="editfrom.messageContent"
+              ref="editor"
+              :height="600"
+              :disabled="editDisable"
+            ></tinymce-editor>
           </el-form-item>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveUpdate('editfrom')">{{$t(`message.save`)}}</el-button>
+        <el-button v-if="!editDisable" type="primary" @click="saveUpdate('editfrom')">{{$t(`message.save`)}}</el-button>
         <el-button @click="resetForm()">{{$t(`message.cancel`)}}</el-button>
       </div>
     </el-dialog>
@@ -204,6 +218,7 @@ var auth = `Basic ${Base64.encode(
 export default {
   data() {
     return {
+      editDisable: false,
       rules: {
         messageTitle: [
           {
@@ -243,7 +258,7 @@ export default {
         border: true,
         index: true,
         editBtn: false,
-        viewBtn: true,
+        viewBtn: false,
         selection: true,
         align: "center",
         menuAlign: "center",
@@ -450,6 +465,13 @@ export default {
     }
   },
   methods: {
+    viewEdit(row) {
+      this.title = this.$t(`chakan`);
+      this.editDisable = true;
+      this.dialogEditVisible = true;
+      this.imageUrl = row.messageIcon;
+      this.editfrom = row;
+    },
     handleAvatarSuccess(res, file) {
       console.log(res);
       this.imageUrl = URL.createObjectURL(file.raw);
@@ -485,6 +507,16 @@ export default {
         }
       );
     },
+    updateDate(row) {
+      getDetail(row.messageId).then(res => {
+        this.editfrom = res.data.data;
+        this.title = this.$t(`message.edit`);
+        this.editDisable = false;
+
+        this.imageUrl = row.messageIcon;
+        this.dialogEditVisible = true;
+      });
+    },
     HTMLEncode(html) {
       var temp = document.createElement("div");
       temp.textContent != null
@@ -497,24 +529,38 @@ export default {
     saveUpdate(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.editfrom);
           this.editfrom.messageContent = this.HTMLEncode(
             this.editfrom.messageContent
           );
-          console.log(this.editfrom);
-          add(this.editfrom).then(
-            () => {
-              this.onLoad(this.page);
-              this.dialogEditVisible = false;
-              this.$message({
-                type: "success",
-                message: "success!"
-              });
-            },
-            error => {
-              console.log(error);
-            }
-          );
+          if (this.title == this.$t(`message.edit`)) {
+            update(this.editfrom).then(
+              () => {
+                this.onLoad(this.page);
+                this.dialogEditVisible = false;
+                this.$message({
+                  type: "success",
+                  message: "success!"
+                });
+              },
+              error => {
+                console.log(error);
+              }
+            );
+          } else {
+            add(this.editfrom).then(
+              () => {
+                this.onLoad(this.page);
+                this.dialogEditVisible = false;
+                this.$message({
+                  type: "success",
+                  message: "success!"
+                });
+              },
+              error => {
+                console.log(error);
+              }
+            );
+          }
         } else {
           console.log("error submit!!");
           return false;
@@ -542,6 +588,7 @@ export default {
         pushService: "0",
         messageContent: ""
       };
+      this.editDisable = false;
       this.dialogEditVisible = true;
     },
     rowViews(row) {
