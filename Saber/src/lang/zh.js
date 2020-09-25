@@ -458,7 +458,8 @@ export default {
     planStatus: "套餐状态",
     sale: "上架",
     TakeOff: "下架",
-    lessHundred: "请输入大于0或小宇于100的数字"
+    lessHundred: "请输入正整数",
+    zeroNum:"请输入大于0的数字"
   },
   message: {
     messageTitle: "标题",

@@ -474,7 +474,8 @@ export default {
     planStatus: "Status of Top-up",
     sale: "For Sale",
     takeOff: "Take Off",
-    lessHundred: "Please enter a number greater than 0 or Xiaoyu less than 100"
+    lessHundred: "Please enter a positive integer",
+    zeroNum: "Please enter a number greater than 0"
   },
   message: {
     messageTitle: "Title",
@@ -497,7 +498,7 @@ export default {
     type: "Announcement type",
     save: "Save",
     cancel: "Cancel",
-    edit:"Edit"
+    edit: "Edit"
   },
   repaircompany: {
     comName: "Name of Repair Merchant",
