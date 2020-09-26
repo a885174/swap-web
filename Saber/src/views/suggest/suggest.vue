@@ -32,7 +32,7 @@
       <template slot-scope="{row}" slot="suggestStatus">
         <label
           :style="{color:row.suggestStatus=='1'?'green':'red'}"
-        >{{row.suggestStatus=="1"?"Disposed":"Undisposed"}}</label>
+        >{{row.suggestStatus=="1"?$t(`suggest.processed`):$t(`suggest.untreated`)}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="scope" slot="menu">
@@ -206,6 +206,7 @@ export default {
             addDisplay: false,
             editDisabled: true,
             editDisplay: false,
+            overHidden: true,
             rules: [
               {
                 required: false,

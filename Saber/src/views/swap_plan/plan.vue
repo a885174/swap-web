@@ -89,18 +89,24 @@ import {
 } from "@/api/swap_plan/plan";
 import { mapGetters } from "vuex";
 
-// const validateNumber = (rule, value, callback) => {
-//   if (value < 0 || value > 100) {
-//     callback(new Error(this.$t(`plan.lessHundred`)));
-//   } else {
-//     callback();
-//   }
-// };
-
-
-
 export default {
   data() {
+    const validateNumber = (rule, value, callback) => {
+      var reg = /^(0|\+?[1-9][0-9]*)$/;
+      if (!reg.test(value)) {
+        callback(new Error(this.$t(`plan.lessHundred`)));
+      } else {
+        callback();
+      }
+    };
+    const validateZeroNum = (rule, value, callback) => {
+      var reg = /^([1-9]\d*(\.\d*[1-9])?)|(0\.\d*[1-9])$/;
+      if (!reg.test(value)) {
+        callback(new Error(this.$t(`plan.zeroNum`)));
+      } else {
+        callback();
+      }
+    };
     return {
       dialogViewVisible: false,
       rowItem: {},
@@ -148,8 +154,9 @@ export default {
             prop: "price",
             rules: [
               {
+                validator: validateNumber,
                 required: false,
-                message: this.$t(`scooter.please`) + this.$t(`plan.price`),
+                // message: this.$t(`scooter.please`) + this.$t(`plan.price`),
                 trigger: "blur"
               }
             ]
@@ -159,9 +166,10 @@ export default {
             prop: "distanceSum",
             rules: [
               {
+                validator: validateNumber,
                 required: false,
-                message:
-                  this.$t(`scooter.please`) + this.$t(`plan.distanceSum`),
+                // message:
+                //   this.$t(`scooter.please`) + this.$t(`plan.distanceSum`),
                 trigger: "blur"
               }
             ]
@@ -169,13 +177,14 @@ export default {
           {
             label: this.$t(`plan.ailableTime`),
             prop: "ailableTime",
-            type: "number",
-            valueDefault: 0,
+            // type: "number",
+            // valueDefault: 0,
             rules: [
               {
+                validator: validateNumber,
                 required: true,
-                message:
-                  this.$t(`scooter.please`) + this.$t(`plan.ailableTime`),
+                // message:
+                //   this.$t(`scooter.please`) + this.$t(`plan.ailableTime`),
                 trigger: "blur"
               }
             ]
