@@ -12,6 +12,8 @@ export const loginByUsername = (tenantId, account, password, type) => request({
   }
 })
 
+
+
 export const getButtons = () => request({
   url: '/api/blade-system/menu/buttons',
   method: 'get'
@@ -31,6 +33,8 @@ export const getMenu = () => request({
   url: '/api/blade-system/menu/routes',
   method: 'get'
 });
+
+
 
 export const getTopMenu = () => request({
   url:   '/api/user/getTopMenu',

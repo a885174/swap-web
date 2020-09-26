@@ -97,6 +97,8 @@ import { mapGetters } from "vuex";
 //   }
 // };
 
+
+
 export default {
   data() {
     return {
@@ -164,21 +166,6 @@ export default {
               }
             ]
           },
-          // {
-          //   label: "折扣(%) ",
-          //   prop: "discount",
-          //   type: "number",
-          //   valueDefault: 100,
-          //   rules: [
-          //     {
-          //       required: false,
-          //       message: "请输入折扣",
-          //       validator: validateNumber,
-
-          //       trigger: "blur"
-          //     }
-          //   ]
-          // },
           {
             label: this.$t(`plan.ailableTime`),
             prop: "ailableTime",
@@ -217,51 +204,6 @@ export default {
               }
             ]
           }
-          // {
-          //   label: "创建人",
-          //   prop: "createUser",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "创建时间",
-          //   prop: "createTime",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建时间",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新人",
-          //   prop: "updateUser",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入更新人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新时间",
-          //   prop: "updateTime",
-          //   rules: [{
-          //     required: true,
-          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "删除标志 （0代表存在 1代表删除）",
-          //   prop: "delFlag",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入删除标志 （0代表存在 1代表删除）",
-          //     trigger: "blur"
-          //   }]
-          // },
         ]
       },
       data: []
