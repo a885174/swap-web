@@ -188,7 +188,8 @@ export default {
     enterLicensePlate:
       "Please enter the license plate number (for example: 1-2 English letters + 1-4 numbers + 0-3 English letters)",
     confirmAssign: "Confirm to assign customers?",
-    confirmUnlock: "Confirm to unlock customer association?"
+    confirmUnlock: "Confirm to unlock customer association?",
+    confirmLock: "Confirm to lock the car?"
   },
   battery: {
     batteryCode: "Battery ID Number",
