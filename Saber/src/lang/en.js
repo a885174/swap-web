@@ -186,7 +186,9 @@ export default {
     unlock: "unlok",
     enterVin: "Please enter the QR code (for example: MC+14 digits)",
     enterLicensePlate:
-      "Please enter the license plate number (for example: 1-2 English letters + 1-4 numbers + 0-3 English letters)"
+      "Please enter the license plate number (for example: 1-2 English letters + 1-4 numbers + 0-3 English letters)",
+    confirmAssign: "Confirm to assign customers?",
+    confirmUnlock: "Confirm to unlock customer association?"
   },
   battery: {
     batteryCode: "Battery ID Number",
@@ -473,9 +475,12 @@ export default {
     ailableTime: "Duration",
     planStatus: "Status of Top-up",
     sale: "For Sale",
-    takeOff: "Take Off",
+    TakeOff: "Take Off",
     lessHundred: "Please enter a positive integer",
-    zeroNum: "Please enter a number greater than 0"
+    zeroNum: "Please enter a number greater than 0",
+    removePage:"Are you sure to remove this package?",
+    salePage:"Confirm to list the package?",
+    updataPage:"Confirm to modify this package?"
   },
   message: {
     messageTitle: "Title",
