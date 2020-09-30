@@ -206,6 +206,7 @@ export default {
     connectStatus: "Connected Status",
     systemStatus: "System Model",
     release: "Publish",
+    Normal:"Normal",
     ubrelease: "Unpublished",
     Fault: "Fault",
     Repairing: "Repairing",
