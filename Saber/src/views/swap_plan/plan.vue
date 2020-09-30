@@ -9,6 +9,7 @@
       :before-open="beforeOpen"
       v-model="form"
       ref="crud"
+      :row-class-name="rowStyle"
       @row-update="rowUpdate"
       @row-save="rowSave"
       @row-del="rowDel"
@@ -19,6 +20,7 @@
       @size-change="sizeChange"
       @on-load="onLoad"
     >
+      <!-- :row-class-name="rowStyle" -->
       <template slot="menuLeft">
         <el-button
           type="danger"
@@ -28,7 +30,7 @@
         >{{`delete`}}</el-button>
 
         <template>
-          <el-button @click.stop="delteant">{{$t(`plan.takeOff`)}}</el-button>
+          <el-button @click.stop="delteant">{{$t(`plan.TakeOff`)}}</el-button>
         </template>
         <template>
           <el-button @click.stop="userdel">{{$t(`plan.sale`)}}</el-button>
@@ -48,6 +50,13 @@
           size="small"
           @click.stop="rowView(row)"
         >{{$t(`chakan`)}}</el-button>
+        <el-button
+          v-if="row.planStatus=='0'"
+          type="text"
+          icon="el-icon-sold-out"
+          size="small"
+          @click.stop="takeOff(row)"
+        >{{$t(`plan.TakeOff`)}}</el-button>
       </template>
     </avue-crud>
 
@@ -237,6 +246,42 @@ export default {
     }
   },
   methods: {
+    rowStyle({ row, rowIndex }) {
+      console.log(row.planStatus == "1");
+      if (row.planStatus == "1") {
+        return (this.option.editBtn = true);
+      } else {
+        return (this.option.editBtn = false);
+      }
+      // return this.option.editBtn = true;
+    },
+    takeOff(row) {
+      this.$confirm(this.$t(`plan.removePage`), {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
+        type: "warning"
+      })
+        .then(() => {
+          row.planStatus = "1";
+          update(row).then(
+            () => {
+              loading();
+              this.onLoad(this.page);
+              this.$message({
+                type: "success",
+                message: "success!"
+              });
+            },
+            error => {
+              done();
+              console.log(error);
+            }
+          );
+        })
+        .catch(() => {
+          this.onLoad(this.page);
+        });
+    },
     rowView(row) {
       getDetail(row.planId).then(res => {
         var data = res.data.data;
@@ -283,13 +328,24 @@ export default {
     },
     delteant() {
       if (this.ids.length > 0) {
-        del(this.ids, "1").then(() => {
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
+        this.$confirm(this.$t(`plan.removePage`), {
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
+          type: "warning"
+        })
+          .then(() => {
+            del(this.ids, "1").then(() => {
+              this.onLoad(this.page);
+              this.$message({
+                type: "success",
+                message: "success!"
+              });
+            });
+          })
+          .catch(() => {
+            loading();
+            this.onLoad(this.page);
           });
-        });
       } else {
         this.$message({
           type: "error",
@@ -300,13 +356,24 @@ export default {
 
     userdel() {
       if (this.ids.length > 0) {
-        del(this.ids, "0").then(() => {
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
+        this.$confirm(this.$t(`plan.salePage`), {
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
+          type: "warning"
+        })
+          .then(() => {
+            del(this.ids, "0").then(() => {
+              this.onLoad(this.page);
+              this.$message({
+                type: "success",
+                message: "success!"
+              });
+            });
+          })
+          .catch(() => {
+            loading();
+            this.onLoad(this.page);
           });
-        });
       } else {
         this.$message({
           type: "error",
@@ -315,20 +382,31 @@ export default {
       }
     },
     rowUpdate(row, index, loading, done) {
-      update(row).then(
-        () => {
+      this.$confirm(this.$t(`plan.updataPage`), {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
+        type: "warning"
+      })
+        .then(() => {
+          update(row).then(
+            () => {
+              loading();
+              this.onLoad(this.page);
+              this.$message({
+                type: "success",
+                message: "success!"
+              });
+            },
+            error => {
+              done();
+              console.log(error);
+            }
+          );
+        })
+        .catch(() => {
           loading();
           this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
-          });
-        },
-        error => {
-          done();
-          console.log(error);
-        }
-      );
+        });
     },
     rowDel(row) {
       this.$confirm("Are you sure you want to delete the selected data?", {

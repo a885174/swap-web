@@ -152,7 +152,7 @@
           <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
             <el-upload
               class="avatar-uploader"
-              action="http://localhostapi//blade-resource/oss/endpoint//upload"
+              action="http://47.112.171.131api//blade-resource/oss/endpoint//upload"
               :show-file-list="false"
               :headers="myHeaders"
               :on-success="handleSuccess"
