@@ -24,7 +24,7 @@ export const getDetail = (planId) => {
 
 export const remove = (ids) => {
   return request({
-    url: '/api/swap_plan/plan/remove',
+    url: '/api/swap_plan/plan/del',
     method: 'post',
     params: {
       ids,
@@ -46,7 +46,7 @@ export const del = (ids,planStatus) => {
 
 export const add = (row) => {
   return request({
-    url: '/api/swap_plan/plan/submit',
+    url: '/api/swap_plan/plan/save',
     method: 'post',
     data: row
   })
@@ -54,7 +54,7 @@ export const add = (row) => {
 
 export const update = (row) => {
   return request({
-    url: '/api/swap_plan/plan/submit',
+    url: '/api/swap_plan/plan/update',
     method: 'post',
     data: row
   })

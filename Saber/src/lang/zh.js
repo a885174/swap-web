@@ -186,6 +186,7 @@ export default {
     batteryName: "电池名",
     batteryVersion: "电池型号",
     voltage: "电压",
+    Normal:"正常",
     electricity: "电池电流",
     cycleIndex: "电池循环次数",
     surplusMileage: "预估行驶里程",

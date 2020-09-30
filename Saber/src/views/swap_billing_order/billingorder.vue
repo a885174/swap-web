@@ -58,7 +58,7 @@
           type="text"
           size="small"
           icon="el-icon-document-copy"
-          v-if="scope.row.orderStatus!='1' "
+          v-if="(scope.row.orderStatus =='0') "
           @click="upload(scope.row)"
         >{{$t(`billing.upload`)}}</el-button>
 
@@ -142,7 +142,7 @@ export default {
               res: "data"
             },
             tip: ".png/.jpg",
-            action: "/api//blade-resource/oss/endpoint//uploadFile"
+            action: "/api//blade-resource/oss/endpoint//upload"
           }
           //     {
           //   label: "订单id",
