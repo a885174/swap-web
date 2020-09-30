@@ -1021,14 +1021,32 @@ export default {
     //   }
     // },
     Updatelock(row) {
-      console.log(row);
-      del(row.scooterId).then(() => {
-        this.onLoad(this.page);
-        this.$message({
-          type: "success",
-          message: "success!"
+      this.$confirm(this.$t(`scooter.confirmLock`), {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
+        type: "warning"
+      })
+        .then(() => {
+          row.planStatus = "1";
+          update(row).then(
+            () => {
+              del(row.scooterId).then(() => {
+                this.onLoad(this.page);
+                this.$message({
+                  type: "success",
+                  message: "success!"
+                });
+              });
+            },
+            error => {
+              done();
+              console.log(error);
+            }
+          );
+        })
+        .catch(() => {
+          this.onLoad(this.page);
         });
-      });
     },
 
     openTenantWindos() {
@@ -1100,14 +1118,24 @@ export default {
     },
     handleSubmit() {
       if (this.ids.length > 0) {
-        SavueTeant(this.ids, this.form.tenantId).then(() => {
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
+        this.$confirm(this.$t(`scooter.confirmAssign`), {
+          confirmButtonText: "sure",
+          cancelButtonText: "cancel",
+          type: "warning"
+        })
+          .then(() => {
+            SavueTeant(this.ids, this.form.tenantId).then(() => {
+              this.onLoad(this.page);
+              this.$message({
+                type: "success",
+                message: "success!"
+              });
+              this.dialogFormVisible = false;
+            });
+          })
+          .catch(() => {
+            this.onLoad(this.page);
           });
-          this.dialogFormVisible = false;
-        });
       } else {
         this.$message.error("Please select at least one piece of data");
       }

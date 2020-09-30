@@ -179,7 +179,10 @@ export default {
     lock: "锁车",
     unlock: "解锁",
     enterVin: "请输入Vin码（例如：MC+14位数字）",
-    enterLicensePlate: "请输入车牌号（例如：1-2个英文字母 + 1-4个数字 + 0-3个英文字母）"
+    enterLicensePlate: "请输入车牌号（例如：1-2个英文字母 + 1-4个数字 + 0-3个英文字母）",
+    confirmAssign: "确认分配客户？",
+    confirmUnlock: "确认解锁客户关联？",
+    confirmLock: "确认锁车？"
   },
   battery: {
     batteryCode: "电池编号 BID",
@@ -459,7 +462,10 @@ export default {
     sale: "上架",
     TakeOff: "下架",
     lessHundred: "请输入正整数",
-    zeroNum:"请输入大于0的数字"
+    zeroNum:"请输入大于0的数字",
+    removePage:"是否确认下架此套餐？",
+    salePage:"确认上架套餐？",
+    updataPage:"确认修改此套餐？"
   },
   message: {
     messageTitle: "标题",
