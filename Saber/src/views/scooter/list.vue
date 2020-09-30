@@ -1054,7 +1054,9 @@ export default {
         this.$message({
           type: "error",
           message: "Please select at least one piece of data!"
-        });
+      
+      
+      });
       } else {
         this.dialogFormVisible = true;
       }
