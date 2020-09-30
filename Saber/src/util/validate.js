@@ -263,3 +263,15 @@ export function isNumber(val){
     }
 
 }
+
+
+export function money(num){
+
+    var reg=/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
+
+    if (reg.test(num)) {
+        return true;
+    }else{
+        return false
+    }
+}
