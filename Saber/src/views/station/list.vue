@@ -152,7 +152,7 @@
           <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
             <el-upload
               class="avatar-uploader"
-              action="http://47.112.171.131api//blade-resource/oss/endpoint//upload"
+              action="/api/blade-resource/oss/endpoint/upload"
               :show-file-list="false"
               :headers="myHeaders"
               :on-success="handleSuccess"
@@ -164,8 +164,8 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="fileDialog = false">{{$t(`submitText`)}}</el-button>
-          <el-button type="primary" @click="insertShopPicature()">{{$t(`cancelText`)}}</el-button>
+          <el-button @click="fileDialog = false">{{$t(`cancelText`)}}</el-button>
+          <el-button type="primary" @click="insertShopPicature()">{{$t(`submitText`)}}</el-button>
         </div>
       </el-dialog>
 
@@ -258,7 +258,7 @@
             <el-form-item :label="$t(`station.uploadPicture`)" :label-width="formLabelWidth">
               <el-upload
                 class="avatar-uploader"
-                action="/api//blade-resource/oss/endpoint//upload"
+                action="/api/blade-resource/oss/endpoint/upload"
                 :show-file-list="false"
                 :headers="myHeaders"
                 :on-success="handleAvatarSuccess"
@@ -270,8 +270,9 @@
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="uploadDialog = false">{{$t(`submitText`)}}</el-button>
-            <el-button type="primary" @click="insertPicature()">{{$t(`cancelText`)}}</el-button>
+            <el-button type="primary" @click="insertPicature()">{{$t(`submitText`)}}</el-button>
+              <el-button @click="uploadDialog = false">{{$t(`cancelText`)}}</el-button>
+
           </div>
         </el-dialog>
       </el-dialog>
