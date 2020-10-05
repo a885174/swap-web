@@ -193,7 +193,12 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button v-if="!editDisable" type="primary" @click="saveUpdate('editfrom')">{{$t(`message.save`)}}</el-button>
+        <el-button
+          v-if="!editDisable"
+          type="primary"
+          @click="saveUpdate('editfrom')"
+          :disabled="isDisabled"
+        >{{$t(`message.save`)}}</el-button>
         <el-button @click="resetForm()">{{$t(`message.cancel`)}}</el-button>
       </div>
     </el-dialog>
@@ -218,6 +223,7 @@ var auth = `Basic ${Base64.encode(
 export default {
   data() {
     return {
+      isDisabled: false,
       editDisable: false,
       rules: {
         messageTitle: [
@@ -471,6 +477,7 @@ export default {
       this.dialogEditVisible = true;
       this.imageUrl = row.messageIcon;
       this.editfrom = row;
+      this.isDisabled = false;
     },
     handleAvatarSuccess(res, file) {
       console.log(res);
@@ -515,6 +522,8 @@ export default {
 
         this.imageUrl = row.messageIcon;
         this.dialogEditVisible = true;
+
+        this.isDisabled = false;
       });
     },
     HTMLEncode(html) {
@@ -529,6 +538,7 @@ export default {
     saveUpdate(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          this.isDisabled = true;
           this.editfrom.messageContent = this.HTMLEncode(
             this.editfrom.messageContent
           );
@@ -544,6 +554,12 @@ export default {
               },
               error => {
                 console.log(error);
+                this.onLoad(this.page);
+                this.dialogEditVisible = false;
+                this.$message({
+                  type: "error",
+                  message: "error!"
+                });
               }
             );
           } else {
@@ -558,6 +574,12 @@ export default {
               },
               error => {
                 console.log(error);
+                this.onLoad(this.page);
+                this.dialogEditVisible = false;
+                this.$message({
+                  type: "error",
+                  message: "error!"
+                });
               }
             );
           }
@@ -590,6 +612,7 @@ export default {
       };
       this.editDisable = false;
       this.dialogEditVisible = true;
+      this.isDisabled = false;
     },
     rowViews(row) {
       getDetail(row.messageId).then(res => {
