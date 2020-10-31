@@ -27,7 +27,7 @@
           plain
           @click="editView(row,'add')"
         >{{$t(`add`)}}</el-button>
-      </template> -->
+      </template>-->
 
       <template slot-scope="{row}" slot="connectStatus">
         <label
@@ -40,7 +40,7 @@
           type="text"
           icon="el-icon-edit"
           size="small"
-          @click.stop="editView(row,'edit')"
+          @click.stop="editView(row)"
         >{{$t(`message.edit`)}}</el-button>
       </template>
     </avue-crud>
@@ -74,8 +74,8 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button>Cancel</el-button>
-          <el-button type="primary">Confirm</el-button>
+          <el-button @click="dialogViewVisible=false">Cancel</el-button>
+          <el-button type="primary" @click="changeMoto()">Confirm</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -115,12 +115,12 @@ export default {
         viewBtn: false,
         selection: true,
         editBtn: false,
-        addBtn:false,
+        addBtn: false,
         column: [
           {
             label: "设备编码",
             prop: "scooterCode",
-            search:true,
+            search: true,
             rules: [
               {
                 required: true,
@@ -140,7 +140,7 @@ export default {
               }
             ]
           },
-                    {
+          {
             label: "Motor Code",
             prop: "motorCode",
             rules: [
@@ -214,20 +214,34 @@ export default {
     }
   },
   methods: {
+    changeMoto() {
+      edit(this.form).then(
+        () => {
+          this.dialogViewVisible = false;
+          this.onLoad(this.page);
+
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        },
+        error => {
+          done();
+          console.log(error);
+        }
+      );
+    },
     changeActive(index) {
       this.current = index;
+      this.form.color = index;
     },
-    editView(row, type) {
+    editView(row) {
       console.log(row);
-      if (row == "") {
+      getDetail(row.scooterId).then(res => {
+        this.form = res.data.data;
+        this.current = this.form.color;
         this.dialogViewVisible = true;
-      } else {
-        getDetail(row.scooterId).then(res => {
-          this.form = res.data.data;
-          this.current=this.form.color;
-          this.dialogViewVisible = true;
-        });
-      }
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
@@ -304,11 +318,9 @@ export default {
       if (["edit", "view"].includes(type)) {
         getDetail(this.form.id).then(res => {
           const data = res.data.data;
-            this.current=1;
-          this.form.vin=data.vin;
-          this.form.scooterCode=data.scooterCode;
-        
-          
+          this.current = 1;
+          this.form.vin = data.vin;
+          this.form.scooterCode = data.scooterCode;
         });
       }
       done();
