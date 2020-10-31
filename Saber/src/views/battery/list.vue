@@ -42,6 +42,12 @@
           </div>
         </el-popover>
       </template>
+      <template slot-scope="{row}" slot="connectStatus">
+        <label
+          :style="{color:row.connectStatus=='0' ||row.connectStatus=='1'?'green':'red'}"
+        >{{row.connectStatus=="0"?$t(`battery.connectCbinet`):(row.connectStatus=="1"?$t(`battery.connectCars`):(row.connectStatus=="2"?$t(`Unconnected`):(row.connectStatus=="3"?$t(`battery.communicationError`):$t(`battery.moduleError`))))}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="{row}" slot="menu">
         <el-button
           type="text"
@@ -299,7 +305,6 @@ export default {
             // addDisabled:true,
             addDisplay: false,
             valueDefault: "0",
-            hide: true,
             dicData: [
               {
                 label: this.$t(`battery.Normal`),
@@ -358,7 +363,6 @@ export default {
             label: this.$t(`battery.powerStatus`),
             prop: "powerStatus",
             type: "select",
-            hide: true,
             //addDisabled:true,
             addDisplay: false,
             valueDefault: "2",
@@ -393,7 +397,6 @@ export default {
             valueDefault: "1",
             search: true,
             type: "select",
-            hide: true,
             dicData: [
               {
                 label: this.$t(`scooter.activated`),
@@ -435,9 +438,9 @@ export default {
             addDisplay: false,
             valueDefault: 2,
             prop: "connectStatus",
+            slot: true,
             search: true,
             type: "select",
-            hide: true,
             dicData: [
               {
                 label: this.$t(`battery.connectCbinet`),
