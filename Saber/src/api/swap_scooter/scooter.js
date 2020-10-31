@@ -12,6 +12,19 @@ export const getList = (current, size, params) => {
   })
 }
 
+export const getPage = (current, size, params) => {
+  return request({
+    url: '/api/swap_scooter/scooter/list',
+    method: 'get',
+    params: {
+      ...params,
+      current,
+      size,
+    }
+  })
+}
+
+
 export const getDetail = (scooterId) => {
   return request({
     url: '/api/swap_scooter/scooter/detail',
@@ -65,6 +78,15 @@ export const add = (row) => {
 export const update = (row) => {
   return request({
     url: '/api/swap_scooter/scooter/submit',
+    method: 'post',
+    data: row
+  })
+}
+
+
+export const edit = (row) => {
+  return request({
+    url: '/api/swap_scooter/scooter/update',
     method: 'post',
     data: row
   })
