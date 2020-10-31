@@ -19,7 +19,7 @@
       @size-change="sizeChange"
       @on-load="onLoad"
     >
-      <template slot="menuLeft">
+      <!-- <template slot="menuLeft">
         <el-button
           type="primary"
           size="small"
@@ -27,7 +27,7 @@
           plain
           @click="editView(row,'add')"
         >{{$t(`add`)}}</el-button>
-      </template>
+      </template> -->
 
       <template slot-scope="{row}" slot="connectStatus">
         <label
@@ -56,10 +56,10 @@
           <el-input v-model="form.vin"></el-input>
         </el-form-item>
         <el-form-item label="Controller QR Code">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.scooterCode"></el-input>
         </el-form-item>
         <el-form-item label="Motor Code">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.motorCode"></el-input>
         </el-form-item>
         <el-form-item label="Color">
           <div
@@ -84,10 +84,10 @@
 
 <script>
 import {
-  getList,
+  getPage,
   getDetail,
   add,
-  update,
+  edit,
   remove
 } from "@/api/swap_scooter/scooter";
 import { mapGetters } from "vuex";
@@ -112,13 +112,15 @@ export default {
         tip: false,
         border: true,
         index: true,
-        viewBtn: true,
+        viewBtn: false,
         selection: true,
         editBtn: false,
+        addBtn:false,
         column: [
           {
             label: "设备编码",
             prop: "scooterCode",
+            search:true,
             rules: [
               {
                 required: true,
@@ -134,6 +136,17 @@ export default {
               {
                 required: true,
                 message: "vin码",
+                trigger: "blur"
+              }
+            ]
+          },
+                    {
+            label: "Motor Code",
+            prop: "motorCode",
+            rules: [
+              {
+                required: true,
+                message: "motorCode",
                 trigger: "blur"
               }
             ]
@@ -211,6 +224,7 @@ export default {
       } else {
         getDetail(row.scooterId).then(res => {
           this.form = res.data.data;
+          this.current=this.form.color;
           this.dialogViewVisible = true;
         });
       }
@@ -232,7 +246,7 @@ export default {
       );
     },
     rowUpdate(row, index, loading, done) {
-      update(row).then(
+      edit(row).then(
         () => {
           loading();
           this.onLoad(this.page);
@@ -289,7 +303,12 @@ export default {
     beforeOpen(done, type) {
       if (["edit", "view"].includes(type)) {
         getDetail(this.form.id).then(res => {
-          this.form = res.data.data;
+          const data = res.data.data;
+            this.current=1;
+          this.form.vin=data.vin;
+          this.form.scooterCode=data.scooterCode;
+        
+          
         });
       }
       done();
@@ -317,7 +336,7 @@ export default {
     },
     onLoad(page, params = {}) {
       this.loading = true;
-      getList(
+      getPage(
         page.currentPage,
         page.pageSize,
         Object.assign(params, this.query)
