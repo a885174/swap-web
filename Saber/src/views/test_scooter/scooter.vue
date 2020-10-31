@@ -21,22 +21,64 @@
     >
       <template slot="menuLeft">
         <el-button
-          type="danger"
+          type="primary"
           size="small"
-          icon="el-icon-delete"
+          icon="el-icon-add"
           plain
-          v-if="permission.scooter_delete"
-          @click="handleDelete"
-        >{{$t(`delete`)}}</el-button>
+          @click="editView(row,'add')"
+        >{{$t(`add`)}}</el-button>
       </template>
 
-            <template slot-scope="{row}" slot="connectStatus">
+      <template slot-scope="{row}" slot="connectStatus">
         <label
           :style="{color:row.connectStatus=='0'?'green':'red'}"
         >{{row.connectStatus=="0"?"Connect":"Unconnect"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
+      <template slot-scope="{row}" slot="menu">
+        <el-button
+          type="text"
+          icon="el-icon-edit"
+          size="small"
+          @click.stop="editView(row,'edit')"
+        >{{$t(`message.edit`)}}</el-button>
+      </template>
     </avue-crud>
+    <el-dialog
+      title="Edit"
+      width="600px"
+      :visible.sync="dialogViewVisible"
+      class="abow_dialog"
+      center
+    >
+      <el-form ref="form" :model="editform" label-width="0">
+        <el-form-item label="Vin">
+          <el-input v-model="form.vin"></el-input>
+        </el-form-item>
+        <el-form-item label="Controller QR Code">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="Motor Code">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="Color">
+          <div
+            class="colorBox"
+            v-for="(item,index) in colorlist"
+            :key="index"
+            @click="changeActive(index)"
+            :class="{'active':index==current}"
+          >
+            <div class="box" :style="{ backgroundColor: item }"></div>
+            <div class="text">{{item}}</div>
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <el-button>Cancel</el-button>
+          <el-button type="primary">Confirm</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </basic-container>
 </template>
 
@@ -53,13 +95,17 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      current: 0,
+      colorlist: ["Red", "Black", "White"],
+      dialogViewVisible: false,
+      editform: {},
       form: {},
       query: {},
       loading: true,
       page: {
         pageSize: 10,
         currentPage: 1,
-        total: 0   
+        total: 0
       },
       selectionList: [],
       option: {
@@ -68,8 +114,8 @@ export default {
         index: true,
         viewBtn: true,
         selection: true,
+        editBtn: false,
         column: [
-
           {
             label: "设备编码",
             prop: "scooterCode",
@@ -92,7 +138,7 @@ export default {
               }
             ]
           },
-        
+
           {
             label: "color",
             prop: "color",
@@ -104,7 +150,7 @@ export default {
               }
             ]
           },
-                    {
+          {
             label: this.$t(`scooter.connectStatus`),
             prop: "connectStatus",
             slot: true,
@@ -155,6 +201,20 @@ export default {
     }
   },
   methods: {
+    changeActive(index) {
+      this.current = index;
+    },
+    editView(row, type) {
+      console.log(row);
+      if (row == "") {
+        this.dialogViewVisible = true;
+      } else {
+        getDetail(row.scooterId).then(res => {
+          this.form = res.data.data;
+          this.dialogViewVisible = true;
+        });
+      }
+    },
     rowSave(row, loading, done) {
       add(row).then(
         () => {
@@ -274,4 +334,43 @@ export default {
 </script>
 
 <style>
+.abow_dialog .el-dialog .el-dialog__body {
+  padding-bottom: 20px;
+}
+.el-form-item__label {
+  float: none;
+}
+.colorBox {
+  position: relative;
+  width: 75px;
+  height: 58px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 1px solid rgba(121, 121, 121, 1);
+  float: left;
+  margin-right: 20px;
+}
+.active {
+  background-color: rgba(22, 155, 213, 1);
+  color: #fff;
+}
+
+.colorBox .box {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+  left: 50%;
+  top: 6px;
+  border: 1px solid rgba(121, 121, 121, 1);
+  transform: translate(-50%, 0);
+}
+.colorBox .text {
+  position: absolute;
+  bottom: 6px;
+  width: 100%;
+  text-align: center;
+  line-height: 16px;
+  font-size: 14px;
+}
 </style>
