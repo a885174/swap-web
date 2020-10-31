@@ -35,6 +35,11 @@
         >{{row.connectStatus=="0"?"Connect":"Unconnect"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
+
+      <template slot-scope="{row}" slot="color">
+        <label>{{row.color==0?"Red":(row.color==1?"Black":"White")}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="{row}" slot="menu">
         <el-button
           type="text"
@@ -155,6 +160,7 @@ export default {
           {
             label: "color",
             prop: "color",
+            slot: true,
             rules: [
               {
                 required: true,
