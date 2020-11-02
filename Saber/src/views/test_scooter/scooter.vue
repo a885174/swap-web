@@ -56,13 +56,13 @@
       class="abow_dialog"
       center
     >
-      <el-form ref="form" :model="editform" label-width="0">
+      <el-form ref="form" class="form" :model="editform" label-width="0">
         <el-form-item label="Vin">
           <el-input v-model="form.vin"></el-input>
         </el-form-item>
-        <el-form-item label="Controller QR Code">
+        <!-- <el-form-item label="Controller QR Code">
           <el-input v-model="form.scooterCode"></el-input>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="Motor Code">
           <el-input v-model="form.motorCode"></el-input>
         </el-form-item>
@@ -121,9 +121,10 @@ export default {
         selection: true,
         editBtn: false,
         addBtn: false,
+        delBtn: true,
         column: [
           {
-            label: "设备编码",
+            label: "Controller QR",
             prop: "scooterCode",
             search: true,
             rules: [
@@ -207,7 +208,7 @@ export default {
       return {
         addBtn: this.vaildData(this.permission.scooter_add, false),
         viewBtn: this.vaildData(this.permission.scooter_view, false),
-        delBtn: this.vaildData(this.permission.scooter_delete, false),
+        delBtn: this.vaildData(this.permission.scooter_delete, true),
         editBtn: this.vaildData(this.permission.scooter_edit, false)
       };
     },
@@ -288,7 +289,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          return remove(row.id);
+          return remove(row.scooterId);
         })
         .then(() => {
           this.onLoad(this.page);
@@ -372,7 +373,7 @@ export default {
 
 <style>
 .abow_dialog .el-dialog .el-dialog__body {
-  padding-bottom: 20px;
+  padding-bottom: 20px !important;
 }
 .el-form-item__label {
   float: none;
