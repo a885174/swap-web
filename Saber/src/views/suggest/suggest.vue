@@ -337,7 +337,7 @@ export default {
                 trigger: "blur"
               }
             ]
-          }
+          },
           // {
           //   label: "创建人",
           //   prop: "createUser",
@@ -347,15 +347,15 @@ export default {
           //     trigger: "blur"
           //   }]
           // },
-          // {
-          //   label: "创建时间",
-          //   prop: "createTime",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建时间",
-          //     trigger: "blur"
-          //   }]
-          // },
+          {
+            label: "Update Time",
+            prop: "createTime",
+            rules: [{
+              required: true,
+              message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
+              trigger: "blur"
+            }]
+          },
           // {
           //   label: "更新人",
           //   prop: "updateUser",
@@ -366,7 +366,7 @@ export default {
           //   }]
           // },
           // {
-          //   label: "更新时间",
+          //   label: "Update Time",
           //   prop: "updateTime",
           //   rules: [{
           //     required: true,
