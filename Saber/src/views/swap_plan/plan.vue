@@ -30,10 +30,10 @@
         >{{`delete`}}</el-button>
 
         <template>
-          <el-button @click.stop="delteant">{{$t(`plan.TakeOff`)}}</el-button>
+          <el-button @click.stop="userdel(1)">{{$t(`plan.TakeOff`)}}</el-button>
         </template>
         <template>
-          <el-button @click.stop="userdel">{{$t(`plan.sale`)}}</el-button>
+          <el-button @click.stop="userdel(0)">{{$t(`plan.sale`)}}</el-button>
         </template>
       </template>
 
@@ -262,6 +262,7 @@ export default {
         type: "warning"
       })
         .then(() => {
+          debugger;
           row.planStatus = "1";
           update(row).then(
             () => {
@@ -354,7 +355,7 @@ export default {
       }
     },
 
-    userdel() {
+    userdel(planStatus) {
       if (this.ids.length > 0) {
         this.$confirm(this.$t(`plan.salePage`), {
           confirmButtonText: "sure",
@@ -362,7 +363,7 @@ export default {
           type: "warning"
         })
           .then(() => {
-            del(this.ids, "0").then(() => {
+            del(this.ids, planStatus).then(() => {
               this.onLoad(this.page);
               this.$message({
                 type: "success",
