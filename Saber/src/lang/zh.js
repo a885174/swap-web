@@ -399,7 +399,9 @@ export default {
     userStatus: "用户状态",
     ipaddress: "登录 ip",
     loginDate: "登录日期",
-    emailverification: "邮箱验证"
+    emailverification: "邮箱验证",
+    resetPaw: "密码重置",
+    associatedCustomers:"关联客户"
   },
   suggest: {
     userName: "用户姓名",

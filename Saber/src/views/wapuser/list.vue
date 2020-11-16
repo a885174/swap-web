@@ -102,7 +102,6 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
-
     // 联系电话/手机 验证
     var validateContactNumber = (rule, value, callback) => {
       var reg = /^(08)\d{7,12}$/;
@@ -154,6 +153,8 @@ export default {
           },
           {
             label: this.$t(`user.loginName`),
+            editDisabled: true,
+            editDisplay: false,
             prop: "loginName",
             rules: [
               {
@@ -170,7 +171,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入用户姓名",
+                message: this.$t(`scooter.please`) + this.$t(`user.username`),
                 trigger: "blur"
               }
             ]
@@ -192,7 +193,8 @@ export default {
               {
                 validator: validateContactNumber,
                 required: false,
-                message: "请输入手机号码",
+                message:
+                  this.$t(`scooter.please`) + this.$t(`user.phoneNumber`),
                 trigger: "blur"
               }
             ]
@@ -203,7 +205,8 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入邮箱 暂不真实校验，只做格式校验",
+                // message: "请输入邮箱 暂不真实校验，只做格式校验",
+                message: this.$t(`scooter.please`) + this.$t(`user.email`),
                 trigger: "blur"
               }
             ]
@@ -215,7 +218,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入职业 ",
+                message: this.$t(`scooter.please`) + this.$t(`user.job`),
                 trigger: "blur"
               }
             ]
@@ -224,15 +227,17 @@ export default {
             label: this.$t(`user.sex`),
             prop: "sex",
             hide: true,
+            editDisabled: true,
+            editDisplay: false,
             type: "select",
             valueDefault: "0",
             dicData: [
               {
-                label: "男",
+                label: "Male",
                 value: "0"
               },
               {
-                label: "女",
+                label: "FeMale",
                 value: "1"
               }
             ],
