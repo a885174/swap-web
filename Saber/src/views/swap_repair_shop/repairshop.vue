@@ -96,11 +96,7 @@
         <el-table-column label="index" width="70px">
           <template slot-scope="scope">{{scope.$index+1}}</template>
         </el-table-column>
-        <el-table-column property="week" :label="$t(`store.week`)" width="150">
-          <!-- <template slot-scope="scope">
-            <el-tag>{{scope.row.week===0? '七天24小时':'星期'+scope.row.week}}</el-tag>
-          </template>-->
-        </el-table-column>
+      
         <el-table-column property="business_time_s" :label="$t(`station.startTime`)" width="200"></el-table-column>
         <el-table-column property="business_time_e" :label="$t(`station.endTime`)"></el-table-column>
 

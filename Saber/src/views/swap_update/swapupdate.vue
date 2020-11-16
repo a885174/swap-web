@@ -74,6 +74,10 @@
           <el-input v-model="formData.byteLength" placeholder="请输入字节长度" clearable :style="{width: '100%'}" :disabled="true">
           </el-input>
         </el-form-item>
+        <el-form-item label="md5值" prop="verify">
+          <el-input v-model="formData.verify" placeholder="请输入字节长度" clearable :style="{width: '100%'}" :disabled="true">
+          </el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer">
         <el-button @click="close">取消</el-button>
@@ -187,6 +191,14 @@ var auth = `Basic ${Base64.encode(
                 message: "请输入字节长度",
                 trigger: "blur"
               }]
+            },{
+              label:"md5值",
+               prop: "verify",
+              rules: [{
+                required: true,
+                trigger: "blur"
+              }]
+              
             },
             {
               label: "升级内容",
@@ -240,6 +252,7 @@ var auth = `Basic ${Base64.encode(
         formData: {
         patchUrl: undefined,
         content:undefined,
+        verify:undefined,
         patchContent:undefined,
         versionNumber: undefined,
         byteLength: undefined,
@@ -313,6 +326,10 @@ var auth = `Basic ${Base64.encode(
               {
                 label: "固件包地址",
                 prop: row.patchUrl
+              },
+              {
+                label:"md5值",
+                prop:row.verify
               },
               // { label: '文件内容', prop: row.content },
               {
@@ -425,7 +442,6 @@ var auth = `Basic ${Base64.encode(
         this.page.pageSize = pageSize;
       },
       onOpen() {
-        alert(1111)
         this.dialogViewVisible=true;
       },
     onClose() {
@@ -440,6 +456,7 @@ var auth = `Basic ${Base64.encode(
         this.formData.content=res.data.content;
         // this.formData.versionNumber=res.data.versionNumber;
         this.formData.byteLength=res.data.byteLength;
+        this.formData.verify=res.data.verify;
         this.formData.patchUrl=res.data.patchUrl;
       }
    

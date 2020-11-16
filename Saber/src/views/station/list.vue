@@ -272,7 +272,6 @@
           <div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="insertPicature()">{{$t(`submitText`)}}</el-button>
               <el-button @click="uploadDialog = false">{{$t(`cancelText`)}}</el-button>
-
           </div>
         </el-dialog>
       </el-dialog>
@@ -482,19 +481,6 @@ export default {
         index: true,
         align: "center",
         column: [
-          // {
-          //   label: "换电柜ID",
-          //   prop: "stationId",
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入换电柜ID",
-          //     trigger: "blur"
-          //   }]
-          // },
           {
             label: this.$t(`station.stationCode`),
             // width: 160,

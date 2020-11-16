@@ -134,11 +134,14 @@
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"
               >
-                <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                <!-- <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i> -->
               </el-upload>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
+
         </el-row>
         <el-row>
           <!-- <el-col :span="12">
@@ -193,12 +196,7 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button
-          v-if="!editDisable"
-          type="primary"
-          @click="saveUpdate('editfrom')"
-          :disabled="isDisabled"
-        >{{$t(`message.save`)}}</el-button>
+        <el-button v-if="!editDisable" type="primary"  @click="saveUpdate('editfrom')">{{$t(`message.save`)}}</el-button>
         <el-button @click="resetForm()">{{$t(`message.cancel`)}}</el-button>
       </div>
     </el-dialog>
@@ -223,7 +221,6 @@ var auth = `Basic ${Base64.encode(
 export default {
   data() {
     return {
-      isDisabled: false,
       editDisable: false,
       rules: {
         messageTitle: [
@@ -477,7 +474,6 @@ export default {
       this.dialogEditVisible = true;
       this.imageUrl = row.messageIcon;
       this.editfrom = row;
-      this.isDisabled = false;
     },
     handleAvatarSuccess(res, file) {
       console.log(res);
@@ -485,7 +481,6 @@ export default {
       this.editfrom.messageIcon = res.data.url;
     },
     beforeAvatarUpload(file) {
-      console.log("111111");
       // const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -519,11 +514,8 @@ export default {
         this.editfrom = res.data.data;
         this.title = this.$t(`message.edit`);
         this.editDisable = false;
-
         this.imageUrl = row.messageIcon;
         this.dialogEditVisible = true;
-
-        this.isDisabled = false;
       });
     },
     HTMLEncode(html) {
@@ -538,7 +530,6 @@ export default {
     saveUpdate(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.isDisabled = true;
           this.editfrom.messageContent = this.HTMLEncode(
             this.editfrom.messageContent
           );
@@ -554,12 +545,6 @@ export default {
               },
               error => {
                 console.log(error);
-                this.onLoad(this.page);
-                this.dialogEditVisible = false;
-                this.$message({
-                  type: "error",
-                  message: "error!"
-                });
               }
             );
           } else {
@@ -574,12 +559,6 @@ export default {
               },
               error => {
                 console.log(error);
-                this.onLoad(this.page);
-                this.dialogEditVisible = false;
-                this.$message({
-                  type: "error",
-                  message: "error!"
-                });
               }
             );
           }
@@ -612,7 +591,6 @@ export default {
       };
       this.editDisable = false;
       this.dialogEditVisible = true;
-      this.isDisabled = false;
     },
     rowViews(row) {
       getDetail(row.messageId).then(res => {

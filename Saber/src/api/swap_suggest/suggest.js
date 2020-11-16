@@ -42,7 +42,7 @@ export const add = (row) => {
 
 export const update = (row) => {
   return request({
-    url: '/api/swap_suggest/suggest/submit',
+    url: '/api/swap_suggest/suggest/update',
     method: 'post',
     data: row
   })
@@ -52,7 +52,7 @@ export const update = (row) => {
 
 export const delwith = (suggestId,content) => {
   return request({
-    url: '/api/swap_suggest/suggest/submit',
+    url: '/api/swap_suggest/suggest/update',
     method: 'post',
     data: {
       suggestId:suggestId,
