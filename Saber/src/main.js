@@ -15,7 +15,7 @@ import {
 } from '@/config/env';
 import i18n from './lang' // Internationalization
 import './styles/common.scss';
-
+import VueCropper from 'vue-cropper'
 import basicContainer from './components/basic-container/main'
 import TinymceEditor from './components/tinymce-editor/tinymce-editor'
 
@@ -28,6 +28,7 @@ import AvueUeditor from 'avue-plugin-ueditor'
 import global_ from './Global.vue'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
+
 Vue.use(VueGoogleMaps, {
     load: {
       key: 'AIzaSyBFhdyjOq_mAY67fbNpgkADkb3fXXOHIdU',
@@ -35,16 +36,8 @@ Vue.use(VueGoogleMaps, {
     }
   })
 
-
-
-    
-import VueCropper from 'vue-cropper'
 Vue.use(VueCropper)
-
-
 Vue.use(VueMapbox, { mapboxgl: Mapbox });
-
-
 Vue.use(AvueUeditor);
 Vue.use(AvueMap);
 

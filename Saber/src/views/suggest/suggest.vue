@@ -337,6 +337,9 @@ export default {
                 trigger: "blur"
               }
             ]
+          },{
+              label:"Update Time",
+              prop:'updateTime',           
           }
           // {
           //   label: "创建人",
@@ -376,7 +379,8 @@ export default {
           // },
         ]
       },
-      data: []
+      data: [],
+      userName:""
     };
   },
   computed: {
@@ -415,6 +419,7 @@ export default {
     rowViews(row) {
       getDetail(row.suggestId).then(res => {
         var data = res.data.data;
+        data.userName=row.userName;
         this.dialogViewVisibles = true;
         var imageItems = data.picUrl.split(",");
         console.log(imageItems);
@@ -429,7 +434,7 @@ export default {
           case "3":
             clientType = "Other";
             break;
-        }
+          }
         this.rowItem = {
           item: [
             {
@@ -494,7 +499,6 @@ export default {
       });
     },
     deal(row) {
-      debugger;
       this.suggestId = row.suggestId;
       if (row.suggestStatus == "1") {
         this.$message({

@@ -142,7 +142,7 @@ export default {
               res: "data"
             },
             tip: ".png/.jpg",
-            action: "/api//blade-resource/oss/endpoint//upload"
+            action: "/api//blade-resource/oss/endpoint/upload"
           }
           //     {
           //   label: "订单id",
