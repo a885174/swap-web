@@ -24,7 +24,7 @@ export const getDetail = (planId) => {
 
 export const remove = (ids) => {
   return request({
-    url: '/api/swap_plan/plan/del',
+    url: '/api/swap_plan/plan/remove',
     method: 'post',
     params: {
       ids,
