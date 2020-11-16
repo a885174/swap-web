@@ -309,7 +309,9 @@ export default {
     emergencyPhone: "emergencyPhone",
     ipaddress: "ipaddress",
     loginDate: "loginDate",
-    emailverification: "Email verification"
+    emailverification: "Email verification",
+    resetPaw: "Reset Password",
+    associatedCustomers:"Associated customers"
   },
 
   supplier: {
