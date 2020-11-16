@@ -479,7 +479,7 @@ export default {
     ailableTime: "Duration",
     planStatus: "Status of Top-up",
     sale: "For Sale",
-    TakeOff: "Take Off",
+    TakeOff: "Off Shelf",
     lessHundred: "Please enter a positive integer",
     zeroNum: "Please enter a number greater than 0",
     removePage:"Are you sure to remove this package?",

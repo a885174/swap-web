@@ -40,7 +40,7 @@
       <template slot-scope="{row}" slot="planStatus">
         <label
           :style="{color:row.planStatus=='0'?'green':'red'}"
-        >{{row.planStatus=="0"?"Sale":"Take Off"}}</label>
+        >{{row.planStatus=="0"?"Sale":"Off Shelf"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="{row}" slot="menu">
@@ -357,7 +357,11 @@ export default {
 
     userdel(planStatus) {
       if (this.ids.length > 0) {
-        this.$confirm(this.$t(`plan.salePage`), {
+        var text=this.$t(`plan.salePage`);
+        if(planStatus==0){
+          text=this.$t(`plan.TakeOff`);
+        }
+        this.$confirm(text, {
           confirmButtonText: "sure",
           cancelButtonText: "cancel",
           type: "warning"
