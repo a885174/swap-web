@@ -27,7 +27,7 @@
           plain
           @click="editView(row,'add')"
         >{{$t(`add`)}}</el-button>
-      </template> -->
+      </template>-->
 
       <template slot-scope="{row}" slot="connectStatus">
         <label
@@ -35,12 +35,17 @@
         >{{row.connectStatus=="0"?"Connect":"Unconnect"}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
+
+      <template slot-scope="{row}" slot="color">
+        <label>{{row.color==0?"Red":(row.color==1?"Black":"White")}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
       <template slot-scope="{row}" slot="menu">
         <el-button
           type="text"
           icon="el-icon-edit"
           size="small"
-          @click.stop="editView(row,'edit')"
+          @click.stop="editView(row)"
         >{{$t(`message.edit`)}}</el-button>
       </template>
     </avue-crud>
@@ -51,13 +56,13 @@
       class="abow_dialog"
       center
     >
-      <el-form ref="form" :model="editform" label-width="0">
+      <el-form ref="form" class="form" :model="editform" label-width="0">
         <el-form-item label="Vin">
           <el-input v-model="form.vin"></el-input>
         </el-form-item>
-        <el-form-item label="Controller QR Code">
+        <!-- <el-form-item label="Controller QR Code">
           <el-input v-model="form.scooterCode"></el-input>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="Motor Code">
           <el-input v-model="form.motorCode"></el-input>
         </el-form-item>
@@ -74,8 +79,8 @@
           </div>
         </el-form-item>
         <el-form-item>
-          <el-button>Cancel</el-button>
-          <el-button type="primary">Confirm</el-button>
+          <el-button @click="dialogViewVisible=false">Cancel</el-button>
+          <el-button type="primary" @click="changeMoto()">Confirm</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -115,12 +120,13 @@ export default {
         viewBtn: false,
         selection: true,
         editBtn: false,
-        addBtn:false,
+        addBtn: false,
+        delBtn: true,
         column: [
           {
-            label: "设备编码",
+            label: "Controller QR",
             prop: "scooterCode",
-            search:true,
+            search: true,
             rules: [
               {
                 required: true,
@@ -140,7 +146,7 @@ export default {
               }
             ]
           },
-                    {
+          {
             label: "Motor Code",
             prop: "motorCode",
             rules: [
@@ -155,6 +161,7 @@ export default {
           {
             label: "color",
             prop: "color",
+            slot: true,
             rules: [
               {
                 required: true,
@@ -201,7 +208,7 @@ export default {
       return {
         addBtn: this.vaildData(this.permission.scooter_add, false),
         viewBtn: this.vaildData(this.permission.scooter_view, false),
-        delBtn: this.vaildData(this.permission.scooter_delete, false),
+        delBtn: this.vaildData(this.permission.scooter_delete, true),
         editBtn: this.vaildData(this.permission.scooter_edit, false)
       };
     },
@@ -214,20 +221,34 @@ export default {
     }
   },
   methods: {
+    changeMoto() {
+      edit(this.form).then(
+        () => {
+          this.dialogViewVisible = false;
+          this.onLoad(this.page);
+
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        },
+        error => {
+          done();
+          console.log(error);
+        }
+      );
+    },
     changeActive(index) {
       this.current = index;
+      this.form.color = index;
     },
-    editView(row, type) {
+    editView(row) {
       console.log(row);
-      if (row == "") {
+      getDetail(row.scooterId).then(res => {
+        this.form = res.data.data;
+        this.current = this.form.color;
         this.dialogViewVisible = true;
-      } else {
-        getDetail(row.scooterId).then(res => {
-          this.form = res.data.data;
-          this.current=this.form.color;
-          this.dialogViewVisible = true;
-        });
-      }
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
@@ -268,7 +289,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          return remove(row.id);
+          return remove(row.scooterId);
         })
         .then(() => {
           this.onLoad(this.page);
@@ -304,11 +325,9 @@ export default {
       if (["edit", "view"].includes(type)) {
         getDetail(this.form.id).then(res => {
           const data = res.data.data;
-            this.current=1;
-          this.form.vin=data.vin;
-          this.form.scooterCode=data.scooterCode;
-        
-          
+          this.current = 1;
+          this.form.vin = data.vin;
+          this.form.scooterCode = data.scooterCode;
         });
       }
       done();
@@ -354,7 +373,7 @@ export default {
 
 <style>
 .abow_dialog .el-dialog .el-dialog__body {
-  padding-bottom: 20px;
+  padding-bottom: 20px !important;
 }
 .el-form-item__label {
   float: none;
