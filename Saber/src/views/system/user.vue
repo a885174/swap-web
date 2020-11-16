@@ -29,7 +29,7 @@
                    plain
                    v-if="permission.user_reset"
                    icon="el-icon-refresh"
-                   @click="handleReset">密码重置
+                   @click="handleReset">{{$t(`user.resetPaw`)}}
         </el-button>
                 <el-button size="small"  @click="openTenantWindos()">{{$t(`assignClient`)}}</el-button>
 
@@ -270,7 +270,7 @@
               hide: true,
               display: false
             },{
-              label:"关联客户",
+              label:this.$t(`user.associatedCustomers`),
               prop:'clientName',
             }
           ]
