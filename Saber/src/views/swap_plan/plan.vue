@@ -357,10 +357,14 @@ export default {
 
     userdel(planStatus) {
       if (this.ids.length > 0) {
-        var text=this.$t(`plan.salePage`);
+        var text;
         if(planStatus==0){
-          text=this.$t(`plan.TakeOff`);
+          text="Are you sure to"+this.$t(`plan.TakeOff`)+"this package";
         }
+        if(planStatus==1){
+          text="Are you sure to"+this.$t(`plan.sale`)+"this package";
+        }
+
         this.$confirm(text, {
           confirmButtonText: "sure",
           cancelButtonText: "cancel",
