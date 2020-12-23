@@ -34,7 +34,11 @@
 
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
-        
+        <el-button
+          type="text"
+          size="small"
+          @click.stop="openDailog(scope.row)"
+        >分配</el-button>
       </template>
 
     
@@ -52,11 +56,12 @@
           <el-input v-model="formData.patchContent " placeholder="请输入更新内容" clearable :style="{width: '100%'}" >
           </el-input>
         </el-form-item>
-        <el-form-item label="上传" prop="patchUrl" required>
-          <el-upload ref="patchUrl" :file-list="field104fileList" :action="field104Action" :headers="myHeaders"
-            :before-upload="field104BeforeUpload" accept=".bin" :on-success="handleSuccess">
-            <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
-          </el-upload>
+         <el-form-item label="上传" prop="patchUrl" required>
+        <el-upload  ref="patchUrl" :file-list="patcUrlfileList" :headers="myHeaders"
+          :action="patcUrlAction"
+          :before-upload="patcUrlBeforeUpload"  :on-success="handleSuccess" accept=".bin">
+          <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+        </el-upload>
         </el-form-item>
         <el-form-item label="升级包地址" prop="patchUrl">
           <el-input v-model="formData.patchUrl" placeholder="请输入升级包地址" clearable :style="{width: '100%'}" :disabled="true">
@@ -99,13 +104,88 @@
         <el-button type="primary" @click="dialogVisible = false">关闭 </el-button>
       </span>
     </el-dialog>
+
+
+<el-dialog title="固件升级记录" :visible.sync="dialogTableVisible" width="800px" >
+       <el-col :span="1.5">
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="mini"
+          @click="dialogFormVisible = true">
+          选取电池</el-button>
+      </el-col>
+  <el-table :data="gridData">
+           <el-table-column label="序号" width="70px">
+        <template slot-scope="scope">{{scope.$index+1}}</template>
+      </el-table-column>
+  <el-table-column label="升级包编号" align="center" prop="patchId" />
+      <el-table-column label="通讯板" align="center" prop="patchType" >
+        <template slot-scope="scope">
+          <span v-if="scope.row.patchType=='0'">通巡板</span>
+          <span v-if="scope.row.patchType=='1'">BMS板</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="升级包地址" align="center" prop="patchUrl" />
+      <el-table-column label="版本号" align="center" prop="versionNumber" />
+      <el-table-column label="电池编码" align="center" prop="batteryCode" />
+      <el-table-column label="升级状态" align="center">
+        /**0 升级中  1 升级完成  2升级失败 3待升级*/
+        <template slot-scope="scope">
+          <span v-if="scope.row.updateStatus==0">升级中</span>
+          <span v-if="scope.row.updateStatus==1">升级完成</span>
+          <span v-if="scope.row.updateStatus==2">升级失败</span>
+          <span v-if="scope.row.updateStatus==3">待升级</span>
+        </template>
+
+      </el-table-column>
+  </el-table>
+</el-dialog>
+
+<el-dialog title="固件升级分配" :visible.sync="dialogFormVisible"  size="medium" label-width="100px">
+  <el-form :model="form2">
+        <el-form-item label="升级包编号" prop="patchId" >
+            <el-col :span="12">
+          <el-input v-model="form2.patchId" :disabled="true"/>
+            </el-col>
+        </el-form-item>
+        <el-form-item label="固件包地址" prop="patchId" >
+            <el-col :span="12">
+          <el-input v-model="form2.patchUrl" :disabled="true"/>
+            </el-col>
+        </el-form-item>
+        <el-form-item label="升级包版本号" prop="patchId" >
+            <el-col :span="12">
+          <el-input v-model="form2.versionNumber" :disabled="true"/>
+            </el-col>
+        </el-form-item>
+       <el-form-item label="电池" prop="batteryId" required>
+        <el-select v-model="form2.batteryId" placeholder="请选择电池" clearable size="small">
+           <el-option
+                  v-for="item in batteryOptions"
+                  :key="item.batteryId"
+                  :label="item.batteryCode"
+                  :value="item.batteryId"
+                ></el-option>
+        </el-select>
+      </el-form-item>
+  </el-form>
+  
+  
+
+  <div slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogFormVisible =submitLogForm()">确 定</el-button>
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+  </div>
+</el-dialog>
+    
   </basic-container>
 
   
 </template>
 
 <script>
-  import {getList, getDetail, add, update, remove} from "@/api/swap_update/swapupdate";
+  import {getList, getDetail, add, update, remove,listLog,addLog} from "@/api/swap_update/swapupdate";
   import {mapGetters} from "vuex";
   import website from "@/config/website";
 
@@ -129,6 +209,8 @@ var auth = `Basic ${Base64.encode(
           total: 0
         },
         dialogViewVisible:false,
+        dialogFormVisible:false,
+        gridData:[],
         dialogVisible:false,
         rowItem:[],
         selectionList: [],
@@ -249,6 +331,14 @@ var auth = `Basic ${Base64.encode(
           ]
         },
         data: [],
+        dialogTableVisible:false,
+        form2:{
+        patchType: undefined,
+        versionNumber: undefined,
+        patchUrl: undefined,
+        batteryId: undefined,
+      
+      },
         formData: {
         patchUrl: undefined,
         content:undefined,
@@ -275,8 +365,8 @@ var auth = `Basic ${Base64.encode(
         ]
       },
       myHeaders: { Authorization: auth, "Blade-Auth": "bearer " + token },
-      field104Action: '/api/blade-resource/oss/endpoint/uploadPackage',
-      field104fileList: [],
+      patcUrlAction: '/api/blade-resource/oss/endpoint/uploadPackage',
+      patcUrlfileList: [],
       field103Options: [{
         "label": "BMS",
         "value": 0
@@ -287,8 +377,6 @@ var auth = `Basic ${Base64.encode(
         "label": "Station",
         "value": 2
       }],
-
-
 
       };
     },
@@ -310,6 +398,14 @@ var auth = `Basic ${Base64.encode(
         return ids.join(",");
       }
     },
+    created() {
+    // this.getList();
+    //   this.getDicts("patch_type").then(response => {
+    //   this.patchTypeOptions = response.data;
+    // });
+    // this.getBatterySelect();
+
+  },
     methods: {
        rowView(row){
          this.dialogVisible=true;
@@ -389,6 +485,11 @@ var auth = `Basic ${Base64.encode(
           });
       },
 
+    //     getBatterySelect() {
+    //   batterySelect().then(response => {
+    //     this.batteryOptions = response.data;
+    //   });
+    // },
   
       handleDelete() {
         if (this.selectionList.length === 0) {
@@ -483,7 +584,39 @@ var auth = `Basic ${Base64.encode(
       })
     },
     
-    field104BeforeUpload(file) {
+
+  logListload(id){
+      listLog(id).then(response => {
+        this.gridData = response.rows;
+      }); 
+  },
+    openDailog(row){
+      this.dialogTableVisible = true;
+      this.form2.patchId=row.id;
+      this.form2.patchType=row.id;
+      this.form2.patchUrl=row.patchUrl;
+      this.form2.versionNumber=row.versionNumber;
+      this.logListload(this.form2.patchId);
+      },
+
+
+   submitLogForm(){
+
+      if(this.form2.batteryId==undefined  ){
+        return;
+      }else{
+addLog(this.form2).then(response => {
+              if (response.code === 200) {
+                this.msgSuccess("分配设备成功");
+                this.open = false;
+                this.logListload(this.form2.patchId);
+              }
+            });
+      }
+         
+    },
+
+    patcUrlAction(file) {
       let isRightSize = file.size / 1024 / 1024 < 2
       if (!isRightSize) {
         this.$message.error('文件大小超过 2MB')
