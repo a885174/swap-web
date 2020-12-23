@@ -22,6 +22,18 @@ export const getDetail = (id) => {
   })
 }
 
+
+
+export const listLog = (id) => {
+  return request({
+    url: '/api/swap_update/swapupdate/detail',
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
+
 export const remove = (ids) => {
   return request({
     url: '/api/swap_update/swapupdate/remove',
@@ -33,6 +45,14 @@ export const remove = (ids) => {
 }
 
 export const add = (row) => {
+  return request({
+    url: '/api/swap_update/swapupdate/save',
+    method: 'post',
+    data: row
+  })
+}
+
+export const addLog = (row) => {
   return request({
     url: '/api/swap_update/swapupdate/save',
     method: 'post',
