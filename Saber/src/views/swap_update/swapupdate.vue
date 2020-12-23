@@ -490,6 +490,20 @@ var auth = `Basic ${Base64.encode(
     //     this.batteryOptions = response.data;
     //   });
     // },
+
+
+      patcUrlBeforeUpload(file) {
+      let isRightSize = file.size / 1024 / 1024 < 2
+      if (!isRightSize) {
+        this.$message.error('文件大小超过 2MB')
+      }
+      let isAccept = new RegExp('.bin').test(file.name)
+   
+      if (!isAccept) {
+        this.$message.error('应该选择.bin类型的文件')
+      }
+      return isRightSize && isAccept
+    },
   
       handleDelete() {
         if (this.selectionList.length === 0) {
