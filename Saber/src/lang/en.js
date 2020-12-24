@@ -117,10 +117,10 @@ export default {
     closeAll: "Close All"
   },
   scooter: {
-    vincode: "VIN",
+    vincode: "Serial Number",
     name: "Name of Motorcycle",
     licensePlate: "License Plate Number ",
-    scooterVersion: "Model Number",
+    scooterVersion: "Type Numberr",
     scooterStatus: "Motorcycle Status",
     sellChannel: "Sales Channel",
     sellStatus: "Business Status",
