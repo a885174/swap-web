@@ -105,7 +105,7 @@ export const importxls = () => {
 
 export const downloadxls = () => {
   return request({
-    url: '/api/swap_scooter/scooter/download',
+    url: '/api/swap_scooter/scooter/exportExcel',
     method: 'post',
     responseType:'blob'
   })

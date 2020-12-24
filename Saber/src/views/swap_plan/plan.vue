@@ -262,7 +262,6 @@ export default {
         type: "warning"
       })
         .then(() => {
-          debugger;
           row.planStatus = "1";
           update(row).then(
             () => {

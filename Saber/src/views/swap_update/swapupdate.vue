@@ -34,7 +34,11 @@
 
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
-        
+        <el-button
+            size="mini"
+            type="text"
+            @click="openDailog(scope.row)"
+      >分配</el-button>
       </template>
 
     
@@ -99,6 +103,112 @@
         <el-button type="primary" @click="dialogVisible = false">关闭 </el-button>
       </span>
     </el-dialog>
+
+     <el-dialog title="固件升级记录" :visible.sync="dialogTableVisible" width="800px" >
+       <el-col :span="1.5">
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="mini"
+          @click="dialogFormVisible = true">
+          选取电池</el-button>
+      </el-col>
+  <el-table :data="gridData">
+           <el-table-column label="序号" width="70px">
+        <template slot-scope="scope">{{scope.$index+1}}</template>
+      </el-table-column>
+  <el-table-column label="升级包编号" align="center" prop="patchId" />
+      <el-table-column label="通讯板" align="center" prop="patchType" >
+        <template slot-scope="scope">
+          <span v-if="scope.row.patchType=='0'">通巡板</span>
+          <span v-if="scope.row.patchType=='1'">BMS板</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="升级包地址" align="center" prop="patchUrl" />
+      <el-table-column label="版本号" align="center" prop="versionNumber" />
+      <el-table-column label="电池编码" align="center" prop="batteryCode" />
+      <el-table-column label="升级状态" align="center">
+        /**0 升级中  1 升级完成  2升级失败 3待升级*/
+        <template slot-scope="scope">
+          <span v-if="scope.row.updateStatus==0">升级中</span>
+          <span v-if="scope.row.updateStatus==1">升级完成</span>
+          <span v-if="scope.row.updateStatus==2">升级失败</span>
+          <span v-if="scope.row.updateStatus==3">待升级</span>
+        </template>
+
+      </el-table-column>
+  </el-table>
+</el-dialog>
+
+
+<el-dialog title="固件升级分配" :visible.sync="dialogFormVisible"  size="medium" label-width="100px">
+  <el-form :model="form2">
+        <el-form-item label="升级包编号" prop="patchId" >
+            <el-col :span="12">
+          <el-input v-model="form2.patchId" :disabled="true"/>
+            </el-col>
+        </el-form-item>
+        <el-form-item label="固件包地址" prop="patchId" >
+            <el-col :span="12">
+          <el-input v-model="form2.patchUrl" :disabled="true"/>
+            </el-col>
+        </el-form-item>
+        <el-form-item label="升级包版本号" prop="patchId" >
+            <el-col :span="12">
+          <el-input v-model="form2.versionNumber" :disabled="true"/>
+            </el-col>
+        </el-form-item>
+       <el-form-item label="电池" prop="batteryId" required>
+        <el-select v-model="form2.batteryId" placeholder="请选择电池" clearable size="small">
+           <el-option
+                  v-for="item in batteryOptions"
+                  :key="item.batteryId"
+                  :label="item.batteryCode"
+                  :value="item.batteryId"
+                ></el-option>
+        </el-select>
+      </el-form-item>
+  </el-form>
+  
+  
+
+  <div slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogFormVisible =submitLogForm()">确 定</el-button>
+    <el-button @click="dialogFormVisible = false">取 消</el-button>
+  </div>
+</el-dialog>
+
+   <!-- 用户导入对话框 -->
+    <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
+        <el-form-item label="升级包地址" prop="patchUrl">
+         <el-input v-model="form.versionNumber" placeholder="请输入版本号" />
+        </el-form-item>
+      <el-upload
+        ref="upload"
+        :limit="1"
+        accept=".bin"
+        :headers="upload.headers"
+        :action="upload.url + '?updateSupport=' + upload.updateSupport"
+        :disabled="upload.isUploading"
+        :on-progress="handleFileUploadProgress"
+        :on-success="handleFileSuccess"
+        :auto-upload="false"
+        drag
+      >
+        <i class="el-icon-upload"></i>
+           <div class="el-upload__tip" slot="tip">
+        </div>
+        <div class="el-upload__text">
+          将文件拖到此处，或
+          <em>点击上传</em>
+        </div>
+        <div class="el-upload__tip" style="color:red" slot="tip">提示：仅允许导入“bin”格式文件</div>
+      </el-upload>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFileForm">确 定</el-button>
+        <el-button @click="upload.open = false">取 消</el-button>
+      </div>
+    </el-dialog>
   </basic-container>
 
   
@@ -129,7 +239,10 @@ var auth = `Basic ${Base64.encode(
           total: 0
         },
         dialogViewVisible:false,
+        dialogTableVisible:false,
+        dialogFormVisible:false,     
         dialogVisible:false,
+        batteryOptions:undefined,
         rowItem:[],
         selectionList: [],
         option: {
@@ -249,6 +362,14 @@ var auth = `Basic ${Base64.encode(
           ]
         },
         data: [],
+        gridData:[],
+        form2:{
+        patchType: undefined,
+        versionNumber: undefined,
+        patchUrl: undefined,
+        batteryId: undefined,
+    
+      },
         formData: {
         patchUrl: undefined,
         content:undefined,
@@ -389,6 +510,15 @@ var auth = `Basic ${Base64.encode(
           });
       },
 
+
+    openDailog(row){
+      this.dialogTableVisible = true;
+      this.form2.patchId=row.id;
+      this.form2.patchType=row.id;
+      this.form2.patchUrl=row.patchUrl;
+      this.form2.versionNumber=row.versionNumber;
+      this.logListload(this.form2.patchId);      
+      },
   
       handleDelete() {
         if (this.selectionList.length === 0) {

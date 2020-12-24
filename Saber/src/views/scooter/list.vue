@@ -19,6 +19,12 @@
       @size-change="sizeChange"
       @on-load="onLoad"
     >
+
+        <template slot-scope="{row}" slot="color">
+        <label>{{row.color==0?"Red":(row.color==1?"Black":"White")}}</label>
+        <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+      </template>
+
       <template slot="menuLeft">
         <el-button
           type="danger"
@@ -312,6 +318,18 @@ export default {
               }
             ]
           },
+            {
+            label: "vin",
+            prop: "vin",
+            addDisabled: true,
+            addDisplay: false,
+            rules: [
+              {
+                required: false,
+                trigger: "blur"
+              }
+            ]
+          },
           {
             label: this.$t(`scooter.connectStatus`),
             prop: "connectStatus",
@@ -457,6 +475,16 @@ export default {
             editDisplay: false,
             addDisabled: true,
             addDisplay: false
+          },
+            {
+            label: "color",
+            prop: "color",
+            slot: true,
+            editDisabled: true,
+            editDisplay: false,
+            addDisabled: true,
+            addDisplay: false
+ 
           },
           {
             label: this.$t(`tenant.tenantName`),
@@ -640,7 +668,6 @@ export default {
                 value: "2"
               }
             ],
-            // type: "number",
             rules: [
               {
                 required: false,
@@ -812,6 +839,7 @@ export default {
         this.dialogViewVisible = true;
         var data = res.data.data;
         var scooterStatus;
+        var scooterColor;
         switch (data.scooterStatus) {
           case "0":
             scooterStatus = this.$t(`battery.Normal`);
@@ -824,6 +852,17 @@ export default {
             break;
           case "3":
             scooterStatus = this.$t(`battery.Castoff`);
+            break;
+        }
+        switch(data.color){
+          case 0:
+            scooterColor="Red";
+            break;
+          case 1:
+            scooterColor="Black";
+            break;
+          case 2:
+            scooterColor="White";
             break;
         }
         this.rowItem = {
@@ -845,6 +884,9 @@ export default {
                   prop: data.batteryNumber
                 },
                 { label: "IMEI", prop: data.imei },
+                {label:"vin",prop:data.vin},
+                {label:"Motor Code",prop:data.motorCode},
+                {label:"Color",prop:scooterColor},
                 {
                   label: this.$t(`scooter.mileageValue`),
                   prop:
@@ -952,9 +994,17 @@ export default {
         console.log(response);
         response = response.data;
         if (response.code == 200) {
+          this.onLoad(this.page);
           this.$message({
             type: "success",
             message: "success!"
+          });
+          
+        }
+        if (response.code == 99) {
+          this.$message({
+            type: "fail",
+            message: response.msg
           });
         }
       });
@@ -1102,7 +1152,7 @@ export default {
         let link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
         //配置下载的文件名
-        link.download = "导出电动车数据列表.xls";
+        link.download = "ScooterTemplate.xlsx";
         link.click();
       });
     },
@@ -1114,7 +1164,7 @@ export default {
         let link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
         //配置下载的文件名
-        link.download = "电动车下载模板.xls";
+        link.download = "ScooterTemplate.xlsx";
         link.click();
       });
     },

@@ -8991,6 +8991,11 @@ vue-axios@^2.1.2:
   resolved "https://registry.npm.taobao.org/vue-axios/download/vue-axios-2.1.5.tgz#1af4bf1218ed71309c76afb38d0f683e312c24a7"
   integrity sha1-GvS/EhjtcTCcdq+zjQ9oPjEsJKc=
 
+vue-cropper@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.npm.taobao.org/vue-cropper/download/vue-cropper-0.5.5.tgz#9bd1ba563c7faa268abd52fb2af4c6c28d33c962"
+  integrity sha1-m9G6Vjx/qiaKvVL7KvTGwo0zyWI=
+
 vue-cropperjs@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/vue-cropperjs/download/vue-cropperjs-3.0.0.tgz#b3456009a72014ae98bd374a1d812a5c1f5ff46f"
