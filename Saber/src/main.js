@@ -55,7 +55,7 @@ Vue.use(window.AVUE, {
 // axios.defaults.baseURL=global_.BASE_URL;
 // axios.defaults.timeout=1800;
 // axios.defaults.withCredentials=true;
-// Vue.prototype.$t = (key, value) => i18n.t(key, value);
+Vue.prototype.$t = (key, value) => i18n.t(key, value);
 
 
 

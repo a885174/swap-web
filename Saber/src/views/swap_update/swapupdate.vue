@@ -35,10 +35,10 @@
       <template slot-scope="{row}" slot="menu">
         <el-button type="text" icon="el-icon-view" size="small" @click.stop="rowView(row)">{{$t(`chakan`)}}</el-button>
         <el-button
-            size="mini"
-            type="text"
-            @click="openDailog(scope.row)"
-      >分配</el-button>
+          type="text"
+          size="small"
+          @click.stop="openDailog(row)"
+        >分配</el-button>
       </template>
 
     
@@ -48,7 +48,7 @@
       <el-form ref="elForm" :model="formData" :rules="rules" size="medium" label-width="80px">
         <el-form-item label="升级包类型" prop="patchType">
           <el-select v-model="formData.patchType" placeholder="请选择升级包类型" clearable :style="{width: '100%'}">
-            <el-option v-for="(item, index) in field103Options" :key="index" :label="item.label"
+            <el-option v-for="(item, index) in patchTypeOptions" :key="index" :label="item.label"
               :value="item.value" :disabled="item.disabled"></el-option>
           </el-select>
         </el-form-item>
@@ -56,11 +56,12 @@
           <el-input v-model="formData.patchContent " placeholder="请输入更新内容" clearable :style="{width: '100%'}" >
           </el-input>
         </el-form-item>
-        <el-form-item label="上传" prop="patchUrl" required>
-          <el-upload ref="patchUrl" :file-list="field104fileList" :action="field104Action" :headers="myHeaders"
-            :before-upload="field104BeforeUpload" accept=".bin" :on-success="handleSuccess">
-            <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
-          </el-upload>
+         <el-form-item label="上传" prop="patchUrl" required>
+        <el-upload  ref="patchUrl" :file-list="patcUrlfileList" :headers="myHeaders"
+          :action="patcUrlAction"
+          :before-upload="patcUrlBeforeUpload"  :on-success="handleSuccess" accept=".bin">
+          <el-button size="small" type="primary" icon="el-icon-upload">点击上传</el-button>
+        </el-upload>
         </el-form-item>
         <el-form-item label="升级包地址" prop="patchUrl">
           <el-input v-model="formData.patchUrl" placeholder="请输入升级包地址" clearable :style="{width: '100%'}" :disabled="true">
@@ -104,14 +105,15 @@
       </span>
     </el-dialog>
 
-     <el-dialog title="固件升级记录" :visible.sync="dialogTableVisible" width="800px" >
+
+<el-dialog title="固件升级记录" :visible.sync="dialogTableVisible" width="800px" >
        <el-col :span="1.5">
         <el-button
           type="primary"
           icon="el-icon-plus"
           size="mini"
           @click="dialogFormVisible = true">
-          选取电池</el-button>
+          分配设备</el-button>
       </el-col>
   <el-table :data="gridData">
            <el-table-column label="序号" width="70px">
@@ -120,13 +122,14 @@
   <el-table-column label="升级包编号" align="center" prop="patchId" />
       <el-table-column label="通讯板" align="center" prop="patchType" >
         <template slot-scope="scope">
-          <span v-if="scope.row.patchType=='0'">通巡板</span>
-          <span v-if="scope.row.patchType=='1'">BMS板</span>
+          <span v-if="scope.row.patchType=='0'">BMS板</span>
+          <span v-if="scope.row.patchType=='1'">电动车</span>
+          <span v-if="scope.row.patchType=='2'">换电柜</span>
         </template>
       </el-table-column>
       <el-table-column label="升级包地址" align="center" prop="patchUrl" />
       <el-table-column label="版本号" align="center" prop="versionNumber" />
-      <el-table-column label="电池编码" align="center" prop="batteryCode" />
+      <el-table-column label="终端编码" align="center" prop="deviceCode" />
       <el-table-column label="升级状态" align="center">
         /**0 升级中  1 升级完成  2升级失败 3待升级*/
         <template slot-scope="scope">
@@ -140,82 +143,53 @@
   </el-table>
 </el-dialog>
 
+<el-dialog title="选择设备" :visible.sync="dialogFormVisible"  size="medium" label-width="100px">
 
-<el-dialog title="固件升级分配" :visible.sync="dialogFormVisible"  size="medium" label-width="100px">
-  <el-form :model="form2">
-        <el-form-item label="升级包编号" prop="patchId" >
-            <el-col :span="12">
-          <el-input v-model="form2.patchId" :disabled="true"/>
-            </el-col>
-        </el-form-item>
-        <el-form-item label="固件包地址" prop="patchId" >
-            <el-col :span="12">
-          <el-input v-model="form2.patchUrl" :disabled="true"/>
-            </el-col>
-        </el-form-item>
-        <el-form-item label="升级包版本号" prop="patchId" >
-            <el-col :span="12">
-          <el-input v-model="form2.versionNumber" :disabled="true"/>
-            </el-col>
-        </el-form-item>
-       <el-form-item label="电池" prop="batteryId" required>
-        <el-select v-model="form2.batteryId" placeholder="请选择电池" clearable size="small">
-           <el-option
-                  v-for="item in batteryOptions"
-                  :key="item.batteryId"
-                  :label="item.batteryCode"
-                  :value="item.batteryId"
-                ></el-option>
-        </el-select>
-      </el-form-item>
-  </el-form>
-  
-  
 
-  <div slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogFormVisible =submitLogForm()">确 定</el-button>
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
-  </div>
+  <div class="searchDiv">
+      <el-col :span="10">
+        <!-- 查询输入框 -->
+        <el-input v-model="deviceCode" placeholder="请输入设备编码"></el-input>
+      </el-col>
+      <el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
+      <!-- 模态框 -->
+      <el-button @click="submitForm ()">分配设备</el-button>
+
+        
+
+
+
+
+
+
+  <el-table :data="device" ref="multipleTable" @selection-change="handleSelectionChange">
+  <el-table-column
+      type="selection"
+      width="55">
+   </el-table-column>
+  <el-table-column label="序号" width="70px">
+  <template slot-scope="scope">{{scope.$index+1}}</template>
+  </el-table-column>
+  <!-- <el-table-column label="设备编号" align="center" prop="deviceId"></el-table-column> -->
+  <el-table-column label="设备类型" align="center" prop="type" >
+      <template slot-scope="scope">
+          <span v-if="scope.row.type=='0'">BMS板</span>
+          <span v-if="scope.row.type=='1'">电动车</span>
+          <span v-if="scope.row.type=='2'">换电柜</span>
+        </template>
+  </el-table-column>
+  <el-table-column label="升级包编码" align="center" prop="deviceCode" />
+     
+</el-table>
+</div>
 </el-dialog>
-
-   <!-- 用户导入对话框 -->
-    <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
-        <el-form-item label="升级包地址" prop="patchUrl">
-         <el-input v-model="form.versionNumber" placeholder="请输入版本号" />
-        </el-form-item>
-      <el-upload
-        ref="upload"
-        :limit="1"
-        accept=".bin"
-        :headers="upload.headers"
-        :action="upload.url + '?updateSupport=' + upload.updateSupport"
-        :disabled="upload.isUploading"
-        :on-progress="handleFileUploadProgress"
-        :on-success="handleFileSuccess"
-        :auto-upload="false"
-        drag
-      >
-        <i class="el-icon-upload"></i>
-           <div class="el-upload__tip" slot="tip">
-        </div>
-        <div class="el-upload__text">
-          将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" style="color:red" slot="tip">提示：仅允许导入“bin”格式文件</div>
-      </el-upload>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFileForm">确 定</el-button>
-        <el-button @click="upload.open = false">取 消</el-button>
-      </div>
-    </el-dialog>
-  </basic-container>
+</basic-container>
 
   
 </template>
 
 <script>
-  import {getList, getDetail, add, update, remove} from "@/api/swap_update/swapupdate";
+  import {getList, getDetail, add, update, remove,listLog,addLog,getSelect} from "@/api/swap_update/swapupdate";
   import {mapGetters} from "vuex";
   import website from "@/config/website";
 
@@ -233,14 +207,15 @@ var auth = `Basic ${Base64.encode(
         form: {},
         query: {},
         loading: true,
+        multipleSelection:[],
         page: {
           pageSize: 10,
           currentPage: 1,
           total: 0
         },
         dialogViewVisible:false,
-        dialogTableVisible:false,
-        dialogFormVisible:false,     
+        dialogFormVisible:false,
+        gridData:[],
         dialogVisible:false,
         batteryOptions:undefined,
         rowItem:[],
@@ -362,14 +337,19 @@ var auth = `Basic ${Base64.encode(
           ]
         },
         data: [],
-        gridData:[],
+        device:[],
+        dialogTableVisible:false,
         form2:{
         patchType: undefined,
         versionNumber: undefined,
         patchUrl: undefined,
-        batteryId: undefined,
-    
+        deviceId: undefined,
+        ids:"",
+        deviceCode: undefined,
+      
       },
+      deviceId:"",
+      deviceCode:"",
         formData: {
         patchUrl: undefined,
         content:undefined,
@@ -396,20 +376,18 @@ var auth = `Basic ${Base64.encode(
         ]
       },
       myHeaders: { Authorization: auth, "Blade-Auth": "bearer " + token },
-      field104Action: '/api/blade-resource/oss/endpoint/uploadPackage',
-      field104fileList: [],
-      field103Options: [{
+      patcUrlAction: '/api/blade-resource/oss/endpoint/uploadPackage',
+      patcUrlfileList: [],
+      patchTypeOptions: [{
         "label": "BMS",
-        "value": 0
+        "value": "0"
       }, {
         "label": "Sccoter",
-        "value": 1
+        "value": "1"
       }, {
         "label": "Station",
-        "value": 2
+        "value": "2"
       }],
-
-
 
       };
     },
@@ -431,6 +409,7 @@ var auth = `Basic ${Base64.encode(
         return ids.join(",");
       }
     },
+
     methods: {
        rowView(row){
          this.dialogVisible=true;
@@ -510,15 +489,22 @@ var auth = `Basic ${Base64.encode(
           });
       },
 
-
-    openDailog(row){
-      this.dialogTableVisible = true;
-      this.form2.patchId=row.id;
-      this.form2.patchType=row.id;
-      this.form2.patchUrl=row.patchUrl;
-      this.form2.versionNumber=row.versionNumber;
-      this.logListload(this.form2.patchId);      
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
       },
+
+      patcUrlBeforeUpload(file) {
+      let isRightSize = file.size / 1024 / 1024 < 2
+      if (!isRightSize) {
+        this.$message.error('文件大小超过 2MB')
+      }
+      let isAccept = new RegExp('.bin').test(file.name)
+   
+      if (!isAccept) {
+        this.$message.error('应该选择.bin类型的文件')
+      }
+      return isRightSize && isAccept
+    },
   
       handleDelete() {
         if (this.selectionList.length === 0) {
@@ -554,6 +540,9 @@ var auth = `Basic ${Base64.encode(
         this.query = {};
         this.onLoad(this.page);
       },
+      search(){
+      this.typeload(this.form2.patchType,this.deviceCode);
+      },
       searchChange(params) {
         this.query = params;
         this.onLoad(this.page, params);
@@ -578,6 +567,36 @@ var auth = `Basic ${Base64.encode(
       this.$refs['elForm'].resetFields()
       this.dialogViewVisible=true;
 
+    },
+
+    submitForm (){
+        let deviceIds = [];
+        if (this.multipleSelection.length === 0) {
+          this.$message.warning("请选择至少一条数据");
+          return;
+        }
+        this.multipleSelection.forEach(ele => {
+          deviceIds.push(ele.deviceId);
+        });
+        this.form2.ids=deviceIds.join(",");
+      this.$confirm("确定将这些设备升级", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+             return addLog(this.form2);
+            })
+            .then(() => {
+                  this.dialogFormVisible = false;
+                this.logListload(this.form2.patchId);
+                this.$message({
+                type: "success",
+                message: "分配设备成功!"
+              });
+            });
+      
+   
     },
     handleSuccess(res) {
       if(res.code=200){
@@ -613,17 +632,34 @@ var auth = `Basic ${Base64.encode(
       })
     },
     
-    field104BeforeUpload(file) {
-      let isRightSize = file.size / 1024 / 1024 < 2
-      if (!isRightSize) {
-        this.$message.error('文件大小超过 2MB')
-      }
-      let isAccept = new RegExp('.bin').test(file.name)
-      if (!isAccept) {
-        this.$message.error('应该选择.bin类型的文件')
-      }
-      return isRightSize && isAccept
-    },
+
+
+  logListload(id){
+      listLog(id).then(response => {
+        console.log(response.data)
+        
+        this.gridData = response.data.data;
+      }); 
+  },
+
+    typeload(patchType,deviceCode){
+      getSelect(patchType,deviceCode).then(response => {
+        if(response.data.code==200){
+            this.device = response.data.data;
+
+        }
+      }); 
+  },
+    openDailog(row){
+      this.dialogTableVisible = true;
+      this.form2.patchId=row.id;
+      this.form2.patchType=row.patchType;
+      this.form2.patchUrl=row.patchUrl;
+      this.form2.versionNumber=row.versionNumber;
+      this.logListload(this.form2.patchId);
+      this.typeload(this.form2.patchType,this.deviceCode);
+      },
+
       onLoad(page, params = {}) {
         this.loading = true;
         getList(page.currentPage, page.pageSize, Object.assign(params, this.query)).then(res => {
