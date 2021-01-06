@@ -49,12 +49,16 @@ export const update = (row) => {
 }
 
 
+
+
+
+
+
+
 export const importxls = () => {
   return request({
-    url: '/api/swap_battery/battery/exportExcel',
+    url: '/api//swap_battery/battery/exportExcel',
     method: 'post',
     responseType:'blob'
   })
 }
-
-

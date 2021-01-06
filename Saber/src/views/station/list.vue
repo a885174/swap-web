@@ -31,6 +31,7 @@
         <el-button @click="dialogFormVisible = true">{{$t(`AssignStore`)}}</el-button>
         <template>
           <el-button @click.stop="delstore">{{$t(`UnlinkwithStore`)}}</el-button>
+            <el-button   @click="upload.open=true">{{$t(`import`)}}</el-button>
         </template>
 
         <el-dialog title="AssignStore" :visible.sync="dialogFormVisible" width="30%" center>
@@ -88,6 +89,37 @@
       </template>
     </avue-crud>
 
+           <!-- 用户导入对话框 -->
+    <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
+      <el-upload
+        ref="upload"
+        :limit="1"
+        accept=".xlsx, .xls"
+        :headers="upload.headers"
+        action="/api//swap_station/station/importData"
+        :disabled="upload.isUploading"
+        :on-progress="handleFileUploadProgress"
+        :on-success="handleFileSuccess"
+        :auto-upload="false"
+        drag
+      >
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__tip" slot="tip">
+          <!-- <el-checkbox v-model="upload.updateSupport" />是否更新已经存在的用户数据 -->
+          <el-link type="info" style="font-size:12px" @click="goimportxls">download template</el-link>
+        </div>
+        <div class="el-upload__text">
+          Drag the file here, or
+          <em>Click upload</em>
+        </div>
+        <div class="el-upload__tip" style="color:red" slot="tip">Tip: only "XLS" or "xlsx" format files can be imported!</div>
+      </el-upload>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFileForm">确 定</el-button>
+        <el-button @click="upload.open = false">取 消</el-button>
+      </div>
+    </el-dialog>
+
     <el-dialog
       title="Map"
       :visible.sync="mapDialogVisible"
@@ -96,38 +128,6 @@
       center
     >
       <mapbox-map mapWidth="60%" mapHeight="600px" :lnglat="lnglat" @sendiptVal="showChildMsg"></mapbox-map>
-      <!-- 
-   <el-form
-          ref="editForm"
-          :model="editData"
-          label-width="140px"
-        >
-          <el-form-item label="Map">
-            <div style="height: 370px;">
-                            <label>
-                                <GmapAutocomplete @place_changed="setPlace" ref="gampautocomplete"/>
-                                <el-button @click="addMarker">confirm</el-button>
-                            </label>
-                            <br/>
-                            <gmap-map
-                                    :center="center"
-                                    :zoom="16"
-                                    map-type-id="terrain"
-                                    style="width: 400px; height: 300px"
-                            >
-                                <gmap-marker
-                                        @dragend="updateMaker"
-                                        :key="index"
-                                        v-for="(m, index) in markers"
-                                        :position="m.position"
-                                        :clickable="true"
-                                        :draggable="true"
-                                        @click="center = m.position"
-                                ></gmap-marker>
-                            </gmap-map>
-                        </div>
-          </el-form-item>
-      </el-form>-->
       <div slot="footer" class="dialog-footer">
         <el-button @click="mapDialogVisible = false">{{$t(`submitText`)}}</el-button>
         <el-button type="primary" @click="sumbitAddres()">{{$t(`cancelText`)}}</el-button>
@@ -402,6 +402,20 @@ export default {
       form: {},
       gridData: [],
       tabledData: [],
+      upload: {
+        // 是否显示弹出层（用户导入）
+        open: false,
+        // 弹出层标题（用户导入）
+        title: "",
+        // 是否禁用上传
+        isUploading: false,
+        // 是否更新已经存在的用户数据
+        updateSupport: 0,
+        // 设置上传的请求头部
+        headers: { Authorization: auth, "Blade-Auth": "bearer " + token },
+        // headers: { Authorization: "Bearer " + getToken() },
+        // 上传的地址
+      },
       show: false,
       multipleSelection: [],
       currentPlace: "",
@@ -1353,6 +1367,33 @@ export default {
             message: "success!"
           });
         });
+    },
+
+    handleFileUploadProgress(event) {
+      this.upload.isUploading = true;
+    },
+    // 文件上传成功处理
+    handleFileSuccess(response) {
+      this.upload.open = false;
+      this.upload.isUploading = false;
+      this.$refs.upload.clearFiles();
+      this.$alert(response.msg, "Result", { dangerouslyUseHTMLString: true });
+          this.onLoad(this.page);
+    },
+    // 提交上传文件
+    submitFileForm() {
+      this.$refs.upload.submit();
+    },
+
+    goimportxls() {
+      importxls().then(response => {
+        let blob = new Blob([response.data], { type: "application/x-xls" });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        //配置下载的文件名
+        link.download = "Station.xlsx";
+        link.click();
+      });
     },
 
     handleEdit(index, row) {

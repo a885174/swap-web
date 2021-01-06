@@ -22,6 +22,26 @@ export const getDetail = (id) => {
   })
 }
 
+
+
+export const listLog = (id) => {
+  return request({
+    url: '/api//swap_update_record/updaterecord/list/'+id,
+    method: 'get',
+  })
+}
+
+export const getSelect = (patchType,deviceCode) => {
+  return request({
+    url: '/api/swap_update_record/updaterecord/select',
+    method: 'get',
+    params: {
+      patchType,
+      deviceCode
+    }
+  })
+}
+
 export const remove = (ids) => {
   return request({
     url: '/api/swap_update/swapupdate/remove',
@@ -40,6 +60,14 @@ export const add = (row) => {
   })
 }
 
+export const addLog = (row) => {
+  return request({
+    url: '/api/swap_update_record/updaterecord/save',
+    method: 'post',
+    data: row
+  })
+}
+
 export const update = (row) => {
   return request({
     url: '/api/swap_update/swapupdate/submit',
@@ -47,4 +75,6 @@ export const update = (row) => {
     data: row
   })
 }
+
+
 

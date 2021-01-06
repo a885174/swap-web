@@ -27,6 +27,7 @@
           plain
           @click="handleDelete"
         >{{$t(`delete`)}}</el-button>
+       <el-button   @click="upload.open=true">{{$t(`import`)}}</el-button>
 
         <!-- <el-button type="primary"
                      icon="el-icon-check"
@@ -47,6 +48,7 @@
           :style="{color:row.connectStatus=='0' ||row.connectStatus=='1'?'green':'red'}"
         >{{row.connectStatus=="0"?$t(`battery.connectCbinet`):(row.connectStatus=="1"?$t(`battery.connectCars`):(row.connectStatus=="2"?$t(`Unconnected`):(row.connectStatus=="3"?$t(`battery.communicationError`):$t(`battery.moduleError`))))}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
+
       </template>
       <template slot-scope="{row}" slot="menu">
         <el-button
@@ -78,6 +80,38 @@
         <el-button type="primary" @click="dialogViewVisible = false">Back</el-button>
       </span>
     </el-dialog>
+
+
+       <!-- 用户导入对话框 -->
+    <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
+      <el-upload
+        ref="upload"
+        :limit="1"
+        accept=".xlsx, .xls"
+        :headers="upload.headers"
+        action="/api//swap_battery/battery/importData"
+        :disabled="upload.isUploading"
+        :on-progress="handleFileUploadProgress"
+        :on-success="handleFileSuccess"
+        :auto-upload="false"
+        drag
+      >
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__tip" slot="tip">
+          <!-- <el-checkbox v-model="upload.updateSupport" />是否更新已经存在的用户数据 -->
+          <el-link type="info" style="font-size:12px" @click="goimportxls">download template</el-link>
+        </div>
+        <div class="el-upload__text">
+          Drag the file here, or
+          <em>Click upload</em>
+        </div>
+        <div class="el-upload__tip" style="color:red" slot="tip">Tip: only "XLS" or "xlsx" format files can be imported!</div>
+      </el-upload>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitFileForm">确 定</el-button>
+        <el-button @click="upload.open = false">取 消</el-button>
+      </div>
+    </el-dialog>
   </basic-container>
 </template>
 
@@ -90,9 +124,15 @@ import {
   remove,
   importxls
 } from "@/api/swap_battery/battery";
+import website from "@/config/website";
 import { mapGetters } from "vuex";
-
+import { getToken } from "@/util/auth";
+var token = getToken(); // 要保证取到
+var auth = `Basic ${Base64.encode(
+  `${website.clientId}:${website.clientSecret}`
+)}`;
 export default {
+  
   data() {
     // 设备类名称 验证
     var validateDeviceName = (rule, value, callback) => {
@@ -115,6 +155,20 @@ export default {
     return {
       dialogViewVisible: false,
       form: {},
+    upload: {
+        // 是否显示弹出层（用户导入）
+        open: false,
+        // 弹出层标题（用户导入）
+        title: "",
+        // 是否禁用上传
+        isUploading: false,
+        // 是否更新已经存在的用户数据
+        updateSupport: 0,
+        // 设置上传的请求头部
+        headers: { Authorization: auth, "Blade-Auth": "bearer " + token },
+        // headers: { Authorization: "Bearer " + getToken() },
+        // 上传的地址
+      },
       rowItem: {},
       query: {},
       loading: true,
@@ -139,19 +193,6 @@ export default {
         menuAlign: "center",
         indexLabel: "index",
         column: [
-          // {
-          //   label: "电池id",
-          //   prop: "batteryId",
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入电池id",
-          //     trigger: "blur"
-          //   }]
-          // },
           {
             label: this.$t(`battery.batteryCode`),
             // width: 160,
@@ -677,6 +718,7 @@ export default {
           // },
         ]
       },
+    
       data: [],
       tableData: []
     };
@@ -892,13 +934,36 @@ export default {
         });
     },
 
+  /** 下载模板操作 */
+    // importTemplate() {
+    //   importTemplate().then(response => {
+    //     this.download(response.msg);
+    //   });
+    // },
+        // 文件上传中处理
+    handleFileUploadProgress(event) {
+      this.upload.isUploading = true;
+    },
+    // 文件上传成功处理
+    handleFileSuccess(response) {
+      this.upload.open = false;
+      this.upload.isUploading = false;
+      this.$refs.upload.clearFiles();
+      this.$alert(response.msg, "Result", { dangerouslyUseHTMLString: true });
+          this.onLoad(this.page);
+    },
+    // 提交上传文件
+    submitFileForm() {
+      this.$refs.upload.submit();
+    },
+
     goimportxls() {
       importxls().then(response => {
         let blob = new Blob([response.data], { type: "application/x-xls" });
         let link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
         //配置下载的文件名
-        link.download = "Battery data list.xls";
+        link.download = "Battery.xlsx";
         link.click();
       });
     },
