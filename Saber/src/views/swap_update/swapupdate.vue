@@ -147,22 +147,9 @@
 
 
   <div class="searchDiv">
-      <el-col :span="10">
-        <!-- 查询输入框 -->
-        <el-input v-model="deviceCode" placeholder="请输入设备编码"></el-input>
-      </el-col>
-      <el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
-      <!-- 模态框 -->
-      <el-button @click="submitForm ()">分配设备</el-button>
-
-        
 
 
-
-
-
-
-  <el-table :data="device" ref="multipleTable" @selection-change="handleSelectionChange">
+  <!-- <el-table :data="device" ref="multipleTable" @selection-change="handleSelectionChange">
   <el-table-column
       type="selection"
       width="55">
@@ -170,7 +157,6 @@
   <el-table-column label="序号" width="70px">
   <template slot-scope="scope">{{scope.$index+1}}</template>
   </el-table-column>
-  <!-- <el-table-column label="设备编号" align="center" prop="deviceId"></el-table-column> -->
   <el-table-column label="设备类型" align="center" prop="type" >
       <template slot-scope="scope">
           <span v-if="scope.row.type=='0'">BMS板</span>
@@ -180,7 +166,28 @@
   </el-table-column>
   <el-table-column label="升级包编码" align="center" prop="deviceCode" />
      
-</el-table>
+</el-table> -->
+
+  <avue-crud
+        :option="selectOption"
+        :table-loading="loading"
+        :data="device"
+        :page="selectPage"
+        v-model="scooterForm"
+        ref="selectCrud"
+        @search-change="searchScooterChange"
+        @search-reset="searchScooterReset"
+        @selection-change="scooterSelect"
+        @current-change="currentscooterChange"
+        @size-change="scootersizeChange"
+      >
+        <template slot="menuLeft">
+          <!-- 保存按钮 -->
+          <template>
+      <el-button @click="submitForm ()">分配设备</el-button>
+          </template>
+        </template>
+      </avue-crud>
 </div>
 </el-dialog>
 </basic-container>
@@ -206,13 +213,81 @@ var auth = `Basic ${Base64.encode(
       return {
         form: {},
         query: {},
+        squery: {},
         loading: true,
+        selectOption:{
+          tip: false,
+          border: true,
+          index: true,
+          selection: true,
+          align: "center",
+          menu: false,
+          indexLabel: "Index",
+          refreshBtn: false,
+          addBtn: false,
+          column: [
+              {
+              label: "设备编码",
+              prop: "deviceCode",
+              search:true,
+              rules: [{
+                required: true,
+                message: "设备编码",
+                trigger: "blur"
+              }]
+            },{
+              label: "设备类型",
+              prop: "type",
+              dicData:[
+                {
+                  label:"BMS板",
+                  value:0
+                },{
+                  label:"电动车",
+                  value:1
+                },{
+                  label:"换电柜",
+                  value:2
+                }
+              ],
+              rules: [{
+                required: true,
+                message: "请输入升级状态 0 升级中  1 升级完成  2升级失败 3待升级",
+                trigger: "blur"
+              }]
+            },{
+              label:"连接状态",
+              prop:"connectStatus",
+              type:"select",
+              search:true,
+              dicData:[
+                {
+                  label:"连接",
+                  value:"0"
+                },{
+                  label:"离线",
+                  value:"1"
+                }
+              ]
+
+            }
+          ]
+
+        },
         multipleSelection:[],
+        scooterForm: {},
+        scooterIds:"",
         page: {
           pageSize: 10,
           currentPage: 1,
           total: 0
         },
+        selectPage: {
+        pageSize: 10,
+        currentPage: 1,
+        total: 0
+      },
+      
         dialogViewVisible:false,
         dialogFormVisible:false,
         gridData:[],
@@ -557,6 +632,33 @@ var auth = `Basic ${Base64.encode(
       currentChange(currentPage){
         this.page.currentPage = currentPage;
       },
+
+      searchScooterChange(params) {
+      params.patchType=this.form2.patchType;
+      this.squery = params;
+      this.scooterData(this.selectPage, params);
+    },
+      currentscooterChange(currentPage) {
+      this.selectPage.currentPage = currentPage;
+      this.scooterData(this.selectPage);
+    },
+     scootersizeChange(pageSize) {
+      this.selectPage.pageSize = pageSize;
+      this.scooterData(this.selectPage);
+    },
+      searchScooterReset() {
+      this.squery = {};
+      this.scooterData(this.selectPage);
+    },
+
+      // 选中的电动车ID
+    scooterSelect(list) {
+      let ids = [];
+      list.forEach(ele => {
+        ids.push(ele.deviceId);
+      });
+      this.scooterIds = ids.join(",");
+    },
       sizeChange(pageSize){
         this.page.pageSize = pageSize;
       },
@@ -570,15 +672,12 @@ var auth = `Basic ${Base64.encode(
     },
 
     submitForm (){
-        let deviceIds = [];
-        if (this.multipleSelection.length === 0) {
+        if (this.scooterIds.length=== 0) {
           this.$message.warning("请选择至少一条数据");
           return;
         }
-        this.multipleSelection.forEach(ele => {
-          deviceIds.push(ele.deviceId);
-        });
-        this.form2.ids=deviceIds.join(",");
+      
+        this.form2.ids=this.scooterIds;
       this.$confirm("确定将这些设备升级", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
@@ -600,7 +699,6 @@ var auth = `Basic ${Base64.encode(
     },
     handleSuccess(res) {
       if(res.code=200){
-        console.log(res);
         this.formData.patchUrl=res.data.patchUrl;
         this.formData.content=res.data.content;
         // this.formData.versionNumber=res.data.versionNumber;
@@ -633,10 +731,24 @@ var auth = `Basic ${Base64.encode(
     },
     
 
+    scooterData(page, params = {}) {
+      getSelect(
+        page.currentPage,
+        page.pageSize,
+        Object.assign(params, this.squery)
+      ).then(res => {
+        const data = res.data.data;
+        this.selectPage.total = data.total;
+        this.device = data.records;
+        this.loading = false;
+        // this.$refs.selectCrud.toggleSelection();
+        // this.selectionClear();
+        // this.selectData = res.data.records;
+      });
+    },
 
   logListload(id){
       listLog(id).then(response => {
-        console.log(response.data)
         
         this.gridData = response.data.data;
       }); 
@@ -656,8 +768,11 @@ var auth = `Basic ${Base64.encode(
       this.form2.patchType=row.patchType;
       this.form2.patchUrl=row.patchUrl;
       this.form2.versionNumber=row.versionNumber;
+      this.scooterForm = row;
       this.logListload(this.form2.patchId);
-      this.typeload(this.form2.patchType,this.deviceCode);
+      this.squery.patchType=this.form2.patchType;
+      this.squery.deviceCode="";
+      this.scooterData(this.selectPage);
       },
 
       onLoad(page, params = {}) {
