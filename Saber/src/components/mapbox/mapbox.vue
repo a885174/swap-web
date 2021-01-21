@@ -192,7 +192,7 @@ export default {
       });
     },
     init(callback) {
-      mapboxgl.accessToken ='pk.eyJ1Ijoic3dhcGVuZXJnaSIsImEiOiJjazQwenA4eGgwN2FuM2ttczV3d3pnbzM3In0.vHSZs-Iv1m16miOc58z1mA'
+      mapboxgl.accessToken ='pk.eyJ1Ijoic3dhcGVuZXJnaSIsImEiOiJja2pjbjk0dnc3em1qMzFxanY1Z2c3a3o5In0.hpVb2Wp1VNbxB4Udi9PNig'
             this.map = new mapboxgl.Map({
         container: this.$refs.basicMapbox,
         center: [12.550343, 55.665957],
