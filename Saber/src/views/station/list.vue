@@ -1168,9 +1168,9 @@ export default {
       this.$refs["upload"].$refs["upload-inner"].handleClick();
     },
     getFile(file) {
-      debugger
       const formData = new FormData();
-      formData.append("file",new Blob([file]));
+      formData.append("file", file);
+      // formData.append("file",new Blob([file]));
       // 上传照片接口
       upload(formData).then(res => {
         debugger
