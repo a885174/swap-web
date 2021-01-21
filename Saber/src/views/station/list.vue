@@ -31,7 +31,7 @@
         <el-button @click="dialogFormVisible = true">{{$t(`AssignStore`)}}</el-button>
         <template>
           <el-button @click.stop="delstore">{{$t(`UnlinkwithStore`)}}</el-button>
-            <el-button   @click="upload.open=true">{{$t(`import`)}}</el-button>
+          <el-button @click="upload.open=true">{{$t(`import`)}}</el-button>
         </template>
 
         <el-dialog title="AssignStore" :visible.sync="dialogFormVisible" width="30%" center>
@@ -64,6 +64,12 @@
         <el-button
           type="text"
           size="small"
+          icon="el-icon-edit"
+          @click.stop="openEditDialog(scope.row)"
+        >{{$t(`message.edit`)}}</el-button>
+        <el-button
+          type="text"
+          size="small"
           icon="el-icon-box"
           @click.stop="getListData(scope.row)"
         >warhouse management</el-button>
@@ -89,7 +95,57 @@
       </template>
     </avue-crud>
 
-           <!-- 用户导入对话框 -->
+    <!-- 编辑弹窗 -->
+    <el-dialog
+      title="编辑"
+      :visible.sync="editdialogVisibles"
+      :fullscreen="true"
+      :append-to-body="true"
+    >
+      <avue-form ref="editform" v-model="editform" :option="editoption">
+        <template slot="stationpicture">
+          <el-upload
+            class="avatar-uploader"
+            ref="upload"
+            :action="uploadLogo"
+            :show-file-list="false"
+            :file-list="photoList"
+            :on-change="changePhotoFile"
+            :auto-upload="false"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </template>
+        <template slot="stationpicturelist">
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            list-type="picture-card"
+            :on-change="changePhotoFile"
+            :auto-upload="false"
+            :limit="2"
+          >
+            <i slot="default" class="el-icon-plus"></i>
+            <div v-if="pic.file_url" slot="file" slot-scope="{file}">
+              <img class="el-upload-list__item-thumbnail" :src="pic.file_url" alt />
+              <span
+                v-if="!disabled"
+                class="el-upload-list__item-delete"
+                @click="handleRemove(file)"
+              >
+                <i class="el-icon-delete"></i>
+              </span>
+            </div>
+            <!-- <i v-else class="el-icon-plus"> -->
+          </el-upload>
+        </template>
+        <template slot="address">
+          <mapselect ref="gmap" :oldmarker="oldmarker" :address="oldaddress"></mapselect>
+        </template>
+      </avue-form>
+    </el-dialog>
+    <my-cropper ref="myCropper" @getFile="getFile" @upAgain="upAgain"></my-cropper>
+    <!-- 用户导入对话框 -->
     <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
       <el-upload
         ref="upload"
@@ -112,7 +168,11 @@
           Drag the file here, or
           <em>Click upload</em>
         </div>
-        <div class="el-upload__tip" style="color:red" slot="tip">Tip: only "XLS" or "xlsx" format files can be imported!</div>
+        <div
+          class="el-upload__tip"
+          style="color:red"
+          slot="tip"
+        >Tip: only "XLS" or "xlsx" format files can be imported!</div>
       </el-upload>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitFileForm">确 定</el-button>
@@ -271,7 +331,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="insertPicature()">{{$t(`submitText`)}}</el-button>
-              <el-button @click="uploadDialog = false">{{$t(`cancelText`)}}</el-button>
+            <el-button @click="uploadDialog = false">{{$t(`cancelText`)}}</el-button>
           </div>
         </el-dialog>
       </el-dialog>
@@ -348,7 +408,8 @@ import {
   del,
   SavePicture,
   getStationcPicture,
-  removePicture
+  removePicture,
+  upload
 } from "@/api/swap_station/station";
 import { getDeptTree } from "@/api/swap_supplier/supplier";
 import { getPicture } from "@/api/swap_picture/picture";
@@ -357,12 +418,15 @@ import website from "@/config/website";
 import { mapGetters } from "vuex";
 import { getToken } from "@/util/auth";
 import { addPic } from "@/api/swap_picture/picture";
+import gMapSelectPoint from "@/components/selectPoint/selectPoint.vue";
+import MyCropper from "@/components/crop_image/cropper.vue";
 
 var token = getToken(); // 要保证取到
 var auth = `Basic ${Base64.encode(
   `${website.clientId}:${website.clientSecret}`
 )}`;
 export default {
+  components: { mapselect: gMapSelectPoint, MyCropper },
   data() {
     // 企业名类 验证
     var validateStoreName = (rule, value, callback) => {
@@ -397,6 +461,18 @@ export default {
       }
     };
     return {
+      pic: {
+        file_url: ""
+      },
+      uploadLogo: "https://avueupload.91eic.com/upload/list",
+      photoList: [],
+      headerObj: "",
+      imageUrl: "",
+
+      oldmarker: "",
+      oldaddress: "",
+      supplierTree: [],
+      editdialogVisibles: false,
       dialogViewVisibles: false,
       rowItem: {},
       form: {},
@@ -412,7 +488,7 @@ export default {
         // 是否更新已经存在的用户数据
         updateSupport: 0,
         // 设置上传的请求头部
-        headers: { Authorization: auth, "Blade-Auth": "bearer " + token },
+        headers: { Authorization: auth, "Blade-Auth": "bearer " + token }
         // headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
       },
@@ -890,22 +966,168 @@ export default {
           // },
         ]
       },
-      data: []
+      data: [],
+      editform: {},
+      editoption: {
+        column: [
+          {
+            label: this.$t(`station.stationCode`),
+            prop: "stationCode",
+            disabled: true,
+            rules: [
+              {
+                validator: validateSID,
+                required: true,
+                message: this.$t(`station.enterSwitchCabinetNumber`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: this.$t(`station.stationModel`),
+            // width: 120,
+            prop: "stationModel",
+            rules: [
+              {
+                required: false,
+                message: this.$t(`station.enterModel`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: this.$t(`station.supplier`),
+            prop: "supplierId",
+            type: "tree",
+            dicData: [],
+            props: {
+              label: "title"
+            },
+            rules: [
+              {
+                required: false,
+                message: this.$t(`station.selectSupplier`),
+                trigger: "click"
+              }
+            ]
+          },
+          {
+            label: this.$t(`scooter.produceTime`),
+            width: 120,
+            prop: "produceTime",
+            type: "datetime",
+            format: "yyyy-MM-dd",
+            valueFormat: "yyyy-MM-dd",
+            // addDisabled:true,
+            // addDisplay:false,
+            rules: [
+              {
+                required: false,
+                message:
+                  this.$t(`scooter.please`) + this.$t(`scooter.produceTime`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: this.$t(`AssignStore`),
+            prop: "storeId",
+            type: "tree",
+            rules: [
+              {
+                required: true,
+                message: this.$t(`station.selectStore`),
+                trigger: "blur"
+              }
+            ],
+            dicUrl: "/api/swap_store/store/select",
+            props: {
+              label: "storeName",
+              value: "storeId"
+            }
+          },
+          {
+            label: "展示状态",
+            prop: "connectStatus",
+            //addDisabled:true,
+            type: "select",
+            valueDefault: "1",
+            // hide:true,
+            dicData: [
+              {
+                label: "展示",
+                value: "0"
+              },
+              {
+                label: "不展示",
+                value: "1"
+              }
+            ],
+            rules: [
+              {
+                required: true,
+                message: this.$t(`scooter.connectionStatus`),
+                trigger: "blur"
+              }
+            ]
+          },
+          // {
+          //   label: "营业时间",
+          //   prop: "produceTimetype",
+          //   formslot:true,
+          //   rules: [{
+          //       required: true,
+          //       message: "请输营业时间",
+          //       trigger: "blur"
+          //     }]
+          // }
+          {
+            label: "主图图片",
+            prop: "stationpicture",
+            formslot: true,
+            span: 24
+          },
+          {
+            label: "店铺图片",
+            prop: "stationpicturelist",
+            formslot: true,
+            span: 24
+          },
+          // {
+          //   label: "数组图片组",
+          //   prop: "img",
+          //   dataType: "array",
+          //   type: "upload",
+          //   propsHttp: {
+          //     res: "data.0"
+          //   },
+          //   span: 24,
+          //   limit: 2,
+          //   listType: "picture-card",
+          //   tip: "只能上传jpg/png文件，且不超过500kb",
+          //   action: "https://avueupload.91eic.com/upload/list"
+          // },
+          {
+            label: "地址",
+            prop: "address",
+            formslot: true,
+            span: 24
+          }
+        ]
+      }
     };
   },
 
-  watch: {
-    "form.tenantId"() {
-      if (this.form.tenantId !== "") {
-        getDeptTree(this.form.tenantId).then(res => {
-          const index = this.$refs.crud.findColumnIndex("supplierId");
-
-          this.option.column[index].dicData = res.data.data;
-        });
-      }
-    }
-  },
-
+  // watch: {
+  // "form.tenantId"() {
+  //   if (this.form.tenantId !== "") {
+  //     getDeptTree(this.form.tenantId).then(res => {
+  //       const index = this.$refs.crud.findColumnIndex("supplierId");
+  //       this.option.column[index].dicData = res.data.data;
+  //     });
+  //   }
+  // }
+  // },
   computed: {
     ...mapGetters(["permission"]),
     permissionList() {
@@ -925,6 +1147,63 @@ export default {
     }
   },
   methods: {
+    handleRemove(file) {
+      debugger;
+
+      console.log(file);
+    },
+    changePhotoFile(file, fileList) {
+      if (fileList.length > 0) {
+        this.photoList = [fileList[fileList.length - 1]];
+      }
+      this.handleCrop(file);
+    },
+    handleCrop(file) {
+      this.$nextTick(() => {
+        this.$refs.myCropper.open(file.raw || file);
+      });
+    },
+    // 点击弹框重新时触发
+    upAgain() {
+      this.$refs["upload"].$refs["upload-inner"].handleClick();
+    },
+    getFile(file) {
+      debugger
+      const formData = new FormData();
+      formData.append("file",new Blob([file]));
+      // 上传照片接口
+      upload(formData).then(res => {
+        debugger
+        console.log(res);
+        if (res.code === 200) {
+        } else {
+          this.$message.error("上传出错");
+        }
+        this.$refs.upload.submit();
+      });
+      // uploadSelfCompanyLogo(formData).then(res => {
+      //   if (res.code === 0) {
+      //     this.companyInfo.logo = res.filename;
+      //     this.companyInfo.imageUrl = res.url;
+      //     this.imageUrl = res.url;
+      //     //上传成功后，关闭弹框组件
+      //     // this.handleCrop(file);
+      //     this.$refs.myCropper.close();
+      //   } else {
+      //     this.$message.error("上传出错");
+      //   }
+      // });
+      // this.$refs.upload.submit();
+    },
+
+    openEditDialog(row) {
+      this.editdialogVisibles = true;
+      this.editform = row;
+      this.editoption.column[2].dicData = this.supplierTree;
+      this.oldmarker = row.latitude + "," + row.longitude;
+      this.oldaddress = row.address;
+      console.log("--------------------" + this.oldmarker);
+    },
     rowSave(row, loading, done) {
       add(row).then(
         () => {
@@ -1058,7 +1337,6 @@ export default {
 
       SavePicture(pictureids.join(","), this.data.picturestationId).then(() => {
         getStationcPicture(this.data.picturestationId).then(res => {
-          console.log("返回结果:" + res.data);
           this.gridData = res.data.data;
         });
         this.$message({
@@ -1070,7 +1348,6 @@ export default {
     },
     getTableData() {
       getPicture().then(res => {
-        console.log("返回结果:" + res.data);
         this.tabledData = res.data.data;
       });
       this.innerVisible = true;
@@ -1091,7 +1368,6 @@ export default {
     geolocate() {
       navigator.geolocation.getCurrentPosition(
         position => {
-          console.log("获取当前位置", position);
           this.center = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
@@ -1145,7 +1421,6 @@ export default {
     getGridData(row) {
       this.data.picturestationId = row.stationId;
       getStationcPicture(row.stationId).then(res => {
-        console.log("返回结果:" + res.data);
         this.gridData = res.data.data;
       });
       this.dialogTableVisible = true;
@@ -1153,9 +1428,7 @@ export default {
 
     getListData(row) {
       getChaList(row.stationCode).then(res => {
-        console.log("返回结果:" + res.data);
         this.chaData = res.data.data;
-        console.log("cha:" + this.chaData);
       });
       this.chaTableVisible = true;
     },
@@ -1172,7 +1445,6 @@ export default {
         })
         .then(() => {
           getStationcPicture(this.data.picturestationId).then(res => {
-            console.log("返回结果:" + res.data);
             this.gridData = res.data.data;
           });
           this.$message({
@@ -1212,10 +1484,8 @@ export default {
         return;
       }
 
-      console.log("返回结果:" + this.data.picturestationId);
       addPhoto(this.data.pictureUrl, this.data.picturestationId).then(() => {
         getStationcPicture(this.data.picturestationId).then(res => {
-          console.log("返回结果:" + res.data);
           this.gridData = res.data.data;
         });
         this.$message({
@@ -1237,7 +1507,6 @@ export default {
 
       addPic(this.pictureMainUrl).then(() => {
         getPicture().then(res => {
-          console.log("返回结果:" + res.data);
           this.tabledData = res.data.data;
         });
         this.$message({
@@ -1276,7 +1545,6 @@ export default {
         })
         .then(() => {
           getStationcPicture(this.data.picturestationId).then(res => {
-            console.log("返回结果:" + res.data);
             this.gridData = res.data.data;
           });
           this.$message({
@@ -1378,7 +1646,7 @@ export default {
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
       this.$alert(response.msg, "Result", { dangerouslyUseHTMLString: true });
-          this.onLoad(this.page);
+      this.onLoad(this.page);
     },
     // 提交上传文件
     submitFileForm() {
@@ -1471,6 +1739,7 @@ export default {
       getDeptTree(this.form.tenantId).then(res => {
         const index = this.$refs.crud.findColumnIndex("supplierId");
         this.option.column[index].dicData = res.data.data;
+        this.supplierTree = res.data.data;
         console.log(this.option.column[index].dicData);
       });
     }
@@ -1548,5 +1817,29 @@ body {
   padding-top: 12px;
   line-height: 20px;
   border-bottom: 1px solid #ebebeb;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>

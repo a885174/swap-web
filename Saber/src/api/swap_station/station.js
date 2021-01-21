@@ -1,173 +1,168 @@
-import request from '@/router/axios';
+import request from "@/router/axios";
 
 export const getList = (current, size, params) => {
   return request({
-    url: '/api/swap_station/station/page',
-    method: 'get',
+    url: "/api/swap_station/station/page",
+    method: "get",
     params: {
       ...params,
       current,
-      size,
+      size
     }
-  })
-}
+  });
+};
 
-export const getDetail = (stationId) => {
+export const getDetail = stationId => {
   return request({
-    url: '/api/swap_station/station/detail',
-    method: 'get',
+    url: "/api/swap_station/station/detail",
+    method: "get",
     params: {
       stationId
     }
-  })
-}
+  });
+};
 
-
-
-export const getChaList = (stationcode) => {
+export const getChaList = stationcode => {
   return request({
-    url: '/api/swap_station/station/getChaList',
-    method: 'get',
+    url: "/api/swap_station/station/getChaList",
+    method: "get",
     params: {
       stationcode
     }
-  })
-}
+  });
+};
 
-export const remove = (ids) => {
+export const remove = ids => {
   return request({
-    url: '/api/swap_station/station/remove',
-    method: 'post',
+    url: "/api/swap_station/station/remove",
+    method: "post",
     params: {
-      ids,
+      ids
     }
-  })
-}
+  });
+};
 
-export const add = (row) => {
+export const add = row => {
   return request({
-    url: '/api/swap_station/station/submit',
-    method: 'post',
+    url: "/api/swap_station/station/submit",
+    method: "post",
     data: row
-  })
-}
+  });
+};
 
-export const update = (row) => {
+export const update = row => {
   return request({
-    url: '/api/swap_station/station/submit',
-    method: 'post',
+    url: "/api/swap_station/station/submit",
+    method: "post",
     data: row
-  })
-}
+  });
+};
 
-export const updateAddress = (row) => {
+export const updateAddress = row => {
   return request({
-    url: '/api/swap_station/station/update',
-    method: 'post',
+    url: "/api/swap_station/station/update",
+    method: "post",
     data: row
-  })
-}
-
+  });
+};
 
 export const importxls = () => {
   return request({
-    url: '/api/swap_station/station/exportExcel',
-    method: 'post',
-    responseType:'blob'
-  })
-}
+    url: "/api/swap_station/station/exportExcel",
+    method: "post",
+    responseType: "blob"
+  });
+};
 
-
-
-export const SaveStore = (ids,storeId) => {
+export const SaveStore = (ids, storeId) => {
   return request({
-    url: '/api/swap_station/station/SaveStore',
-    method: 'post',
+    url: "/api/swap_station/station/SaveStore",
+    method: "post",
     params: {
       ids,
       storeId
     }
-  })
-}
+  });
+};
 
-export const del = (ids) => {
+export const del = ids => {
   return request({
-    url: '/api/swap_station/station/delStore',
-    method: 'post',
+    url: "/api/swap_station/station/delStore",
+    method: "post",
     params: {
       ids
     }
-  })
-}
+  });
+};
 
-
-export const SavePicture = (ids,stationId) => {
+export const SavePicture = (ids, stationId) => {
   return request({
-    url: '/api//swap_station_picture/stationpicture/SavePicture',
-    method: 'post',
+    url: "/api//swap_station_picture/stationpicture/SavePicture",
+    method: "post",
     params: {
       ids,
       stationId
     }
-  })
-}
+  });
+};
 
-
-export const removePicture = (ids) => {
+export const removePicture = ids => {
   return request({
-    url: '/api/swap_station_picture/stationpicture/delete',
-    method: 'post',
+    url: "/api/swap_station_picture/stationpicture/delete",
+    method: "post",
     params: {
-      ids,
+      ids
     }
-  })
-}
+  });
+};
 
-
-export const updatePicture = (ids,stationId) => {
+export const updatePicture = (ids, stationId) => {
   return request({
-    url: '/api/swap_station_picture/stationpicture/updateMain',
-    method: 'post',
+    url: "/api/swap_station_picture/stationpicture/updateMain",
+    method: "post",
     params: {
       ids,
       stationId
     }
-  })
-}
+  });
+};
 
-
-export const updateSort = (row) => {
+export const updateSort = row => {
   return request({
-    url: '/api/swap_station_picture/stationpicture/update',
-    method: 'post',
+    url: "/api/swap_station_picture/stationpicture/update",
+    method: "post",
     data: row
-  })
-}
+  });
+};
 
-
-
-
-
-export const getStationcPicture = (stationId) => {
+export const getStationcPicture = stationId => {
   return request({
-    url: '/api/swap_station_picture/stationpicture/picturelist',
-    method: 'get',
+    url: "/api/swap_station_picture/stationpicture/picturelist",
+    method: "get",
     params: {
       stationId
     }
-  })
-}
+  });
+};
 
-
-
-export const addPhoto = (pictureUrl,stationId) => {
+export const addPhoto = (pictureUrl, stationId) => {
   return request({
-    url: '/api/swap_station_picture/stationpicture/saveStationPicture',
-    method: 'post',
+    url: "/api/swap_station_picture/stationpicture/saveStationPicture",
+    method: "post",
     params: {
       pictureUrl,
       stationId
     }
-  })
-}
+  });
+};
 
+export const upload = file => {
+  return request({
+    url: "/api/blade-resource/oss/endpoint//upload",
+    method: "post",
+    headers: {'Content-Type':'multipart/form-data'},
+    data: file
+    
+  });
+
+};
