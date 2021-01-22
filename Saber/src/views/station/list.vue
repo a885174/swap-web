@@ -107,11 +107,10 @@
           <el-upload
             class="avatar-uploader"
             ref="upload"
-            :action="uploadLogo"
+            :action="uploadstation"
             :show-file-list="false"
             :file-list="photoList"
             :on-change="changePhotoFile"
-            :auto-upload="false"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -119,28 +118,25 @@
         </template>
         <template slot="stationpicturelist">
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action
+            class="upload-idCard"
             list-type="picture-card"
-            :on-change="changePhotoFile"
-            :auto-upload="false"
+            :file-list="idCardImageList"
+            ref="imgRef"
             :limit="2"
+            :auto-upload="false"
+            :on-change="changePhotoFiles"
+            :on-remove="function(file ,raw){ handleRemovePic('idCard',file ,raw) }"
           >
-            <i slot="default" class="el-icon-plus"></i>
-            <div v-if="pic.file_url" slot="file" slot-scope="{file}">
-              <img class="el-upload-list__item-thumbnail" :src="pic.file_url" alt />
-              <span
-                v-if="!disabled"
-                class="el-upload-list__item-delete"
-                @click="handleRemove(file)"
-              >
-                <i class="el-icon-delete"></i>
-              </span>
-            </div>
-            <!-- <i v-else class="el-icon-plus"> -->
+            <i class="el-icon-plus"></i>
           </el-upload>
         </template>
         <template slot="address">
           <mapselect ref="gmap" :oldmarker="oldmarker" :address="oldaddress"></mapselect>
+        </template>
+        <template slot="menuForm">
+          <el-button type="primary" @click="editFromSubmit()">提 交</el-button>
+          <el-button @click="handleEmpty()">清 空</el-button>
         </template>
       </avue-form>
     </el-dialog>
@@ -461,13 +457,13 @@ export default {
       }
     };
     return {
-      pic: {
-        file_url: ""
-      },
-      uploadLogo: "https://avueupload.91eic.com/upload/list",
+      uploadstation: "/api/blade-resource/oss/endpoint//upload",
       photoList: [],
       headerObj: "",
       imageUrl: "",
+      imageUrl1: "",
+      imageUrl2: "",
+      idCardImageList: [],
 
       oldmarker: "",
       oldaddress: "",
@@ -969,6 +965,8 @@ export default {
       data: [],
       editform: {},
       editoption: {
+        emptyBtn: false,
+        submitBtn: false,
         column: [
           {
             label: this.$t(`station.stationCode`),
@@ -1093,20 +1091,6 @@ export default {
             formslot: true,
             span: 24
           },
-          // {
-          //   label: "数组图片组",
-          //   prop: "img",
-          //   dataType: "array",
-          //   type: "upload",
-          //   propsHttp: {
-          //     res: "data.0"
-          //   },
-          //   span: 24,
-          //   limit: 2,
-          //   listType: "picture-card",
-          //   tip: "只能上传jpg/png文件，且不超过500kb",
-          //   action: "https://avueupload.91eic.com/upload/list"
-          // },
           {
             label: "地址",
             prop: "address",
@@ -1147,55 +1131,75 @@ export default {
     }
   },
   methods: {
-    handleRemove(file) {
-      debugger;
-
-      console.log(file);
+    // 提交编辑表单
+    editFromSubmit() {
+      console.log(this.editform);
+    },
+    // 清空编辑表单
+    handleEmpty() {},
+    // 图片列表删除方法
+    handleRemovePic(name, file, fileList) {
+      //将删除后的fileList赋给数组
+      this.idCardImageList = fileList;
+      this.editform.imgList = this.idCardImageList;
+      console.log(this.idCardImageList);
     },
     changePhotoFile(file, fileList) {
       if (fileList.length > 0) {
         this.photoList = [fileList[fileList.length - 1]];
       }
-      this.handleCrop(file);
+      this.handleCrop(file, "single");
     },
-    handleCrop(file) {
+    changePhotoFiles(file, fileList) {
+      if (fileList.length > 0) {
+        this.photoList = [fileList[fileList.length - 1]];
+      }
+      this.handleCrop(file, "list1");
+    },
+    handleCrop(file, type) {
       this.$nextTick(() => {
-        this.$refs.myCropper.open(file.raw || file);
+        this.$refs.myCropper.open(file.raw || file, type);
       });
     },
     // 点击弹框重新时触发
     upAgain() {
       this.$refs["upload"].$refs["upload-inner"].handleClick();
     },
-    getFile(file) {
+    
+    getFile(file, type) {
       const formData = new FormData();
       formData.append("file", file);
-      // formData.append("file",new Blob([file]));
       // 上传照片接口
       upload(formData).then(res => {
-        debugger
         console.log(res);
-        if (res.code === 200) {
+        if (res.data.code === 200) {
+          // this.companyInfo.imageUrl = res.data.data.url;
+          if (type == "single") {
+            this.imageUrl = res.data.data.url;
+            this.editform.mainImg = this.imageUrl;
+          } else if (type == "list1") {
+            this.imageUrl1 = res.data.data.url;
+            this.idCardImageList.push({
+              name: res.data.data.name,
+              url: res.data.data.url
+            });
+            this.editform.imgList = this.idCardImageList;
+            console.log(this.idCardImageList);
+          } else {
+            this.imageUrl2 = res.data.data.url;
+          }
+          //上传成功后，关闭弹框组件
+          this.$refs.myCropper.close();
         } else {
           this.$message.error("上传出错");
         }
-        this.$refs.upload.submit();
       });
-      // uploadSelfCompanyLogo(formData).then(res => {
-      //   if (res.code === 0) {
-      //     this.companyInfo.logo = res.filename;
-      //     this.companyInfo.imageUrl = res.url;
-      //     this.imageUrl = res.url;
-      //     //上传成功后，关闭弹框组件
-      //     // this.handleCrop(file);
-      //     this.$refs.myCropper.close();
-      //   } else {
-      //     this.$message.error("上传出错");
-      //   }
-      // });
-      // this.$refs.upload.submit();
     },
 
+    getLatlng(latLng) {
+      this.editform.latitude = latLng.split(",")[0];
+      this.editform.longitude = latLng.split(",")[1];
+    },
     openEditDialog(row) {
       this.editdialogVisibles = true;
       this.editform = row;
@@ -1841,5 +1845,18 @@ body {
   width: 178px;
   height: 178px;
   display: block;
+}
+.el-upload-list__item-delete {
+  display: block;
+}
+.imgs {
+  width: 160px;
+  height: 160px;
+}
+.imgs img {
+  width: 100%;
+}
+.el-icon-close {
+  font-size: 16px;
 }
 </style>
