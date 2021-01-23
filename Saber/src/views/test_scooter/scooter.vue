@@ -54,17 +54,20 @@
       width="600px"
       :visible.sync="dialogViewVisible"
       class="abow_dialog"
+      v-if="dialogViewVisible"
       center
     >
-      <el-form ref="form" class="form" :model="editform" label-width="0">
-        <el-form-item label="Vin">
-          <el-input v-model="form.vin"></el-input>
+      <el-form ref="changemoto" :rules="motorules" class="form" :model="form" label-width="0">
+        <el-form-item label="Vin" prop="vin">
+          <el-input v-model="form.vin" autocomplete="off" @input="change($event)"></el-input>
         </el-form-item>
         <!-- <el-form-item label="Controller QR Code">
           <el-input v-model="form.scooterCode"></el-input>
         </el-form-item>-->
-        <el-form-item label="Motor Code">
-          <el-input v-model="form.motorCode"></el-input>
+        <el-form-item label="Motor Code" prop="motorCode">
+          <el-input v-model="form.motorCode" autocomplete="off" @input="change($event)">
+            <template slot="prepend">12ZW6063320YA</template>
+          </el-input>
         </el-form-item>
         <el-form-item label="Color">
           <div
@@ -99,6 +102,32 @@ import { mapGetters } from "vuex";
 
 export default {
   data() {
+    // VIN码 验证
+    var validateVin = (rule, value, callback) => {
+      var reg = /^[0-9a-zA-Z]{17}$/;
+      setTimeout(() => {
+        if (value === "") {
+          return callback(new Error("Can not be empty!"));
+        } else if (!reg.test(value)) {
+          callback(new Error("17 characters and numbers"));
+        } else {
+          callback();
+        }
+      }, 5);
+    };
+    // motocode 验证
+    var validateMoto = (rule, value, callback) => {
+      var regmoto = /^[0-9]{9}$/;
+      setTimeout(() => {
+        if (value === "") {
+          return callback(new Error("Can not be empty!"));
+        } else if (!regmoto.test(value)) {
+          callback(new Error("9 numbers"));
+        } else {
+          callback();
+        }
+      }, 5);
+    };
     return {
       current: 0,
       colorlist: ["Red", "Black", "White"],
@@ -199,7 +228,11 @@ export default {
           }
         ]
       },
-      data: []
+      data: [],
+      motorules: {
+        vin: [{ validator: validateVin.bind(this), trigger: "blur" }],
+        motorCode: [{ validator: validateMoto.bind(this), trigger: "blur" }]
+      }
     };
   },
   computed: {
@@ -221,22 +254,34 @@ export default {
     }
   },
   methods: {
+    change($event) {
+      this.$forceUpdate();
+    },
     changeMoto() {
-      edit(this.form).then(
-        () => {
-          this.dialogViewVisible = false;
-          this.onLoad(this.page);
+      this.$refs.changemoto.validate(valid => {
+        if (valid) {
+          console.log("~~~~~~~~~~~~~~~");
+          console.log(this.form);
+          edit(this.form).then(
+            () => {
+              this.dialogViewVisible = false;
+              this.onLoad(this.page);
 
-          this.$message({
-            type: "success",
-            message: "success!"
-          });
-        },
-        error => {
-          done();
-          console.log(error);
+              this.$message({
+                type: "success",
+                message: "success!"
+              });
+            },
+            error => {
+              // done();
+              console.log(error);
+            }
+          );
+        } else {
+          console.log("error submit!!");
+          // return false;
         }
-      );
+      });
     },
     changeActive(index) {
       this.current = index;
