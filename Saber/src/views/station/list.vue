@@ -1021,6 +1021,7 @@ export default {
   methods: {
     // 提交编辑表单
     editFromSubmit() { 
+      
       console.log(this.editform);
       debugger;
       update(this.editform).then(
