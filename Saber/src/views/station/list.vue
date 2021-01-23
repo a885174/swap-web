@@ -677,36 +677,6 @@ export default {
               }
             ]
           },
-          // {
-          //   label: this.$t(`station.startTime`),
-          //   prop: "businessTimeS",
-          //   type: "time",
-          //   format: " HH:mm ",
-          //   valueFormat: "HH:mm",
-          //   hide: true,
-          //   rules: [
-          //     {
-          //       required: false,
-          //       message: this.$t(`scooter.please`)+this.$t(`station.startTime`),
-          //       trigger: "blur"
-          //     }
-          //   ]
-          // },
-          // {
-          //   label: this.$t(`station.endTime`),
-          //   prop: "businessTimeE",
-          //   hide: true,
-          //   type: "time",
-          //   format: " HH:mm",
-          //   valueFormat: "HH:mm:",
-          //   rules: [
-          //     {
-          //       required: false,
-          //       message: this.$t(`scooter.please`)+this.$t(`station.endTime`),
-          //       trigger: "blur"
-          //     }
-          //   ]
-          // },
           {
             label: this.$t(`station.address`),
             width: 200,
@@ -877,93 +847,11 @@ export default {
               }
             ]
           }
-          //
-          // {
-          //   label: "创建人",
-          //   prop: "createUser",
-          // editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "创建时间",
-          //   prop: "createTime",
-          //    editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建时间",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新人",
-          //   prop: "updateUser",
-          //     editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入更新人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新时间",
-          //   prop: "updateTime",
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "备注",
-          //   prop: "remark",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入备注",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "删除标识",
-          //   prop: "delFlag",
-          //   type:'select',
-          //      addDisabled:true,
-          //   addDisplay:false,
-          //   dicData:[
-          //     {
-          //       label:'存在',
-          //       value:'0'
-          //     },{
-          //       label:'删除',
-          //       value:'1'
-          //     }
-          //   ],
-          //   rules: [{
-          //     required: false,
-          //     message: "请输入删除标识 0代表存在 1代表删除",
-          //     trigger: "blur"
-          //   }]
-          // },
         ]
       },
       data: [],
-      editform: {},
+      editform: {
+      },
       editoption: {
         emptyBtn: false,
         submitBtn: false,
@@ -1117,9 +1005,9 @@ export default {
     permissionList() {
       return {
         addBtn: this.vaildData(this.permission.station_add, false),
-        viewBtn: this.vaildData(this.permission.station_view, false)
+        viewBtn: this.vaildData(this.permission.station_view, false),
+        editBtn: this.vaildData(this.permission.station_edit, false)
         //  delBtn: this.vaildData(this.permission.station_delete, false),
-        // editBtn: this.vaildData(this.permission.station_edit, false)
       };
     },
     ids() {
@@ -1132,8 +1020,22 @@ export default {
   },
   methods: {
     // 提交编辑表单
-    editFromSubmit() {
+    editFromSubmit() { 
       console.log(this.editform);
+      debugger;
+      update(this.editform).then(
+        () => {
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      
     },
     // 清空编辑表单
     handleEmpty() {},
