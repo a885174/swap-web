@@ -1147,10 +1147,18 @@ export default {
     }
   },
   methods: {
-    handleRemove(file) {
-      debugger;
-
-      console.log(file);
+    // 提交编辑表单
+    editFromSubmit() {
+      console.log(this.editform);
+    },
+    // 清空编辑表单
+    handleEmpty() {},
+    // 图片列表删除方法
+    handleRemovePic(name, file, fileList) {
+      //将删除后的fileList赋给数组
+      this.idCardImageList = fileList;
+      this.editform.imgList = this.idCardImageList;
+      console.log(this.idCardImageList);
     },
     changePhotoFile(file, fileList) {
       if (fileList.length > 0) {

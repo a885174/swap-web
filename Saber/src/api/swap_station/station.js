@@ -52,7 +52,7 @@ export const add = row => {
 
 export const update = row => {
   return request({
-    url: "/api/swap_station/station/update",
+    url: "/api/swap_station/station/submit",
     method: "post",
     data: row
   });
