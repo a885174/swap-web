@@ -31,13 +31,14 @@ export const listLog = (id) => {
   })
 }
 
-export const getSelect = (patchType,deviceCode) => {
+export const getSelect = (current, size, params) => {
   return request({
     url: '/api/swap_update_record/updaterecord/select',
     method: 'get',
     params: {
-      patchType,
-      deviceCode
+      ...params,
+      current,
+      size,
     }
   })
 }
