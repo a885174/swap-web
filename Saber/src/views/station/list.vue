@@ -101,17 +101,17 @@
       :visible.sync="editdialogVisibles"
       :fullscreen="true"
       :append-to-body="true"
+      v-if="editdialogVisibles"
     >
       <avue-form ref="editform" v-model="editform" :option="editoption">
         <template slot="stationpicture">
           <el-upload
             class="avatar-uploader"
             ref="upload"
-            :action="uploadLogo"
+            :action="uploadstation"
             :show-file-list="false"
             :file-list="photoList"
             :on-change="changePhotoFile"
-            :auto-upload="false"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -119,28 +119,25 @@
         </template>
         <template slot="stationpicturelist">
           <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action
+            class="upload-idCard"
             list-type="picture-card"
-            :on-change="changePhotoFile"
-            :auto-upload="false"
+            :file-list="idCardImageList"
+            ref="imgRef"
             :limit="2"
+            :auto-upload="false"
+            :on-change="changePhotoFiles"
+            :on-remove="function(file ,raw){ handleRemovePic('idCard',file ,raw) }"
           >
-            <i slot="default" class="el-icon-plus"></i>
-            <div v-if="pic.file_url" slot="file" slot-scope="{file}">
-              <img class="el-upload-list__item-thumbnail" :src="pic.file_url" alt />
-              <span
-                v-if="!disabled"
-                class="el-upload-list__item-delete"
-                @click="handleRemove(file)"
-              >
-                <i class="el-icon-delete"></i>
-              </span>
-            </div>
-            <!-- <i v-else class="el-icon-plus"> -->
+            <i class="el-icon-plus"></i>
           </el-upload>
         </template>
         <template slot="address">
-          <mapselect ref="gmap" :oldmarker="oldmarker" :address="oldaddress"></mapselect>
+          <mapselect ref="gmap" :oldmarker="oldmarker" :address="oldaddress" @getLatlng="getLatlng"></mapselect>
+        </template>
+        <template slot="menuForm">
+          <el-button type="primary" @click="editFromSubmit()">提 交</el-button>
+          <el-button @click="handleEmpty()">清 空</el-button>
         </template>
       </avue-form>
     </el-dialog>
@@ -382,6 +379,26 @@
           <p>{{item.prop}}</p>
         </div>
       </div>
+      <div class="imageItem" v-for="item in rowItem.imageItem" :key="item.title">
+        <div class="title">{{item.title}}</div>
+        <el-popover placement="bottom" trigger="click" v-for="column in item.column" :key="column">
+          <!--trigger属性值：hover、click、focus 和 manual-->
+          <a :href="column" target="_blank" title="查看最大化图片">
+            <img :src="column" class="bigimg" />
+          </a>
+          <img slot="reference" :src="column" class="img" />
+        </el-popover>
+
+        <!-- <el-image
+            v-for="column in item.column"
+            :key="column"
+            :src="column"
+            class="img"
+            fit="cover"
+            :preview-src-list="column.srcList"
+        ></el-image>-->
+        <!-- <img v-for="column in item.column" :key="column" :src="column" class="img" /> -->
+      </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogViewVisibles = false">Back</el-button>
       </span>
@@ -461,13 +478,13 @@ export default {
       }
     };
     return {
-      pic: {
-        file_url: ""
-      },
-      uploadLogo: "https://avueupload.91eic.com/upload/list",
+      uploadstation: "/api/blade-resource/oss/endpoint//upload",
       photoList: [],
       headerObj: "",
       imageUrl: "",
+      imageUrl1: "",
+      imageUrl2: "",
+      idCardImageList: [],
 
       oldmarker: "",
       oldaddress: "",
@@ -681,36 +698,6 @@ export default {
               }
             ]
           },
-          // {
-          //   label: this.$t(`station.startTime`),
-          //   prop: "businessTimeS",
-          //   type: "time",
-          //   format: " HH:mm ",
-          //   valueFormat: "HH:mm",
-          //   hide: true,
-          //   rules: [
-          //     {
-          //       required: false,
-          //       message: this.$t(`scooter.please`)+this.$t(`station.startTime`),
-          //       trigger: "blur"
-          //     }
-          //   ]
-          // },
-          // {
-          //   label: this.$t(`station.endTime`),
-          //   prop: "businessTimeE",
-          //   hide: true,
-          //   type: "time",
-          //   format: " HH:mm",
-          //   valueFormat: "HH:mm:",
-          //   rules: [
-          //     {
-          //       required: false,
-          //       message: this.$t(`scooter.please`)+this.$t(`station.endTime`),
-          //       trigger: "blur"
-          //     }
-          //   ]
-          // },
           {
             label: this.$t(`station.address`),
             width: 200,
@@ -881,94 +868,13 @@ export default {
               }
             ]
           }
-          //
-          // {
-          //   label: "创建人",
-          //   prop: "createUser",
-          // editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "创建时间",
-          //   prop: "createTime",
-          //    editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入创建时间",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新人",
-          //   prop: "updateUser",
-          //     editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入更新人",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "更新时间",
-          //   prop: "updateTime",
-          //   editDisabled:true,
-          //   editDisplay:false,
-          //   addDisabled:true,
-          //   addDisplay:false,
-          //   rules: [{
-          //     required: true,
-          //     message: this.$t(`scooter.please`)+this.$t(`AppVseroin.updatedTime`),
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "备注",
-          //   prop: "remark",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入备注",
-          //     trigger: "blur"
-          //   }]
-          // },
-          // {
-          //   label: "删除标识",
-          //   prop: "delFlag",
-          //   type:'select',
-          //      addDisabled:true,
-          //   addDisplay:false,
-          //   dicData:[
-          //     {
-          //       label:'存在',
-          //       value:'0'
-          //     },{
-          //       label:'删除',
-          //       value:'1'
-          //     }
-          //   ],
-          //   rules: [{
-          //     required: false,
-          //     message: "请输入删除标识 0代表存在 1代表删除",
-          //     trigger: "blur"
-          //   }]
-          // },
         ]
       },
       data: [],
       editform: {},
       editoption: {
+        emptyBtn: false,
+        submitBtn: false,
         column: [
           {
             label: this.$t(`station.stationCode`),
@@ -1093,20 +999,6 @@ export default {
             formslot: true,
             span: 24
           },
-          // {
-          //   label: "数组图片组",
-          //   prop: "img",
-          //   dataType: "array",
-          //   type: "upload",
-          //   propsHttp: {
-          //     res: "data.0"
-          //   },
-          //   span: 24,
-          //   limit: 2,
-          //   listType: "picture-card",
-          //   tip: "只能上传jpg/png文件，且不超过500kb",
-          //   action: "https://avueupload.91eic.com/upload/list"
-          // },
           {
             label: "地址",
             prop: "address",
@@ -1133,9 +1025,9 @@ export default {
     permissionList() {
       return {
         addBtn: this.vaildData(this.permission.station_add, false),
-        viewBtn: this.vaildData(this.permission.station_view, false)
+        viewBtn: this.vaildData(this.permission.station_view, false),
+        editBtn: this.vaildData(this.permission.station_edit, false)
         //  delBtn: this.vaildData(this.permission.station_delete, false),
-        // editBtn: this.vaildData(this.permission.station_edit, false)
       };
     },
     ids() {
@@ -1149,7 +1041,19 @@ export default {
   methods: {
     // 提交编辑表单
     editFromSubmit() {
-      console.log(this.editform);
+      update(this.editform).then(
+        () => {
+          this.editdialogVisibles = false;
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        },
+        error => {
+          console.log(error);
+        }
+      );
     },
     // 清空编辑表单
     handleEmpty() {},
@@ -1164,53 +1068,71 @@ export default {
       if (fileList.length > 0) {
         this.photoList = [fileList[fileList.length - 1]];
       }
-      this.handleCrop(file);
+      this.handleCrop(file, "single");
     },
-    handleCrop(file) {
+    changePhotoFiles(file, fileList) {
+      if (fileList.length > 0) {
+        this.photoList = [fileList[fileList.length - 1]];
+      }
+      this.handleCrop(file, "list1");
+    },
+    handleCrop(file, type) {
       this.$nextTick(() => {
-        this.$refs.myCropper.open(file.raw || file);
+        this.$refs.myCropper.open(file.raw || file, type);
       });
     },
     // 点击弹框重新时触发
     upAgain() {
       this.$refs["upload"].$refs["upload-inner"].handleClick();
     },
-    getFile(file) {
+
+    getFile(file, type) {
       const formData = new FormData();
       formData.append("file", file);
-      // formData.append("file",new Blob([file]));
       // 上传照片接口
       upload(formData).then(res => {
-        debugger
         console.log(res);
-        if (res.code === 200) {
+        if (res.data.code === 200) {
+          // this.companyInfo.imageUrl = res.data.data.url;
+          if (type == "single") {
+            this.imageUrl = res.data.data.url;
+            this.editform.mainImg = this.imageUrl;
+          } else if (type == "list1") {
+            this.imageUrl1 = res.data.data.url;
+            this.idCardImageList.push({
+              name: res.data.data.name,
+              url: res.data.data.url
+            });
+            this.editform.imgList = this.idCardImageList;
+            console.log(this.idCardImageList);
+          } else {
+            this.imageUrl2 = res.data.data.url;
+          }
+          //上传成功后，关闭弹框组件
+          this.$refs.myCropper.close();
         } else {
           this.$message.error("上传出错");
         }
-        this.$refs.upload.submit();
       });
-      // uploadSelfCompanyLogo(formData).then(res => {
-      //   if (res.code === 0) {
-      //     this.companyInfo.logo = res.filename;
-      //     this.companyInfo.imageUrl = res.url;
-      //     this.imageUrl = res.url;
-      //     //上传成功后，关闭弹框组件
-      //     // this.handleCrop(file);
-      //     this.$refs.myCropper.close();
-      //   } else {
-      //     this.$message.error("上传出错");
-      //   }
-      // });
-      // this.$refs.upload.submit();
     },
 
+    getLatlng(latLng) {
+      // console.log(latLng);
+      this.editform.latitude = latLng.split(",")[0];
+      this.editform.longitude = latLng.split(",")[1];
+    },
     openEditDialog(row) {
-      this.editdialogVisibles = true;
-      this.editform = row;
-      this.editoption.column[2].dicData = this.supplierTree;
-      this.oldmarker = row.latitude + "," + row.longitude;
-      this.oldaddress = row.address;
-      console.log("--------------------" + this.oldmarker);
+      getDetail(row.stationId).then(res => {
+        this.editdialogVisibles = true;
+        this.editform = res.data.data;
+        this.editoption.column[2].dicData = this.supplierTree;
+        this.oldmarker = row.latitude + "," + row.longitude;
+        this.oldaddress = row.address;
+        this.imageUrl = res.data.data.mainImg;
+        this.idCardImageList = JSON.parse(res.data.data.imgList);
+        this.editform.imgList = JSON.parse(res.data.data.imgList);
+        console.log(this.idCardImageList);
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
@@ -1233,6 +1155,13 @@ export default {
         var data = res.data.data;
         this.dialogViewVisibles = true;
         var stationStatus;
+        var imageItems = [];
+        imageItems.push(data.mainImg);
+        this.idCardImageList = JSON.parse(data.imgList);
+        this.idCardImageList.forEach(ele => {
+          imageItems.push(ele.url);
+        });
+
         switch (data.stationStatus) {
           case "0":
             stationStatus = this.$t(`battery.Normal`);
@@ -1322,6 +1251,13 @@ export default {
             //   title: "备注",
             //   prop: data.remark
             // }
+          ],
+          imageItem: [
+            {
+              title: "picture",
+              column: imageItems,
+              srcList: imageItems
+            }
           ]
         };
       });
@@ -1850,7 +1786,6 @@ body {
   height: 178px;
   display: block;
 }
-<<<<<<< HEAD
 .el-upload-list__item-delete {
   display: block;
 }
@@ -1865,6 +1800,3 @@ body {
   font-size: 16px;
 }
 </style>
-=======
-</style>
->>>>>>> parent of 78631af... station 编辑
