@@ -90,7 +90,6 @@ export default {
         lng: mlon
       };
       this.starting_point = `${mlat},${mlon}`;
-      this.$emit("getLatlng", this.starting_point);
     },
     centerMap() {
       var that = this;
@@ -162,7 +161,6 @@ export default {
           lng: lon
         };
         this.zooms = 16;
-        this.$emit("getLatlng", this.starting_point);
         console.log(this.starting_point);
       }
     }
@@ -226,7 +224,7 @@ export default {
   /* color: #409eff; */
   margin: 0 10px 0px 20px;
 }
-.latlng {
+.latlng{
   float: right;
 }
 </style>

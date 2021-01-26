@@ -101,15 +101,13 @@ export default {
         enlarge: 1, // 图片根据截图框输出比例倍数
         mode: "contain" // 图片默认渲染方式(contain, cover, 100px, 100% auto)
       },
-      preview: {},
-      type:""
+      preview: {}
     };
   },
   methods: {
-    open(data,type) {
+    open(data) {
       this.options.img = window.URL.createObjectURL(data);
       this.dialogVisible = true;
-      this.type = type
     },
     close(){
       this.dialogVisible = false;
@@ -172,9 +170,10 @@ export default {
         let file = this.dataURLtoFile(data, "photo.png");
         // 生成文件类型
         self.loading = false;
-        this.$emit("getFile",file,self.type)
+        this.$emit("getFile",file)
       });
     },
+    //自定义上传，裁剪后调用
   }
 };
 </script>
