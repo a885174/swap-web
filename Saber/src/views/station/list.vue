@@ -101,6 +101,7 @@
       :visible.sync="editdialogVisibles"
       :fullscreen="true"
       :append-to-body="true"
+      v-if="editdialogVisibles"
     >
       <avue-form ref="editform" v-model="editform" :option="editoption">
         <template slot="stationpicture">
@@ -132,7 +133,7 @@
           </el-upload>
         </template>
         <template slot="address">
-          <mapselect ref="gmap" :oldmarker="oldmarker" :address="oldaddress"></mapselect>
+          <mapselect ref="gmap" :oldmarker="oldmarker" :address="oldaddress" @getLatlng="getLatlng"></mapselect>
         </template>
         <template slot="menuForm">
           <el-button type="primary" @click="editFromSubmit()">提 交</el-button>
@@ -377,6 +378,26 @@
           <div class="title">{{item.title}}</div>
           <p>{{item.prop}}</p>
         </div>
+      </div>
+      <div class="imageItem" v-for="item in rowItem.imageItem" :key="item.title">
+        <div class="title">{{item.title}}</div>
+        <el-popover placement="bottom" trigger="click" v-for="column in item.column" :key="column">
+          <!--trigger属性值：hover、click、focus 和 manual-->
+          <a :href="column" target="_blank" title="查看最大化图片">
+            <img :src="column" class="bigimg" />
+          </a>
+          <img slot="reference" :src="column" class="img" />
+        </el-popover>
+
+        <!-- <el-image
+            v-for="column in item.column"
+            :key="column"
+            :src="column"
+            class="img"
+            fit="cover"
+            :preview-src-list="column.srcList"
+        ></el-image>-->
+        <!-- <img v-for="column in item.column" :key="column" :src="column" class="img" /> -->
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogViewVisibles = false">Back</el-button>
@@ -850,8 +871,7 @@ export default {
         ]
       },
       data: [],
-      editform: {
-      },
+      editform: {},
       editoption: {
         emptyBtn: false,
         submitBtn: false,
@@ -1020,12 +1040,10 @@ export default {
   },
   methods: {
     // 提交编辑表单
-    editFromSubmit() { 
-      
-      console.log(this.editform);
-      debugger;
+    editFromSubmit() {
       update(this.editform).then(
         () => {
+          this.editdialogVisibles = false;
           this.onLoad(this.page);
           this.$message({
             type: "success",
@@ -1036,7 +1054,6 @@ export default {
           console.log(error);
         }
       );
-      
     },
     // 清空编辑表单
     handleEmpty() {},
@@ -1068,7 +1085,7 @@ export default {
     upAgain() {
       this.$refs["upload"].$refs["upload-inner"].handleClick();
     },
-    
+
     getFile(file, type) {
       const formData = new FormData();
       formData.append("file", file);
@@ -1100,16 +1117,22 @@ export default {
     },
 
     getLatlng(latLng) {
+      // console.log(latLng);
       this.editform.latitude = latLng.split(",")[0];
       this.editform.longitude = latLng.split(",")[1];
     },
     openEditDialog(row) {
-      this.editdialogVisibles = true;
-      this.editform = row;
-      this.editoption.column[2].dicData = this.supplierTree;
-      this.oldmarker = row.latitude + "," + row.longitude;
-      this.oldaddress = row.address;
-      console.log("--------------------" + this.oldmarker);
+      getDetail(row.stationId).then(res => {
+        this.editdialogVisibles = true;
+        this.editform = res.data.data;
+        this.editoption.column[2].dicData = this.supplierTree;
+        this.oldmarker = row.latitude + "," + row.longitude;
+        this.oldaddress = row.address;
+        this.imageUrl = res.data.data.mainImg;
+        this.idCardImageList = JSON.parse(res.data.data.imgList);
+        this.editform.imgList = JSON.parse(res.data.data.imgList);
+        console.log(this.idCardImageList);
+      });
     },
     rowSave(row, loading, done) {
       add(row).then(
@@ -1132,6 +1155,13 @@ export default {
         var data = res.data.data;
         this.dialogViewVisibles = true;
         var stationStatus;
+        var imageItems = [];
+        imageItems.push(data.mainImg);
+        this.idCardImageList = JSON.parse(data.imgList);
+        this.idCardImageList.forEach(ele => {
+          imageItems.push(ele.url);
+        });
+
         switch (data.stationStatus) {
           case "0":
             stationStatus = this.$t(`battery.Normal`);
@@ -1221,6 +1251,13 @@ export default {
             //   title: "备注",
             //   prop: data.remark
             // }
+          ],
+          imageItem: [
+            {
+              title: "picture",
+              column: imageItems,
+              srcList: imageItems
+            }
           ]
         };
       });

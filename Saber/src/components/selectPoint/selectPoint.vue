@@ -163,7 +163,7 @@ export default {
         };
         this.zooms = 16;
         this.$emit("getLatlng", this.starting_point);
-        console.log(this.starting_point);
+        
       }
     }
   }
