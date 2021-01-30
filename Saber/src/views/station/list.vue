@@ -104,6 +104,11 @@
       v-if="editdialogVisibles"
     >
       <avue-form ref="editform" v-model="editform" :option="editoption">
+        <!-- 营业时间 -->
+        <template slot="produceTime">
+          <my-produce-time ref="myProduceTime"></my-produce-time>
+        </template>
+        <!-- 主图上传 -->
         <template slot="stationpicture">
           <el-upload
             class="avatar-uploader"
@@ -117,6 +122,7 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </template>
+        <!-- 图片列表上传 -->
         <template slot="stationpicturelist">
           <el-upload
             action
@@ -137,7 +143,7 @@
         </template>
         <template slot="menuForm">
           <el-button type="primary" @click="editFromSubmit()">提 交</el-button>
-          <el-button @click="handleEmpty()">清 空</el-button>
+          <el-button @click="handleEmpty()">返 回</el-button>
         </template>
       </avue-form>
     </el-dialog>
@@ -380,7 +386,7 @@
         </div>
       </div>
       <div class="imageItem" v-for="item in rowItem.imageItem" :key="item.title">
-        <div class="title">{{item.title}}</div>
+        <div v-if="item.column.length>0" class="title">{{item.title}}</div>
         <el-popover placement="bottom" trigger="click" v-for="column in item.column" :key="column">
           <!--trigger属性值：hover、click、focus 和 manual-->
           <a :href="column" target="_blank" title="查看最大化图片">
@@ -436,6 +442,7 @@ import { mapGetters } from "vuex";
 import { getToken } from "@/util/auth";
 import { addPic } from "@/api/swap_picture/picture";
 import gMapSelectPoint from "@/components/selectPoint/selectPoint.vue";
+import MyProduceTime from "@/components/produce-time/produceTime.vue";
 import MyCropper from "@/components/crop_image/cropper.vue";
 
 var token = getToken(); // 要保证取到
@@ -443,7 +450,7 @@ var auth = `Basic ${Base64.encode(
   `${website.clientId}:${website.clientSecret}`
 )}`;
 export default {
-  components: { mapselect: gMapSelectPoint, MyCropper },
+  components: { mapselect: gMapSelectPoint, MyCropper, MyProduceTime },
   data() {
     // 企业名类 验证
     var validateStoreName = (rule, value, callback) => {
@@ -977,16 +984,19 @@ export default {
               }
             ]
           },
-          // {
-          //   label: "营业时间",
-          //   prop: "produceTimetype",
-          //   formslot:true,
-          //   rules: [{
-          //       required: true,
-          //       message: "请输营业时间",
-          //       trigger: "blur"
-          //     }]
-          // }
+          {
+            label: "营业时间",
+            prop: "produceTime",
+            formslot: true,
+            span: 24,
+            rules: [
+              {
+                required: true,
+                message: this.$t(`scooter.connectionStatus`),
+                trigger: "blur"
+              }
+            ]
+          },
           {
             label: "主图图片",
             prop: "stationpicture",
@@ -1121,6 +1131,7 @@ export default {
       this.editform.latitude = latLng.split(",")[0];
       this.editform.longitude = latLng.split(",")[1];
     },
+    // 打开编辑弹窗
     openEditDialog(row) {
       getDetail(row.stationId).then(res => {
         this.editdialogVisibles = true;
@@ -1131,6 +1142,7 @@ export default {
         this.imageUrl = res.data.data.mainImg;
         this.idCardImageList = JSON.parse(res.data.data.imgList);
         this.editform.imgList = JSON.parse(res.data.data.imgList);
+        // this.timeType = this.timeTypeOptions[0].value;
         console.log(this.idCardImageList);
       });
     },
@@ -1156,12 +1168,15 @@ export default {
         this.dialogViewVisibles = true;
         var stationStatus;
         var imageItems = [];
-        imageItems.push(data.mainImg);
-        this.idCardImageList = JSON.parse(data.imgList);
-        this.idCardImageList.forEach(ele => {
-          imageItems.push(ele.url);
-        });
-
+        var imafelist = [];
+        data.mainImg != "" ? imageItems.push(data.mainImg) : imageItems;
+        if (data.imgList != "") {
+          imafelist = JSON.parse(data.imgList);
+          imafelist.forEach(ele => {
+            imageItems.push(ele.url);
+          });
+        }
+        console.log(imageItems);
         switch (data.stationStatus) {
           case "0":
             stationStatus = this.$t(`battery.Normal`);
