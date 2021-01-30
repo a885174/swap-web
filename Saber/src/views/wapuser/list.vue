@@ -153,8 +153,6 @@ export default {
           },
           {
             label: this.$t(`user.loginName`),
-            editDisabled: true,
-            editDisplay: false,
             prop: "loginName",
             rules: [
               {
@@ -171,7 +169,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: this.$t(`scooter.please`) + this.$t(`user.username`),
+                message: "请输入用户姓名",
                 trigger: "blur"
               }
             ]
@@ -193,8 +191,7 @@ export default {
               {
                 validator: validateContactNumber,
                 required: false,
-                message:
-                  this.$t(`scooter.please`) + this.$t(`user.phoneNumber`),
+                message: "请输入手机号码",
                 trigger: "blur"
               }
             ]
@@ -205,8 +202,7 @@ export default {
             rules: [
               {
                 required: false,
-                // message: "请输入邮箱 暂不真实校验，只做格式校验",
-                message: this.$t(`scooter.please`) + this.$t(`user.email`),
+                message: "请输入邮箱 暂不真实校验，只做格式校验",
                 trigger: "blur"
               }
             ]
@@ -218,7 +214,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: this.$t(`scooter.please`) + this.$t(`user.job`),
+                message: "请输入职业 ",
                 trigger: "blur"
               }
             ]
@@ -227,17 +223,15 @@ export default {
             label: this.$t(`user.sex`),
             prop: "sex",
             hide: true,
-            editDisabled: true,
-            editDisplay: false,
             type: "select",
             valueDefault: "0",
             dicData: [
               {
-                label: "Male",
+                label: "男",
                 value: "0"
               },
               {
-                label: "FeMale",
+                label: "女",
                 value: "1"
               }
             ],

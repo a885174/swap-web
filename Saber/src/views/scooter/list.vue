@@ -279,7 +279,7 @@ export default {
             label: this.$t(`scooter.licensePlate`),
             prop: "licensePlate",
             span: 20,
-            search: true,
+            search: false,
             labelWidth: 120,
             rules: [
               {
