@@ -29,6 +29,7 @@
         class="timePicker"
         value-format="HH:mm"
         format="HH:mm"
+        @change="fixedTimeChange"
       ></el-time-picker>
     </div>
     <div v-if="timeType=='3'" class="selectitems">
@@ -107,81 +108,84 @@ export default {
       timeType: "1",
       currentType: "",
       // 固定时间范围
-      fixedTime: [new Date(2021, 1, 28, 8, 30), new Date(2021, 1, 28, 17, 30)],
+      // fixedTime: [new Date(2021, 1, 28, 8, 30), new Date(2021, 1, 28, 17, 30)],
+      fixedTime: ["08:30", "17:30"],
       ruleForm: {
         list: [
           {
             week: "",
-            fixedTime: [
-              new Date(2021, 1, 28, 8, 30),
-              new Date(2021, 1, 28, 17, 30)
-            ]
+            fixedTime: ["08:30", "17:30"]
           }
         ]
       },
       weekOptions: [
         {
           label: "Monday",
-          value: "Monday"
+          value: "1"
         },
         {
           label: "Tuesday",
-          value: "Tuesday"
+          value: "2"
         },
         {
           label: "Wednesday",
-          value: "Wednesday"
+          value: "3"
         },
         {
           label: "Thursday",
-          value: "Thursday"
+          value: "4"
         },
         {
           label: "Friday",
-          value: "Friday"
+          value: "5"
         },
         {
           label: "Saturday",
-          value: "Saturday"
+          value: "6"
         },
         {
           label: "Sunday",
-          value: "Sunday"
+          value: "7"
         }
       ],
       weeklist: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
       ],
       selectedOptions: [],
       fuSelectedLust: []
     };
   },
   methods: {
+    fixedTimeChange() {
+      console.log(this.fixedTime);
+      this.$emit("changeProTime", this.timeType, this.fixedTime);
+    },
     changeTimeType(value) {
-      console.log(this.timeType);
+      console.log(this.fixedTime);
+      var timeList;
+      if (value == 2) {
+        timeList = this.fixedTime;
+      } else if (value == 3) {
+        timeList = this.ruleForm.list;
+      }
+      this.$emit("changeProTime", value, timeList);
     },
     selectChange(value, index) {
-      console.log(arguments);
-      console.log(value, index);
       this.selectedOptions[index] = value;
-    //   if (this.selectedOptions.length > 0) {
-        let allList = [];
-        this.selectedOptions.forEach(element => {
-          allList = [...new Set([...allList, ...element])];
-        });
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~");
-        console.log(allList);
-        this.fuSelectedLust = allList;
-    //   } else {
-    //     this.fuSelectedLust = value;
-    //   }
-      //   this.fuSelectedLust = RemoveSame;
+      let allList = [];
+      this.selectedOptions.forEach(element => {
+        allList = [...new Set([...allList, ...element])];
+      });
+      this.fuSelectedLust = allList;
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~");
+      console.log(this.ruleForm.list);
+      this.$emit("changeProTime", this.timeType, this.ruleForm.list);
     },
     getDisable(value) {
       if (this.fuSelectedLust.indexOf(value) >= 0) {
@@ -190,35 +194,36 @@ export default {
         return false;
       }
     },
+    // type3 时间列表
     timeChange(val) {
-      console.log(this.ruleForm);
+      console.log(this.ruleForm.list);
+      this.$emit("changeProTime", this.timeType, this.ruleForm.list);
     },
     add() {
-      console.log(this.weeklist);
-      console.log(this.selectedOptions);
       let RemoveSame = [
         ...new Set([...this.weeklist, ...this.selectedOptions])
       ];
-      console.log(RemoveSame);
       let SamePart = this.weeklist.filter(item =>
         this.selectedOptions.includes(item)
       );
-      console.log(SamePart);
       let Difference = RemoveSame.filter(item => !SamePart.includes(item));
-      console.log(Difference);
       this.ruleForm.list.push({
         week: "",
-        fixedTime: [new Date(2021, 1, 28, 8, 30), new Date(2021, 1, 28, 17, 30)]
+        fixedTime: ["08:30", "17:30"]
       });
       console.log(this.ruleForm.list);
+
+      this.$emit("changeProTime", this.timeType, this.ruleForm.list);
     },
     del(index) {
       // 删除时恢复可选
       if (this.ruleForm.list[index] || this.ruleForm.list[index] == 0) {
         this.selectedOptions.remove(this.ruleForm.list[index].week);
       }
-      console.log(this.selectedOptions);
       this.ruleForm.list.splice(index, 1);
+      console.log(this.ruleForm.list);
+
+      this.$emit("changeProTime", this.timeType, this.ruleForm.list);
     }
   }
 };

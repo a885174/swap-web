@@ -106,7 +106,7 @@
       <avue-form ref="editform" v-model="editform" :option="editoption">
         <!-- 营业时间 -->
         <template slot="produceTime">
-          <my-produce-time ref="myProduceTime"></my-produce-time>
+          <my-produce-time ref="myProduceTime" @changeProTime="changeProTime"></my-produce-time>
         </template>
         <!-- 主图上传 -->
         <template slot="stationpicture">
@@ -1125,7 +1125,16 @@ export default {
         }
       });
     },
-
+    // 获取选中的营业时间
+    changeProTime(type, timeList) {
+      this.editform.timeType = type;
+      this.editform.timeList = timeList;
+      console.log("-------- 获取选中的营业时间 --------");
+      console.log(JSON.stringify(this.editform.timeList));
+      // JSON.parse(JSON.stringify(this.editform.timeList))
+      //  JSON.parse(JSON.stringify(data))
+    },
+    // 获取选中的坐标点位
     getLatlng(latLng) {
       // console.log(latLng);
       this.editform.latitude = latLng.split(",")[0];
