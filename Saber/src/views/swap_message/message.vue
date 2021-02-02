@@ -140,7 +140,11 @@
             </el-form-item>
           </el-col>
         </el-row>
+<<<<<<< HEAD
     
+=======
+        
+>>>>>>> 5d675290db97e55fa8454781b8e4a186ce523952
         <el-row>
           <!-- <el-col :span="12">
             <el-form-item :label="$t(`message.messageType`)">
@@ -194,7 +198,11 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button v-if="!editDisable" type="primary"  @click="saveUpdate('editfrom')">{{$t(`message.save`)}}</el-button>
+        <el-button
+          v-if="!editDisable"
+          type="primary"
+          @click="saveUpdate('editfrom')"
+        >{{$t(`message.save`)}}</el-button>
         <el-button @click="resetForm()">{{$t(`message.cancel`)}}</el-button>
       </div>
     </el-dialog>
@@ -468,11 +476,13 @@ export default {
   },
   methods: {
     viewEdit(row) {
-      this.title = this.$t(`chakan`);
-      this.editDisable = true;
-      this.dialogEditVisible = true;
-      this.imageUrl = row.messageIcon;
-      this.editfrom = row;
+      getDetail(row.messageId).then(res => {
+        this.title = this.$t(`chakan`);
+        this.editDisable = true;
+        this.dialogEditVisible = true;
+        this.imageUrl = row.messageIcon;
+        this.editfrom = res.data.data;
+      });
     },
     handleAvatarSuccess(res, file) {
       console.log(res);
