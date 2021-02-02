@@ -20,13 +20,13 @@
       @on-load="onLoad"
     >
       <template slot="menuLeft">
-        <el-button
+        <!-- <el-button
           type="danger"
           size="small"
           icon="el-icon-delete"
           plain
           @click="handleDelete"
-        >{{$t(`delete`)}}</el-button>
+        >{{$t(`delete`)}}</el-button> -->
 
         <!-- <el-button type="primary"
                      icon="el-icon-check"
@@ -432,9 +432,9 @@ export default {
     permissionList() {
       return {
         addBtn: this.vaildData(this.permission.wapuser_add, false),
-        viewBtn: this.vaildData(this.permission.wapuser_view, false)
-        // delBtn: this.vaildData(this.permission.wapuser_delete, false),
-        //editBtn: this.vaildData(this.permission.wapuser_edit, false)
+        viewBtn: this.vaildData(this.permission.wapuser_view, false),
+        delBtn: this.vaildData(this.permission.wapuser_delete, false),
+        editBtn: this.vaildData(this.permission.wapuser_edit, false)
       };
     },
     ids() {

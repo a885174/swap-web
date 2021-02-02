@@ -115,7 +115,7 @@
         label-width="80px"
         :disabled="editDisable"
       >
-        <el-row style="height:100px">
+        <el-row>
           <el-col :span="12">
             <el-form-item :label="$t(`message.messageTitle`)" prop="messageTitle">
               <el-input
@@ -140,9 +140,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-
-        </el-row>
+    
         <el-row>
           <!-- <el-col :span="12">
             <el-form-item :label="$t(`message.messageType`)">
@@ -453,10 +451,11 @@ export default {
     ...mapGetters(["permission"]),
     permissionList() {
       return {
-        addBtn: this.vaildData(this.permission.message_add, false)
+        addBtn: this.vaildData(this.permission.message_add, false),
+                editBtn: this.vaildData(this.permission.message_edit, false)
+
         // viewBtn: this.vaildData(this.permission.message_view, false),
         // delBtn: this.vaildData(this.permission.message_delete, false),
-        // editBtn: this.vaildData(this.permission.message_edit, false)
       };
     },
     ids() {
