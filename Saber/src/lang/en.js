@@ -86,6 +86,7 @@ export default {
     tenantId: "Please input tenantId",
     username: "Please input username",
     password: "Please input a password",
+    pawRules:"The password must be at least 6 characters long",
     wechat: "Wechat",
     qq: "QQ",
     phone: "Please input a phone",
@@ -95,7 +96,8 @@ export default {
     phoneLogin: "phoneLogin",
     thirdLogin: "thirdLogin",
     msgText: "send code",
-    msgSuccess: "reissued code"
+    msgSuccess: "reissued code",
+    loginloading:"Logging in, please wait..."
   },
   navbar: {
     info: "info",
@@ -412,6 +414,7 @@ export default {
     UnlinkwithMotorcycle: "Unlink with Motorcycle",
     tenantStatus: "Status of Account",
     contactNumber: "contact Number",
+    contactAddress: "contact address",
     users: "User Count",
     scooters: "Motorcycle Count",
     legalPerson: "Legal Person",

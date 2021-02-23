@@ -1051,19 +1051,20 @@ export default {
   methods: {
     // 提交编辑表单
     editFromSubmit() {
-      update(this.editform).then(
-        () => {
-          this.editdialogVisibles = false;
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
-          });
-        },
-        error => {
-          console.log(error);
-        }
-      );
+      console.log(this.editform)
+      // update(this.editform).then(
+      //   () => {
+      //     this.editdialogVisibles = false;
+      //     this.onLoad(this.page);
+      //     this.$message({
+      //       type: "success",
+      //       message: "success!"
+      //     });
+      //   },
+      //   error => {
+      //     console.log(error);
+      //   }
+      // );
     },
     // 清空编辑表单
     handleEmpty() {},
@@ -1151,6 +1152,7 @@ export default {
         this.imageUrl = res.data.data.mainImg;
         this.idCardImageList = JSON.parse(res.data.data.imgList);
         this.editform.imgList = JSON.parse(res.data.data.imgList);
+        this.editform.timeType = "1";
         // this.timeType = this.timeTypeOptions[0].value;
         console.log(this.idCardImageList);
       });
