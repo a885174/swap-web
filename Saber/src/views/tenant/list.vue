@@ -295,7 +295,7 @@ export default {
       selectionList: [],
       option: {
         dialogWidth: 400,
-        dialogHeight: 330,
+        dialogHeight: 540,
         tip: false,
         border: true,
         index: true,
@@ -344,7 +344,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入客户名称",
+                message:
+                  this.$t(`scooter.please`) + this.$t(`tenant.tenantName`),
                 trigger: "blur"
               }
             ]
@@ -408,7 +409,8 @@ export default {
               {
                 validator: validateStoreName,
                 required: false,
-                message: "请输入联系地址",
+                message:
+                  this.$t(`scooter.please`) + this.$t(`tenant.contactAddress`),
                 trigger: "blur"
               }
             ]
@@ -420,7 +422,7 @@ export default {
             rules: [
               {
                 required: false,
-                message: "请输入邮箱",
+                message: this.$t(`scooter.please`) + this.$t(`user.email`),
                 trigger: "blur"
               }
             ]
@@ -474,22 +476,24 @@ export default {
             valueDefault: "1",
             dicData: [
               {
-                label: "有",
+                label: this.$t(`merchant.have`),
                 value: "0"
               },
               {
-                label: "无",
+                label: this.$t(`merchant.no`),
                 value: "1"
               },
               {
-                label: "未知",
+                label: this.$t(`merchant.unknown`),
                 value: "2"
               }
             ],
             rules: [
               {
                 required: false,
-                message: "请输入工商备案",
+                message:
+                  this.$t(`scooter.please`) +
+                  this.$t(`repaircompany.Industrial`),
                 trigger: "blur"
               }
             ]
@@ -515,7 +519,8 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入客户状态",
+                message:
+                  this.$t(`scooter.please`) + this.$t(`tenant.tenantStatus`),
                 trigger: "blur"
               }
             ]

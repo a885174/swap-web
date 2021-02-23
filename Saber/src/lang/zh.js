@@ -84,6 +84,7 @@ export default {
     tenantId: "请输入租户ID",
     username: "请输入账号",
     password: "请输入密码",
+    pawRules:"密码长度最少为6位",
     wechat: "微信",
     qq: "QQ",
     phone: "请输入手机号",
@@ -93,7 +94,8 @@ export default {
     phoneLogin: "手机号登录",
     thirdLogin: "第三方登录",
     msgText: "发送验证码",
-    msgSuccess: "秒后重发"
+    msgSuccess: "秒后重发",
+    loginloading:"登录中,请稍后..."
   },
   navbar: {
     logOut: "退出登录",
@@ -339,6 +341,7 @@ export default {
     users: "User Count",
     scooters: "Motorcycle Count",
     contactNumber: "联系电话",
+    contactAddress: "联系地址",
     tenantStatus: "客户状态",
     legalPerson: "法定代表",
     Frozen: "冻结",

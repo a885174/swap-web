@@ -27,7 +27,7 @@
         placeholder="选择时间范围"
         style="width: 200px !important;"
         class="timePicker"
-        value-format="HH:mm"
+        value-format="HH:mm:ss"
         format="HH:mm"
         @change="fixedTimeChange"
       ></el-time-picker>
@@ -60,7 +60,7 @@
           style="width: 200px !important;"
           class="timePicker"
           @change="timeChange"
-          value-format="HH:mm"
+          value-format="HH:mm:ss"
           format="HH:mm"
         ></el-time-picker>
         <i v-if="ruleForm.list.length>1" class="el-icon-remove ico" @click="del(index)"></i>
