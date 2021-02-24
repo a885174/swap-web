@@ -116,17 +116,8 @@ export default {
         menu: false,
         align: "center",
         column: [
-          // {
-          //   label: "id",
-          //   prop: "id",
-          //   rules: [{
-          //     required: true,
-          //     message: "请输入",
-          //     trigger: "blur"
-          //   }]
-          // },
           {
-            label: this.$t(`AppVseroin.appVersoin`),
+            label: "Amount/Rp",
             prop: "versoin",
             rules: [
               {
@@ -136,30 +127,8 @@ export default {
               }
             ]
           },
-          // {
-          //   label:this.$t(`AppVersoin.isForcedUpdate`),
-          //   prop: "isForcedUpdate",
-          //   type: "select",
-          //   dicData: [
-          //     {
-          //       label: this.$t(`AppVseroin.no`),
-          //       value: "1"
-          //     },
-          //     {
-          //       label: this.$t(`AppVseroin.yes`),
-          //       value: "0"
-          //     }
-          //   ],
-          //   rules: [
-          //     {
-          //       required: true,
-          //       message: "请输入版本号",
-          //       trigger: "blur"
-          //     }
-          //   ]
-          // },
           {
-            label: this.$t(`AppVseroin.apkAddress`),
+            label: "Quantity of electricity/Kwh",
             prop: "apkUrl",
             rules: [
               {
@@ -170,7 +139,7 @@ export default {
             ]
           },
           {
-            label: this.$t(`AppVseroin.updatedInstruction`),
+            label: "Start Time",
             prop: "versoinLog",
             rules: [
               {
@@ -181,7 +150,7 @@ export default {
             ]
           },
           {
-            label: this.$t(`AppVseroin.updatedTime`),
+            label: "End Time",
             prop: "updateTime",
             hide: true,
             rules: [
