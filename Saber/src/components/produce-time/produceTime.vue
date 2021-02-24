@@ -87,6 +87,25 @@ Array.prototype.remove = function(val) {
   }
 };
 export default {
+  props: {
+    oldtimeType: {
+      type: String,
+      default: "1"
+    },
+    oldfixedTime: {
+      type: String,
+      default: "08:00:00,17:30:00"
+    },
+    oldtimelist: {
+      type: Array,
+      default: [
+        {
+          week: "",
+          fixedTime: ["08:00:00","17:30:00"]
+        }
+      ]
+    }
+  },
   data() {
     return {
       // 时间类型数组
@@ -109,12 +128,12 @@ export default {
       currentType: "",
       // 固定时间范围
       // fixedTime: [new Date(2021, 1, 28, 8, 30), new Date(2021, 1, 28, 17, 30)],
-      fixedTime: ["08:30", "17:30"],
+      fixedTime: ["08:00:00","17:30:00"],
       ruleForm: {
         list: [
           {
             week: "",
-            fixedTime: ["08:30", "17:30"]
+            fixedTime: ["08:00:00","17:30:00"]
           }
         ]
       },
@@ -148,18 +167,25 @@ export default {
           value: "7"
         }
       ],
-      weeklist: [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7"
-      ],
+      weeklist: ["1", "2", "3", "4", "5", "6", "7"],
       selectedOptions: [],
       fuSelectedLust: []
     };
+  },
+  created() {
+    this.timeType = this.oldtimeType;
+    if (this.timeType == "2") {
+      this.fixedTime = [
+        this.oldfixedTime.split(",")[0],
+        this.oldfixedTime.split(",")[1]
+      ];
+    } else if (this.timeType == "3") {
+      this.ruleForm.list = this.oldtimelist;
+    }
+
+    console.log("-----------------------submit-----------------------");
+    console.log(this.fixedTime);
+    console.log(this.ruleForm);
   },
   methods: {
     fixedTimeChange() {
@@ -167,6 +193,9 @@ export default {
       this.$emit("changeProTime", this.timeType, this.fixedTime);
     },
     changeTimeType(value) {
+      console.log(
+        "-----------------------changeTimeType-----------------------"
+      );
       console.log(this.fixedTime);
       var timeList;
       if (value == 2) {
@@ -206,7 +235,7 @@ export default {
       let SamePart = this.weeklist.filter(item =>
         this.selectedOptions.includes(item)
       );
-      let Difference = RemoveSame.filter(item => !SamePart.includes(item));
+      // let Difference = RemoveSame.filter(item => !SamePart.includes(item));
       this.ruleForm.list.push({
         week: "",
         fixedTime: ["08:30", "17:30"]

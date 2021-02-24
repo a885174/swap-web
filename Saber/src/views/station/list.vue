@@ -106,7 +106,13 @@
       <avue-form ref="editform" v-model="editform" :option="editoption">
         <!-- 营业时间 -->
         <template slot="produceTime">
-          <my-produce-time ref="myProduceTime" @changeProTime="changeProTime"></my-produce-time>
+          <my-produce-time
+            ref="myProduceTime"
+            :oldtimeType="timeType"
+            :oldfixedTime="fixedTime"
+            :oldtimelist="timelist"
+            @changeProTime="changeProTime"
+          ></my-produce-time>
         </template>
         <!-- 主图上传 -->
         <template slot="stationpicture">
@@ -485,6 +491,9 @@ export default {
       }
     };
     return {
+      timeType: "",
+      fixedTime: "",
+      timelist: [],
       uploadstation: "/api/blade-resource/oss/endpoint//upload",
       photoList: [],
       headerObj: "",
@@ -1051,20 +1060,32 @@ export default {
   methods: {
     // 提交编辑表单
     editFromSubmit() {
-      console.log(this.editform)
-      // update(this.editform).then(
-      //   () => {
-      //     this.editdialogVisibles = false;
-      //     this.onLoad(this.page);
-      //     this.$message({
-      //       type: "success",
-      //       message: "success!"
-      //     });
-      //   },
-      //   error => {
-      //     console.log(error);
-      //   }
-      // );
+      console.log("-----------------------submit-----------------------");
+      console.log(this.editform.timeList.week);
+      if (
+        this.editform.timeType == "3" &&
+        (this.editform.timeList.week == undefined ||
+          this.editform.timeList.week == "")
+      ) {
+        this.$message({
+          type: "error",
+          message: "请选择营业时间!"
+        });
+      } else {
+        update(this.editform).then(
+          () => {
+            this.editdialogVisibles = false;
+            this.onLoad(this.page);
+            this.$message({
+              type: "success",
+              message: "success!"
+            });
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     },
     // 清空编辑表单
     handleEmpty() {},
@@ -1150,10 +1171,20 @@ export default {
         this.oldmarker = row.latitude + "," + row.longitude;
         this.oldaddress = row.address;
         this.imageUrl = res.data.data.mainImg;
-        this.idCardImageList = JSON.parse(res.data.data.imgList);
-        this.editform.imgList = JSON.parse(res.data.data.imgList);
-        this.editform.timeType = "1";
-        // this.timeType = this.timeTypeOptions[0].value;
+        if (res.data.data.imgList != "") {
+          this.idCardImageList = JSON.parse(res.data.data.imgList);
+          this.editform.imgList = JSON.parse(res.data.data.imgList);
+        }
+
+        // this.editform.timeType = res.data.data.timeList;
+        this.timeType = res.data.data.timeType;
+        console.log(res.data.data.timeType);
+        if (this.timeType == "2") {
+          this.fixedTime = res.data.data.timeList;
+        } else if (this.timeType == "3") {
+          this.timelist = JSON.parse(res.data.data.timeList);
+        }
+
         console.log(this.idCardImageList);
       });
     },
