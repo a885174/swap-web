@@ -1052,19 +1052,19 @@ export default {
     // 提交编辑表单
     editFromSubmit() {
       console.log(this.editform)
-      // update(this.editform).then(
-      //   () => {
-      //     this.editdialogVisibles = false;
-      //     this.onLoad(this.page);
-      //     this.$message({
-      //       type: "success",
-      //       message: "success!"
-      //     });
-      //   },
-      //   error => {
-      //     console.log(error);
-      //   }
-      // );
+      update(this.editform).then(
+        () => {
+          this.editdialogVisibles = false;
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        },
+        error => {
+          console.log(error);
+        }
+      );
     },
     // 清空编辑表单
     handleEmpty() {},
