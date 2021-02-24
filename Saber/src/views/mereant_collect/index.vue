@@ -1,15 +1,19 @@
 <template>
   <div>
     <basic-container>
-      <p>
-        Amount：Rp
-        <span>380,000,000</span>
-      </p>
-      <p>
-        Quantity of electricity：
-        <span>380,000,000</span> Kwh
-      </p>
-      <p>Time：February,01,2021 ~ February,23,2021</p>
+      <div class="info">
+        <p>
+          <span class="title">Amount：</span> Rp
+          <span class="bold">380,000,000</span>
+        </p>
+        <p>
+          <span class="title">Quantity of electricity：</span>
+          <span class="bold">380,000,000</span>&nbsp;&nbsp;&nbsp; Kwh
+        </p>
+        <p>
+          <span class="title">Time：</span> February,01,2021 ~ February,23,2021
+        </p>
+      </div>
     </basic-container>
     <basic-container>
       <avue-crud
@@ -389,5 +393,20 @@ export default {
   padding-top: 12px;
   line-height: 20px;
   border-bottom: 1px solid #ebebeb;
+}
+
+.info {
+  font-size: 14px;
+  font-weight: 400;
+  color: #333333;
+  text-align: center;
+  line-height: 48px;
+}
+.info .title {
+  font-weight: 700;
+}
+.info .bold {
+  font-weight: 700;
+  font-size: 36px;
 }
 </style>
