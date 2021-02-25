@@ -1061,6 +1061,7 @@ export default {
     // 提交编辑表单
     editFromSubmit() {
       console.log("-----------------------submit-----------------------");
+      
       if (
         this.editform.timeType == "3" &&
         (this.editform.timeList.week == undefined ||

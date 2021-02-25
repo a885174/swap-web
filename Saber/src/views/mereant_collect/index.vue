@@ -1,15 +1,19 @@
 <template>
   <div>
     <basic-container>
-      <p>
-        Amount：Rp
-        <span>380,000,000</span>
-      </p>
-      <p>
-        Quantity of electricity：
-        <span>380,000,000</span> Kwh
-      </p>
-      <p>Time：February,01,2021 ~ February,23,2021</p>
+      <div class="info">
+        <p>
+          <span class="title">Amount：</span> Rp
+          <span class="bold">{{amount}}</span>
+        </p>
+        <p>
+          <span class="title">Quantity of electricity：</span>
+          <span class="bold">{{electricity}}</span>&nbsp;&nbsp;&nbsp; Kwh
+        </p>
+        <p>
+          <span class="title">Time：</span>{{startdate}} ~ {{enddate}}
+        </p>
+      </div>
     </basic-container>
     <basic-container>
       <avue-crud
@@ -79,12 +83,13 @@
 
 <script>
 import {
-  getList,
   getDetail,
   add,
   update,
+  getstaEleList,
+  stationElectricitySum,
   remove
-} from "@/api/swap_app_versoin/appversoin";
+} from "@/api/swap_station/station";
 import { mapGetters } from "vuex";
 
 export default {
@@ -92,6 +97,10 @@ export default {
     return {
       dialogViewVisible: false,
       rowItem: {},
+      startdate:"",
+      enddate:"",
+      amount:"",
+      electricity:"",
       form: {},
       query: {},
       loading: true,
@@ -122,8 +131,8 @@ export default {
           //   }]
           // },
           {
-            label: this.$t(`AppVseroin.appVersoin`),
-            prop: "versoin",
+            label: "Amount",
+            prop: "amount",
             rules: [
               {
                 required: true,
@@ -155,8 +164,8 @@ export default {
           //   ]
           // },
           {
-            label: this.$t(`AppVseroin.apkAddress`),
-            prop: "apkUrl",
+            label: "quantity of electricity",
+            prop: "electricity_read",
             rules: [
               {
                 required: true,
@@ -166,8 +175,8 @@ export default {
             ]
           },
           {
-            label: this.$t(`AppVseroin.updatedInstruction`),
-            prop: "versoinLog",
+            label:"Start Time",
+            prop: "startdate",
             rules: [
               {
                 required: true,
@@ -177,22 +186,24 @@ export default {
             ]
           },
           {
-            label: this.$t(`AppVseroin.updatedTime`),
-            prop: "updateTime",
-            hide: true,
-            rules: [
-              {
-                required: true,
-                message:
-                  this.$t(`scooter.please`) + this.$t(`AppVseroin.updatedTime`),
-                trigger: "blur"
-              }
-            ]
+            label:"End Time",
+            prop: "enddate",
+            // rules: [
+            //   {
+            //     required: true,
+            //     message:
+            //       this.$t(`scooter.please`) + this.$t(`AppVseroin.updatedTime`),
+            //     trigger: "blur"
+            //   }
+            // ]
           }
         ]
       },
       data: []
     };
+  },
+    created() {
+    this.getSum();
   },
   computed: {
     ...mapGetters(["permission"]),
@@ -338,7 +349,7 @@ export default {
     },
     selectionClear() {
       this.selectionList = [];
-      this.$refs.crud.toggleSelection();
+      // this.$refs.crud.toggleSelection();
     },
     currentChange(currentPage) {
       this.page.currentPage = currentPage;
@@ -346,9 +357,19 @@ export default {
     sizeChange(pageSize) {
       this.page.pageSize = pageSize;
     },
+    getSum(){
+      stationElectricitySum().then(res =>{
+        const data = res.data.data;
+        this.startdate = data.startdate;
+        this.enddate = data.enddate;
+        this.electricity=data.electricity_read;
+        this.amount = data.amount;
+
+      });
+    },
     onLoad(page, params = {}) {
       this.loading = true;
-      getList(
+      getstaEleList(
         page.currentPage,
         page.pageSize,
         Object.assign(params, this.query)
@@ -389,5 +410,20 @@ export default {
   padding-top: 12px;
   line-height: 20px;
   border-bottom: 1px solid #ebebeb;
+}
+
+.info {
+  font-size: 14px;
+  font-weight: 400;
+  color: #333333;
+  text-align: center;
+  line-height: 48px;
+}
+.info .title {
+  font-weight: 700;
+}
+.info .bold {
+  font-weight: 700;
+  font-size: 36px;
 }
 </style>

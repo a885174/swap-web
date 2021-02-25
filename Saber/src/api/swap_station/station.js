@@ -166,3 +166,25 @@ export const upload = file => {
   });
 
 };
+
+
+
+
+export const getstaEleList= (current, size, params) => {
+  return request({
+    url: "/api/swap_station/station/stationElectricity",
+    method: "get",
+    params: {
+      ...params,
+      current,
+      size
+    }
+  });
+};
+
+export const stationElectricitySum= () => {
+  return request({
+    url: "/api/swap_station/station/stationElectricitySum",
+    method: "get",
+  });
+};
