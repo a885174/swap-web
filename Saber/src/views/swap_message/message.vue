@@ -140,11 +140,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-<<<<<<< HEAD
-    
-=======
         
->>>>>>> 5d675290db97e55fa8454781b8e4a186ce523952
         <el-row>
           <!-- <el-col :span="12">
             <el-form-item :label="$t(`message.messageType`)">

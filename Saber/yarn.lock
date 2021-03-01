@@ -719,8 +719,6 @@
   version "0.4.0"
   resolved "https://registry.npm.taobao.org/@mapbox/fusspot/download/@mapbox/fusspot-0.4.0.tgz#5ac625b5ed31695fda465fb0413ee0379bdf553c"
   integrity sha1-WsYlte0xaV/aRl+wQT7gN5vfVTw=
-<<<<<<< HEAD
-=======
   dependencies:
     is-plain-obj "^1.1.0"
     xtend "^4.0.1"
@@ -729,7 +727,6 @@
   version "0.2.2"
   resolved "https://registry.npm.taobao.org/@mapbox/geojson-area/download/@mapbox/geojson-area-0.2.2.tgz#18d7814aa36bf23fbbcc379f8e26a22927debf10"
   integrity sha1-GNeBSqNr8j+7zDefjiaiKSfevxA=
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   dependencies:
     is-plain-obj "^1.1.0"
     xtend "^4.0.1"
@@ -753,15 +750,9 @@
   integrity sha1-zlblOfg1UrWNENZy6k1vya3HsjQ=
 
 "@mapbox/mapbox-gl-geocoder@^4.5.1":
-<<<<<<< HEAD
-  version "4.7.0"
-  resolved "https://registry.npm.taobao.org/@mapbox/mapbox-gl-geocoder/download/@mapbox/mapbox-gl-geocoder-4.7.0.tgz#ff3b3b6a8e89e4c62df46be8e95502b6c5e510bc"
-  integrity sha1-/zs7ao6J5MYt9Gvo6VUCtsXlELw=
-=======
   version "4.6.0"
   resolved "https://registry.npm.taobao.org/@mapbox/mapbox-gl-geocoder/download/@mapbox/mapbox-gl-geocoder-4.6.0.tgz#ce9c6647d10ff3a9fb5dcfd6526eedaafe7b4843"
   integrity sha1-zpxmR9EP86n7Xc/WUm7tqv57SEM=
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   dependencies:
     "@mapbox/mapbox-sdk" "^0.11.0"
     lodash.debounce "^4.0.6"
@@ -770,11 +761,7 @@
     suggestions "^1.6.0"
     xtend "^4.0.1"
 
-<<<<<<< HEAD
-"@mapbox/mapbox-gl-supported@^1.5.0":
-=======
 "@mapbox/mapbox-gl-supported@^1.4.0":
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   version "1.5.0"
   resolved "https://registry.npm.taobao.org/@mapbox/mapbox-gl-supported/download/@mapbox/mapbox-gl-supported-1.5.0.tgz#f60b6a55a5d8e5ee908347d2ce4250b15103dc8e"
   integrity sha1-9gtqVaXY5e6Qg0fSzkJQsVED3I4=
@@ -812,11 +799,7 @@
   dependencies:
     meow "^6.1.1"
 
-<<<<<<< HEAD
-"@mapbox/tiny-sdf@^1.1.1":
-=======
 "@mapbox/tiny-sdf@^1.1.0":
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@mapbox/tiny-sdf/download/@mapbox/tiny-sdf-1.1.1.tgz#16a20c470741bfe9191deb336f46e194da4a91ff"
   integrity sha1-FqIMRwdBv+kZHeszb0bhlNpKkf8=
@@ -853,11 +836,7 @@
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/@sindresorhus/is/download/@sindresorhus/is-0.7.0.tgz?cache=0&sync_timestamp=1598047536871&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40sindresorhus%2Fis%2Fdownload%2F%40sindresorhus%2Fis-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
-=======
   resolved "https://registry.npm.taobao.org/@sindresorhus/is/download/@sindresorhus/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   integrity sha1-mgb08TfuhNffBGDB/bETX/psUP0=
 
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
@@ -1643,17 +1622,10 @@ avue-plugin-map@0.0.7:
     vue "^2.5.17"
     vue-router "^3.0.1"
 
-<<<<<<< HEAD
-avue-plugin-ueditor@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.npm.taobao.org/avue-plugin-ueditor/download/avue-plugin-ueditor-0.1.6.tgz?cache=0&sync_timestamp=1599806491189&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Favue-plugin-ueditor%2Fdownload%2Favue-plugin-ueditor-0.1.6.tgz#840250f53e7e5042fbbb203507565c43240f28fe"
-  integrity sha1-hAJQ9T5+UEL7uyA1B1ZcQyQPKP4=
-=======
 avue-plugin-ueditor@^0.1.4:
   version "0.1.5"
   resolved "https://registry.npm.taobao.org/avue-plugin-ueditor/download/avue-plugin-ueditor-0.1.5.tgz#a20828d5e40689b02cb31f1007ba497518bb43c2"
   integrity sha1-oggo1eQGibAssx8QB7pJdRi7Q8I=
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   dependencies:
     axios "^0.18.0"
     element-ui "^2.13.0"
@@ -3309,11 +3281,7 @@ electron-to-chromium@^1.3.390:
 
 element-ui@^2.13.0:
   version "2.13.2"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/element-ui/download/element-ui-2.13.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Felement-ui%2Fdownload%2Felement-ui-2.13.2.tgz#582bf47aaaaaafe23ea1958fae217a687ad06447"
-=======
   resolved "https://registry.npm.taobao.org/element-ui/download/element-ui-2.13.2.tgz#582bf47aaaaaafe23ea1958fae217a687ad06447"
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   integrity sha1-WCv0eqqqr+I+oZWPriF6aHrQZEc=
   dependencies:
     async-validator "~1.8.1"
@@ -3593,11 +3561,7 @@ event-pubsub@4.3.0:
 
 eventemitter3@^3.1.0:
   version "3.1.2"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/eventemitter3/download/eventemitter3-3.1.2.tgz?cache=0&sync_timestamp=1598086394401&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feventemitter3%2Fdownload%2Feventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
-=======
   resolved "https://registry.npm.taobao.org/eventemitter3/download/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   integrity sha1-LT1I+cNGaY/Og6hdfWZOmFNd9uc=
 
 eventemitter3@^4.0.0:
@@ -4251,22 +4215,9 @@ globule@^1.0.0:
     lodash "~4.17.12"
     minimatch "~3.0.2"
 
-<<<<<<< HEAD
-google-maps@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.npm.taobao.org/google-maps/download/google-maps-4.3.2.tgz#686183f35ef349b6780e39fd2683078062ac8fb5"
-  integrity sha1-aGGD817zSbZ4Djn9JoMHgGKsj7U=
-  dependencies:
-    "@types/googlemaps" "^3.39.1"
-
-got@^8.3.2:
-  version "8.3.2"
-  resolved "https://registry.npm.taobao.org/got/download/got-8.3.2.tgz?cache=0&sync_timestamp=1596795486537&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fgot%2Fdownload%2Fgot-8.3.2.tgz#1d23f64390e97f776cac52e5b936e5f514d2e937"
-=======
 got@^8.3.2:
   version "8.3.2"
   resolved "https://registry.npm.taobao.org/got/download/got-8.3.2.tgz?cache=0&sync_timestamp=1594901688109&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fgot%2Fdownload%2Fgot-8.3.2.tgz#1d23f64390e97f776cac52e5b936e5f514d2e937"
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   integrity sha1-HSP2Q5Dpf3dsrFLluTbl9RTS6Tc=
   dependencies:
     "@sindresorhus/is" "^0.7.0"
@@ -5681,11 +5632,7 @@ meow@^3.7.0:
 
 meow@^6.1.1:
   version "6.1.1"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/meow/download/meow-6.1.1.tgz?cache=0&sync_timestamp=1597092850825&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmeow%2Fdownload%2Fmeow-6.1.1.tgz#1ad64c4b76b2a24dfb2f635fddcadf320d251467"
-=======
   resolved "https://registry.npm.taobao.org/meow/download/meow-6.1.1.tgz?cache=0&sync_timestamp=1589682815639&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmeow%2Fdownload%2Fmeow-6.1.1.tgz#1ad64c4b76b2a24dfb2f635fddcadf320d251467"
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   integrity sha1-GtZMS3ayok37L2Nf3crfMg0lFGc=
   dependencies:
     "@types/minimist" "^1.2.0"
@@ -5831,8 +5778,6 @@ minimist-options@^4.0.2:
     arrify "^1.0.1"
     is-plain-obj "^1.1.0"
     kind-of "^6.0.3"
-<<<<<<< HEAD
-=======
 
 minimist@0.0.5:
   version "0.0.5"
@@ -5843,7 +5788,6 @@ minimist@0.0.8:
   version "0.0.8"
   resolved "https://registry.npm.taobao.org/minimist/download/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
   integrity sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
 
 minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
   version "1.2.5"
@@ -5970,11 +5914,7 @@ nan@^2.12.1, nan@^2.13.2:
 
 nanoid@^2.0.1:
   version "2.1.11"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/nanoid/download/nanoid-2.1.11.tgz?cache=0&sync_timestamp=1596064062089&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnanoid%2Fdownload%2Fnanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
-=======
   resolved "https://registry.npm.taobao.org/nanoid/download/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   integrity sha1-7CS4p1jVkVYVMbQXagHjq08PAoA=
 
 nanomatch@^1.2.9:
@@ -6161,11 +6101,7 @@ normalize-url@1.9.1:
 
 normalize-url@2.0.1:
   version "2.0.1"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/normalize-url/download/normalize-url-2.0.1.tgz?cache=0&sync_timestamp=1596373165623&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnormalize-url%2Fdownload%2Fnormalize-url-2.0.1.tgz#835a9da1551fa26f70e92329069a23aa6574d7e6"
-=======
   resolved "https://registry.npm.taobao.org/normalize-url/download/normalize-url-2.0.1.tgz#835a9da1551fa26f70e92329069a23aa6574d7e6"
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   integrity sha1-g1qdoVUfom9w6SMpBpojqmV01+Y=
   dependencies:
     prepend-http "^2.0.0"
@@ -7437,8 +7373,6 @@ redent@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/redent/download/redent-3.0.0.tgz#e557b7998316bb53c9f1f56fa626352c6963059f"
   integrity sha1-5Ve3mYMWu1PJ8fVvpiY1LGljBZ8=
-<<<<<<< HEAD
-=======
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
@@ -7447,7 +7381,6 @@ redeyed@~0.4.0:
   version "0.4.4"
   resolved "https://registry.npm.taobao.org/redeyed/download/redeyed-0.4.4.tgz#37e990a6f2b21b2a11c2e6a48fd4135698cba97f"
   integrity sha1-N+mQpvKyGyoRwuakj9QTVpjLqX8=
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
@@ -8498,17 +8431,10 @@ suggestions@^1.6.0:
     fuzzy "^0.1.1"
     xtend "^4.0.0"
 
-<<<<<<< HEAD
-supercluster@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.npm.taobao.org/supercluster/download/supercluster-7.1.0.tgz#f0a457426ec0ab95d69c5f03b51e049774b94479"
-  integrity sha1-8KRXQm7Aq5XWnF8DtR4El3S5RHk=
-=======
 supercluster@^7.0.0:
   version "7.0.0"
   resolved "https://registry.npm.taobao.org/supercluster/download/supercluster-7.0.0.tgz#75d474fafb0a055db552ed7bd7bbda583f6ab321"
   integrity sha1-ddR0+vsKBV21Uu1717vaWD9qsyE=
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   dependencies:
     kdbush "^3.0.0"
 
@@ -9487,11 +9413,7 @@ yargs-parser@^18.1.1:
 
 yargs-parser@^18.1.3:
   version "18.1.3"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/yargs-parser/download/yargs-parser-18.1.3.tgz?cache=0&sync_timestamp=1596945681098&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fyargs-parser%2Fdownload%2Fyargs-parser-18.1.3.tgz#be68c4975c6b2abf469236b0c870362fab09a7b0"
-=======
   resolved "https://registry.npm.taobao.org/yargs-parser/download/yargs-parser-18.1.3.tgz?cache=0&sync_timestamp=1595125126126&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fyargs-parser%2Fdownload%2Fyargs-parser-18.1.3.tgz#be68c4975c6b2abf469236b0c870362fab09a7b0"
->>>>>>> 72460c386f2a21e8bccc84971499b4d6471e9e0c
   integrity sha1-vmjEl1xrKr9GkjawyHA2L6sJp7A=
   dependencies:
     camelcase "^5.0.0"
