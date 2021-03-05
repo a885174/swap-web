@@ -27,7 +27,7 @@
           plain
           @click="handleDelete"
         >{{$t(`delete`)}}</el-button>
-       <el-button   @click="upload.open=true">{{$t(`import`)}}</el-button>
+        <el-button @click="upload.open=true">{{$t(`import`)}}</el-button>
 
         <!-- <el-button type="primary"
                      icon="el-icon-check"
@@ -35,11 +35,11 @@
         @click.stop="goimportxls()">导出</el-button>-->
         <el-popover placement="top-start" width="800" height="600" trigger="click">
           <el-table :data="tableData" highlight-current-row>
-            <el-table-column property="tenantId" label="电动车id"></el-table-column>
-            <el-table-column property="tenantName" label="电动车姓名"></el-table-column>
+            <el-table-column property="tenantId" :label="$t(`order.scooterCOde`)"></el-table-column>
+            <el-table-column property="tenantName" :label="$t(`scooter.name`)"></el-table-column>
           </el-table>
           <div style="margin-top: 20px">
-            <el-button @click="setCurrent(tableData[1])">选取电动车</el-button>
+            <el-button @click="setCurrent(tableData[1])">{{$t(`battery.chooseCar`)}}</el-button>
           </div>
         </el-popover>
       </template>
@@ -48,7 +48,6 @@
           :style="{color:row.connectStatus=='0' ||row.connectStatus=='1'?'green':'red'}"
         >{{row.connectStatus=="0"?$t(`battery.connectCbinet`):(row.connectStatus=="1"?$t(`battery.connectCars`):(row.connectStatus=="2"?$t(`Unconnected`):(row.connectStatus=="3"?$t(`battery.communicationError`):$t(`battery.moduleError`))))}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
-
       </template>
       <template slot-scope="{row}" slot="menu">
         <el-button
@@ -81,8 +80,7 @@
       </span>
     </el-dialog>
 
-
-       <!-- 用户导入对话框 -->
+    <!-- 用户导入对话框 -->
     <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
       <el-upload
         ref="upload"
@@ -105,7 +103,11 @@
           Drag the file here, or
           <em>Click upload</em>
         </div>
-        <div class="el-upload__tip" style="color:red" slot="tip">Tip: only "XLS" or "xlsx" format files can be imported!</div>
+        <div
+          class="el-upload__tip"
+          style="color:red"
+          slot="tip"
+        >Tip: only "XLS" or "xlsx" format files can be imported!</div>
       </el-upload>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitFileForm">确 定</el-button>
@@ -132,7 +134,6 @@ var auth = `Basic ${Base64.encode(
   `${website.clientId}:${website.clientSecret}`
 )}`;
 export default {
-  
   data() {
     // 设备类名称 验证
     var validateDeviceName = (rule, value, callback) => {
@@ -155,7 +156,7 @@ export default {
     return {
       dialogViewVisible: false,
       form: {},
-    upload: {
+      upload: {
         // 是否显示弹出层（用户导入）
         open: false,
         // 弹出层标题（用户导入）
@@ -165,7 +166,7 @@ export default {
         // 是否更新已经存在的用户数据
         updateSupport: 0,
         // 设置上传的请求头部
-        headers: { Authorization: auth, "Blade-Auth": "bearer " + token },
+        headers: { Authorization: auth, "Blade-Auth": "bearer " + token }
         // headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
       },
@@ -718,7 +719,7 @@ export default {
           // },
         ]
       },
-    
+
       data: [],
       tableData: []
     };
@@ -934,13 +935,13 @@ export default {
         });
     },
 
-  /** 下载模板操作 */
+    /** 下载模板操作 */
     // importTemplate() {
     //   importTemplate().then(response => {
     //     this.download(response.msg);
     //   });
     // },
-        // 文件上传中处理
+    // 文件上传中处理
     handleFileUploadProgress(event) {
       this.upload.isUploading = true;
     },
@@ -950,7 +951,7 @@ export default {
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
       this.$alert(response.msg, "Result", { dangerouslyUseHTMLString: true });
-          this.onLoad(this.page);
+      this.onLoad(this.page);
     },
     // 提交上传文件
     submitFileForm() {

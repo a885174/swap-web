@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <el-dialog title="编辑" :visible.sync="dialogFormVisible">
+    <el-dialog :title="$t(`message.edit`)" :visible.sync="dialogFormVisible">
       <span slot="footer" class="dialog-footer">
         <el-form :model="form">
           <el-form-item label="Avaliable Battery Level" :label-width="formLabelWidth">
@@ -27,7 +27,7 @@
       </span>
     </el-dialog>
 
-    <el-dialog title="编辑" :visible.sync="formVisible">
+    <el-dialog :title="$t(`message.edit`)" :visible.sync="formVisible">
       <span slot="footer" class="dialog-footer">
         <el-form :model="form">
           <el-form-item label="Booking Valid Time / min" :label-width="formLabelWidth">

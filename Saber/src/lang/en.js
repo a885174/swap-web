@@ -86,7 +86,7 @@ export default {
     tenantId: "Please input tenantId",
     username: "Please input username",
     password: "Please input a password",
-    pawRules:"The password must be at least 6 characters long",
+    pawRules: "The password must be at least 6 characters long",
     wechat: "Wechat",
     qq: "QQ",
     phone: "Please input a phone",
@@ -97,7 +97,7 @@ export default {
     thirdLogin: "thirdLogin",
     msgText: "send code",
     msgSuccess: "reissued code",
-    loginloading:"Logging in, please wait..."
+    loginloading: "Logging in, please wait..."
   },
   navbar: {
     info: "info",
@@ -191,7 +191,8 @@ export default {
       "Please enter the license plate number (for example: 1-2 English letters + 1-4 numbers + 0-3 English letters)",
     confirmAssign: "Confirm to assign customers?",
     confirmUnlock: "Confirm to unlock customer association?",
-    confirmLock: "Confirm to lock the car?"
+    confirmLock: "Confirm to lock the car?",
+    enterDeviceName: "Please enter English + numbers"
   },
   battery: {
     batteryCode: "Battery ID Number",
@@ -211,7 +212,7 @@ export default {
     connectStatus: "Connected Status",
     systemStatus: "System Model",
     release: "Publish",
-    Normal:"Normal",
+    Normal: "Normal",
     ubrelease: "Unpublished",
     Fault: "Fault",
     Repairing: "Repairing",
@@ -233,7 +234,8 @@ export default {
     enterlockStatus: "Please enter the lock status 0: Locked 1: Unlocked",
     enterpowerStatus:
       "Please enter the charging status 0: charging 1: discharging 2: shelving",
-    enterBID: "Please enter the battery number (for example: BA/BT+14 numbers)"
+    enterBID: "Please enter the battery number (for example: BA/BT+14 numbers)",
+    chooseCar: "Choose an electric car"
   },
   station: {
     stationCode: "Swap Station ID Number",
@@ -296,7 +298,14 @@ export default {
     exceed: "Upload image size cannot exceed 2MB!",
     pUploadPicture: "Please upload a picture",
     setImage: "Are you sure to set this picture as the main picture?",
-    pictureMaterial: "Picture material"
+    pictureMaterial: "Picture material",
+    displaySstatus: "Display status",
+    show: "Show off",
+    dshow: "Don't show",
+    businessHours:"Business hours",
+    mainPicture:"Main picture",
+    storePicture:"Store Picture",
+    selectTime:"Please select business hours!"
   },
   user: {
     loginName: "Login Name",
@@ -313,7 +322,7 @@ export default {
     loginDate: "loginDate",
     emailverification: "Email verification",
     resetPaw: "Reset Password",
-    associatedCustomers:"Associated customers"
+    associatedCustomers: "Associated customers"
   },
 
   supplier: {
@@ -485,9 +494,9 @@ export default {
     TakeOff: "Off Shelf",
     lessHundred: "Please enter a positive integer",
     zeroNum: "Please enter a number greater than 0",
-    removePage:"Are you sure to remove this package?",
-    salePage:"Confirm to list the package?",
-    updataPage:"Confirm to modify this package?"
+    removePage: "Are you sure to remove this package?",
+    salePage: "Confirm to list the package?",
+    updataPage: "Confirm to modify this package?"
   },
   message: {
     messageTitle: "Title",
@@ -511,6 +520,12 @@ export default {
     save: "Save",
     cancel: "Cancel",
     edit: "Edit"
+  },
+  notice: {
+    notTitle: "Notification title",
+    notType: "Notification type",
+    notDate: "Notification date",
+    notContent: "Notification content"
   },
   repaircompany: {
     comName: "Name of Repair Merchant",

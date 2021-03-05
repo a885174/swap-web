@@ -97,7 +97,7 @@
 
     <!-- 编辑弹窗 -->
     <el-dialog
-      title="编辑"
+      :title="$t(`edit`)"
       :visible.sync="editdialogVisibles"
       :fullscreen="true"
       :append-to-body="true"
@@ -475,7 +475,7 @@ export default {
     var validateSID = (rule, value, callback) => {
       var reg = /^(SS|ss)\d{14}$/;
       if (!reg.test(value)) {
-        callback(new Error("请输入英文+数字"));
+        callback(new Error(this.$t(`scooter.enterDeviceName`)));
       } else {
         callback();
       }
@@ -485,7 +485,7 @@ export default {
     var validateIMEI = (rule, value, callback) => {
       var reg = /^\d{15,17}$/;
       if (!reg.test(value)) {
-        callback(new Error("请输入英文+数字"));
+        callback(new Error(this.$t(`scooter.enterDeviceName`)));
       } else {
         callback();
       }
@@ -667,7 +667,7 @@ export default {
             prop: "storeId",
             type: "tree",
             slot: true,
-            hide: true,
+            hide: false,
             rules: [
               {
                 required: true,
@@ -969,7 +969,7 @@ export default {
             }
           },
           {
-            label: "展示状态",
+            label: this.$t(`station.displaySstatus`),
             prop: "connectStatus",
             //addDisabled:true,
             type: "select",
@@ -977,11 +977,11 @@ export default {
             // hide:true,
             dicData: [
               {
-                label: "展示",
+                label: this.$t(`station.show`),
                 value: "0"
               },
               {
-                label: "不展示",
+                label: this.$t(`station.dshow`),
                 value: "1"
               }
             ],
@@ -994,32 +994,32 @@ export default {
             ]
           },
           {
-            label: "营业时间",
+            label: this.$t(`station.businessHours`),
             prop: "produceTime",
             formslot: true,
-            span: 24,
-            rules: [
-              {
-                required: true,
-                message: this.$t(`scooter.connectionStatus`),
-                trigger: "blur"
-              }
-            ]
+            span: 24
+            // rules: [
+            //   {
+            //     required: true,
+            //     message: this.$t(`scooter.connectionStatus`),
+            //     trigger: "blur"
+            //   }
+            // ]
           },
           {
-            label: "主图图片",
+            label: this.$t(`station.mainPicture`),
             prop: "stationpicture",
             formslot: true,
             span: 24
           },
           {
-            label: "店铺图片",
+            label: this.$t(`station.storePicture`),
             prop: "stationpicturelist",
             formslot: true,
             span: 24
           },
           {
-            label: "地址",
+            label: this.$t(`supplier.address`),
             prop: "address",
             formslot: true,
             span: 24
@@ -1061,15 +1061,15 @@ export default {
     // 提交编辑表单
     editFromSubmit() {
       console.log("-----------------------submit-----------------------");
-      
+      console.log(this.editform.timeList["week"]);
       if (
         this.editform.timeType == "3" &&
-        (this.editform.timeList.week == undefined ||
-          this.editform.timeList.week == "")
+        (this.editform.timeList == undefined ||
+          this.editform.timeList.length == 0)
       ) {
         this.$message({
           type: "error",
-          message: "请选择营业时间!"
+          message: this.$t(`station.selectTime`)
         });
       } else {
         update(this.editform).then(
@@ -1125,9 +1125,11 @@ export default {
       upload(formData).then(res => {
         console.log(res);
         if (res.data.code === 200) {
+          console.log(type);
           // this.companyInfo.imageUrl = res.data.data.url;
           if (type == "single") {
             this.imageUrl = res.data.data.url;
+            console.log(this.imageUrl);
             this.editform.mainImg = this.imageUrl;
           } else if (type == "list1") {
             this.imageUrl1 = res.data.data.url;
@@ -1152,7 +1154,7 @@ export default {
       this.editform.timeType = type;
       this.editform.timeList = timeList;
       console.log("-------- 获取选中的营业时间 --------");
-      console.log(JSON.stringify(this.editform.timeList));
+      console.log(this.editform.timeList);
       // JSON.parse(JSON.stringify(this.editform.timeList))
       //  JSON.parse(JSON.stringify(data))
     },

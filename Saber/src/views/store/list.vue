@@ -435,7 +435,7 @@ export default {
     var validateContactNumber = (rule, value, callback) => {
       var reg = /^(08)\d{7,12}$/;
       if (!reg.test(value)) {
-        callback(new Error());
+        callback(new Error(this.$t(`scooter.please`) + this.$t(`supplier.contactNumber`)));
       } else {
         callback();
       }

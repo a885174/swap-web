@@ -25,11 +25,11 @@
         <el-button size="small"
                    icon="el-icon-delete"
                    @click="handleRole"
-                   plain>权限设置
+                   plain>Permission settings
         </el-button>
       </template>
     </avue-crud>
-    <el-dialog title="角色配置"
+    <el-dialog title="Role configuration"
                :visible.sync="box"
                width="20%">
       <el-tree :data="list"

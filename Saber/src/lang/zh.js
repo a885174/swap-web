@@ -84,7 +84,7 @@ export default {
     tenantId: "请输入租户ID",
     username: "请输入账号",
     password: "请输入密码",
-    pawRules:"密码长度最少为6位",
+    pawRules: "密码长度最少为6位",
     wechat: "微信",
     qq: "QQ",
     phone: "请输入手机号",
@@ -95,7 +95,7 @@ export default {
     thirdLogin: "第三方登录",
     msgText: "发送验证码",
     msgSuccess: "秒后重发",
-    loginloading:"登录中,请稍后..."
+    loginloading: "登录中,请稍后..."
   },
   navbar: {
     logOut: "退出登录",
@@ -181,17 +181,19 @@ export default {
     lock: "锁车",
     unlock: "解锁",
     enterVin: "请输入Vin码（例如：MC+14位数字）",
-    enterLicensePlate: "请输入车牌号（例如：1-2个英文字母 + 1-4个数字 + 0-3个英文字母）",
+    enterLicensePlate:
+      "请输入车牌号（例如：1-2个英文字母 + 1-4个数字 + 0-3个英文字母）",
     confirmAssign: "确认分配客户？",
     confirmUnlock: "确认解锁客户关联？",
-    confirmLock: "确认锁车？"
+    confirmLock: "确认锁车？",
+    enterDeviceName:"请输入英文+数字"
   },
   battery: {
     batteryCode: "电池编号 BID",
     batteryName: "电池名",
     batteryVersion: "电池型号",
     voltage: "电压",
-    Normal:"正常",
+    Normal: "正常",
     electricity: "电池电流",
     cycleIndex: "电池循环次数",
     surplusMileage: "预估行驶里程",
@@ -205,7 +207,7 @@ export default {
     connectStatus: "连接状态",
     systemStatus: "系统模式",
     release: "发布",
-    ubrelease:"不发布",
+    ubrelease: "不发布",
     Fault: "故障",
     Repairing: "维修",
     Castoff: "报废",
@@ -225,7 +227,8 @@ export default {
     moduleError: "模块错误",
     enterlockStatus: "请输入锁定状态 0:已锁定 1:未锁定",
     enterpowerStatus: "请输入充电状态 0:充电中 1:放电中 2:搁置",
-    enterBID: "请输入电池编号（例如：BA/BT+14数字）"
+    enterBID: "请输入电池编号（例如：BA/BT+14数字）",
+    chooseCar: "选取电动车"
   },
   station: {
     stationCode: "换电柜编号（UID）",
@@ -284,7 +287,14 @@ export default {
     exceed: "上传图片大小不能超过 2MB!",
     pUploadPicture: "请上传图片",
     setImage: "确定将此图设置为主图吗?",
-    pictureMaterial: "图片素材"
+    pictureMaterial: "图片素材",
+    displaySstatus:"展示状态",
+    show:"展示",
+    dshow:"不展示",
+    businessHours:"营业时间",
+    mainPicture:"主图图片",
+    storePicture:"店铺图片",
+    selectTime:"请选择营业时间!"
   },
 
   supplier: {
@@ -404,7 +414,7 @@ export default {
     loginDate: "登录日期",
     emailverification: "邮箱验证",
     resetPaw: "密码重置",
-    associatedCustomers:"关联客户"
+    associatedCustomers: "关联客户"
   },
   suggest: {
     userName: "用户姓名",
@@ -468,10 +478,10 @@ export default {
     sale: "上架",
     TakeOff: "下架",
     lessHundred: "请输入正整数",
-    zeroNum:"请输入大于0的数字",
-    removePage:"是否确认下架此套餐？",
-    salePage:"确认上架套餐？",
-    updataPage:"确认修改此套餐？"
+    zeroNum: "请输入大于0的数字",
+    removePage: "是否确认下架此套餐？",
+    salePage: "确认上架套餐？",
+    updataPage: "确认修改此套餐？"
   },
   message: {
     messageTitle: "标题",
@@ -489,12 +499,18 @@ export default {
     results: "推送结果",
     details: "消息详情",
     id: "公告ID",
-    messageContent:'正文',
+    messageContent: "正文",
     title: "公告标题",
     type: "公告类型",
-    save:"保存",
-    cancel:"取消",
-    edit:"编辑"
+    save: "保存",
+    cancel: "取消",
+    edit: "编辑"
+  },
+  notice: {
+    notTitle:"通知标题",
+    notType:"通知类型",
+    notDate:"通知日期",
+    notContent:"通知内容"
   },
   common: {},
   repairshop: {

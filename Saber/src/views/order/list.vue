@@ -189,7 +189,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入套餐总里程",
+                message: this.$t(`scooter.please`) + this.$t(`order.useName`),
                 trigger: "blur"
               }
             ]
@@ -225,7 +225,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入套餐总里程",
+                message: this.$t(`scooter.please`) + this.$t(`order.scooterCode`),
                 trigger: "blur"
               }
             ]
@@ -284,7 +284,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入订单总价",
+                message: this.$t(`scooter.please`) + this.$t(`order.totalPrices`),
                 trigger: "blur"
               }
             ]

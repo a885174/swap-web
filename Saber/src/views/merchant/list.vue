@@ -130,7 +130,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入商户id",
+                message: this.$t(`scooter.please`) + this.$t(`merchant.merchantId`),
                 trigger: "blur"
               }
             ]
@@ -142,7 +142,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入商户名称",
+                message: this.$t(`scooter.please`) + this.$t(`merchant.merchantName`),
                 trigger: "blur"
               }
             ]
@@ -245,19 +245,19 @@ export default {
             ]
           },
           {
-            label: "法律代表",
+            label: this.$t(`tenant.legalPerson`),
             prop: "legalPerson",
             hide: true,
             rules: [
               {
                 required: false,
-                message: "请输入法律代表",
+                message: this.$t(`scooter.please`)+this.$t(`tenant.legalPerson`),
                 trigger: "blur"
               }
             ]
           },
           {
-            label: "工商备案 ",
+            label: this.$t(`tenant.approveStatus`),
             prop: "filingStatus",
             type: "select",
             valueDefault: "1",
@@ -279,7 +279,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请输入工商备案",
+                message: this.$t(`scooter.please`)+this.$t(`tenant.approveStatus`),
                 trigger: "blur"
               }
             ]
@@ -305,7 +305,7 @@ export default {
             rules: [
               {
                 required: true,
-                message: "请选择"+this.$t( `merchant.status`),
+                message: this.$t(`scooter.please`)+this.$t( `merchant.status`),
                 trigger: "blur"
               }
             ]

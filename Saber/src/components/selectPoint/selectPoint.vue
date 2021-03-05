@@ -13,7 +13,7 @@
         @place_changed="processStartChanged"
       />
       <label class="address">{{latlngCurrent}}</label>
-      <el-button @click="centerMap" icon="el-icon-aim" type="text">回到此处</el-button>
+      <el-button @click="centerMap" icon="el-icon-aim" type="text">Back here</el-button>
       <!-- :select-first-on-enter="true" -->
       <label class="latlng">{{starting_point}}</label>
       <gmap-map

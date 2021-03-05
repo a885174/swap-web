@@ -19,8 +19,7 @@
       @size-change="sizeChange"
       @on-load="onLoad"
     >
-
-        <template slot-scope="{row}" slot="color">
+      <template slot-scope="{row}" slot="color">
         <label>{{row.color==0?"Red":(row.color==1?"Black":"White")}}</label>
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
@@ -165,7 +164,7 @@ export default {
     var validateDeviceName = (rule, value, callback) => {
       var reg = /^[a-zA-Z0-9]+$/;
       if (reg.test(value)) {
-        callback(new Error("请输入英文+数字"));
+        callback(new Error(this.$t(`scooter.enterDeviceName`)));
       } else {
         callback();
       }
@@ -174,7 +173,7 @@ export default {
     var validateVin = (rule, value, callback) => {
       var reg = /^(MC)\d{14}$/;
       if (!reg.test(value)) {
-        callback(new Error());
+        callback(new Error(this.$t(`scooter.enterVin`)));
       } else {
         callback();
       }
@@ -183,7 +182,7 @@ export default {
     var validateLicense = (rule, value, callback) => {
       var reg = /^[A-Za-z]{1,2}[0-9]{1,4}[A-Za-z]{0,3}$/;
       if (!reg.test(value)) {
-        callback(new Error());
+        callback(new Error(this.$t(`scooter.enterLicensePlate`)));
       } else {
         callback();
       }
@@ -318,7 +317,7 @@ export default {
               }
             ]
           },
-            {
+          {
             label: "vin",
             prop: "vin",
             addDisabled: true,
@@ -476,7 +475,7 @@ export default {
             addDisabled: true,
             addDisplay: false
           },
-            {
+          {
             label: "color",
             prop: "color",
             slot: true,
@@ -484,7 +483,6 @@ export default {
             editDisplay: false,
             addDisabled: true,
             addDisplay: false
- 
           },
           {
             label: this.$t(`tenant.tenantName`),
@@ -854,15 +852,15 @@ export default {
             scooterStatus = this.$t(`battery.Castoff`);
             break;
         }
-        switch(data.color){
+        switch (data.color) {
           case 0:
-            scooterColor="Red";
+            scooterColor = "Red";
             break;
           case 1:
-            scooterColor="Black";
+            scooterColor = "Black";
             break;
           case 2:
-            scooterColor="White";
+            scooterColor = "White";
             break;
         }
         this.rowItem = {
@@ -884,9 +882,9 @@ export default {
                   prop: data.batteryNumber
                 },
                 { label: "IMEI", prop: data.imei },
-                {label:"vin",prop:data.vin},
-                {label:"Motor Code",prop:data.motorCode},
-                {label:"Color",prop:scooterColor},
+                { label: "vin", prop: data.vin },
+                { label: "Motor Code", prop: data.motorCode },
+                { label: "Color", prop: scooterColor },
                 {
                   label: this.$t(`scooter.mileageValue`),
                   prop:
@@ -999,7 +997,6 @@ export default {
             type: "success",
             message: "success!"
           });
-          
         }
         if (response.code == 99) {
           this.$message({
@@ -1104,9 +1101,7 @@ export default {
         this.$message({
           type: "error",
           message: "Please select at least one piece of data!"
-      
-      
-      });
+        });
       } else {
         this.dialogFormVisible = true;
       }

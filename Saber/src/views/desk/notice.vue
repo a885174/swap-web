@@ -1,31 +1,33 @@
 <template>
   <basic-container>
-    <avue-crud :option="option"
-               :data="data"
-               :page="page"
-               @row-del="rowDel"
-               v-model="form"
-               :permission="permissionList"
-               @row-update="rowUpdate"
-               @row-save="rowSave"
-               :before-open="beforeOpen"
-               @search-change="searchChange"
-               @search-reset="searchReset"
-               @selection-change="selectionChange"
-               @current-change="currentChange"
-               @size-change="sizeChange"
-               @on-load="onLoad">
+    <avue-crud
+      :option="option"
+      :data="data"
+      :page="page"
+      @row-del="rowDel"
+      v-model="form"
+      :permission="permissionList"
+      @row-update="rowUpdate"
+      @row-save="rowSave"
+      :before-open="beforeOpen"
+      @search-change="searchChange"
+      @search-reset="searchReset"
+      @selection-change="selectionChange"
+      @current-change="currentChange"
+      @size-change="sizeChange"
+      @on-load="onLoad"
+    >
       <template slot="menuLeft">
-        <el-button type="danger"
-                   size="small"
-                   icon="el-icon-delete"
-                   plain
-                   v-if="permission.notice_delete"
-                      @click="handleDelete">{{$t(`delete`)}}
-        </el-button>
+        <el-button
+          type="danger"
+          size="small"
+          icon="el-icon-delete"
+          plain
+          v-if="permission.notice_delete"
+          @click="handleDelete"
+        >{{$t(`delete`)}}</el-button>
       </template>
-      <template slot-scope="{row}"
-                slot="category">
+      <template slot-scope="{row}" slot="category">
         <el-tag>{{row.categoryName}}</el-tag>
       </template>
     </avue-crud>
@@ -33,198 +35,214 @@
 </template>
 
 <script>
-  import {getList, remove, update, add, getNotice} from "@/api/dept/notice";
-  import {mapGetters} from "vuex";
+import { getList, remove, update, add, getNotice } from "@/api/dept/notice";
+import { mapGetters } from "vuex";
 
-  export default {
-    data() {
+export default {
+  data() {
+    return {
+      form: {},
+      query: {},
+      page: {
+        pageSize: 10,
+        currentPage: 1,
+        total: 0
+      },
+      selectionList: [],
+      option: {
+        tip: false,
+        border: true,
+        index: true,
+        viewBtn: true,
+        selection: true,
+        column: [
+          {
+            label: this.$t(`notice.notTitle`),
+            prop: "title",
+            row: true,
+            search: true,
+            rules: [
+              {
+                required: true,
+                message: this.$t(`scooter.please`) + this.$t(`notice.notTitle`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: this.$t(`notice.notType`),
+            type: "select",
+            row: true,
+            dicUrl: "/api/blade-system/dict/dictionary?code=notice",
+            props: {
+              label: "dictValue",
+              value: "dictKey"
+            },
+            slot: true,
+            prop: "category",
+            search: true,
+            rules: [
+              {
+                required: true,
+                message: this.$t(`scooter.please`) + this.$t(`notice.notType`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: this.$t(`notice.notDate`),
+            prop: "releaseTime",
+            type: "date",
+            format: "yyyy-MM-dd hh:mm:ss",
+            valueFormat: "yyyy-MM-dd hh:mm:ss",
+            rules: [
+              {
+                required: true,
+                message: this.$t(`scooter.please`) + this.$t(`notice.notDate`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
+            label: this.$t(`notice.notContent`),
+            prop: "content",
+            span: 24,
+            minRows: 6,
+            type: "textarea"
+          }
+        ]
+      },
+      data: []
+    };
+  },
+  computed: {
+    ...mapGetters(["permission"]),
+    permissionList() {
       return {
-        form: {},
-        query: {},
-        page: {
-          pageSize: 10,
-          currentPage: 1,
-          total: 0
-        },
-        selectionList: [],
-        option: {
-          tip: false,
-          border: true,
-          index: true,
-          viewBtn: true,
-          selection: true,
-          column: [
-            {
-              label: "通知标题",
-              prop: "title",
-              row: true,
-              search: true,
-              rules: [{
-                required: true,
-                message: "请输入通知标题",
-                trigger: "blur"
-              }]
-            },
-            {
-              label: "通知类型",
-              type: "select",
-              row: true,
-              dicUrl: "/api/blade-system/dict/dictionary?code=notice",
-              props: {
-                label: "dictValue",
-                value: "dictKey"
-              },
-              slot: true,
-              prop: "category",
-              search: true,
-              rules: [{
-                required: true,
-                message: "请输入通知类型",
-                trigger: "blur"
-              }]
-            },
-            {
-              label: "通知日期",
-              prop: "releaseTime",
-              type: "date",
-              format: "yyyy-MM-dd hh:mm:ss",
-              valueFormat: "yyyy-MM-dd hh:mm:ss",
-              rules: [{
-                required: true,
-                message: "请输入通知日期",
-                trigger: "blur"
-              }]
-            },
-            {
-              label: "通知内容",
-              prop: "content",
-              span: 24,
-              minRows: 6,
-              type: "textarea"
-            }
-          ]
-        },
-        data: []
+        addBtn: this.vaildData(this.permission.notice_add, false),
+        viewBtn: this.vaildData(this.permission.notice_view, false),
+        delBtn: this.vaildData(this.permission.notice_delete, false),
+        editBtn: this.vaildData(this.permission.notice_edit, false)
       };
     },
-    computed: {
-      ...mapGetters(["permission"]),
-      permissionList() {
-        return {
-          addBtn: this.vaildData(this.permission.notice_add, false),
-          viewBtn: this.vaildData(this.permission.notice_view, false),
-          delBtn: this.vaildData(this.permission.notice_delete, false),
-          editBtn: this.vaildData(this.permission.notice_edit, false)
-        };
-      },
-      ids() {
-        let ids = [];
-        this.selectionList.forEach(ele => {
-          ids.push(ele.id);
-        });
-        return ids.join(",");
-      }
-    },
-    methods: {
-      rowSave(row, loading, done) {
-        add(row).then(() => {
-          loading();
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
-          });
-        }, error => {
-          done();
-          console.log(error);
-        });
-      },
-      rowUpdate(row, index, loading, done) {
-        update(row).then(() => {
-          loading();
-          this.onLoad(this.page);
-          this.$message({
-            type: "success",
-            message: "success!"
-          });
-        }, error => {
-          done();
-          console.log(error);
-        });
-      },
-      rowDel(row) {
-        this.$confirm("Are you sure you want to delete the selected data?", {
-          confirmButtonText: "sure",
-          cancelButtonText: "cancel",
-          type: "warning"
-        })
-          .then(() => {
-            return remove(row.id);
-          })
-          .then(() => {
-            this.onLoad(this.page);
-            this.$message({
-              type: "success",
-              message: "success!"
-            });
-          });
-      },
-      searchReset() {
-        this.query = {};
-        this.onLoad(this.page);
-      },
-      searchChange(params) {
-        this.query = params;
-        this.onLoad(this.page, params);
-      },
-      selectionChange(list) {
-        this.selectionList = list;
-      },
-      handleDelete() {
-        if (this.selectionList.length === 0) {
-          this.$message.warning("Please select at least one piece of data");
-          return;
-        }
-        this.$confirm("Are you sure you want to delete the selected data?", {
-          confirmButtonText: "sure",
-          cancelButtonText: "cancel",
-          type: "warning"
-        })
-          .then(() => {
-            return remove(this.ids);
-          })
-          .then(() => {
-            this.onLoad(this.page);
-            this.$message({
-              type: "success",
-              message: "success!"
-            });
-            this.$refs.crud.toggleSelection();
-          });
-      },
-      beforeOpen(done, type) {
-        if (["edit", "view"].includes(type)) {
-          getNotice(this.form.id).then(res => {
-            this.form = res.data.data;
-          });
-        }
-        done();
-      },
-      currentChange(currentPage){
-        this.page.currentPage = currentPage;
-      },
-      sizeChange(pageSize){
-        this.page.pageSize = pageSize;
-      },
-      onLoad(page, params = {}) {
-        getList(page.currentPage, page.pageSize, Object.assign(params, this.query)).then(res => {
-          const data = res.data.data;
-          this.page.total = data.total;
-          this.data = data.records;
-        });
-      }
+    ids() {
+      let ids = [];
+      this.selectionList.forEach(ele => {
+        ids.push(ele.id);
+      });
+      return ids.join(",");
     }
-  };
+  },
+  methods: {
+    rowSave(row, loading, done) {
+      add(row).then(
+        () => {
+          loading();
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        },
+        error => {
+          done();
+          console.log(error);
+        }
+      );
+    },
+    rowUpdate(row, index, loading, done) {
+      update(row).then(
+        () => {
+          loading();
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        },
+        error => {
+          done();
+          console.log(error);
+        }
+      );
+    },
+    rowDel(row) {
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
+        type: "warning"
+      })
+        .then(() => {
+          return remove(row.id);
+        })
+        .then(() => {
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+        });
+    },
+    searchReset() {
+      this.query = {};
+      this.onLoad(this.page);
+    },
+    searchChange(params) {
+      this.query = params;
+      this.onLoad(this.page, params);
+    },
+    selectionChange(list) {
+      this.selectionList = list;
+    },
+    handleDelete() {
+      if (this.selectionList.length === 0) {
+        this.$message.warning("Please select at least one piece of data");
+        return;
+      }
+      this.$confirm("Are you sure you want to delete the selected data?", {
+        confirmButtonText: "sure",
+        cancelButtonText: "cancel",
+        type: "warning"
+      })
+        .then(() => {
+          return remove(this.ids);
+        })
+        .then(() => {
+          this.onLoad(this.page);
+          this.$message({
+            type: "success",
+            message: "success!"
+          });
+          this.$refs.crud.toggleSelection();
+        });
+    },
+    beforeOpen(done, type) {
+      if (["edit", "view"].includes(type)) {
+        getNotice(this.form.id).then(res => {
+          this.form = res.data.data;
+        });
+      }
+      done();
+    },
+    currentChange(currentPage) {
+      this.page.currentPage = currentPage;
+    },
+    sizeChange(pageSize) {
+      this.page.pageSize = pageSize;
+    },
+    onLoad(page, params = {}) {
+      getList(
+        page.currentPage,
+        page.pageSize,
+        Object.assign(params, this.query)
+      ).then(res => {
+        const data = res.data.data;
+        this.page.total = data.total;
+        this.data = data.records;
+      });
+    }
+  }
+};
 </script>
 
 <style>

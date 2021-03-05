@@ -83,7 +83,7 @@
               search:true,
               rules: [{
                 required: true,
-                message: "请输入记录编号",
+                message: this.$t(`scooter.please`) + this.$t(`record.recordNumber`),
                 trigger: "blur"
               }]
             },
@@ -96,7 +96,7 @@
               addDisplay:false,
               rules: [{
                 required: true,
-                message: "请输入用户id",
+                message: this.$t(`scooter.please`) + this.$t(`record.userName`),
                 trigger: "blur"
               }]
             },
@@ -109,7 +109,7 @@
               addDisplay:false,
               rules: [{
                 required: true,
-                message: "请输入电动车id",
+                message: this.$t(`scooter.please`) + this.$t(`record.scooterCode`),
                 trigger: "blur"
               }]
             },
@@ -122,7 +122,7 @@
               addDisplay:false,
               rules: [{
                 required: true,
-                message: "请输入电池id",
+                message: this.$t(`scooter.please`) + this.$t(`record.batteryCode`),
                 trigger: "blur"
               }]
 
@@ -136,7 +136,7 @@
               addDisplay:false,
               rules: [{
                 required: true,
-                message: "请输入换电柜id",
+                message: this.$t(`scooter.please`) + this.$t(`record.stationCode`),
                 trigger: "blur"
               }]
             },
@@ -150,7 +150,7 @@
               hid:true,
               rules: [{
                 required: true,
-                message: "请输入充电仓id",
+                message: this.$t(`scooter.please`) + this.$t(`record.warehouseCode`),
                 trigger: "blur"
               }]
             },
@@ -163,7 +163,7 @@
               
               rules: [{
                 required: true,
-                message: "请输入订单开始时间",
+                message: this.$t(`scooter.please`) + this.$t(`record.orderTimeS`),
                 trigger: "blur"
               }]
             },
@@ -175,7 +175,7 @@
               type: "date",
               rules: [{
                 required: true,
-                message: "请输入订单结束时间",
+                message: this.$t(`scooter.please`) + this.$t(`record.orderTimeE`),
                 trigger: "blur"
               }]
             },

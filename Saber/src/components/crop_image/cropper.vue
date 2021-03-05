@@ -1,7 +1,7 @@
 <template>
   <div class="cropper_model">
     <el-dialog
-      title="图片剪裁"
+      title="Picture cropping"
       width="900px"
       class="cropper_model_dlg"
       :visible.sync="dialogVisible"
@@ -27,15 +27,25 @@
             @realTime="previewImg"
           ></vueCropper>
           <div class="cropper_btns">
-            <el-button type="primary" @click="goUpload" size="mini">重新上传</el-button>
-            <el-button @click="rotateLeft" icon="el-icon-refresh-left" size="mini" title="左旋转"></el-button>
-            <el-button @click="rotateRight" icon="el-icon-refresh-right" size="mini" title="右旋转"></el-button>
-            <el-button @click="changeScale(1)" size="mini" title="放大">+</el-button>
-            <el-button @click="changeScale(-1)" size="mini" title="缩小">-</el-button>
+            <el-button type="primary" @click="goUpload" size="mini">re-upload</el-button>
+            <el-button
+              @click="rotateLeft"
+              icon="el-icon-refresh-left"
+              size="mini"
+              title="Rotate left"
+            ></el-button>
+            <el-button
+              @click="rotateRight"
+              icon="el-icon-refresh-right"
+              size="mini"
+              title="Rotate right"
+            ></el-button>
+            <el-button @click="changeScale(1)" size="mini" title="Enlarge">+</el-button>
+            <el-button @click="changeScale(-1)" size="mini" title="Zoom out">-</el-button>
           </div>
         </div>
         <div class="cropper_right">
-          <h3>预览</h3>
+          <h3>Preview</h3>
           <!-- 预览 -->
           <div
             class="cropper_preview"
@@ -51,7 +61,7 @@
             </div>
           </div>
           <div style="margin-top: 20px;">
-            <el-button type="primary" @click="uploadImg" :loading="loading">确定上传</el-button>
+            <el-button type="primary" @click="uploadImg" :loading="loading">Confirm upload</el-button>
           </div>
         </div>
       </div>
@@ -72,11 +82,12 @@ export default {
   components: { VueCropper },
   data() {
     return {
-    //   uploadLogo: "",
-    //   photoList: [],
-    //   headerObj: "",
-    //   imageUrl: "",
+      //   uploadLogo: "",
+      //   photoList: [],
+      //   headerObj: "",
+      //   imageUrl: "",
       dialogVisible: false,
+      type: "",
       loading: false,
       options: {
         img: "", // 裁剪图片的地址
@@ -105,11 +116,12 @@ export default {
     };
   },
   methods: {
-    open(data) {
+    open(data, type) {
       this.options.img = window.URL.createObjectURL(data);
+      this.type = type;
       this.dialogVisible = true;
     },
-    close(){
+    close() {
       this.dialogVisible = false;
     },
     // base64转图片文件
@@ -170,9 +182,9 @@ export default {
         let file = this.dataURLtoFile(data, "photo.png");
         // 生成文件类型
         self.loading = false;
-        this.$emit("getFile",file)
+        this.$emit("getFile", file, this.type);
       });
-    },
+    }
     //自定义上传，裁剪后调用
   }
 };

@@ -3,7 +3,7 @@
     <el-select
       @change="changeTimeType"
       v-model="timeType"
-      placeholder="请选择"
+      :placeholder="$t(`scooter.pleaseSelect`)"
       style="width:200px !important"
     >
       <el-option
@@ -14,7 +14,7 @@
       ></el-option>
     </el-select>
     <div v-if="timeType=='2'" class="selectitems">
-      <el-select :value="'8 * 5'" placeholder="请选择" style="width:200px !important">
+      <el-select :value="'8 * 5'" placeholder="scooter" style="width:200px !important">
         <el-option :label="'8 * 5'" :value="'8 * 5'"></el-option>
       </el-select>
       <el-time-picker
@@ -24,7 +24,7 @@
         range-separator="-"
         start-placeholder="Start Time"
         end-placeholder="End Time"
-        placeholder="选择时间范围"
+        :placeholder="$t(`scooter.pleaseSelect`)"
         style="width: 200px !important;"
         class="timePicker"
         value-format="HH:mm:ss"
@@ -38,7 +38,7 @@
           multiple
           v-model="item.week"
           @change="selectChange(item.week,index)"
-          placeholder="请选择"
+          :placeholder="$t(`scooter.pleaseSelect`)"
           style="width: 320px !important;"
         >
           <el-option
@@ -56,7 +56,7 @@
           range-separator="-"
           start-placeholder="Start Time"
           end-placeholder="End Time"
-          placeholder="选择时间范围"
+          :placeholder="$t(`scooter.pleaseSelect`)"
           style="width: 200px !important;"
           class="timePicker"
           @change="timeChange"
@@ -120,7 +120,7 @@ export default {
         },
         {
           value: "3",
-          label: "已定义"
+          label: "defined"
         }
       ],
       //选定的时间类型
