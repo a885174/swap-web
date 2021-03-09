@@ -80,7 +80,7 @@
           @click.stop="getrowViews(scope.row)"
         >{{$t(`chakan`)}}</el-button>
         <!-- <el-button type="text" icon="el-icon-view" size="small" @click.stop="getrowViews(scope.row)">{{$t(`chakan`)}}</el-button> -->
-        <el-button
+        <!-- <el-button
           type="text"
           size="small"
           icon="el-icon-picture-outline"
@@ -91,7 +91,7 @@
           size="small"
           icon="el-icon-document-copy"
           @click.stop="openmap(scope.row)"
-        >{{$t(`getlocaton`)}}</el-button>
+        >{{$t(`getlocaton`)}}</el-button>-->
       </template>
     </avue-crud>
 
@@ -148,8 +148,8 @@
           <mapselect ref="gmap" :oldmarker="oldmarker" :address="oldaddress" @getLatlng="getLatlng"></mapselect>
         </template>
         <template slot="menuForm">
-          <el-button type="primary" @click="editFromSubmit()">提 交</el-button>
-          <el-button @click="handleEmpty()">返 回</el-button>
+          <el-button type="primary" @click="editFromSubmit()">{{$t(`submitText`)}}</el-button>
+          <el-button @click="handleEmpty()">{{$t(`cancelText`)}}</el-button>
         </template>
       </avue-form>
     </el-dialog>
@@ -1088,7 +1088,9 @@ export default {
       }
     },
     // 清空编辑表单
-    handleEmpty() {},
+    handleEmpty() {
+      this.editdialogVisibles = false;
+    },
     // 图片列表删除方法
     handleRemovePic(name, file, fileList) {
       //将删除后的fileList赋给数组
