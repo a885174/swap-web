@@ -970,10 +970,9 @@ export default {
           },
           {
             label: this.$t(`station.displaySstatus`),
-            prop: "connectStatus",
+            prop: "isDisplay",
             //addDisabled:true,
             type: "select",
-            valueDefault: "1",
             // hide:true,
             dicData: [
               {
