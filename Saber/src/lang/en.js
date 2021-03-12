@@ -300,7 +300,7 @@ export default {
     setImage: "Are you sure to set this picture as the main picture?",
     pictureMaterial: "Picture material",
     displaySstatus: "Display status",
-    show: "Show off",
+    show: "Show",
     dshow: "Don't show",
     businessHours:"Business hours",
     mainPicture:"Main picture",

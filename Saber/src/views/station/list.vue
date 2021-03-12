@@ -1147,7 +1147,7 @@ export default {
           //上传成功后，关闭弹框组件
           this.$refs.myCropper.close();
         } else {
-          this.$message.error("上传出错");
+          this.$message.error("Upload error");
         }
       });
     },
