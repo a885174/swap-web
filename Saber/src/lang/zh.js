@@ -116,7 +116,7 @@ export default {
     closeOthers: "关闭其它"
   },
   scooter: {
-    vincode: "VIN码",
+    vincode: "SN码",
     name: "电动车名",
     licensePlate: "车牌号",
     scooterVersion: "车型号",
@@ -180,7 +180,7 @@ export default {
     userAssociation: "确定解决用户关联?",
     lock: "锁车",
     unlock: "解锁",
-    enterVin: "请输入Vin码（例如：MC+14位数字）",
+    enterVin: "请输入SN码（例如：MC+14位数字）",
     enterLicensePlate:
       "请输入车牌号（例如：1-2个英文字母 + 1-4个数字 + 0-3个英文字母）",
     confirmAssign: "确认分配客户？",

@@ -53,7 +53,12 @@
       <template slot-scope="{row}" slot="supplierId">
         <el-tag>{{row.supplierName}}</el-tag>
       </template>
-
+      <!-- <template slot-scope="{row}" slot="isDisplay">
+        <label
+          :style="{color:row.isDisplay=='0'?'green':'red'}"
+        >{{row.isDisplay=="0"?$t(`station.show`):$t(`station.dshow`)}}</label>
+        
+      </template>-->
       <template slot-scope="{row}" slot="connectStatus">
         <label
           :style="{color:row.connectStatus=='0'?'green':'red'}"
@@ -662,6 +667,31 @@ export default {
             ]
           },
           {
+            label: this.$t(`station.displaySstatus`),
+            prop: "isDisplay",
+            // slot: true,
+            //addDisabled:true,
+            type: "select",
+            // hide:true,
+            dicData: [
+              {
+                label: this.$t(`station.show`),
+                value: "0"
+              },
+              {
+                label: this.$t(`station.dshow`),
+                value: "1"
+              }
+            ],
+            rules: [
+              {
+                required: true,
+                message: this.$t(`scooter.connectionStatus`),
+                trigger: "blur"
+              }
+            ]
+          },
+          {
             label: this.$t(`AssignStore`),
             width: 140,
             prop: "storeId",
@@ -1060,16 +1090,19 @@ export default {
     // 提交编辑表单
     editFromSubmit() {
       console.log("-----------------------submit-----------------------");
-      console.log(this.editform.timeList["week"]);
       if (
         this.editform.timeType == "3" &&
         (this.editform.timeList == undefined ||
           this.editform.timeList.length == 0)
       ) {
+        // if (
+
+        // ) {
         this.$message({
           type: "error",
           message: this.$t(`station.selectTime`)
         });
+        // }
       } else {
         update(this.editform).then(
           () => {
