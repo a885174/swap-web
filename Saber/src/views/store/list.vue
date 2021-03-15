@@ -54,12 +54,12 @@
         <!-- <el-tag>{{row.tenantStatus}}</el-tag> -->
       </template>
       <template slot-scope="scope" slot="menu">
-        <el-button
+        <!-- <el-button
           type="text"
           size="small"
           icon="el-icon-document-copy"
           @click="openmap(scope.row)"
-        >{{$t(`getlocaton`)}}</el-button>
+        >{{$t(`getlocaton`)}}</el-button>-->
         <el-button
           type="text"
           icon="el-icon-view"
@@ -67,7 +67,7 @@
           @click.stop="rowView(scope.row)"
         >{{$t(`chakan`)}}</el-button>
 
-        <el-button
+        <!-- <el-button
           type="text"
           size="small"
           icon="el-icon-date"
@@ -78,7 +78,7 @@
           size="small"
           icon="el-icon-picture-outline"
           @click="getGridData(scope.row)"
-        >{{$t(`pictureManagement`)}}</el-button>
+        >{{$t(`pictureManagement`)}}</el-button>-->
       </template>
     </avue-crud>
 
@@ -435,7 +435,11 @@ export default {
     var validateContactNumber = (rule, value, callback) => {
       var reg = /^(08)\d{7,12}$/;
       if (!reg.test(value)) {
-        callback(new Error(this.$t(`scooter.please`) + this.$t(`supplier.contactNumber`)));
+        callback(
+          new Error(
+            this.$t(`scooter.please`) + this.$t(`supplier.contactNumber`)
+          )
+        );
       } else {
         callback();
       }
