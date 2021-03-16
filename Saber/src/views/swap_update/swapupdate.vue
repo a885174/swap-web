@@ -107,16 +107,16 @@
 
 
 <el-dialog title="固件升级记录" :visible.sync="dialogTableVisible" width="800px" >
-       <el-col :span="1.5">
+       <!-- <el-col :span="1.5">
         <el-button
           type="primary"
           icon="el-icon-plus"
           size="mini"
           @click="dialogFormVisible = true">
           分配设备</el-button>
-      </el-col>
-  <el-table :data="gridData">
-           <el-table-column label="序号" width="70px">
+      </el-col> -->
+  <!-- <el-table :data="gridData">
+      <el-table-column label="序号" width="70px">
         <template slot-scope="scope">{{scope.$index+1}}</template>
       </el-table-column>
   <el-table-column label="升级包编号" align="center" prop="patchId" />
@@ -140,16 +140,39 @@
         </template>
 
       </el-table-column>
-  </el-table>
+  </el-table> -->
+   <avue-crud
+        :option="gridDataOption"
+        :table-loading="loading"
+        :data="gridData"
+        :page="gPage"
+        v-model="gridDataForm"
+        ref="selectCrud"
+        @search-change="searchgridChange"
+        @search-reset="searchgridReset"
+        @current-change="currentgridChange"
+        @size-change="gridsizeChange"
+      >
+        <template slot="menuLeft">
+          <template>
+          <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="mini"
+          @click="dialogFormVisible = true">
+          分配设备</el-button>          </template>
+        </template>
+      </avue-crud>
 </el-dialog>
 
 <el-dialog title="选择设备" :visible.sync="dialogFormVisible"  size="medium" label-width="100px">
 
 
   <div class="searchDiv">
+  
 
-
-  <!-- <el-table :data="device" ref="multipleTable" @selection-change="handleSelectionChange">
+<!-- 
+  <el-table :data="device" ref="multipleTable" @selection-change="handleSelectionChange">
   <el-table-column
       type="selection"
       width="55">
@@ -167,6 +190,8 @@
   <el-table-column label="升级包编码" align="center" prop="deviceCode" />
      
 </el-table> -->
+
+
 
   <avue-crud
         :option="selectOption"
@@ -214,6 +239,7 @@ var auth = `Basic ${Base64.encode(
         form: {},
         query: {},
         squery: {},
+        gquery:{},
         loading: true,
         selectOption:{
           tip: false,
@@ -274,8 +300,67 @@ var auth = `Basic ${Base64.encode(
           ]
 
         },
+        gridDataOption:{
+          tip: false,
+          border: true,
+          index: true,
+          selection: true,
+          align: "center",
+          menu: false,
+          indexLabel: "Index",
+          refreshBtn: false,
+          addBtn: false,
+          column:[
+            {
+              label: "升级包编号",
+              prop: "patchId",
+            },{
+              label: "升级包类型",
+              prop: "patchType",
+              type:"select",
+              dicData:[
+                {"value":"0",label:"BMS"},
+                {"value":"1",label:"Scooter"},
+                {"value":"2",label:"Station"},
+              ]
+            },{
+              label:"升级包地址",
+              prop:"patchUrl"
+            },{
+              label:"版本号",
+              prop:"versionNumber"
+            },{
+              label:"终端编号",
+              prop:"deviceCode"
+            },{
+              label:"升级状态",
+              prop:"updateStatus",
+              type:"select",
+              dicData:[
+                {
+                  label:"升级中",
+                  value:"0"
+                },{
+                  label:"升级完成",
+                  value:"1"
+                },{
+                  label:"升级失败",
+                  value:"2"
+                },{
+                  label:"待升级",
+                  value:"3"
+                }
+              ]
+            },{
+              label:"创建时间",
+              prop:"createTime"
+            }
+
+          ]
+        },
         multipleSelection:[],
         scooterForm: {},
+        gridDataForm:{},
         scooterIds:"",
         page: {
           pageSize: 10,
@@ -283,6 +368,11 @@ var auth = `Basic ${Base64.encode(
           total: 0
         },
         selectPage: {
+        pageSize: 10,
+        currentPage: 1,
+        total: 0
+      },
+        gPage: {
         pageSize: 10,
         currentPage: 1,
         total: 0
@@ -651,6 +741,36 @@ var auth = `Basic ${Base64.encode(
       this.scooterData(this.selectPage);
     },
 
+      searchgridChange(params) {
+      params.patchType=this.form2.patchType;
+      this.gquery = params;
+      this.logListload(this.gPage, this.form2.patchId);
+    },
+
+      gridsizeChange(pageSize) {
+      this.selectPage.pageSize = pageSize;
+      this.logListload(this.gPage,this.form2.patchId);
+    },
+      searchgridReset() {
+      this.gquery = {};
+      this.logListload(this.gPage,this.form2.patchId);
+    },
+
+
+
+    currentgridChange(currentPage) {
+      this.gPage.currentPage = currentPage;
+      this.logListload(this.gPage,this.form2.patchId);
+    },
+
+      gridSelect(list) {
+      let ids = [];
+      list.forEach(ele => {
+        ids.push(ele.deviceId);
+      });
+      this.scooterIds = ids.join(",");
+    },
+
       // 选中的电动车ID
     scooterSelect(list) {
       let ids = [];
@@ -688,7 +808,7 @@ var auth = `Basic ${Base64.encode(
             })
             .then(() => {
                   this.dialogFormVisible = false;
-                this.logListload(this.form2.patchId);
+                this.logListload(this.gPage,this.form2.patchId);
                 this.$message({
                 type: "success",
                 message: "分配设备成功!"
@@ -747,11 +867,34 @@ var auth = `Basic ${Base64.encode(
       });
     },
 
-  logListload(id){
-      listLog(id).then(response => {
-        
-        this.gridData = response.data.data;
-      }); 
+    // getgridData(page, params = {}) {
+    //   getSelect(
+    //     page.currentPage,
+    //     page.pageSize,
+    //     Object.assign(params, this.squery)
+    //   ).then(res => {
+    //     const data = res.data.data;
+    //     this.selectPage.total = data.total;
+    //     this.device = data.records;
+    //     this.loading = false;
+    //     // this.$refs.selectCrud.toggleSelection();
+    //     // this.selectionClear();
+    //     // this.selectData = res.data.records;
+    //   });
+    // },
+
+  logListload(page,id){
+      listLog(
+        page.currentPage,
+        page.pageSize,
+        id
+      ).then(res => {
+        debugger;
+        const data = res.data.data;
+        this.gPage.total = data.total;
+        this.gridData = data.records;
+        this.loading = false;
+      });
   },
 
     typeload(patchType,deviceCode){
@@ -769,7 +912,7 @@ var auth = `Basic ${Base64.encode(
       this.form2.patchUrl=row.patchUrl;
       this.form2.versionNumber=row.versionNumber;
       this.scooterForm = row;
-      this.logListload(this.form2.patchId);
+      this.logListload(this.gPage,this.form2.patchId);
       this.squery.patchType=this.form2.patchType;
       this.squery.deviceCode="";
       this.scooterData(this.selectPage);

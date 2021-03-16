@@ -24,10 +24,14 @@ export const getDetail = (id) => {
 
 
 
-export const listLog = (id) => {
+export const listLog = (current, size, id) => {
   return request({
     url: '/api//swap_update_record/updaterecord/list/'+id,
     method: 'get',
+    params: {
+      current,
+      size,
+    }
   })
 }
 
